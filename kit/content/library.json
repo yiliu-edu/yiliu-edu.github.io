@@ -1,0 +1,167 @@
+[
+  {
+    "id": "HC-104",
+    "type": "help_article",
+    "title": "Plan work with the Timeline view",
+    "audience": "All users",
+    "features": [
+      "timeline"
+    ],
+    "owner": "Help Center",
+    "last_reviewed": "2026-06-02",
+    "customer_facing": true,
+    "body": [
+      "## Open the Timeline view",
+      "1. Open your project.",
+      "2. Select the **Timeline** tab at the top of the project.",
+      "3. Drag tasks to change their start and end dates.",
+      "",
+      "## Share a timeline",
+      "Select **Share** to give teammates view access to the Timeline.",
+      "",
+      "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"
+    ]
+  },
+  {
+    "id": "ACA-301",
+    "type": "course_lesson",
+    "title": "Projects 101, Lesson 3: Build your first timeline",
+    "audience": "New customers",
+    "features": [
+      "timeline",
+      "sharing"
+    ],
+    "owner": "Academy",
+    "last_reviewed": "2026-04-18",
+    "customer_facing": true,
+    "objective": "Learners will build a project timeline with dependencies for a 4-week launch plan.",
+    "body": [
+      "In this lesson you'll turn your task list into a visual plan.",
+      "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.",
+      "Check: your timeline should show 2 dependencies and end by week 4.",
+      "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"
+    ]
+  },
+  {
+    "id": "IAG-12",
+    "type": "in_app_guide",
+    "title": "Tooltip: Timeline tab",
+    "audience": "All users",
+    "features": [
+      "timeline"
+    ],
+    "owner": "In-App Guidance",
+    "last_reviewed": "2026-05-11",
+    "customer_facing": true,
+    "body": [
+      "New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."
+    ]
+  },
+  {
+    "id": "HC-221",
+    "type": "help_article",
+    "title": "Set up approvals",
+    "audience": "Admins, project leads",
+    "features": [
+      "approvals"
+    ],
+    "owner": "Help Center",
+    "last_reviewed": "2026-03-30",
+    "customer_facing": true,
+    "body": [
+      "## Add an approver",
+      "1. Open a task and select **Request approval**.",
+      "2. Choose one person as the approver.",
+      "3. The approver gets an email and can approve or reject.",
+      "",
+      "Note: each approval step has exactly one approver."
+    ]
+  },
+  {
+    "id": "JA-07",
+    "type": "job_aid",
+    "title": "Admin quick-start checklist",
+    "audience": "Workspace admins",
+    "features": [
+      "guest_access",
+      "approvals",
+      "permissions"
+    ],
+    "owner": "Education Services",
+    "last_reviewed": "2026-02-14",
+    "customer_facing": true,
+    "body": [
+      "☐ Set workspace permissions",
+      "☐ Decide who can invite guests (guests are on by default)",
+      "☐ Set up approval steps for client deliverables",
+      "☐ Turn on single sign-on"
+    ]
+  },
+  {
+    "id": "HC-310",
+    "type": "help_article",
+    "title": "Invite guests to a project",
+    "audience": "All users",
+    "features": [
+      "guest_access"
+    ],
+    "owner": "Help Center",
+    "last_reviewed": "2026-01-20",
+    "customer_facing": true,
+    "body": [
+      "Any project member can invite guests.",
+      "1. Open the project and select **Invite**.",
+      "2. Enter the guest's email and choose **Guest**."
+    ]
+  },
+  {
+    "id": "WS-02",
+    "type": "workshop_module",
+    "title": "Enterprise kickoff workshop, module 2: Reporting",
+    "audience": "Enterprise customers",
+    "features": [
+      "export",
+      "reporting"
+    ],
+    "owner": "Education Services",
+    "last_reviewed": "2026-05-27",
+    "customer_facing": true,
+    "body": [
+      "Activity (10 min): each team builds a status report for their pilot project.",
+      "Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."
+    ]
+  },
+  {
+    "id": "HC-050",
+    "type": "help_article",
+    "title": "Keyboard shortcuts",
+    "audience": "All users",
+    "features": [
+      "shortcuts"
+    ],
+    "owner": "Help Center",
+    "last_reviewed": "2026-06-15",
+    "customer_facing": true,
+    "body": [
+      "| Key | Action |",
+      "| N | New task |",
+      "| T | Open the Timeline |",
+      "| / | Search |"
+    ]
+  },
+  {
+    "id": "HC-415",
+    "type": "help_article",
+    "title": "Speed up large projects",
+    "audience": "Admins",
+    "features": [
+      "performance"
+    ],
+    "owner": "Help Center",
+    "last_reviewed": "2026-05-05",
+    "customer_facing": true,
+    "body": [
+      "Projects with thousands of tasks can load slowly. Archive completed tasks and split very large projects by phase."
+    ]
+  }
+]

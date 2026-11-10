@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Release-Ready Learning Content</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="Interactive walkthrough of an AI-assisted workflow that keeps customer learning content current with each product release. Designed and built by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a content-ops console. Pipeline stepper across the top, one stage at a time below, a running log on the side. */
+:root{
+  --bg:#FDFAF4; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#E4DAE6; --soft:#F8F1E7; --tint:#F1E3F5;
+  --grape:#491355; --disco:#6D0B47; --cinnamon:#E65F2A; --buckthorn:#FCB442; --on-dark:#FEF9F3;
+  --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB; --info:#24456F; --info-soft:#E7EEF9;
+  --gradient-hero:linear-gradient(135deg,#491355 0%,#6D0B47 55%,#831A1D 100%);
+  --gradient-warm:linear-gradient(120deg,#E65F2A,#FCB442);
+  --body:"Open Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --script:"Nothing You Could Do","Segoe Print",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance;font-weight:700}
+p{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--grape);outline-offset:2px}
+.top{background:var(--gradient-hero);color:var(--on-dark)}
+.top .in{max-width:1200px;margin:0 auto;padding:18px 16px 0}
+.eyebrow{font-family:var(--script);color:var(--buckthorn);font-size:18px}
+.top h1{font-size:clamp(22px,3vw,30px);margin-top:2px}
+.top p.sub{color:rgba(254,249,243,.82);font-size:14.5px;margin-top:4px;max-width:80ch}
+.stepper{display:flex;gap:4px;margin-top:16px;overflow-x:auto}
+.stp{flex:1;min-width:150px;background:rgba(254,249,243,.08);border:0;border-radius:14px 14px 0 0;color:rgba(254,249,243,.7);text-align:left;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;gap:1px}
+.stp b{font-size:14.5px;color:inherit}
+.stp span{font-size:12px}
+.stp .n{font-family:var(--mono);font-size:11.5px;color:var(--buckthorn)}
+.stp[aria-current="true"]{background:var(--bg);color:var(--grape)}
+.stp[aria-current="true"] span{color:var(--muted)}
+.stp[aria-current="true"] .n{color:var(--cinnamon)}
+.stp:disabled{opacity:.45;cursor:not-allowed}
+.stp.done:not([aria-current="true"]) b::after{content:" ✓";color:var(--buckthorn)}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+@media (max-width:960px){.wrap{grid-template-columns:minmax(0,1fr)}}
+main{min-width:0;display:flex;flex-direction:column;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:560px){.panel{padding:16px}}
+.panel h2{font-size:22px;color:var(--grape)}
+.label{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lead{max-width:72ch}
+.who{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px}
+.who.ai{background:var(--info-soft);color:var(--info)}
+.who.code{background:var(--soft);color:var(--muted)}
+.who.human{background:var(--tint);color:var(--grape)}
+.btn{font-weight:700;border-radius:12px;padding:10px 18px;cursor:pointer;border:1.5px solid var(--grape);background:var(--surface);color:var(--grape)}
+.btn.primary{background:var(--grape);color:var(--on-dark)}
+.btn.primary:hover{background:var(--disco)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:760px){.split{grid-template-columns:minmax(0,1fr)}}
+.src{background:#1E1424;color:#F3E9F5;border-radius:16px;padding:14px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap}
+.src .hl{background:rgba(252,180,66,.28);border-radius:4px}
+.rec{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;animation:rise .35s both;background:var(--surface)}
+.rec .id{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--cinnamon)}
+.rec .q{font-size:12.5px;color:var(--muted);border-left:3px solid var(--line);padding-left:8px}
+.tag{font-family:var(--mono);font-size:11.5px;background:var(--soft);border-radius:6px;padding:1px 6px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.shake{animation:shake .35s}
+.note{border-radius:14px;padding:12px 16px;background:var(--good-soft);border-left:4px solid var(--good);animation:rise .35s both;max-width:820px}
+.note.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+.note.info{background:var(--info-soft);border-left-color:var(--info)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-dark);background:var(--grape);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.mono{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+tr.pick{cursor:pointer} tr.pick:hover td{background:var(--soft)}
+tr.picked td{background:var(--tint)}
+.sev{font-size:11.5px;font-weight:700;border-radius:99px;padding:2px 9px;white-space:nowrap}
+.sev.high{background:var(--warn-soft);color:var(--warn)} .sev.medium{background:#FEF0D3;color:#7A4C00} .sev.low{background:var(--soft);color:var(--muted)}
+.dec{font-size:11.5px;font-weight:700;border-radius:99px;padding:2px 9px;white-space:nowrap}
+.dec.update{background:var(--info-soft);color:var(--info)} .dec.no_update{background:var(--good-soft);color:var(--good)} .dec.unsure{background:#FEF0D3;color:#7A4C00}
+.queue{display:flex;gap:8px;flex-wrap:wrap}
+.qb{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:7px 12px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--ink);display:flex;gap:8px;align-items:center}
+.qb[aria-current="true"]{border-color:var(--grape);box-shadow:0 0 0 2px var(--grape)}
+.qb i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.qb.ok i{background:var(--good)} .qb.miss i{background:var(--buckthorn)}
+.diff{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:760px){.diff{grid-template-columns:minmax(0,1fr)}}
+.col{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.col h4{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;background:var(--soft);color:var(--muted)}
+.ln{font-family:var(--mono);font-size:12.5px;padding:7px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start;line-height:1.5}
+.ln:first-of-type{border-top:0}
+.ln .cite{font-size:11px;font-weight:600;border-radius:5px;padding:0 5px;white-space:nowrap;flex:none}
+.ln.old{color:var(--muted)}
+.ln.chg{background:#F7FBF9}
+.ln.chg .cite{background:var(--info-soft);color:var(--info)}
+.ln.human{background:#FFF8EC}
+.ln.human .cite{background:#FEF0D3;color:#7A4C00}
+.ln.same .cite{color:var(--muted)}
+button.ln{all:unset;font-family:var(--mono);font-size:12.5px;padding:7px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start;line-height:1.5;cursor:pointer}
+button.ln:hover{outline:2px dashed var(--cinnamon);outline-offset:-2px}
+button.ln:focus-visible{outline:3px solid var(--grape);outline-offset:-3px}
+.ln.struck{text-decoration:line-through;color:var(--warn);background:var(--warn-soft)}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.checks{grid-template-columns:minmax(0,1fr)}}
+.ck{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;border-radius:12px;padding:8px 10px;background:var(--soft)}
+.ck b{display:block}
+.ck .ic{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.ck.pass .ic{background:var(--good)} .ck.flag .ic{background:var(--cinnamon)} .ck.own .ic{background:var(--grape)}
+.oq{font-size:13.5px;background:#FEF0D3;border-radius:12px;padding:8px 12px}
+.decide{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.decide{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.dbtn b{font-size:14px;color:var(--grape)}
+.dbtn span{font-size:12px;color:var(--muted)}
+.dbtn:hover{border-color:var(--grape)}
+.dbtn.right{border-color:var(--good);background:var(--good-soft)}
+.dbtn.wrong{border-color:var(--warn);background:var(--warn-soft);opacity:.7}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--soft);border-radius:16px;padding:12px 14px}
+.stat b{display:block;font-size:28px;font-weight:800;color:var(--grape);font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:12.5px;color:var(--muted)}
+.rule{border:1.5px solid var(--grape);border-radius:16px;overflow:hidden}
+.rule .hd{background:var(--grape);color:var(--on-dark);padding:8px 14px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rule pre{margin:0;padding:12px 14px;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;line-height:1.6}
+.rule ins{text-decoration:none;background:var(--good-soft);color:var(--good);display:block;border-left:3px solid var(--good);padding-left:8px}
+.own{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.own{grid-template-columns:minmax(0,1fr)}}
+.own div{border-radius:16px;padding:12px 14px}
+.own ul{margin:6px 0 0;padding-left:18px;font-size:14px}
+aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
+@media (max-width:960px){aside{position:static}}
+.log{background:#1E1424;color:#E9DDEC;border-radius:18px;padding:14px;font-family:var(--mono);font-size:12px;line-height:1.6;max-height:520px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.log .t{color:#A68FAD}
+.log .ai{color:#9EC1F2} .log .hm{color:var(--buckthorn)} .log .cd{color:#C9B8CF} .log .ok{color:#7FD6AA}
+.side-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.foot{font-size:12.5px;color:var(--muted);max-width:1200px;margin:0 auto;padding:0 16px 32px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:'Open Sans',system-ui,sans-serif;font-size:14px;font-weight:700">
+<a href="../release-ready-content.html" style="background:#491355;color:#FEF9F3;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(73,19,85,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FEF9F3;color:#491355;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #491355;box-shadow:0 6px 18px rgba(73,19,85,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+
+<header class="top"><div class="in">
+  <p class="eyebrow">Content operations · Kitebird Projects 4.2</p>
+  <h1>Release-Ready Learning Content</h1>
+  <p class="sub">An AI-assisted workflow that keeps help articles, Academy lessons, in-app guides and workshop kits current with every release. You play the learning designer who reviews it.</p>
+  <nav class="stepper" id="stepper" aria-label="Workflow stages"></nav>
+</div></header>
+<div class="wrap">
+  <main id="stage" aria-live="polite"></main>
+  <aside>
+    <div class="side-card">
+      <div class="label">Who does what</div>
+      <div class="chips"><span class="who code">Script</span><span class="who ai">AI drafts</span><span class="who human">You decide</span></div>
+      <p class="small" style="font-size:13px;color:var(--muted)">No customer-facing change publishes without a human decision in the log.</p>
+    </div>
+    <div class="label">Run log</div>
+    <div class="log" id="log"></div>
+  </aside>
+</div>
+<p class="foot">Kitebird Projects is a fictional product. The AI outputs shown are a sample run drafted with Claude for this demo; the impact scan is a real script. Designed and built by Yi Liu, November 2026.</p>
+
+<script>
+const DATA = {"library": [{"id": "HC-104", "type": "help_article", "title": "Plan work with the Timeline view", "audience": "All users", "features": ["timeline"], "owner": "Help Center", "last_reviewed": "2026-06-02", "customer_facing": true, "body": ["## Open the Timeline view", "1. Open your project.", "2. Select the **Timeline** tab at the top of the project.", "3. Drag tasks to change their start and end dates.", "", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"]}, {"id": "ACA-301", "type": "course_lesson", "title": "Projects 101, Lesson 3: Build your first timeline", "audience": "New customers", "features": ["timeline", "sharing"], "owner": "Academy", "last_reviewed": "2026-04-18", "customer_facing": true, "objective": "Learners will build a project timeline with dependencies for a 4-week launch plan.", "body": ["In this lesson you'll turn your task list into a visual plan.", "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Check: your timeline should show 2 dependencies and end by week 4.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"]}, {"id": "IAG-12", "type": "in_app_guide", "title": "Tooltip: Timeline tab", "audience": "All users", "features": ["timeline"], "owner": "In-App Guidance", "last_reviewed": "2026-05-11", "customer_facing": true, "body": ["New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."]}, {"id": "HC-221", "type": "help_article", "title": "Set up approvals", "audience": "Admins, project leads", "features": ["approvals"], "owner": "Help Center", "last_reviewed": "2026-03-30", "customer_facing": true, "body": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "", "Note: each approval step has exactly one approver."]}, {"id": "JA-07", "type": "job_aid", "title": "Admin quick-start checklist", "audience": "Workspace admins", "features": ["guest_access", "approvals", "permissions"], "owner": "Education Services", "last_reviewed": "2026-02-14", "customer_facing": true, "body": ["☐ Set workspace permissions", "☐ Decide who can invite guests (guests are on by default)", "☐ Set up approval steps for client deliverables", "☐ Turn on single sign-on"]}, {"id": "HC-310", "type": "help_article", "title": "Invite guests to a project", "audience": "All users", "features": ["guest_access"], "owner": "Help Center", "last_reviewed": "2026-01-20", "customer_facing": true, "body": ["Any project member can invite guests.", "1. Open the project and select **Invite**.", "2. Enter the guest's email and choose **Guest**."]}, {"id": "WS-02", "type": "workshop_module", "title": "Enterprise kickoff workshop, module 2: Reporting", "audience": "Enterprise customers", "features": ["export", "reporting"], "owner": "Education Services", "last_reviewed": "2026-05-27", "customer_facing": true, "body": ["Activity (10 min): each team builds a status report for their pilot project.", "Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."]}, {"id": "HC-050", "type": "help_article", "title": "Keyboard shortcuts", "audience": "All users", "features": ["shortcuts"], "owner": "Help Center", "last_reviewed": "2026-06-15", "customer_facing": true, "body": ["| Key | Action |", "| N | New task |", "| T | Open the Timeline |", "| / | Search |"]}, {"id": "HC-415", "type": "help_article", "title": "Speed up large projects", "audience": "Admins", "features": ["performance"], "owner": "Help Center", "last_reviewed": "2026-05-05", "customer_facing": true, "body": ["Projects with thousands of tasks can load slowly. Archive completed tasks and split very large projects by phase."]}], "release": {"release": "4.2", "date": "2026-11-04", "source": "release-4.2.md", "items": [{"id": "R1", "change_type": "rename_move", "features": ["timeline"], "keywords": ["Timeline"], "summary": "Timeline view is renamed Roadmap and moves under the Plan tab.", "source_line": "The Timeline view is now called Roadmap, and it lives under the new Plan tab."}, {"id": "R2", "change_type": "behavior", "features": ["approvals"], "keywords": ["approver", "approval"], "summary": "A group can now be an approver; any one member can approve.", "source_line": "You can now assign a group as an approver. Any one member of the group can approve."}, {"id": "R3", "change_type": "default", "features": ["guest_access"], "keywords": ["guest"], "summary": "Guest access is off by default for new workspaces; admins turn it on in Settings > Security.", "source_line": "Guest access is now off by default for new workspaces. Admins can turn it on in Settings > Security."}, {"id": "R4", "change_type": "rename_move", "features": ["export"], "keywords": ["Export", "CSV"], "summary": "CSV export moves from Reports > Export to the Share menu on any report; PDF export is new.", "source_line": "CSV export has moved from Reports > Export to the Share menu on every report. You can also export to PDF."}, {"id": "R5", "change_type": "performance", "features": ["performance"], "keywords": [], "summary": "Projects with 5,000+ tasks load up to 40% faster.", "source_line": "Projects with more than 5,000 tasks now load up to 40% faster."}]}, "releaseMd": "# Kitebird Projects 4.2 release notes (November 4, 2026)\n\n- The Timeline view is now called Roadmap, and it lives under the new Plan tab.\n- You can now assign a group as an approver. Any one member of the group can approve.\n- Guest access is now off by default for new workspaces. Admins can turn it on in Settings > Security.\n- CSV export has moved from Reports > Export to the Share menu on every report. You can also export to PDF.\n- Projects with more than 5,000 tasks now load up to 40% faster.\n\nKitebird Projects is a fictional product created for this portfolio demo.\n", "report": {"release": "4.2", "assets_scanned": 9, "flags": [{"asset": "ACA-301", "title": "Projects 101, Lesson 3: Build your first timeline", "owner": "Academy", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Check: your timeline should show 2 dependencies and end by week 4.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"]}, {"asset": "HC-050", "title": "Keyboard shortcuts", "owner": "Help Center", "release_item": "R1", "change_type": "rename_move", "match": "text", "severity": "high", "evidence_lines": ["| T | Open the Timeline |"]}, {"asset": "HC-104", "title": "Plan work with the Timeline view", "owner": "Help Center", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["## Open the Timeline view", "2. Select the **Timeline** tab at the top of the project.", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"]}, {"asset": "HC-310", "title": "Invite guests to a project", "owner": "Help Center", "release_item": "R3", "change_type": "default", "match": "tag+text", "severity": "high", "evidence_lines": ["Any project member can invite guests.", "2. Enter the guest's email and choose **Guest**."]}, {"asset": "IAG-12", "title": "Tooltip: Timeline tab", "owner": "In-App Guidance", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."]}, {"asset": "JA-07", "title": "Admin quick-start checklist", "owner": "Education Services", "release_item": "R3", "change_type": "default", "match": "tag+text", "severity": "high", "evidence_lines": ["☐ Decide who can invite guests (guests are on by default)"]}, {"asset": "WS-02", "title": "Enterprise kickoff workshop, module 2: Reporting", "owner": "Education Services", "release_item": "R4", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."]}, {"asset": "HC-221", "title": "Set up approvals", "owner": "Help Center", "release_item": "R2", "change_type": "behavior", "match": "tag+text", "severity": "medium", "evidence_lines": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "Note: each approval step has exactly one approver."]}, {"asset": "JA-07", "title": "Admin quick-start checklist", "owner": "Education Services", "release_item": "R2", "change_type": "behavior", "match": "tag+text", "severity": "medium", "evidence_lines": ["☐ Set up approval steps for client deliverables"]}, {"asset": "HC-415", "title": "Speed up large projects", "owner": "Help Center", "release_item": "R5", "change_type": "performance", "match": "tag", "severity": "low", "evidence_lines": []}]}, "checks": [{"asset": "HC-104", "release_item": "R1", "decision": "update", "reason": "Steps, heading and alt text name the Timeline tab, which is now Roadmap under Plan.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "ACA-301", "release_item": "R1", "decision": "update", "reason": "Practice step and knowledge check send learners to a tab that no longer exists.", "human_owned_parts": ["learning objective", "assessment item"], "question_for_owner": null}, {"asset": "IAG-12", "release_item": "R1", "decision": "update", "reason": "Tooltip names the Timeline tab.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-050", "release_item": "R1", "decision": "unsure", "reason": "The shortcut table says T opens the Timeline. The release doesn't say whether the shortcut still works.", "human_owned_parts": [], "question_for_owner": "Product: does the T shortcut still open this view (now Roadmap)?"}, {"asset": "HC-310", "release_item": "R3", "decision": "update", "reason": "Says any member can invite guests; in new workspaces an admin must turn guest access on first.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "JA-07", "release_item": "R3", "decision": "update", "reason": "Checklist says guests are on by default, which is now false for new workspaces.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "WS-02", "release_item": "R4", "decision": "update", "reason": "Facilitator demo uses Reports > Export, which moved to the Share menu.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-221", "release_item": "R2", "decision": "update", "reason": "Says each step has exactly one person as approver; groups are now allowed.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "JA-07", "release_item": "R2", "decision": "no_update", "reason": "'Set up approval steps' is still accurate; the checklist doesn't say who can approve.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-415", "release_item": "R5", "decision": "no_update", "reason": "Faster loading doesn't make the advice wrong; archiving still helps.", "human_owned_parts": [], "question_for_owner": null}], "drafts": [{"asset": "HC-104", "title": "Plan work with the Timeline view", "owner": "Help Center", "old": ["## Open the Timeline view", "1. Open your project.", "2. Select the **Timeline** tab at the top of the project.", "3. Drag tasks to change their start and end dates.", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"], "lines": [{"text": "## Open the Roadmap view", "source": "R1"}, {"text": "1. Open your project.", "source": "unchanged"}, {"text": "2. Select the **Plan** tab, then select **Roadmap**.", "source": "R1"}, {"text": "3. Drag tasks to change their start and end dates.", "source": "unchanged"}, {"text": "## Share a roadmap", "source": "R1"}, {"text": "Select **Share** to give teammates view access to the Roadmap.", "source": "R1"}, {"text": "Roadmaps can now be shared publicly with anyone who has the link.", "source": "R1", "unsupported": true}, {"text": "![Plan tab open with Roadmap selected, tasks shown as bars across weeks](roadmap.png)", "source": "R1"}], "open_questions": ["Screenshot roadmap.png needs to be captured from the 4.2 build."], "human_decides": [], "correct": "edit", "why": "Fix it, then publish: delete the unsupported sentence. Everything else is traceable to R1, and the screenshot question goes to the Help Center owner."}, {"asset": "HC-221", "title": "Set up approvals", "owner": "Help Center", "old": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "Note: each approval step has exactly one approver."], "lines": [{"text": "## Add an approver", "source": "unchanged"}, {"text": "1. Open a task and select **Request approval**.", "source": "unchanged"}, {"text": "2. Choose a person or a group as the approver.", "source": "R2"}, {"text": "3. The approver gets an email and can approve or reject. If you chose a group, any one member can approve.", "source": "R2"}, {"text": "Note: each approval step has one approver, which can be a person or a group.", "source": "R2"}], "open_questions": [], "human_decides": [], "correct": "approve", "why": "Every changed line traces to R2, the steps stay in order, and nothing new is claimed. Approve it."}, {"asset": "ACA-301", "title": "Projects 101, Lesson 3: Build your first timeline", "owner": "Academy", "old": ["Objective: Learners will build a project timeline with dependencies for a 4-week launch plan.", "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"], "lines": [{"text": "Objective: Learners will build a project roadmap with dependencies for a 4-week launch plan.", "source": "R1", "human": true}, {"text": "Practice: open the sample project, select the **Plan** tab, then **Roadmap**, and set dates for the 6 launch tasks.", "source": "R1"}, {"text": "Knowledge check: Where do you find the Roadmap? (a) Reports (b) the Plan tab (c) Settings", "source": "R1", "human": true}], "open_questions": ["Lesson title still says 'timeline'. Rename it?"], "human_decides": ["learning objective", "assessment item"], "correct": "route", "why": "The draft is accurate, but it changes a learning objective and an assessment item. Those belong to the Academy owner, who may also want a better question than 'where is the button.' Route it."}, {"asset": "HC-050", "title": "Keyboard shortcuts", "owner": "Help Center", "old": ["| N | New task |", "| T | Open the Timeline |", "| / | Search |"], "lines": [{"text": "| N | New task |", "source": "unchanged"}, {"text": "| T | Open the Roadmap |", "source": "R1"}, {"text": "| / | Search |", "source": "unchanged"}], "open_questions": ["Release notes don't confirm the T shortcut still opens this view. Verify with Product."], "human_decides": [], "correct": "route", "why": "The rename is traceable, but nobody has confirmed the shortcut still works. Publishing a broken shortcut is worse than waiting a day. Route it to Product."}]};
+const STAGES = [
+  {n:"01", t:"Intake", s:"Release notes to change records"},
+  {n:"02", t:"Impact scan", s:"Which assets does it touch?"},
+  {n:"03", t:"Draft and review", s:"AI drafts, you decide"},
+  {n:"04", t:"Publish and learn", s:"Decisions improve the prompts"}
+];
+const KEY = "rrlc-v1";
+const fresh = () => ({s:0, far:0, intake:false, guess:[], checked:false, rev:{}, cur:0, struck:false, rerun:false, log:[]});
+let st = fresh();
+try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && typeof x.s === "number") st = Object.assign(fresh(), x); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const md = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+const $ = id => document.getElementById(id);
+const qa = (sel, el = document) => [...el.querySelectorAll(sel)];
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
+function bump(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+function log(kind, txt){ st.log.push([kind, txt]); save(); drawLog(); }
+function drawLog(){
+  const L = $("log"); const tag = {cd:"script", ai:"ai", hm:"you", ok:"done"};
+  L.innerHTML = st.log.length ? st.log.map(([k, t], i) => `<div><span class="t">${String(i + 1).padStart(2, "0")}</span> <span class="${k}">[${tag[k]}]</span> ${esc(t)}</div>`).join("") : `<div class="t">Waiting for release 4.2…</div>`;
+  L.scrollTop = L.scrollHeight;
+}
+function stepper(){
+  $("stepper").innerHTML = STAGES.map((x, i) => `<button class="stp ${i < st.far ? "done" : ""}" data-i="${i}" aria-current="${st.s === i}" ${i > st.far ? "disabled" : ""}><span class="n">${x.n}</span><b>${x.t}</b><span>${x.s}</span></button>`).join("");
+  qa(".stp").forEach(b => b.onclick = () => { st.s = +b.dataset.i; save(); render(); });
+}
+function unlock(i){ st.far = Math.max(st.far, i); save(); stepper(); }
+function go(i){ st.s = i; save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+const lib = id => DATA.library.find(a => a.id === id);
+
+/* ---------- 1 intake ---------- */
+function intake(){
+  const R = DATA.release.items;
+  const srcText = DATA.releaseMd.split("\n").filter(l => l.startsWith("- ")).map(l => l.slice(2));
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Stage 1 · Intake</span><span class="who ai">AI drafts</span><span class="who human">You check</span></div>
+    <h2>Release 4.2 just shipped. Turn it into change records.</h2>
+    <p class="lead">The intake skill reads the release notes and returns one record per user-facing change, with the exact source line quoted, so every later step can trace back to it.</p>
+    <div class="split">
+      <div><div class="label" style="margin-bottom:6px">Source · release-4.2.md</div><div class="src" id="src">${srcText.map((l, i) => `<span data-l="${i}">- ${esc(l)}</span>`).join("\n")}</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div class="label">Output · change records</div><div id="recs" style="display:flex;flex-direction:column;gap:8px"></div></div>
+    </div>
+    <div class="row"><button class="btn primary" id="run">${st.intake ? "Records checked" : "Run intake skill"}</button><button class="btn" id="nx" ${st.intake ? "" : "disabled"}>Continue to impact scan</button></div>
+    <div id="o"></div></section>`;
+  const show = async animate => {
+    const box = $("recs"); box.innerHTML = "";
+    for (const [i, r] of R.entries()) {
+      if (animate) await wait(350);
+      box.insertAdjacentHTML("beforeend", `<div class="rec" data-i="${i}"><div class="row" style="justify-content:space-between"><span class="id">${r.id} · ${r.change_type}</span><span class="chips">${r.features.map(f => `<span class="tag">${f}</span>`).join("")}</span></div><div>${esc(r.summary)}</div><div class="q">“${esc(r.source_line)}”</div></div>`);
+    }
+    qa(".rec").forEach(el => { el.onmouseenter = el.onfocus = () => qa("#src span").forEach(s => s.classList.toggle("hl", s.dataset.l === el.dataset.i)); });
+  };
+  if (st.intake) show(false);
+  $("run").onclick = async () => {
+    if (st.intake) return;
+    $("run").disabled = true; log("ai", "intake: read release-4.2.md (5 lines)"); await show(true);
+    st.intake = true; log("ai", "intake: 5 change records, every source line quoted"); log("hm", "checked records against source: OK");
+    $("run").textContent = "Records checked"; $("nx").disabled = false;
+    $("o").innerHTML = `<div class="note info">Hover a record to see its source line. Quoting the source exactly is what makes the later traceability check possible. Note R5: a performance change. It will be flagged later, and should be dismissed.</div>`;
+    unlock(1);
+  };
+  $("nx").onclick = () => go(1);
+}
+
+/* ---------- 2 impact scan ---------- */
+function scan(){
+  const F = DATA.report.flags, C = DATA.checks;
+  const chk = f => C.find(c => c.asset === f.asset && c.release_item === f.release_item);
+  const key = f => f.asset + "·" + f.release_item;
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Stage 2 · Impact scan</span><span class="who code">Script</span><span class="who ai">AI checks</span></div>
+    <h2>${DATA.report.flags.length} flags across ${new Set(F.map(f => f.asset)).size} of ${DATA.report.assets_scanned} assets</h2>
+    <p class="lead">The script over-flags on purpose: it matches every asset by feature tag <em>and</em> by UI keyword. Then the AI checks each flag and must point to a conflicting line before it can say "update."</p>
+    ${st.checked ? "" : `<div class="note info"><strong>Your call first:</strong> click the two flags you think need <em>no</em> update, then run the AI check and compare.</div>`}
+    <div class="tablewrap"><table><thead><tr><th>Asset</th><th>Title</th><th>Change</th><th>Match</th><th>Severity</th><th>AI check</th></tr></thead><tbody>
+      ${F.map(f => { const c = chk(f); return `<tr class="${st.checked ? "" : "pick"} ${st.guess.includes(key(f)) ? "picked" : ""}" data-k="${key(f)}" tabindex="${st.checked ? -1 : 0}">
+        <td class="mono">${f.asset}</td><td>${esc(f.title)}<div style="font-size:12px;color:var(--muted)">${esc(f.owner)}</div></td><td class="mono">${f.release_item}</td>
+        <td class="mono">${f.match}${f.match === "text" ? ' <span class="sev medium">keyword only</span>' : ""}</td><td><span class="sev ${f.severity}">${f.severity}</span></td>
+        <td>${st.checked ? `<span class="dec ${c.decision}">${c.decision.replace("_", " ")}</span><div style="font-size:12.5px;margin-top:3px">${esc(c.reason)}</div>${c.question_for_owner ? `<div class="oq" style="margin-top:4px">${esc(c.question_for_owner)}</div>` : ""}` : '<span style="color:var(--muted)">not run</span>'}</td></tr>`; }).join("")}
+    </tbody></table></div>
+    <div class="row"><button class="btn primary" id="run" ${st.checked ? "hidden" : ""}>Run AI impact check</button><span id="cnt" style="font-size:13.5px;color:var(--muted)"></span><button class="btn" id="nx" ${st.checked ? "" : "hidden"}>Review the drafts</button></div>
+    <div id="o"></div></section>`;
+  const cnt = () => { if (!st.checked) $("cnt").textContent = `${st.guess.length} of 2 picked`; };
+  qa("tr.pick").forEach(tr => { const t = () => { const k = tr.dataset.k; st.guess = st.guess.includes(k) ? st.guess.filter(x => x !== k) : [...st.guess, k].slice(-2); save(); qa("tr.pick").forEach(x => x.classList.toggle("picked", st.guess.includes(x.dataset.k))); cnt(); }; tr.onclick = t; tr.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t(); } }; });
+  cnt();
+  const summary = () => {
+    const no = F.filter(f => chk(f).decision === "no_update").map(key);
+    const hit = st.guess.filter(g => no.includes(g)).length;
+    const n = d => C.filter(c => c.decision === d).length;
+    $("o").innerHTML = `<div class="note">${hit === 2 ? "You matched the AI on both dismissals." : `You matched ${hit} of 2 dismissals.`} The AI kept <strong>${n("update")}</strong> updates, dismissed <strong>${n("no_update")}</strong> with a reason the owner can see, and turned <strong>${n("unsure")}</strong> into a question for Product instead of guessing. Also note <strong>HC-050</strong>: it has no <span class="tag">timeline</span> tag, so a tag-only scan would have missed it. The keyword pass caught it.</div>`;
+  };
+  if (st.checked) summary();
+  $("run").onclick = async () => {
+    if (st.guess.length < 2) { $("o").innerHTML = `<div class="note warn">Pick two flags first. Which ones look like they don't need an update?</div>`; return; }
+    log("cd", `scan: ${F.length} flags, ${new Set(F.map(f => f.asset)).size}/${DATA.report.assets_scanned} assets (tag + keyword)`);
+    st.guess.forEach(g => log("hm", `predicted no update: ${g}`));
+    $("run").disabled = true; await wait(500);
+    st.checked = true;
+    C.forEach(c => log("ai", `check ${c.asset}·${c.release_item}: ${c.decision}`));
+    unlock(2); scan();
+  };
+  $("nx").onclick = () => go(2);
+}
+
+/* ---------- 3 draft and review ---------- */
+const DEC = [["approve","Approve","Publish as drafted"],["edit","Approve with edit","Fix, publish, log the edit"],["route","Route to owner","Needs a person's decision"],["reject","Reject","Draft misreads the change"]];
+function review(){
+  const D = DATA.drafts; const i = st.cur, d = D[i]; const r = st.rev[d.asset] ??= {tries:[], done:false};
+  const changed = d.lines.filter(l => l.source !== "unchanged");
+  const unsupported = d.lines.some(l => l.unsupported);
+  const checks = [
+    unsupported && !st.struck ? ["flag","Traceability",`${changed.length - 1} of ${changed.length} changed lines match their cited source. 1 has low overlap with what R1 says. A person should check it.`] : ["pass","Traceability",`All ${unsupported ? changed.length - 1 : changed.length} changed lines cite a release item that supports them.`],
+    ["pass","Terminology","Product terms match the style guide."],
+    d.lines.some(l => l.text.startsWith("![")) ? ["pass","Accessibility","Alt text updated to the new UI. Heading order unchanged."] : ["pass","Accessibility","No images or links changed. Heading order unchanged."],
+    d.human_decides.length ? ["own","Ownership",`Human-owned parts changed: ${d.human_decides.join(", ")}.`] : ["pass","Ownership","No objectives, assessments, pricing or legal text changed."]
+  ];
+  const lineHTML = (l, k) => {
+    const cls = l.source === "unchanged" ? "same" : l.human ? "human" : "chg";
+    const cite = l.source === "unchanged" ? "same" : l.human ? `${l.source} · you decide` : l.source;
+    const struck = l.unsupported && st.struck;
+    if (l.unsupported && !r.done) return `<button class="ln ${cls} ${struck ? "struck" : ""}" data-k="${k}"><span>${md(l.text)}</span><span class="cite">${cite}</span></button>`;
+    return `<div class="ln ${cls} ${struck ? "struck" : ""}" ${l.source !== "unchanged" && !l.unsupported && !r.done ? `data-k="${k}" role="button" tabindex="0" style="cursor:pointer"` : ""}><span>${md(l.text)}</span><span class="cite">${cite}</span></div>`;
+  };
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Stage 3 · Draft and review</span><span class="who ai">AI drafts</span><span class="who human">You decide</span></div>
+    <h2>Review queue</h2>
+    <div class="queue">${D.map((x, j) => { const rr = st.rev[x.asset]; return `<button class="qb ${rr?.done ? (rr.tries.length === 1 ? "ok" : "miss") : ""}" data-j="${j}" aria-current="${j === i}"><i></i>${x.asset}</button>`; }).join("")}</div>
+    <div><div class="label">${d.asset} · ${esc(d.owner)}</div><h3 style="font-size:19px;margin-top:2px">${esc(d.title)}</h3></div>
+    <div class="diff">
+      <div class="col"><h4>Live version</h4>${d.old.map(t => `<div class="ln old"><span>${md(t)}</span></div>`).join("")}</div>
+      <div class="col"><h4>AI draft · click a changed line to check it against its source</h4>${d.lines.map(lineHTML).join("")}</div>
+    </div>
+    <div id="srcnote"></div>
+    <div><div class="label" style="margin-bottom:6px">Automatic rubric checks</div><div class="checks">${checks.map(([c, n, t]) => `<div class="ck ${c}"><span class="ic">${c === "pass" ? "✓" : c === "own" ? "!" : "?"}</span><span><b>${n}</b>${esc(t)}</span></div>`).join("")}</div></div>
+    ${d.open_questions.length ? `<div>${d.open_questions.map(q => `<div class="oq"><strong>Open question:</strong> ${esc(q)}</div>`).join("")}</div>` : ""}
+    <div><div class="label" style="margin-bottom:6px">Your decision</div><div class="decide">${DEC.map(([k, n, s]) => `<button class="dbtn ${r.tries.includes(k) ? (k === d.correct ? "right" : "wrong") : ""}" data-d="${k}"><b>${n}</b><span>${s}</span></button>`).join("")}</div></div>
+    <div id="o"></div>
+    <div class="row" style="justify-content:space-between"><button class="btn" id="pv" ${i === 0 ? "disabled" : ""}>Previous draft</button>${i < D.length - 1 ? `<button class="btn" id="nd">Next draft</button>` : `<button class="btn primary" id="nx" ${D.every(x => st.rev[x.asset]?.done) ? "" : "disabled"}>Publish and see the log</button>`}</div>
+  </section>`;
+  qa(".qb").forEach(b => b.onclick = () => { st.cur = +b.dataset.j; save(); review(); });
+  $("pv").onclick = () => { st.cur--; save(); review(); };
+  if ($("nd")) $("nd").onclick = () => { st.cur++; save(); review(); };
+  if ($("nx")) $("nx").onclick = () => go(3);
+  const rel = id => DATA.release.items.find(x => x.id === id);
+  qa("[data-k]").forEach(el => { const f = () => {
+    const l = d.lines[+el.dataset.k], src = rel(l.source);
+    if (l.unsupported) {
+      st.struck = true; save(); log("hm", `${d.asset}: removed unsupported line ("${l.text.slice(0, 38)}…")`);
+      review(); $("srcnote").innerHTML = `<div class="note">Caught it. ${src.id} says only: “${esc(src.source_line)}” Nothing about public sharing. The draft invented a capability. It's struck out now.</div>`; return;
+    }
+    $("srcnote").innerHTML = `<div class="note info">${src.id} source: “${esc(src.source_line)}” This line is supported.</div>`;
+  }; el.onclick = f; el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); f(); } }; });
+  qa(".dbtn").forEach(b => b.onclick = () => {
+    if (r.done) return;
+    const k = b.dataset.d;
+    if (!r.tries.includes(k)) r.tries.push(k);
+    if (k === "edit" && d.correct === "edit" && !st.struck) { r.tries.pop(); bump(b); $("o").innerHTML = `<div class="note warn">Which line needs the edit? The traceability check found one changed line that doesn't match its source. Click it in the draft first.</div>`; save(); return; }
+    if (k === d.correct) {
+      r.done = true; save();
+      log("hm", `${d.asset}: ${DEC.find(x => x[0] === k)[1].toLowerCase()}${d.correct === "route" ? " → " + (d.asset === "HC-050" ? "Product" : d.owner) : ""}`);
+      review(); $("o").innerHTML = `<div class="note"><strong>Right call.</strong> ${esc(d.why)}</div>`;
+      if (DATA.drafts.every(x => st.rev[x.asset]?.done)) unlock(3);
+    } else {
+      save(); bump(b);
+      const hint = {approve: unsupported && !st.struck ? "One changed line isn't supported by its source. Check the flagged traceability result." : d.human_decides.length ? "This draft changes human-owned parts: an objective and an assessment item." : d.open_questions.length ? "There's an open question nobody has answered yet." : "",
+        edit: "There's nothing in this draft to fix. Check each changed line against its source.",
+        route: "Nothing here needs another owner. The changes are traceable and nothing is human-owned.",
+        reject: "The draft reads the change correctly. Rejecting means re-running for nothing."}[k] || "Not the best call here.";
+      $("o").innerHTML = `<div class="note warn">${esc(hint)} Try another decision.</div>`;
+      qa(".dbtn").forEach(x => x.classList.toggle("wrong", r.tries.includes(x.dataset.d) && x.dataset.d !== d.correct));
+    }
+  });
+  if (r.done) $("o").innerHTML = `<div class="note"><strong>Done.</strong> ${esc(d.why)}</div>`;
+}
+
+/* ---------- 4 publish and learn ---------- */
+function learn(){
+  const D = DATA.drafts;
+  const first = D.filter(d => st.rev[d.asset]?.tries.length === 1).length;
+  const n = k => D.filter(d => d.correct === k).length;
+  const C = DATA.checks;
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Stage 4 · Publish and learn</span><span class="who human">You</span><span class="who ai">AI re-runs</span></div>
+    <h2>Release 4.2: what the workflow did</h2>
+    <div class="stats">
+      <div class="stat"><b>${DATA.report.flags.length}</b><span>flags from the scan across ${DATA.report.assets_scanned} assets</span></div>
+      <div class="stat"><b>${C.filter(c => c.decision === "no_update").length}</b><span>dismissed by the AI check, with reasons</span></div>
+      <div class="stat"><b>${n("approve") + n("edit")}</b><span>drafts published (${n("edit")} after a human edit)</span></div>
+      <div class="stat"><b>${n("route")}</b><span>routed to an owner, not guessed</span></div>
+    </div>
+    <div class="note info">Your review: ${first} of ${D.length} decisions right on the first try. In a real run, these decisions are logged so the team can see where the AI needs the most supervision.</div>
+    <h3 style="font-size:18px">The review decision becomes a rule</h3>
+    <p class="lead">The HC-104 edit removed an invented capability. Instead of fixing it by hand every release, the rule goes into the draft skill.</p>
+    <div class="rule"><div class="hd"><span>skills/03-draft-update.md</span><span>v1.0 → v1.1</span></div><pre>6. For human-owned lines, propose wording but mark it HUMAN DECIDES.
+<ins>7. Never describe a feature or capability unless it appears in a change
+   record. If you think a related capability exists, put it under
+   open_questions instead of in the body.</ins>
+8. List anything you could not verify under open_questions.</pre></div>
+    <div class="row"><button class="btn primary" id="rr" ${st.rerun ? "disabled" : ""}>Re-run the HC-104 draft with v1.1</button></div>
+    <div id="rro"></div>
+    <h3 style="font-size:18px">Where AI drafts and where a person owns the work</h3>
+    <div class="own">
+      <div style="background:var(--info-soft)"><span class="who ai">AI drafts</span><ul><li>Classifying release changes</li><li>Checking which assets a change affects</li><li>Minimal edits to steps, UI names and tooltips</li><li>First-draft alt text</li></ul></div>
+      <div style="background:var(--tint)"><span class="who human">A person owns</span><ul><li>Learning objectives, assessment and certification items</li><li>Pricing and legal text</li><li>Anything with an open question</li><li>Every publish decision</li></ul></div>
+    </div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+  </section>`;
+  const showRerun = () => {
+    const d = D[0];
+    $("rro").innerHTML = `<div class="col" style="margin-top:4px"><h4>HC-104 · draft v1.1 · traceability ✓ 5 of 5</h4>${d.lines.filter(l => !l.unsupported).map(l => `<div class="ln ${l.source === "unchanged" ? "same" : "chg"}"><span>${md(l.text)}</span><span class="cite">${l.source === "unchanged" ? "same" : l.source}</span></div>`).join("")}<div class="ln"><span style="color:var(--muted)">open_questions: “Screenshot roadmap.png needs capturing.” “Can roadmaps be shared outside the workspace? Not in 4.2 notes.”</span></div></div>
+    <div class="note" style="margin-top:8px">With rule 7, the model moved its guess about sharing into an open question instead of the body. That's the loop: each review decision makes the next run need less fixing.</div>`;
+  };
+  if (st.rerun) showRerun();
+  $("rr").onclick = async () => { $("rr").disabled = true; log("ai", "draft HC-104 with skill v1.1"); await wait(600); st.rerun = true; log("ok", "HC-104 v1.1: traceability 5/5, 2 open questions"); log("ok", "published: HC-104, HC-221 · routed: ACA-301 → Academy, HC-050 → Product"); showRerun(); };
+  $("reset").onclick = () => { st = fresh(); save(); render(); };
+}
+
+function render(){ stepper(); drawLog(); [intake, scan, review, learn][st.s](); }
+render();
+</script>
+</body>
+</html>

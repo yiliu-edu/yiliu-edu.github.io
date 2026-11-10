@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Curriculum Designer Onboarding</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="Your First Week as a Curriculum Designer: an interactive onboarding path. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: an onboarding workspace. Week path, buddy and the growing design brief on the left; one module at a time on the right. */
+:root{
+  --bg:#FDFAF4; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#E4DAE6; --soft:#F8F1E7; --tint:#F1E3F5;
+  --grape:#491355; --disco:#6D0B47; --cinnamon:#E65F2A; --buckthorn:#FCB442; --on-dark:#FEF9F3;
+  --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB;
+  --gradient-hero:linear-gradient(135deg,#491355 0%,#6D0B47 55%,#831A1D 100%);
+  --gradient-warm:linear-gradient(120deg,#E65F2A,#FCB442);
+  --body:"Open Sans",system-ui,sans-serif; --script:"Nothing You Could Do","Segoe Print",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance;font-weight:700}
+p{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--grape);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 56px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.small{font-size:13.5px} .muted{color:var(--muted)}
+.eyebrow{font-family:var(--script);color:var(--cinnamon);font-size:19px;line-height:1.2}
+.label{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+
+/* sidebar */
+aside{position:sticky;top:16px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:860px){aside{position:static}}
+.brand{background:var(--gradient-hero);color:var(--on-dark);border-radius:22px;padding:18px}
+.brand h1{font-size:19px;margin-top:4px}
+.brand .eyebrow{color:var(--buckthorn);font-size:17px}
+.brand .score{display:flex;align-items:baseline;gap:6px;margin-top:10px;font-size:13px;color:rgba(254,249,243,.8)}
+.brand .score b{font-size:26px;color:var(--on-dark);font-variant-numeric:tabular-nums}
+.path{display:flex;flex-direction:column;gap:2px}
+@media (max-width:860px){.path{flex-direction:row;overflow-x:auto;padding-bottom:4px}}
+.pd{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:center;background:none;border:0;text-align:left;color:var(--ink);padding:7px 10px;border-radius:12px;cursor:pointer;white-space:nowrap}
+.pd:hover,.pd[aria-current="true"]{background:var(--surface)}
+.pd[aria-current="true"] .nm{font-weight:700;color:var(--grape)}
+.pd .dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--muted)}
+.pd .dot.ok{background:var(--good);border-color:var(--good);color:#fff}
+.pd .dot.mid{background:var(--buckthorn);border-color:var(--buckthorn);color:#2A1030}
+.pd .day{display:block;font-size:11px;color:var(--muted);line-height:1.1}
+.pd .nm{font-size:14px;line-height:1.25}
+.pd.locked{opacity:.5;cursor:not-allowed}
+.pd.locked .dot{border-style:dashed}
+.side-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.briefl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.briefl li{display:flex;gap:8px;align-items:center}
+.briefl i{width:14px;height:14px;border-radius:4px;border:2px solid var(--line);flex:none}
+.briefl li.on i{background:var(--cinnamon);border-color:var(--cinnamon)}
+.briefl li.on{color:var(--ink)} .briefl li{color:var(--muted)}
+
+/* main */
+main{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;display:flex;flex-direction:column;gap:18px;min-height:520px;box-shadow:0 10px 30px rgba(73,19,85,.06)}
+@media (max-width:560px){.card{padding:18px}}
+.card h2{font-size:clamp(24px,3vw,32px);color:var(--grape);letter-spacing:-.015em}
+.lead{font-size:17px;max-width:66ch}
+.goal{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px;color:var(--muted);flex-wrap:wrap}
+.pips{display:flex;gap:5px}
+.pips i{width:13px;height:13px;border-radius:50%;border:2px solid var(--line);transition:background .3s}
+.pips i.on{background:var(--cinnamon);border-color:var(--cinnamon)}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:8px;flex-wrap:wrap}
+.btn{font-weight:700;border-radius:12px;padding:10px 18px;cursor:pointer;border:1.5px solid var(--grape);background:var(--surface);color:var(--grape)}
+.btn.primary{background:var(--grape);color:var(--on-dark)}
+.btn.primary:hover{background:var(--disco);border-color:var(--disco)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.hint{animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(230,95,42,.6)}100%{box-shadow:0 0 0 14px rgba(230,95,42,0)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+.shake{animation:shake .35s}
+.note{border-radius:14px;padding:12px 16px;background:var(--good-soft);border-left:4px solid var(--good);max-width:760px;animation:rise .35s both}
+.note.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+.buddy{display:flex;gap:12px;align-items:flex-start;background:var(--tint);border-radius:18px;padding:12px 14px;max-width:780px}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;flex:none;font-size:16px}
+.buddy .who{font-size:12px;font-weight:700;color:var(--grape)}
+.buddy p{font-size:14.5px}
+.part{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:16px}
+.part h3{font-size:18px}
+
+/* sort */
+.tray{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:9px 13px;cursor:grab;touch-action:none;user-select:none;text-align:left;font-size:14.5px;font-weight:600;max-width:100%;transition:transform .2s,box-shadow .2s}
+.chip.sel{border-color:var(--grape);box-shadow:0 0 0 2px var(--grape);transform:translateY(-3px)}
+.chip.placed{cursor:default;animation:pop .35s both;font-size:13px;padding:6px 10px;font-weight:600}
+.chip.lifting{position:relative;z-index:60;cursor:grabbing;box-shadow:0 10px 24px rgba(73,19,85,.25)}
+.bins{display:grid;gap:12px}
+.bins.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bins.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bins.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){.bins.c3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.bins.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.bins.c2,.bins.c3,.bins.c4{grid-template-columns:minmax(0,1fr)}}
+.bin{border:2px dashed var(--line);border-radius:18px;padding:12px;min-height:140px;display:flex;flex-direction:column;gap:8px;cursor:pointer;background:var(--bg);transition:border-color .2s,transform .2s}
+.bin h4{margin:0;font-size:15px;color:var(--grape)}
+.bin .d{font-size:12.5px;color:var(--muted);line-height:1.4}
+.bin.hot{border-style:solid;border-color:var(--cinnamon);transform:scale(1.015)}
+.bin.yes{border-color:var(--good)} .bin.no{border-color:var(--warn)}
+
+/* chat */
+.chat{background:var(--soft);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:200px}
+.msg{max-width:80%;padding:10px 14px;border-radius:18px;animation:rise .35s both;font-size:15px}
+.msg.them{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--grape);color:var(--on-dark);border-bottom-right-radius:4px;align-self:flex-end}
+.msg.coach{align-self:center;background:var(--good-soft);border-left:4px solid var(--good);font-size:14px;max-width:94%;border-radius:12px}
+.msg.coach.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+.msg.sys{align-self:center;background:none;color:var(--muted);font-style:italic;font-size:13.5px;padding:2px}
+.msg .who{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.typing{display:flex;gap:4px;padding:13px;background:var(--surface);border-radius:18px;align-self:flex-start}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.replies{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.reply{text-align:left;max-width:88%;padding:10px 14px;border-radius:18px;border-bottom-right-radius:4px;border:1.5px dashed var(--grape);background:var(--surface);color:var(--ink);cursor:pointer;animation:rise .35s both;font-size:15px}
+.reply:hover{transform:translateX(-4px)}
+.reply.tried{opacity:.4;text-decoration:line-through;pointer-events:none}
+
+/* objective builder */
+.abcd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.abcd{grid-template-columns:minmax(0,1fr)}}
+.slot{display:flex;flex-direction:column;gap:4px;border-radius:14px;padding:10px 12px;border:1.5px solid var(--line);background:var(--bg)}
+.slot label{font-size:12.5px;font-weight:700}
+.slot select{font:inherit;font-size:14.5px;padding:8px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+.slot .fb{font-size:13px;line-height:1.4}
+.slot.ok{border-color:var(--good);background:var(--good-soft)} .slot.ok .fb{color:var(--good)}
+.slot.bad{border-color:var(--warn);background:var(--warn-soft)} .slot.bad .fb{color:var(--warn)}
+.k-a{color:var(--grape)} .k-b{color:#9A3A12} .k-c{color:#7A4C00} .k-d{color:#24456F}
+.objprev{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;font-size:17px;line-height:1.7}
+.objprev u{text-decoration:none;border-radius:6px;padding:1px 6px;font-weight:700}
+.objprev u.a{background:#F1E3F5;color:var(--grape)} .objprev u.b{background:#FCE3D8;color:#9A3A12} .objprev u.c{background:#FEF0D3;color:#7A4C00} .objprev u.d{background:#E7EEF9;color:#24456F}
+.objprev u.empty{background:var(--soft);color:var(--muted);font-weight:400}
+
+/* order */
+.order{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.order{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.os{border:2px dashed var(--line);border-radius:16px;min-height:96px;padding:10px;display:flex;flex-direction:column;gap:6px;background:var(--bg);cursor:pointer}
+.os .n{font-weight:800;font-size:22px;background:var(--gradient-warm);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.os .t{font-size:14px;font-weight:600}
+.os.filled{border-style:solid;border-color:var(--grape);background:var(--surface)}
+.os.ok{border-color:var(--good);background:var(--good-soft)}
+.os.bad{border-color:var(--warn);background:var(--warn-soft)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:15px;color:var(--ink)}
+.opt:hover{border-color:var(--grape)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.bad{border-color:var(--warn);background:var(--warn-soft);opacity:.75}
+
+/* storyboard */
+.sbwrap{background:var(--soft);border-radius:20px;padding:16px}
+.sbmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:10px}
+.slide{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px;font-family:Georgia,serif;color:#333}
+@media (max-width:640px){.slide{grid-template-columns:minmax(0,1fr)}}
+.hs{all:unset;cursor:pointer;border-radius:8px;padding:8px;outline:2px dashed transparent;outline-offset:2px;transition:outline-color .2s,background .2s;display:block}
+.hs:hover{outline-color:var(--cinnamon)}
+.hs:focus-visible{outline:3px solid var(--grape)}
+.hs.found{outline:2px solid var(--good);background:var(--good-soft);cursor:default}
+.hs.fine{outline:2px solid var(--line)}
+.hs.glow{outline-color:var(--buckthorn);animation:pulse 1.6s infinite}
+.s-top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:8px;gap:10px;flex-wrap:wrap}
+.s-title{font-size:18px;font-weight:700}
+.s-prog{font-size:12px;color:#666;font-family:var(--body)}
+.s-wall{font-size:12.5px;line-height:1.5;text-align:justify}
+.s-img{display:flex;flex-direction:column;gap:6px}
+.s-pic{aspect-ratio:4/3;border-radius:8px;background:#EDEFF2;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:12px}
+.s-pic span{display:flex;align-items:center;gap:8px;font-size:12px;font-family:var(--body)}
+.s-pic span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--c)}
+.s-pic span b{display:block;height:8px;border-radius:4px;background:#d5d8de;flex:1}
+.s-quiz{grid-column:1/-1;background:#F6F6F8;border-radius:8px;font-family:var(--body);font-size:13.5px}
+.s-foot{grid-column:1/-1;display:flex;justify-content:flex-end}
+.s-next{font-family:var(--body);font-size:13px;background:#888;color:#fff;border-radius:6px;padding:6px 14px}
+.found-list{display:flex;flex-direction:column;gap:8px}
+.fi{background:var(--good-soft);border-radius:12px;padding:10px 14px;font-size:14.5px;animation:rise .35s both}
+.fi b{color:var(--good)}
+
+/* sliders, checklist, brief */
+.sliders{display:flex;flex-direction:column;gap:14px;max-width:640px}
+.sld label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}
+.sld input{width:100%;accent-color:var(--grape)}
+.bgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.bgs{grid-template-columns:minmax(0,1fr)}}
+.bgb{text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:16px;padding:12px 14px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+.bgb b{color:var(--grape)}
+.bgb span{font-size:13.5px;color:var(--muted)}
+.bgb[aria-pressed="true"]{border-color:var(--grape);box-shadow:0 0 0 2px var(--grape);background:var(--tint)}
+.week{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.week{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.week div{background:var(--soft);border-radius:14px;padding:10px 12px;font-size:13.5px}
+.week b{display:block;color:var(--cinnamon);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:4px 0}
+.checklist input{margin-top:6px;accent-color:var(--grape)}
+.brief{background:var(--surface);border:1.5px solid var(--grape);border-radius:20px;overflow:hidden}
+.brief .hd{background:var(--gradient-hero);color:var(--on-dark);padding:14px 18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.brief .hd h3{font-size:18px}
+.brief dl{margin:0;padding:6px 18px 14px;display:grid;grid-template-columns:170px minmax(0,1fr);gap:0 16px}
+@media (max-width:600px){.brief dl{grid-template-columns:minmax(0,1fr)}}
+.brief dt{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cinnamon);padding-top:12px}
+.brief dd{margin:0;padding-top:10px;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:10px}
+@media (min-width:601px){.brief dt{border-bottom:1px solid var(--line);padding-bottom:10px}}
+.brief ul{margin:0;padding-left:18px}
+.meter{height:12px;border-radius:99px;background:var(--line);overflow:hidden;max-width:640px}
+.meter i{display:block;height:100%;border-radius:99px;background:var(--gradient-warm);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.foot{font-size:12.5px;color:var(--muted);margin-top:14px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:'Open Sans',system-ui,sans-serif;font-size:14px;font-weight:700">
+<a href="../curriculum-design-onboarding.html" style="background:#491355;color:#FEF9F3;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(73,19,85,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FEF9F3;color:#491355;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #491355;box-shadow:0 6px 18px rgba(73,19,85,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+
+<div class="wrap">
+  <aside>
+    <div class="brand">
+      <p class="eyebrow">Welcome to the team</p>
+      <h1>Your First Week as a Curriculum Designer</h1>
+      <div class="score"><b id="score">0</b><span id="scorelab"></span></div>
+    </div>
+    <nav class="path" id="path" aria-label="Onboarding path"></nav>
+    <div class="side-card">
+      <div class="label">Your design brief</div>
+      <ul class="briefl" id="briefl"></ul>
+    </div>
+  </aside>
+  <main>
+    <section class="card" id="stage" aria-live="polite"></section>
+    <p class="foot">Kitebird is a fictional company created for this onboarding demo. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+  </main>
+</div>
+
+<script>
+/* ---------- content ---------- */
+const MODS = [
+  {key:"analyze",  day:"Day 1", short:"Find the real problem", title:"Find the real problem behind the request", max:10},
+  {key:"objective",day:"Day 2", short:"Write the objective",   title:"Write an objective you can measure", max:10},
+  {key:"backward", day:"Day 3", short:"Plan backward",         title:"Plan backward from the result", max:5},
+  {key:"practice", day:"Day 3", short:"Choose the practice",   title:"Match each need to a practice format", max:4},
+  {key:"review",   day:"Day 4", short:"Review a storyboard",   title:"Review a contractor's storyboard", max:4},
+  {key:"measure",  day:"Day 5", short:"Plan the measures",     title:"Decide how you'll know it worked", max:6},
+  {key:"wrap",     day:"Day 5", short:"Your design brief",     title:"Your first design brief", max:0}
+];
+const BG = {
+  teacher:{n:"Classroom teacher", d:"I've planned lessons and units for students."},
+  sme:{n:"Subject expert", d:"I know a field well and have trained colleagues."},
+  designer:{n:"Designer or developer", d:"I've built courses, media or products."},
+  fresh:{n:"New to the field", d:"This is my first learning design role."}
+};
+const TIP = {
+  analyze:{teacher:"You already diagnose why a student is stuck before reteaching. Do the same here: find the cause before you build.",
+    sme:"You'll be tempted to explain the whole refund policy. Hold that. First find out what agents are actually getting wrong.",
+    designer:"Treat Marcus's request like a feature request: find the user problem behind the solution he's asking for.",
+    fresh:"Your first job isn't to build. It's to ask good questions. Gilbert's model will help you sort what you hear."},
+  objective:{teacher:"This is your learning target, written for adults. Same rule: if you can't see it, you can't assess it.",
+    sme:"Experts often write 'understand the policy.' Ask yourself what you'd watch an agent do to know they understand it.",
+    designer:"Think of the objective as the acceptance criteria for the whole module.",
+    fresh:"The ABCD pattern is your scaffold: Audience, Behavior, Condition, Degree. Fill one slot at a time."},
+  backward:{teacher:"This is Understanding by Design, the same backward design you used for units.",
+    sme:"Resist starting with content. Decide what proof of skill you'd accept first.",
+    designer:"Spec the test before you build the feature. The assessment is the test.",
+    fresh:"Result, then evidence, then practice, then content. Content goes last, even though it's tempting to start there."},
+  practice:{teacher:"You already pick between anchor charts, role-play and guided practice. Same choices, adult learners.",
+    sme:"Not everything needs a course. Some needs are best met by a one-page tool agents keep open.",
+    designer:"Choose the lowest-cost format that changes the behavior. A job aid ships in a day.",
+    fresh:"Ask: does the learner need to remember it, decide something, or click through a tool? Each points to a different format."},
+  review:{teacher:"Review it like a lesson plan from a student teacher: is there practice, and does the check match the target?",
+    sme:"Accuracy matters, but look past it. Can a new agent actually use this screen?",
+    designer:"Check the screen against the objective and against accessibility basics, not just the visual polish.",
+    fresh:"Look for four things: too much text, no practice, a quiz that doesn't match the objective, and accessibility gaps."},
+  measure:{teacher:"Exit tickets measure learning. Here you also need to see what agents do on live tickets weeks later.",
+    sme:"Your credibility with Marcus comes from Level 3 and 4 measures. Plan them now, not after launch.",
+    designer:"These are your product metrics. Satisfaction is a vanity metric on its own.",
+    fresh:"The four Kirkpatrick levels go from 'did they like it' to 'did the business problem shrink.' Sort from easiest to hardest to measure."},
+  wrap:{teacher:"Your brief is your unit plan. Share it before you build anything.",
+    sme:"Get Marcus to sign off on the objective and the measures. That alignment saves weeks.",
+    designer:"This brief is your design doc. Version it and keep it next to the storyboard.",
+    fresh:"You just did a learning designer's first week. Bring this brief to your check-in with me on Friday."}
+};
+const CONF = [["analyze","Analyzing the real need"],["objective","Writing measurable objectives"],["align","Aligning assessment and practice"],["evaluate","Planning evaluation"]];
+const LV = ["", "Not yet", "Shaky", "Okay", "Confident", "Could teach it"];
+const BRIEF = [["problem","Performance problem"],["fixes","Non-training fixes"],["objective","Objective"],["assessment","Assessment"],["formats","Practice formats"],["measures","Success measures"]];
+
+/* ---------- state ---------- */
+const KEY = "cd-onboarding-v1";
+const fresh = () => ({i:-1, far:-1, bg:null, pre:null, r:{}, brief:{}});
+let st = fresh();
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s.i === "number") st = Object.assign(fresh(), s); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const qa = (sel, el = document) => [...el.querySelectorAll(sel)];
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
+const R0 = () => (st.r[st.i] ??= {pts:0, miss:[], got:[], done:false});
+function right(id){ const r = R0(); if (!r.got.includes(id)) { r.got.push(id); if (!r.miss.includes(id)) r.pts++; } save(); renderSide(); }
+function wrong(id){ const r = R0(); if (!r.miss.includes(id)) r.miss.push(id); save(); }
+function finish(){ const r = R0(); r.done = true; st.far = Math.max(st.far, Math.min(st.i + 1, MODS.length - 1)); save(); renderSide(); const n = $("next"); if (n) { n.disabled = false; n.classList.add("hint"); } }
+function note(el, html, kind = ""){ el.innerHTML = `<div class="note ${kind}">${html}</div>`; }
+function bump(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+const pips = (n, t) => `<span class="pips">${Array.from({length:t}, (_, k) => `<i class="${k < n ? "on" : ""}"></i>`).join("")}</span>`;
+function totals(){ let p = 0, m = 0; MODS.forEach((x, i) => { m += x.max; p += st.r[i]?.pts || 0; }); return {p, m}; }
+
+function renderSide(){
+  const t = totals(); $("score").textContent = t.p; $("scorelab").textContent = `/ ${t.m} first-try points`;
+  const box = $("path"); box.innerHTML = "";
+  const mk = (i, day, nm) => {
+    const b = document.createElement("button"); const locked = i > st.far;
+    b.className = "pd" + (locked ? " locked" : ""); b.setAttribute("aria-current", String(st.i === i));
+    const s = st.r[i], m = MODS[i];
+    const cls = i === -1 ? (st.pre ? "ok" : "") : !s?.done ? "" : (m.max === 0 || s.pts === m.max) ? "ok" : "mid";
+    b.innerHTML = `<span class="dot ${cls}">${locked ? "–" : i === -1 ? "★" : i + 1}</span><span><span class="day">${day}</span><span class="nm">${nm}</span></span>`;
+    if (locked) { b.disabled = true; b.title = "Finish the step before to unlock"; } else b.onclick = () => go(i);
+    box.appendChild(b);
+  };
+  mk(-1, "Day 1 morning", "Welcome and set-up");
+  MODS.forEach((m, i) => mk(i, m.day, m.short));
+  $("briefl").innerHTML = BRIEF.map(([k, n]) => `<li class="${st.brief[k] ? "on" : ""}"><i></i>${n}</li>`).join("");
+}
+function go(i){ st.i = Math.max(-1, Math.min(st.far, i)); save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+
+function buddy(html){ return `<div class="buddy"><span class="av" style="background:var(--disco)">D</span><div><div class="who">Dana · your onboarding buddy, Senior Learning Designer</div><p>${html}</p></div></div>`; }
+function shell(m, lead, inner){
+  const tip = st.bg ? TIP[m.key][st.bg] : "";
+  $("stage").innerHTML = `
+    <div class="label">${m.day} · Module ${st.i + 1} of ${MODS.length}</div>
+    <h2>${esc(m.title)}</h2>
+    ${lead ? `<p class="lead">${lead}</p>` : ""}
+    ${tip ? buddy(`<em>Tip for a ${esc(BG[st.bg].n.toLowerCase())}:</em> ${esc(tip)}`) : ""}
+    ${inner}
+    <div class="navrow">
+      <button class="btn" id="prev">Back</button>
+      <button class="btn" id="redo">Restart this module</button>
+      ${st.i < MODS.length - 1 ? `<button class="btn primary" id="next" ${R0().done || st.far > st.i ? "" : "disabled"}>Next module</button>` : "<span></span>"}
+    </div>`;
+  $("prev").onclick = () => go(st.i - 1);
+  $("redo").onclick = () => { st.r[st.i] = {pts:0, miss:[], got:[], done:false}; save(); render(); };
+  if ($("next")) $("next").onclick = () => go(st.i + 1);
+  renderSide();
+}
+
+/* ---------- drag or tap: [data-item] onto [data-bin] ---------- */
+function placeable(root, onPlace){
+  let sel = null;
+  const targets = () => qa("[data-bin]", root);
+  const hit = (x, y) => targets().find(t => { const r = t.getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; });
+  const clear = () => qa("[data-item]", root).forEach(x => x.classList.remove("sel"));
+  qa("[data-item]", root).forEach(el => {
+    let d = null;
+    el.onpointerdown = e => { if (e.button > 0) return; d = {sx:e.clientX, sy:e.clientY, moved:false, id:e.pointerId}; try { el.setPointerCapture(e.pointerId); } catch {} };
+    el.onpointermove = e => {
+      if (!d) return; const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+      if (!d.moved && Math.abs(dx) + Math.abs(dy) > 6) { d.moved = true; el.classList.add("lifting"); }
+      if (d.moved) { el.style.transform = `translate(${dx}px,${dy}px) rotate(-2deg)`; const t = hit(e.clientX, e.clientY); targets().forEach(b => b.classList.toggle("hot", b === t)); }
+    };
+    const end = (e, cancel) => {
+      if (!d) return; const dd = d; d = null; targets().forEach(b => b.classList.remove("hot"));
+      el.style.transform = ""; el.classList.remove("lifting");
+      if (!dd.moved) { if (!cancel) { const was = sel === el.dataset.item; clear(); sel = was ? null : el.dataset.item; if (sel) el.classList.add("sel"); } return; }
+      const t = !cancel && e ? hit(e.clientX, e.clientY) : null;
+      if (t) { sel = null; clear(); onPlace(el.dataset.item, t); }
+    };
+    el.onpointerup = e => end(e, false);
+    el.onpointercancel = () => end(null, true);
+    el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); const was = sel === el.dataset.item; clear(); sel = was ? null : el.dataset.item; if (sel) el.classList.add("sel"); } };
+  });
+  targets().forEach(t => {
+    t.tabIndex = 0;
+    const act = e => { if (sel && !e.target.closest("[data-item]")) { const s = sel; sel = null; clear(); onPlace(s, t); } };
+    t.onclick = act;
+    t.onkeydown = e => { if ((e.key === "Enter" || e.key === " ") && sel) { e.preventDefault(); act(e); } };
+  });
+}
+
+/* generic sort: items onto bins; first-try points per item */
+function sorter(host, cfg){
+  // cfg: {id, items:[{id,t,ans,no}], bins:[{id,n,d}], cols, label, done(placed)}
+  const S = R0(); S[cfg.id] ??= {};
+  const P = S[cfg.id];
+  host.innerHTML = `<div class="goal" id="${cfg.id}-g"></div><div class="tray" id="${cfg.id}-t"></div>
+    <div class="bins ${cfg.cols}">${cfg.bins.map(b => `<div class="bin" data-bin="${b.id}"><h4>${esc(b.n)}</h4>${b.d ? `<span class="d">${esc(b.d)}</span>` : ""}<div class="tray" id="${cfg.id}-${b.id}" style="flex-direction:column;min-height:0"></div></div>`).join("")}</div>
+    <div id="${cfg.id}-o"></div>`;
+  const draw = () => {
+    $(cfg.id + "-t").innerHTML = cfg.items.filter(x => !P[x.id]).map(x => `<button class="chip" data-item="${x.id}">${esc(x.t)}</button>`).join("") || `<span class="muted small">All sorted.</span>`;
+    cfg.bins.forEach(b => $(cfg.id + "-" + b.id).innerHTML = cfg.items.filter(x => P[x.id] === b.id).map(x => `<span class="chip placed">${esc(x.t)}</span>`).join(""));
+    $(cfg.id + "-g").innerHTML = `${cfg.label} ${pips(Object.keys(P).length, cfg.items.length)}`;
+    placeable(host, drop);
+    if (Object.keys(P).length === cfg.items.length) cfg.done(host.querySelector(`#${cfg.id}-o`));
+  };
+  const drop = (id, bin) => {
+    const x = cfg.items.find(i => i.id === id), b = bin.dataset.bin;
+    if (x.ans !== b) { wrong(cfg.id + id); bump(bin); note($(cfg.id + "-o"), `${esc(x.no?.[b] || x.why)} <strong>Try another column.</strong>`, "warn"); return; }
+    right(cfg.id + id); P[id] = b; save(); note($(cfg.id + "-o"), `<strong>Yes.</strong> ${esc(x.why)}`); draw();
+  };
+  draw();
+}
+
+/* ---------- modules ---------- */
+const MOD = {
+analyze(m){
+  const T = [
+    {them:"Hi! Marcus from Support Ops. Refund tickets are a mess, and escalations doubled this quarter. Can you build a training on refunds by end of month?",
+     o:[{t:"Before I design anything: what should agents be doing differently, and how would we see it?", ok:true, rep:"They should resolve standard refunds themselves. Right now about 4 in 10 refund tickets get escalated to my leads.", c:"Start from the performance you want to see, not the content you could cover."},
+        {t:"Sure! How long should the course be?", rep:"Um, an hour? Whatever you think.", c:"That jumps to format before anyone knows the problem. You'd be scoping a course nobody has defined."},
+        {t:"Great, can you send me all the refund policy docs?", rep:"Sure, there are about 40 pages.", c:"Collecting content first usually ends in a policy slideshow. Ask about the performance gap first."}]},
+    {them:"So, standard refunds without escalating. What do you need from me?",
+     o:[{t:"Could I read 20 recent escalated tickets and sit with two agents for an hour?", ok:true, rep:"Sure. I'll set it up for Thursday.", c:"Observing the real work shows where it breaks, and it's often not where people assume."},
+        {t:"Let's survey agents on whether they liked their onboarding.", rep:"We can, but they always say it was fine.", c:"Satisfaction won't tell you why refunds go wrong. Look at the work itself."},
+        {t:"No need. I'll assume they don't know the policy well enough.", rep:"Makes sense to me.", c:"That's an untested guess. If the cause isn't knowledge, a course won't fix it."}]},
+    {them:"Thursday works. Anything else before you start?",
+     o:[{t:"Could we agree now on how we'll measure success, like the escalation rate on refund tickets?", ok:true, rep:"Yes. I already track that weekly. Let's use it.", c:"Agreeing on the measure up front makes the project about results, and gives you data later."},
+        {t:"Nope, I'll send you the finished course when it's done.", rep:"Okay… see you in a month.", c:"No checkpoints means surprises at the end. Agree on success measures and review points now."},
+        {t:"Can we add a section on company values while we're at it?", rep:"Hmm, I guess?", c:"That's scope creep. Keep the module tied to the refund problem."}]}
+  ];
+  const S = R0(); S.k ??= 0; S.h ??= [];
+  shell(m, "Your first assignment arrives on day one. Marcus, the Support Operations Manager at Kitebird, has a request. <strong>Choose what you'd say</strong>, then sort what you learn from shadowing.",
+    `<div class="part"><h3>Part 1 · The intake conversation</h3><div class="goal" id="g1"></div><div class="chat" id="chat"></div><div class="replies" id="rep"></div></div>
+     <div class="part" id="p2" hidden><h3>Part 2 · What you found on Thursday</h3>
+       <p class="small muted">You read 20 escalated tickets and shadowed two agents. <strong>Sort each finding</strong> into the cell of Gilbert's Behavior Engineering Model where its cause lives. Only one cell is a training fix.</p><div id="sort"></div></div>`);
+  const chat = $("chat"), rep = $("rep");
+  const add = (cls, html, who) => chat.insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${who ? `<div class="who">${who}</div>` : ""}${html}</div>`);
+  const typing = async () => { const t = document.createElement("div"); t.className = "typing"; t.innerHTML = "<i></i><i></i><i></i>"; chat.appendChild(t); await wait(700); t.remove(); };
+  const part2 = () => {
+    $("p2").hidden = false;
+    sorter($("sort"), {id:"f", cols:"c3", label:"Findings sorted",
+      bins:[{id:"info", n:"Environment · Information", d:"Clear expectations, guidance, feedback"}, {id:"res", n:"Environment · Resources", d:"Tools, time, materials"}, {id:"inc", n:"Environment · Incentives", d:"Rewards and consequences"},
+            {id:"know", n:"Person · Knowledge & skills", d:"What training can build"}, {id:"cap", n:"Person · Capacity", d:"Fit, fatigue, workload"}, {id:"mot", n:"Person · Motives", d:"Why someone would want to do it"}],
+      items:[
+        {id:"a", t:"Agents mix up partial and full refunds", ans:"know", why:"A decision gap. This is the cell training can actually fix, with practice on real tickets."},
+        {id:"c", t:"Agents freeze when an angry customer threatens to cancel", ans:"know", why:"A skill gap. Scenario practice builds it."},
+        {id:"f", t:"The help-center refund page is two versions out of date", ans:"info", why:"Agents are following wrong guidance. Update the page first."},
+        {id:"d", t:"The billing tool times out on refunds over $200", ans:"res", why:"A tool problem. Flag it to the product team. No course fixes a timeout."},
+        {id:"e", t:"The quality score rewards escalating anything over $50", ans:"inc", why:"Agents escalate because they're rewarded for it. Change the score."},
+        {id:"g", t:"Errors spike in the last hours of 12-hour night shifts", ans:"cap", why:"That's fatigue, a capacity issue. Scheduling, not training."},
+        {id:"h", t:"Agents say they'd rather escalate than be blamed for a wrong refund", ans:"mot", why:"A motive problem. Leads need to make it safe to resolve."}
+      ],
+      done: out => {
+        st.brief.problem = "About 4 in 10 refund tickets are escalated. Agents mix up partial and full refunds and freeze with upset customers (knowledge and skill gaps).";
+        st.brief.fixes = "Gilbert's model points to the environment first. Flag to Marcus: out-of-date help-center refund page (information), billing tool timeout over $200 (resources), quality score that rewards escalation (incentives), 12-hour night shifts (capacity), fear of blame for wrong refunds (motives).";
+        save(); renderSide();
+        note(out, "Only 2 of 7 findings sit in the Knowledge cell. Gilbert's Behavior Engineering Model says to fix the environment first, because that's where most performance problems live. Your brief now lists the other five for Marcus."); finish();
+      }});
+  };
+  const show = () => {
+    $("g1").innerHTML = `Good questions asked ${pips(Math.min(S.k, 3), 3)}`;
+    if (S.k >= 3) { rep.innerHTML = ""; part2(); return; }
+    const tried = S.h.filter(([k]) => k === S.k).map(([, j]) => j);
+    rep.innerHTML = T[S.k].o.map((o, j) => `<button class="reply ${tried.includes(j) ? "tried" : ""}" data-j="${j}">${esc(o.t)}</button>`).join("");
+    qa(".reply", rep).forEach(b => b.onclick = () => pick(+b.dataset.j));
+  };
+  let busy = false;
+  const pick = async j => {
+    if (busy) return; busy = true;
+    const k = S.k, o = T[k].o[j]; S.h.push([k, j]); save(); rep.innerHTML = "";
+    add("me", esc(o.t)); await typing(); add("them", esc(o.rep), "Marcus");
+    if (o.ok) { right("q" + k); add("coach", "<strong>Good question.</strong> " + esc(o.c)); S.k++; save(); if (S.k < 3) { await typing(); add("them", esc(T[S.k].them), "Marcus"); } else add("sys", "Thursday: you read 20 escalated tickets and shadow two agents."); }
+    else { wrong("q" + k); add("coach warn", esc(o.c) + " <strong>Try a different reply.</strong>"); }
+    busy = false; show();
+  };
+  for (let k = 0; k <= Math.min(S.k, 2); k++) {
+    add("them", esc(T[k].them), "Marcus");
+    S.h.filter(([x]) => x === k).forEach(([, j]) => { const o = T[k].o[j]; add("me", esc(o.t)); add("them", esc(o.rep), "Marcus"); add(o.ok ? "coach" : "coach warn", esc(o.c)); });
+  }
+  if (S.k >= 3) add("sys", "Thursday: you read 20 escalated tickets and shadow two agents.");
+  show();
+},
+
+objective(m){
+  const S = R0(); S.sel ??= {a:"", b:"", c:"", d:""}; S.lock ??= {}; S.checks ??= 0;
+  const SL = {
+    a:{n:"Audience", q:"Who will do it?", opts:[["agents","new support agents",1,"Right: the people whose performance should change."],["all","all Kitebird employees",0,"Too broad. Only agents handle refund tickets."],["course","the refund training",0,"An objective describes learners, not the course."]]},
+    b:{n:"Behavior", q:"What will they do?", opts:[["issue","issue a standard refund in the billing tool",1,"Observable: you can watch it happen."],["understand","understand the refund policy",0,"You can't see 'understand.' What would they do that shows it?"],["watch","watch the refund walkthrough video",0,"That's a learning activity, not the performance."]]},
+    c:{n:"Condition", q:"With what, or in what situation?", opts:[["given","Given a customer ticket and the refund policy",1,"That matches the real job: agents always have the ticket and the policy open."],["after","After completing the training",0,"That says when, not the conditions of the task."],["memory","From memory, with no tools open",0,"Unrealistic. On the job, agents have the policy open."]]},
+    d:{n:"Degree", q:"How well?", opts:[["nine","with the correct amount and no escalation, in 9 of 10 practice tickets",1,"Specific and measurable, and it ties to Marcus's escalation goal."],["best","to the best of their ability",0,"There's no way to measure 'best.'"],["feel","and feel confident about refunds",0,"Confidence matters, but it isn't performance you can observe."]]}
+  };
+  const opt = (k, v) => SL[k].opts.find(o => o[0] === v);
+  shell(m, "On day two you write the objective that everything else will be built from. Start by spotting verbs you can observe, then build the full objective.",
+    `<div class="part"><h3>Part 1 · Which verbs can you observe?</h3><div id="verbs"></div></div>
+     <div class="part" id="p2" hidden><h3>Part 2 · Build the objective</h3>
+       <p class="small muted">Choose one option for each part, then check. Correct parts lock in.</p>
+       <div class="objprev" id="prev2"></div>
+       <div class="abcd">${Object.entries(SL).map(([k, s]) => `<div class="slot" id="s-${k}"><label for="sel-${k}"><span class="k-${k}">${s.n}</span> <span class="muted" style="font-weight:400">· ${s.q}</span></label>
+         <select id="sel-${k}"><option value="">Choose…</option>${s.opts.map(o => `<option value="${o[0]}">${esc(o[1])}</option>`).join("")}</select><div class="fb" id="fb-${k}"></div></div>`).join("")}</div>
+       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn primary" id="chk">Check my objective</button><span class="goal" id="g2"></span></div>
+       <div id="o2"></div></div>`);
+  const preview = () => {
+    const w = k => { const o = opt(k, S.sel[k]); return o ? `<u class="${k}">${esc(o[1])}</u>` : `<u class="empty">${SL[k].n.toLowerCase()}</u>`; };
+    $("prev2").innerHTML = `${w("c")}, ${w("a")} will ${w("b")} ${w("d")}.`;
+    const n = Object.keys(SL).filter(k => S.lock[k]).length;
+    $("g2").innerHTML = `Parts locked in ${pips(n, 4)}`;
+  };
+  const paintSlots = () => Object.keys(SL).forEach(k => {
+    const sel = $("sel-" + k); sel.value = S.sel[k]; sel.disabled = !!S.lock[k];
+    $("s-" + k).className = "slot" + (S.lock[k] ? " ok" : "");
+    if (S.lock[k]) $("fb-" + k).textContent = opt(k, S.sel[k])[3];
+  });
+  const part2 = () => {
+    $("p2").hidden = false; paintSlots(); preview();
+    Object.keys(SL).forEach(k => $("sel-" + k).onchange = e => { S.sel[k] = e.target.value; $("s-" + k).className = "slot"; $("fb-" + k).textContent = ""; save(); preview(); });
+    const done = () => {
+      st.brief.objective = "Given a customer ticket and the refund policy, new support agents will issue a standard refund in the billing tool with the correct amount and no escalation, in 9 of 10 practice tickets.";
+      save(); renderSide();
+      note($("o2"), "That's a complete objective. Notice how the degree links straight to Marcus's escalation numbers. That link is what gets stakeholders to sign off."); $("chk").hidden = true; finish();
+    };
+    $("chk").onclick = () => {
+      const empty = Object.keys(SL).filter(k => !S.sel[k]);
+      if (empty.length) { note($("o2"), `Choose an option for ${empty.map(k => SL[k].n).join(", ")} first.`, "warn"); return; }
+      Object.keys(SL).forEach(k => {
+        if (S.lock[k]) return; const o = opt(k, S.sel[k]);
+        if (o[2]) { S.lock[k] = true; right("abcd" + k); $("s-" + k).className = "slot ok"; $("fb-" + k).textContent = o[3]; $("sel-" + k).disabled = true; }
+        else { wrong("abcd" + k); $("s-" + k).className = "slot bad"; $("fb-" + k).textContent = o[3]; bump($("s-" + k)); }
+      });
+      save(); preview();
+      if (Object.keys(SL).every(k => S.lock[k])) done(); else note($("o2"), "Some parts need another look. Read the feedback under each one and choose again.", "warn");
+    };
+    if (Object.keys(SL).every(k => S.lock[k])) done();
+  };
+  sorter($("verbs"), {id:"v", cols:"c2", label:"Verbs sorted",
+    bins:[{id:"obs", n:"You can observe it", d:"You could watch someone do it or check their work"}, {id:"hid", n:"Hard to observe", d:"Happens inside someone's head"}],
+    items:[
+      {id:"issue", t:"issue", ans:"obs", why:"You can watch an agent issue a refund and check the amount."},
+      {id:"identify", t:"identify", ans:"obs", why:"You can check whether they picked the right refund type."},
+      {id:"explain", t:"explain", ans:"obs", why:"You can hear or read the explanation and judge it."},
+      {id:"understand", t:"understand", ans:"hid", why:"Understanding is invisible. Ask what they'd do to show it."},
+      {id:"know", t:"know", ans:"hid", why:"Knowing can't be seen directly. Pick the action that proves it."},
+      {id:"aware", t:"be aware of", ans:"hid", why:"Awareness is invisible, and too weak to train toward."}
+    ],
+    done: out => { note(out, "Observable verbs make objectives you can assess. Now use one to build the full objective."); part2(); }});
+},
+
+backward(m){
+  const CARDS = [{id:"r", t:"Define the result you want (the objective)"}, {id:"e", t:"Decide what evidence proves it (the assessment)"}, {id:"p", t:"Design practice that builds it (the activities)"}, {id:"c", t:"Add the content and media they need"}];
+  const S = R0(); S.slots ??= [null, null, null, null]; S.checked ??= false; S.okOrder ??= false; S.mc ??= [];
+  shell(m, "Day three. Before building screens, plan the module backward from the result.",
+    `<div class="part"><h3>Part 1 · Put the planning steps in order</h3>
+       <p class="small muted">Tap a card to drop it into the next empty step. Tap a filled step to send its card back.</p>
+       <div class="tray" id="otray"></div><div class="order" id="order"></div>
+       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn primary" id="chk">Check the order</button></div><div id="o1"></div></div>
+     <div class="part" id="p2" hidden><h3>Part 2 · Pick the assessment</h3>
+       <p class="small">Your objective: <em>${esc(st.brief.objective || "Given a customer ticket and the refund policy, new support agents will issue a standard refund in the billing tool with the correct amount and no escalation, in 9 of 10 practice tickets.")}</em></p>
+       <p class="small muted">Which assessment gives you the evidence this objective asks for?</p>
+       <div class="opts" id="opts"></div><div id="o2"></div></div>`);
+  const OPTS = [
+    {t:"A practice ticket queue: agents work 10 refund tickets in a sandbox copy of the billing tool", ok:true, c:"It asks for the same behavior, condition and degree as the objective. That's alignment."},
+    {t:"A 20-question multiple-choice quiz on the refund policy", c:"A quiz checks recall of the policy, not whether agents can issue a refund in the tool."},
+    {t:"A short reflection: what did you learn about refunds today?", c:"Reflection is useful, but it can't show 9 of 10 correct refunds."}
+  ];
+  const draw = () => {
+    const used = S.slots.filter(Boolean);
+    $("otray").innerHTML = CARDS.filter(c => !used.includes(c.id)).map(c => `<button class="chip" data-c="${c.id}">${esc(c.t)}</button>`).join("") || `<span class="muted small">All four placed.</span>`;
+    $("order").innerHTML = S.slots.map((id, k) => { const c = CARDS.find(x => x.id === id); const st2 = S.okOrder ? "ok" : ""; return `<button class="os ${c ? "filled" : ""} ${st2}" data-s="${k}"><span class="n">${k + 1}</span><span class="t">${c ? esc(c.t) : '<span class="muted">Empty</span>'}</span></button>`; }).join("");
+    qa("#otray .chip").forEach(b => b.onclick = () => { if (S.okOrder) return; const k = S.slots.indexOf(null); if (k < 0) return; S.slots[k] = b.dataset.c; save(); draw(); });
+    qa("#order .os").forEach(b => b.onclick = () => { if (S.okOrder) return; S.slots[+b.dataset.s] = null; save(); draw(); });
+    $("chk").hidden = S.okOrder;
+  };
+  const part2 = () => {
+    $("p2").hidden = false;
+    const paint = () => {
+      $("opts").innerHTML = OPTS.map((o, j) => `<button class="opt ${S.mc.includes(j) ? (o.ok ? "ok" : "bad") : ""}" data-j="${j}">${esc(o.t)}</button>`).join("");
+      qa("#opts .opt").forEach(b => b.onclick = () => {
+        const j = +b.dataset.j, o = OPTS[j]; if (S.mc.some(x => OPTS[x].ok)) return;
+        S.mc.push(j); save();
+        if (o.ok) { right("assess"); st.brief.assessment = "Practice ticket queue: 10 refund tickets in a sandbox copy of the billing tool. Pass = correct amount, no escalation, 9 of 10."; save(); renderSide(); paint(); note($("o2"), "<strong>Aligned.</strong> " + esc(o.c) + " It's in your brief now."); finish(); }
+        else { wrong("assess"); paint(); note($("o2"), esc(o.c) + " <strong>Try another.</strong>", "warn"); }
+      });
+    };
+    paint();
+    if (S.mc.some(x => OPTS[x].ok)) note($("o2"), "<strong>Aligned.</strong> " + esc(OPTS[0].c));
+  };
+  $("chk").onclick = () => {
+    if (S.slots.includes(null)) { note($("o1"), "Place all four cards first.", "warn"); return; }
+    const want = ["r","e","p","c"];
+    if (!S.checked) { S.checked = true; want.forEach((w, k) => S.slots[k] === w ? right("ord" + k) : wrong("ord" + k)); }
+    const bad = want.map((w, k) => S.slots[k] !== w ? k : -1).filter(k => k >= 0);
+    if (!bad.length) { S.okOrder = true; save(); draw(); note($("o1"), "Result, evidence, practice, content. Deciding the evidence before the activities keeps every screen tied to the objective."); part2(); return; }
+    bad.forEach(k => S.slots[k] = null); save(); draw();
+    bad.forEach(k => bump(qa("#order .os")[k]));
+    note($("o1"), `${bad.length} step${bad.length > 1 ? "s were" : " was"} out of place and went back to the tray. Hint: content comes last, and you decide how you'll check before you plan how to teach.`, "warn");
+  };
+  draw();
+  if (S.okOrder) { note($("o1"), "Result, evidence, practice, content."); part2(); }
+},
+
+practice(m){
+  shell(m, "Each finding from Thursday needs a different kind of support. <strong>Drag each need</strong> (or tap it, then tap a format) to the format that fits best.",
+    `<div id="sort"></div>`);
+  sorter($("sort"), {id:"pf", cols:"c4", label:"Needs matched",
+    bins:[{id:"aid", n:"Job aid", d:"A one-page tool used during the task"}, {id:"scen", n:"Branching scenario", d:"Practice decisions with consequences"}, {id:"sim", n:"Software simulation", d:"Click through the real tool safely"}, {id:"vid", n:"Short video demo", d:"See an expert model it once"}],
+    items:[
+      {id:"rules", t:"Agents need 7 refund rules but use some only once a month", ans:"aid", why:"Rarely used rules belong in a job aid, not in memory. Agents keep it open on tickets.", no:{scen:"Scenarios are for judgment calls. Remembering rarely used rules is a reference problem.", sim:"This isn't about clicking through the tool.", vid:"A video won't help in the middle of a ticket."}},
+      {id:"angry", t:"Agents freeze when an upset customer threatens to cancel", ans:"scen", why:"Handling emotion means making choices under pressure. Branching scenarios let agents practice safely.", no:{aid:"A checklist won't help much in a tense moment. They need practice making the call.", sim:"The tool isn't the hard part here. The conversation is.", vid:"Watching once doesn't build the skill. They need to practice."}},
+      {id:"tool", t:"Agents must click through 6 screens in the billing tool", ans:"sim", why:"A sandbox simulation lets them practice the exact clicks without touching real accounts.", no:{aid:"A job aid can back it up, but they still need hands-on practice in the tool.", scen:"There's no judgment call here. It's a procedure in the tool.", vid:"Watching clicks isn't the same as doing them."}},
+      {id:"model", t:"Agents have never heard what a great refund call sounds like", ans:"vid", why:"A short model lets them see the target before they practice it.", no:{aid:"Tone and pacing are hard to put on a page.", scen:"Show the model first. Scenarios come after they know what good looks like.", sim:"This is about the conversation, not the tool."}}
+    ],
+    done: out => { st.brief.formats = "Job aid: refund rules and account-age check. Software simulation: billing tool steps. Short video: a model refund call. Branching scenario: upset customer threatening to cancel."; save(); renderSide(); note(out, "Four needs, four formats. Only two of them need e-learning at all. The job aid alone could ship this week."); finish(); }});
+},
+
+review(m){
+  const H = {
+    wall:{issue:true, t:"Wall of text", f:"Turn the policy paragraph into a short decision table: full vs partial refund, by reason and account age."},
+    next:{issue:true, t:"No practice", f:"Replace 'Click Next' with a quick decision: show a ticket and ask 'Full or partial refund?'"},
+    quiz:{issue:true, t:"Quiz doesn't match the objective", f:"Ask an applied question tied to the objective: 'This customer's account is 20 days old. What do you refund?'"},
+    img:{issue:true, t:"Accessibility gaps", f:"Add alt text, and label each status with words, not only red and green."},
+    title:{issue:false, t:"The title is clear and matches the screen."},
+    prog:{issue:false, t:"A progress indicator helps learners pace themselves. Keep it."}
+  };
+  const S = R0(); S.found ??= []; S.wrongs ??= 0;
+  shell(m, "Day four. A contractor sent the first draft of the refund module. <strong>Click each problem you see on this screen.</strong> There are four.",
+    `<div class="goal" id="g"></div>
+     <div class="sbwrap">
+       <div class="sbmeta"><span>Draft storyboard · Refund module v0.1</span><span>From: contractor · For: your review</span></div>
+       <div class="slide">
+         <div class="s-top"><button class="hs" data-h="title"><span class="s-title">Refund Policy Overview</span></button><button class="hs" data-h="prog"><span class="s-prog">Screen 4 of 12</span></button></div>
+         <button class="hs" data-h="wall"><p class="s-wall">Kitebird's refund policy (v3.2, revised) states that customers may request a refund within the eligibility window as defined by account tenure, subscription tier and billing cycle, provided that the request is not associated with a promotional credit, gift subscription or partner-billed account, in which case a partial refund may apply according to the prorated schedule, except where the customer has previously received a goodwill credit within the trailing twelve-month period, in which case escalation to a lead is required unless the amount is below the threshold, and agents should verify account age before proceeding…</p></button>
+         <button class="hs" data-h="img"><div class="s-img"><div class="s-pic"><span style="--c:#2BA84A"><b></b></span><span style="--c:#D83A3A"><b></b></span><span style="--c:#2BA84A"><b></b></span><span style="--c:#D83A3A"><b></b></span></div><span class="small" style="font-family:var(--body);color:#888">[image: refund_status_chart.png]</span></div></button>
+         <button class="hs s-quiz" data-h="quiz"><strong>Knowledge check:</strong> In what year did Kitebird introduce its current refund policy? &nbsp;○ 2019 &nbsp;○ 2021 &nbsp;○ 2023</button>
+         <div class="s-foot"><button class="hs" data-h="next"><span class="s-next">Click Next to continue ›</span></button></div>
+       </div>
+     </div>
+     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" id="hint">Show me a hint</button></div>
+     <div id="o"></div>
+     <div class="found-list" id="fl"></div>`);
+  const issues = Object.keys(H).filter(k => H[k].issue);
+  const paint = () => {
+    $("g").innerHTML = `Problems found ${pips(S.found.length, 4)}`;
+    qa(".hs").forEach(b => { const f = S.found.includes(b.dataset.h); b.classList.toggle("found", f); if (f) b.classList.remove("glow"); });
+    $("fl").innerHTML = S.found.map(k => `<div class="fi"><b>${esc(H[k].t)}.</b> Fix: ${esc(H[k].f)}</div>`).join("");
+    if (S.found.length === 4) { $("hint").hidden = true; note($("o"), "You found all four. Send the contractor these fixes as comments on the storyboard, tied back to the objective, so they see the reason for each one."); finish(); }
+  };
+  qa(".hs").forEach(b => b.onclick = () => {
+    const k = b.dataset.h, h = H[k];
+    if (S.found.includes(k)) return;
+    if (!h.issue) { b.classList.add("fine"); note($("o"), esc(h.t) + " Look for something that blocks learning.", "warn"); return; }
+    S.found.push(k); right("hs" + k); save(); $("o").innerHTML = ""; paint();
+  });
+  $("hint").onclick = () => {
+    const left = issues.filter(k => !S.found.includes(k)); if (!left.length) return;
+    const k = left[0]; S.hinted ??= []; if (!S.hinted.includes(k)) { S.hinted.push(k); wrong("hs" + k); } save();
+    qa(".hs").forEach(b => b.classList.toggle("glow", b.dataset.h === k));
+    note($("o"), "Look at the glowing part of the screen. Hints mean no point for that one, but you'll still find it.", "warn");
+  };
+  paint();
+},
+
+measure(m){
+  shell(m, "Day five. Before anything launches, agree with Marcus on how you'll know it worked. <strong>Sort each measure</strong> into the Kirkpatrick level it belongs to.",
+    `<div id="sort"></div>`);
+  sorter($("sort"), {id:"k", cols:"c4", label:"Measures sorted",
+    bins:[{id:"l1", n:"1 · Reaction", d:"Did they find it useful?"}, {id:"l2", n:"2 · Learning", d:"Can they do it in practice?"}, {id:"l3", n:"3 · Behavior", d:"Do they do it on the job?"}, {id:"l4", n:"4 · Results", d:"Did the business problem shrink?"}],
+    items:[
+      {id:"rate", t:"Agents rate the module 4.5 / 5 for usefulness", ans:"l1", why:"That's reaction: how learners felt about it."},
+      {id:"sim", t:"Agents pass 9 of 10 tickets in the practice queue", ans:"l2", why:"That's learning: the skill shown in a practice setting."},
+      {id:"check", t:"QA reviewers see the account-age check on live tickets", ans:"l3", why:"That's behavior: the skill showing up on real tickets."},
+      {id:"lead", t:"Team leads see agents resolve standard refunds without escalating", ans:"l3", why:"That's behavior on the job, observed by leads."},
+      {id:"esc", t:"The share of refund tickets escalated falls from about 4 in 10", ans:"l4", why:"That's a business result: the number Marcus brought to you."},
+      {id:"csat", t:"Customer satisfaction on refund tickets goes up", ans:"l4", why:"That's a business result customers feel."}
+    ],
+    done: out => { st.brief.measures = "L1 usefulness rating · L2 practice-queue pass rate · L3 QA checks and lead observations on live tickets · L4 refund escalation rate (from about 4 in 10) and refund-ticket CSAT. Baseline now, check again at 30 and 60 days."; save(); renderSide(); note(out, "Levels 3 and 4 are what Marcus cares about. Capture the baseline escalation rate before launch so you can show the change."); finish(); }});
+},
+
+wrap(m){
+  const prep = ["Send Marcus the non-training fixes (tool timeout, quality score, help-center page)","Get sign-off on the objective and success measures","Draft the job aid and test it with two agents","Storyboard the upset-customer scenario","Book a 30-day results check-in with Marcus"];
+  const S = R0(); S.c ??= {...(st.pre || {analyze:3, objective:3, align:3, evaluate:3})}; S.p ??= [];
+  const t = totals();
+  const B = st.brief;
+  shell(m, st.pre ? "Here's the brief you built this week. Rate your confidence again to compare it with Monday, then plan next week." : "Here's the brief you built this week.",
+    `<div class="brief"><div class="hd"><h3>Design brief · Refund handling for new support agents</h3><span class="small">Requested by Marcus, Support Ops · Drafted by you</span></div>
+      <dl>${BRIEF.map(([k, n]) => `<dt>${n}</dt><dd>${B[k] ? esc(B[k]) : '<span class="muted">Finish the module that fills this section.</span>'}</dd>`).join("")}</dl></div>
+     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn primary" id="copy">Copy my brief</button><span class="small muted" id="copied" role="status"></span></div>
+     <div class="part"><h3>How confident do you feel now?</h3>
+       <div class="sliders">${CONF.map(([k, n]) => `<div class="sld"><label for="c-${k}"><span>${n}</span><span class="small"><span class="muted" style="font-weight:600">${st.pre ? `Monday: ${LV[st.pre[k]]} · Now: ` : ""}</span><span id="v-${k}"></span></span></label><input type="range" min="1" max="5" id="c-${k}" data-k="${k}" value="${S.c[k]}"></div>`).join("")}</div>
+       <p class="small" id="grow" style="font-weight:700"></p></div>
+     <div class="part"><h3>Next week</h3><div class="checklist">${prep.map((p, k) => `<label><input type="checkbox" id="p${k}" data-k="${k}" ${S.p.includes(k) ? "checked" : ""}><span>${esc(p)}</span></label>`).join("")}</div>
+       <div class="label" style="margin-top:6px">First-week score</div><div style="font-size:30px;font-weight:800;color:var(--grape)">${t.p} / ${t.m}</div>
+       <button class="btn" id="reset" style="align-self:flex-start">Reset all progress</button></div>`);
+  const upd = () => {
+    CONF.forEach(([k]) => $("v-" + k).textContent = LV[S.c[k]]);
+    if (st.pre) { const up = CONF.filter(([k]) => S.c[k] > st.pre[k]).length; $("grow").textContent = up ? `Your confidence grew in ${up} of 4 areas since Monday.` : ""; }
+    finish();
+  };
+  qa("input[type=range]").forEach(i => i.oninput = () => { S.c[i.dataset.k] = +i.value; save(); upd(); });
+  qa(".checklist input").forEach(c => c.onchange = () => { const k = +c.dataset.k; S.p = c.checked ? [...new Set([...S.p, k])] : S.p.filter(x => x !== k); save(); });
+  $("copy").onclick = async () => {
+    const txt = `Design brief: Refund handling for new support agents\n\n${BRIEF.map(([k, n]) => `${n}:\n${B[k] || "(not filled yet)"}`).join("\n\n")}\n\nNext week:\n${prep.map((p, k) => `[${S.p.includes(k) ? "x" : " "}] ${p}`).join("\n")}`;
+    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied."; } catch { $("copied").textContent = "Copy isn't available here. Select the brief text and copy it manually."; }
+  };
+  $("reset").onclick = () => { st = fresh(); save(); go(-1); };
+  upd();
+}
+};
+
+function renderIntro(){
+  const pre = st.pre || {analyze:3, objective:3, align:3, evaluate:3};
+  let bg = st.bg;
+  $("stage").innerHTML = `
+    <p class="eyebrow">Welcome to Kitebird's learning team</p>
+    <h2>Your first week starts with a real request</h2>
+    <p class="lead">Instead of reading a handbook, you'll work one real assignment from start to finish: a stakeholder asks for "a training," and by Friday you'll have a design brief ready for sign-off. About 25 minutes in total. Stop and come back anytime.</p>
+    ${buddy("Hi, I'm Dana. I'll check in with tips along the way. Tell me a bit about your background so I can make them useful.")}
+    <div class="part"><h3>What best describes you?</h3><div class="bgs">${Object.entries(BG).map(([k, b]) => `<button class="bgb" data-bg="${k}" aria-pressed="${bg === k}"><b>${b.n}</b><span>${b.d}</span></button>`).join("")}</div></div>
+    <div class="part"><h3>Your week</h3><div class="week">
+      <div><b>Day 1</b>Question the request and find the real problem</div>
+      <div><b>Day 2</b>Write an objective you can measure</div>
+      <div><b>Day 3</b>Plan backward and choose practice formats</div>
+      <div><b>Day 4</b>Review a contractor's storyboard</div>
+      <div><b>Day 5</b>Plan the measures and finish your brief</div></div></div>
+    <div class="part"><h3>Before you start: how confident are you?</h3>
+      <div class="sliders">${CONF.map(([k, n]) => `<div class="sld"><label for="pre-${k}"><span>${n}</span><span id="pv-${k}">${LV[pre[k]]}</span></label><input type="range" min="1" max="5" id="pre-${k}" data-k="${k}" value="${pre[k]}"></div>`).join("")}</div>
+      <p class="small muted">You'll rate these again on Friday.</p></div>
+    <div id="o"></div>
+    <div class="navrow"><span></span><button class="btn primary" id="startbtn">${st.pre ? "Continue my week" : "Start Day 1"}</button></div>`;
+  qa(".bgb").forEach(b => b.onclick = () => { bg = b.dataset.bg; qa(".bgb").forEach(x => x.setAttribute("aria-pressed", String(x === b))); $("o").innerHTML = ""; });
+  qa("#stage input[type=range]").forEach(i => i.oninput = () => { pre[i.dataset.k] = +i.value; $("pv-" + i.dataset.k).textContent = LV[+i.value]; });
+  $("startbtn").onclick = () => {
+    if (!bg) { note($("o"), "Choose the background that fits you best, so Dana's tips match.", "warn"); return; }
+    st.bg = bg; st.pre = {...pre}; st.far = Math.max(st.far, 0); save();
+    const first = MODS.findIndex((_, i) => !st.r[i]?.done); go(first < 0 ? 0 : first);
+  };
+  renderSide();
+}
+function render(){ if (st.i < 0) { renderIntro(); return; } const m = MODS[st.i]; MOD[m.key](m); }
+render();
+</script>
+</body>
+</html>

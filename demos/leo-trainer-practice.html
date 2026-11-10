@@ -1,0 +1,934 @@
+<!doctype html><html><head>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:'Open Sans',system-ui,sans-serif;font-size:14px;font-weight:700">
+<a href="../leo-trainer-practice.html" style="background:#491355;color:#FEF9F3;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(73,19,85,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FEF9F3;color:#491355;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #491355;box-shadow:0 6px 18px rgba(73,19,85,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+
+<title>LEO Trainer Practice</title>
+<!--
+  LEO Trainer Practice
+  Instructional design and development: Yi Liu, Digital4Good, October 2026
+  Created for Digital4Good x Google (Meet LEO). Content based on the Meet LEO training deck.
+  Please keep this credit and the on-page credit if you share or adapt this file.
+-->
+<meta name="author" content="Yi Liu, Digital4Good">
+<meta name="description" content="LEO Trainer Practice: a self-check for educators after the Meet LEO webinar. Designed and developed by Yi Liu for Digital4Good x Google, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700;6..12,800&display=swap">
+<style>
+/* Layout: a practice room for trainers. Round map + score on the left, one practice round at a time on the right. */
+:root{
+  --bg:#F4F6F2; --surface:#FFFFFF; --ink:#18263A; --muted:#55657A; --line:#DCE3DA; --scene:#E9EEF3;
+  --safe:#1F7A5A; --safe-soft:#E2F2EA; --rules:#B85C00; --rules-soft:#FBEBD9; --explore:#3B57C4; --explore-soft:#E5EAFB;
+  --accent:#18263A; --accent-ink:#FFFFFF; --good:#1F7A5A; --warn:#B85C00; --glow:#FFC83D; --parent:#E5EAFB;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Nunito Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F151C; --surface:#18212B; --ink:#E8EEF3; --muted:#9EAEBD; --line:#2A3542; --scene:#111A23;
+  --safe:#5CCB9E; --safe-soft:#14302A; --rules:#F0A55A; --rules-soft:#352514; --explore:#8EA3F5; --explore-soft:#1D2545;
+  --accent:#E8EEF3; --accent-ink:#0F151C; --good:#5CCB9E; --warn:#F0A55A; --parent:#25304F; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F151C; --surface:#18212B; --ink:#E8EEF3; --muted:#9EAEBD; --line:#2A3542; --scene:#111A23;
+  --safe:#5CCB9E; --safe-soft:#14302A; --rules:#F0A55A; --rules-soft:#352514; --explore:#8EA3F5; --explore-soft:#1D2545;
+  --accent:#E8EEF3; --accent-ink:#0F151C; --good:#5CCB9E; --warn:#F0A55A; --parent:#25304F; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.wrap{grid-template-columns:minmax(0,1fr);gap:14px}}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:26px;font-weight:800} h2{font-size:27px;font-weight:800;letter-spacing:-.015em} h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.muted{color:var(--muted)} .small{font-size:13.5px}
+.lead{font-size:17px;max-width:64ch}
+
+nav.map{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:14px}
+@media (max-width:820px){nav.map{position:static}}
+.brand p{color:var(--muted);font-size:14px;margin-top:4px}
+.score{display:flex;align-items:baseline;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.score b{font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums}
+.rounds{display:flex;flex-direction:column;gap:2px}
+@media (max-width:820px){.rounds{flex-direction:row;overflow-x:auto;padding-bottom:4px}}
+.rd{display:flex;gap:10px;align-items:center;background:none;border:0;font:inherit;font-size:14.5px;color:var(--ink);text-align:left;padding:7px 10px;border-radius:10px;cursor:pointer;white-space:nowrap}
+.rd:hover,.rd[aria-current="true"]{background:var(--surface)}
+.rd[aria-current="true"]{font-weight:800}
+.rd .s{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;font-variant-numeric:tabular-nums}
+.rd .s.ok{background:var(--good);border-color:var(--good);color:var(--surface)}
+.rd .s.mid{background:var(--glow);border-color:var(--glow);color:#18263A}
+.rd.locked,.rd.locked:hover{background:none;color:var(--muted);cursor:not-allowed;opacity:.65}
+.rd.locked .s{border-style:dashed;color:var(--muted)}
+.rd.locked .s svg{width:11px;height:11px}
+
+main{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px;min-height:480px}
+@media (max-width:560px){.card{padding:18px}}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;border-radius:10px;padding:10px 16px;cursor:pointer;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:3px solid var(--explore);outline-offset:2px}
+.stepcount{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.goal{display:flex;align-items:center;gap:12px;font-weight:800;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.pips{display:flex;gap:5px}
+.pips i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);transition:background .3s,border-color .3s,transform .3s}
+.pips i.on{background:var(--good);border-color:var(--good);transform:scale(1.15)}
+.tries{font-variant-numeric:tabular-nums}
+.note{border-radius:12px;padding:12px 16px;background:var(--bg);border-left:4px solid var(--good);max-width:700px;animation:rise .35s ease both}
+.note.warn{border-left-color:var(--warn)}
+.scene{position:relative;background:var(--scene);border-radius:16px;padding:16px;overflow:hidden}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--glow) 75%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+.shake{animation:shake .35s} .hint{animation:pulse 1.6s infinite}
+
+/* drag cards + bins */
+.tray{display:flex;flex-wrap:wrap;gap:8px;min-height:42px}
+.chipc{font:inherit;font-size:14.5px;font-weight:700;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:8px 12px;cursor:grab;touch-action:none;user-select:none;transition:transform .2s,box-shadow .2s}
+.chipc.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink);transform:translateY(-3px)}
+.chipc.placed{cursor:default;animation:pop .35s both;font-size:13.5px;padding:6px 10px}
+.chipc.dragging{position:fixed;z-index:50;pointer-events:none;box-shadow:0 8px 20px color-mix(in srgb,var(--ink) 25%,transparent)}
+.bins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.bins{grid-template-columns:minmax(0,1fr)}}
+.bin{border:2px dashed var(--line);border-radius:14px;padding:12px;min-height:150px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .2s,transform .2s;background:var(--surface)}
+.bin.hot{transform:scale(1.02)}
+.bin.b-safe{border-color:var(--safe)} .bin.b-safe h3{color:var(--safe)}
+.bin.b-rules{border-color:var(--rules)} .bin.b-rules h3{color:var(--rules)}
+.bin.b-explore{border-color:var(--explore)} .bin.b-explore h3{color:var(--explore)}
+.bin.hot{border-style:solid}
+
+/* safesearch labels */
+.ssrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.ssrow{grid-template-columns:minmax(0,1fr)}}
+.ss{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:170px;cursor:pointer;transition:border-color .2s,transform .2s}
+.ss.hot{border-color:var(--safe);transform:scale(1.02)}
+.ss b{font-family:var(--display);font-size:20px}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.th{aspect-ratio:4/3;border-radius:6px;background:var(--safe-soft)}
+.th.x{background:repeating-linear-gradient(45deg,var(--rules-soft) 0 5px,var(--surface) 5px 10px)}
+.th.blur{filter:blur(3px)} .th.gone{opacity:.12}
+
+/* phone */
+.phone{width:min(100%,270px);background:var(--ink);border-radius:32px;padding:12px;flex:none}
+.screen{background:var(--surface);border-radius:22px;min-height:360px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.sbar{height:24px;display:flex;justify-content:space-between;padding:4px 16px;font-size:11px;font-weight:800}
+.home{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:16px}
+.app{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:14px;padding:8px 4px}
+.app .ic{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;transition:transform .2s,box-shadow .3s}
+.app:hover .ic{transform:scale(1.08)}
+.app:focus-visible{outline:3px solid var(--explore)}
+.app.right .ic{box-shadow:0 0 0 3px var(--good)}
+.ic svg{width:32px;height:32px}
+.worry{background:var(--parent);border-radius:16px;border-bottom-left-radius:4px;padding:12px 14px;max-width:380px;animation:rise .35s both}
+
+/* youtube age drag */
+.kidsrow{display:flex;gap:10px;flex-wrap:wrap}
+.kidc{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px}
+.kidc b{font-family:var(--display);font-size:20px}
+.story{display:flex;flex-direction:column;gap:4px;text-align:left;max-width:300px;padding:10px 12px}
+.story .who2{display:flex;gap:8px;align-items:center}
+.story .av2{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;color:#fff;font-size:14px;flex:none}
+.story .ctx{font-size:13.5px;font-weight:400;color:var(--muted);line-height:1.45}
+.story.placed{max-width:none}
+
+/* chat */
+.chat{background:var(--scene);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:240px}
+.msg{max-width:82%;padding:10px 14px;border-radius:18px;animation:rise .35s both}
+.msg.parent{background:var(--parent);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--ink);color:var(--accent-ink);border-bottom-right-radius:4px;align-self:flex-end}
+.msg.coach{align-self:center;background:var(--surface);border:1.5px solid var(--good);font-size:14px;max-width:94%;border-radius:12px}
+.msg.coach.warn{border-color:var(--warn)}
+.who{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:2px}
+.typing{display:flex;gap:4px;padding:14px;background:var(--parent);border-radius:18px;align-self:flex-start}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.replies{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.reply{font:inherit;text-align:left;max-width:88%;padding:10px 14px;border-radius:18px;border-bottom-right-radius:4px;border:1.5px dashed var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;animation:rise .35s both;transition:transform .15s}
+.reply:hover{transform:translateX(-4px)}
+.reply.tried{opacity:.4;text-decoration:line-through;pointer-events:none}
+
+/* intro */
+.intro-hero{display:flex;flex-direction:column;gap:10px}
+.goals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+@media (max-width:640px){.goals{grid-template-columns:minmax(0,1fr)}}
+.goals li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px;display:flex;gap:10px;align-items:flex-start}
+.goals li .n{font-family:var(--display);font-weight:800;color:var(--muted);flex:none}
+.howto{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.howto{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.howto div{border-radius:12px;padding:10px 12px;font-size:14px;background:var(--bg)}
+.howto b{display:block;font-family:var(--display);font-size:16px}
+/* recommend round */
+.parentcard{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:2px dashed var(--line);border-radius:16px;padding:14px;transition:border-color .2s,transform .2s;cursor:pointer;animation:rise .4s both}
+.parentcard.hot{border-color:var(--explore);border-style:solid;transform:scale(1.01)}
+.parentcard .av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:22px;color:#fff;flex:none}
+.parentcard .bub{background:var(--parent);border-radius:16px;border-top-left-radius:4px;padding:10px 14px;font-size:15.5px}
+.parentcard .drop{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--muted)}
+.parentcard .bub.answer{margin-top:6px;border-left:4px solid var(--warn);animation:rise .35s both}
+.parentcard .bub.answer.yes{border-left-color:var(--good)}
+.parentcard.answered{cursor:default;border-style:solid;border-color:var(--good)}
+.nextstep{margin-top:10px}
+.acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.act{display:flex;flex-direction:column;gap:2px;text-align:left}
+.act .tg{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--explore)}
+.act .nm{font-family:var(--display);font-size:15.5px;font-weight:600;line-height:1.2}
+.served{display:flex;flex-wrap:wrap;gap:6px}
+.served span{font-size:12.5px;font-weight:700;background:var(--explore-soft);border-radius:99px;padding:3px 10px;animation:pop .35s both}
+/* facilitation room */
+.room{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:14px}
+@media (max-width:760px){.room{grid-template-columns:minmax(0,1fr)}}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tile{position:relative;aspect-ratio:16/10;border-radius:12px;background:var(--night,#1B2440);display:grid;place-items:center;transition:box-shadow .25s}
+.tile .face{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:22px;color:#fff}
+.tile .nm{position:absolute;left:8px;bottom:6px;font-size:12px;font-weight:800;color:#fff;background:rgba(0,0,0,.35);border-radius:6px;padding:1px 7px}
+.tile.talk{box-shadow:0 0 0 3px var(--good)}
+.tile .rx{position:absolute;right:8px;top:6px;font-size:22px;animation:pop .4s both}
+.tile .hand{position:absolute;left:8px;top:6px;font-size:12px;font-weight:800;background:var(--glow);color:#18263A;border-radius:6px;padding:1px 7px;animation:pop .4s both}
+.you{grid-column:1/-1;aspect-ratio:auto;padding:10px 14px;background:var(--surface);border:1.5px solid var(--line);display:flex;gap:10px;align-items:flex-start;justify-items:start}
+.you .face{width:36px;height:36px;font-size:15px;background:var(--ink);color:var(--accent-ink);flex:none}
+.you .said{font-size:14.5px;min-height:1.5em}
+.side{display:flex;flex-direction:column;gap:10px;min-width:0}
+.engage{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.engage .bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px}
+.engage .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--rules),var(--glow),var(--good));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.zchat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;height:260px;overflow-y:auto;font-size:13.5px}
+.zchat .ln{animation:rise .3s both}
+.zchat .ln b{font-weight:800}
+.zchat .sys{color:var(--muted);font-style:italic}
+.phase{display:flex;gap:6px;flex-wrap:wrap}
+.phase span{font-size:12px;font-weight:800;border-radius:99px;padding:3px 10px;border:1.5px solid var(--line);color:var(--muted);transition:all .3s}
+.phase span.on{border-color:var(--ink);color:var(--ink)}
+.phase span.done{background:var(--good);border-color:var(--good);color:var(--surface)}
+.say{display:flex;flex-direction:column;gap:8px}
+.sayb{font:inherit;text-align:left;border:1.5px dashed var(--ink);background:var(--surface);color:var(--ink);border-radius:14px;padding:10px 14px;cursor:pointer;animation:rise .35s both;transition:transform .15s}
+.sayb:hover{transform:translateX(4px)}
+.sayb.tried{opacity:.4;text-decoration:line-through;pointer-events:none}
+/* conversation board */
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.board{grid-template-columns:minmax(0,1fr)}}
+.col{background:var(--surface);border:2px dashed var(--line);border-radius:14px;padding:10px;min-height:170px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .2s}
+.col.hot{border-color:var(--explore);border-style:solid}
+.col h3{font-size:15px}
+.col .q{font-size:12.5px;color:var(--muted)}
+
+/* slide strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sl{all:unset;cursor:pointer;aspect-ratio:16/10;border-radius:10px;background:var(--surface);border:2px solid var(--line);padding:8px 10px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;font-weight:800;position:relative;transition:transform .2s,border-color .2s,opacity .3s}
+.sl:hover{transform:translateY(-2px)}
+.sl:focus-visible{outline:3px solid var(--explore)}
+.sl .tg{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.sl.flag{border-color:var(--glow);background:color-mix(in srgb,var(--glow) 18%,var(--surface))}
+.sl.flag::after{content:"Optional?";position:absolute;top:6px;right:8px;font-size:10px;background:var(--glow);color:#18263A;border-radius:99px;padding:1px 7px;animation:pop .3s both}
+.sl.r-ok{border-color:var(--good)} .sl.r-miss{border-color:var(--warn);border-style:dashed}
+.sl.out{opacity:.35}
+.sl.core-lock{cursor:default}
+
+/* readiness */
+.sliders{display:flex;flex-direction:column;gap:14px;max-width:620px}
+.sld label{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
+.sld input{width:100%;accent-color:var(--ink)}
+.sld.scaled input{display:block;width:calc(80% + 16px);margin:6px calc(10% - 8px) 2px}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));font-size:12.5px;line-height:1.25;text-align:center;color:var(--muted)}
+.scale span{padding:2px;cursor:pointer}
+.scale span.on{color:var(--ink);font-weight:800}
+@media (max-width:560px){.scale{font-size:11.5px}.scale span{padding:2px 1px}}
+.meter2{height:14px;border-radius:99px;background:var(--line);overflow:hidden;max-width:620px}
+.meter2 i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--rules),var(--glow),var(--good));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.review{display:flex;flex-wrap:wrap;gap:8px}
+.rv{font:inherit;font-size:14px;font-weight:700;border-radius:99px;border:1.5px solid var(--warn);background:none;color:var(--ink);padding:5px 12px;cursor:pointer}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:4px 0}
+.checklist input{margin-top:6px;accent-color:var(--good)}
+.resl{columns:2;column-gap:24px;padding-left:18px;margin:0}
+@media (max-width:560px){.resl{columns:1}}
+.resl a{color:var(--explore);font-weight:700}
+.foot{font-size:12.5px;color:var(--muted);margin-top:14px}
+.lifting{position:relative;z-index:60;cursor:grabbing!important;box-shadow:0 10px 24px color-mix(in srgb,var(--ink) 28%,transparent)!important;animation:none!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <nav class="map" aria-label="Practice rounds">
+    <div class="brand"><h1>LEO Trainer Practice</h1><p>Review and rehearse Meet LEO before you run it for parents.</p><p class="small muted" style="margin-top:6px">Designed by Yi Liu</p></div>
+    <div class="score"><b id="score">0</b><span class="muted small" id="scorelab"></span></div>
+    <div class="rounds" id="rounds"></div>
+  </nav>
+  <main>
+    <section class="card" id="stage" aria-live="polite"></section>
+    <p class="foot">Practice for trainers who attended the Meet LEO train-the-trainer webinar by Digital4Good x Google.<br>Answers follow the Meet LEO training deck; check Google's help pages for current product settings.<br>Designed and developed by Yi Liu for Digital4Good x Google, October 2026. Please keep this credit when sharing or adapting.</p>
+  </main>
+</div>
+
+<script>
+const ICON = {
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5" stroke-linecap="round"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7zm0 4.5A2.5 2.5 0 1 0 12 11.5 2.5 2.5 0 0 0 12 6.5z"/></svg>'
+};
+
+const ROUNDS = [
+  {type:"safesearch", short:"SafeSearch defaults", title:"Label the SafeSearch defaults", max:2},
+  {type:"familylink", short:"Family Link", title:"A parent's worry: which part of Family Link helps?", max:4},
+  {type:"youtube", short:"YouTube for each family", title:"Which YouTube experience fits each family?", max:4},
+  {type:"recommend", short:"Recommend activities", title:"A parent wants ideas: what do you recommend?", max:5},
+  {type:"parentqa", short:"Parent questions", title:"Answer the parents' questions", max:5},
+  {type:"facilitate", short:"Facilitate the activity", title:"Facilitate a Family Conversations activity", max:7},
+  {type:"agenda", short:"Plan your session", title:"Which slides are optional? Then plan your session", max:16},
+  {type:"ready", short:"Ready check", title:"Are you ready to train parents?", max:0}
+];
+
+/* ---------- state ---------- */
+const KEY = "leo-practice-portfolio";
+/* far = furthest round unlocked; -1 means only Start here is open. It only moves forward,
+   so replaying a finished round does not lock the rounds after it. */
+const fresh = () => ({i:-1, r:{}, pre:null, far:-1});
+let st = fresh();
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s.i === "number") {
+  st = Object.assign(fresh(), s);
+  if (typeof s.far !== "number") {   // progress saved before locking existed: keep every round this person already reached
+    const seen = Object.keys(st.r).map(Number);
+    st.far = Math.max(st.pre ? 0 : -1, st.i, ...seen, ...seen.filter(k => st.r[k]?.done).map(k => Math.min(k + 1, ROUNDS.length - 1)));
+  }
+} } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+
+/* ---------- anonymous usage data ----------
+   Paste the Google Apps Script web app URL between the quotes. Leave empty to send nothing.
+   Sent: a random browser ID, rounds completed, self-check points, confidence ratings. Never names or emails. */
+const ENDPOINT = "";  // portfolio copy: sends nothing
+const TOOL_VERSION = "leo-practice-1.0";
+const SID = (() => { try { let id = localStorage.getItem("leo-practice-sid"); if (!id) { id = Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); localStorage.setItem("leo-practice-sid", id); } return id; } catch { return "nostore-" + Math.random().toString(36).slice(2, 10); } })();
+const CONF = ["safe","rules","explore","facil"];
+function track(event, extra = {}){
+  if (!ENDPOINT) return;
+  const avg = o => o ? +(CONF.reduce((a, k) => a + (o[k] || 0), 0) / 4).toFixed(2) : "";
+  const body = {session: SID, event, version: TOOL_VERSION, pre: st.pre || null, preAvg: avg(st.pre), ...extra};
+  try { fetch(ENDPOINT, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(body), keepalive: true}).catch(() => {}); } catch {}
+}
+let _finTimer = null;
+function trackFinish(post){
+  clearTimeout(_finTimer);
+  _finTimer = setTimeout(() => { const t = totals(); track("finish", {post, postAvg: +(CONF.reduce((a, k) => a + post[k], 0) / 4).toFixed(2), totalPts: t.p, totalMax: t.m}); }, 2500);
+}
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const qa = (sel, el = document) => [...el.querySelectorAll(sel)];
+const R0 = () => (st.r[st.i] ??= {pts:0, miss:[], done:false});
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
+
+/* scoring: a point for each item answered right on the first try */
+function right(item){ const r = R0(); r.got ??= []; if (!r.got.includes(item)) { r.got.push(item); if (!r.miss.includes(item)) r.pts++; } save(); renderMap(); }
+function wrong(item){ const r = R0(); if (!r.miss.includes(item)) r.miss.push(item); save(); }
+function finish(){ const r = R0(); const first = !r.done; r.done = true; st.far = Math.max(st.far, Math.min(st.i + 1, ROUNDS.length - 1)); save(); renderMap(); const rd = ROUNDS[st.i]; if (first && rd && rd.max) track("round", {round: st.i + 1, roundName: rd.short, pts: r.pts || 0, max: rd.max}); const n = $("next"); if (n) { n.disabled = false; n.classList.add("hint"); } }
+function note(el, html, kind = ""){ el.innerHTML = `<div class="note ${kind}">${html}</div>`; }
+function noteNext(el, html, label, onNext){
+  note(el, html);
+  const row = document.createElement("div"); row.className = "nextstep";
+  const b = document.createElement("button"); b.className = "btn primary"; b.textContent = label; b.onclick = onNext;
+  row.appendChild(b); el.appendChild(row); b.focus({preventScroll: true});
+}
+function bump(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+function pips(n, total){ return `<span class="pips">${Array.from({length:total}, (_, k) => `<i class="${k < n ? "on" : ""}"></i>`).join("")}</span>`; }
+function goal(label, n, total){ const g = $("stage").querySelector(".goal"); if (g) g.innerHTML = `${label} ${pips(n, total)}`; }
+
+function totals(){ let p = 0, m = 0; ROUNDS.forEach((r, i) => { m += r.max; p += st.r[i]?.pts || 0; }); return {p, m}; }
+function renderMap(){
+  const t = totals(); $("score").textContent = t.p; $("scorelab").textContent = `/ ${t.m} self-check points`;
+  const box = $("rounds"); box.innerHTML = "";
+  const sb = document.createElement("button"); sb.className = "rd"; sb.setAttribute("aria-current", String(st.i === -1));
+  sb.innerHTML = `<span class="s ${st.pre ? "ok" : ""}">0</span><span>Start here</span>`; sb.onclick = () => go(-1); box.appendChild(sb);
+  ROUNDS.forEach((r, i) => {
+    const s = st.r[i], b = document.createElement("button");
+    if (i > st.far) {
+      const need = i === 0 ? "Finish Start here" : `Finish round ${i}`;
+      b.className = "rd locked"; b.disabled = true; b.title = `${need} to unlock`;
+      b.setAttribute("aria-label", `Round ${i + 1}, ${r.short}: locked. ${need} to unlock.`);
+      b.innerHTML = `<span class="s">${ICON.lock}</span><span>${r.short}</span>`;
+      box.appendChild(b); return;
+    }
+    b.className = "rd"; b.setAttribute("aria-current", String(st.i === i));
+    const cls = !s?.done ? "" : (r.max === 0 || s.pts === r.max) ? "ok" : "mid";
+    b.innerHTML = `<span class="s ${cls}">${i + 1}</span><span>${r.short}</span>`;
+    b.onclick = () => go(i); box.appendChild(b);
+  });
+}
+function go(i){ st.i = Math.max(-1, Math.min(st.far, i)); save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+
+function shell(r, lead, inner){
+  $("stage").innerHTML = `
+    <div class="eyebrow muted">Round ${st.i + 1} of ${ROUNDS.length}</div>
+    <h2>${esc(r.title)}</h2>
+    ${lead ? `<p class="lead">${lead}</p>` : ""}
+    ${inner}
+    <div class="navrow">
+      <button class="btn" id="prev">Back</button>
+      <button class="btn" id="redo">Practice this round again</button>
+      ${st.i < ROUNDS.length - 1 ? `<button class="btn primary" id="next" ${R0().done || st.far > st.i ? "" : "disabled"}>Next round</button>` : "<span></span>"}
+    </div>`;
+  $("prev").onclick = () => go(st.i - 1);
+  $("redo").onclick = () => { st.r[st.i] = {pts:0, miss:[], done:false}; save(); render(); };
+  if ($("next")) $("next").onclick = () => go(st.i + 1);
+  renderMap();
+}
+
+/* drag-or-tap placement: [data-item] onto [data-bin] */
+function placeable(onPlace){
+  let sel = null;
+  document.querySelectorAll(".dragging").forEach(g => g.remove());
+  const targets = () => qa("[data-bin]");
+  const hit = (x, y) => targets().find(t => { const r = t.getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; });
+  const keep = (id, res) => { if (res !== false) return; sel = id; const el = qa("[data-item]").find(x => x.dataset.item === id); if (el) el.classList.add("sel"); };
+  const toggle = el => { qa("[data-item]").forEach(x => x.classList.remove("sel")); if (sel === el.dataset.item) { sel = null; return; } sel = el.dataset.item; el.classList.add("sel"); };
+  qa("[data-item]").forEach(el => {
+    let drag = null;   // {id, sx, sy, moved, x, y}
+    const snapBack = () => {
+      el.style.transition = "transform .25s cubic-bezier(.3,1.3,.5,1)"; el.style.transform = "";
+      setTimeout(() => { el.classList.remove("lifting"); el.style.transition = ""; }, 260);
+    };
+    const end = (e, cancelled) => {
+      if (!drag) return;
+      const d = drag; drag = null;
+      window.removeEventListener("pointerup", winUp); window.removeEventListener("blur", winBlur);
+      targets().forEach(b => b.classList.remove("hot"));
+      try { el.releasePointerCapture(d.id); } catch {}
+      if (!d.moved) { if (!cancelled) toggle(el); return; }
+      const x = e && e.clientX != null && !cancelled ? e.clientX : d.x, y = e && e.clientY != null && !cancelled ? e.clientY : d.y;
+      const t = hit(x, y);
+      if (t) { sel = null; el.style.transform = ""; el.classList.remove("lifting"); keep(el.dataset.item, onPlace(el.dataset.item, t)); }
+      else snapBack();
+    };
+    const winUp = e => end(e, false), winBlur = () => end(null, true);
+    el.onpointerdown = e => {
+      if (e.button > 0) return;
+      drag = {id: e.pointerId, sx: e.clientX, sy: e.clientY, x: e.clientX, y: e.clientY, moved: false};
+      try { el.setPointerCapture(e.pointerId); } catch {}
+      window.addEventListener("pointerup", winUp); window.addEventListener("blur", winBlur);
+    };
+    el.onpointermove = e => {
+      if (!drag) return;
+      drag.x = e.clientX; drag.y = e.clientY;
+      const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+      if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 6) { drag.moved = true; el.classList.add("lifting"); el.style.transition = "none"; }
+      if (drag.moved) {
+        el.style.transform = `translate(${dx}px, ${dy}px) rotate(-2deg)`;
+        const t = hit(e.clientX, e.clientY); targets().forEach(b => b.classList.toggle("hot", b === t));
+      }
+    };
+    el.onpointerup = e => end(e, false);
+    el.onpointercancel = () => end(null, true);
+    el.onlostpointercapture = () => { if (drag && drag.moved) end(null, false); };
+    el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(el); } };
+  });
+  targets().forEach(t => {
+    if (t._ph) t.removeEventListener("click", t._ph);
+    t._ph = e => { if (sel && !e.target.closest("[data-item]")) { const s2 = sel; sel = null; keep(s2, onPlace(s2, t)); } };
+    t.addEventListener("click", t._ph);
+    if (!t.hasAttribute("tabindex")) t.tabIndex = 0;
+    t.onkeydown = t.onkeydown || (e => { if ((e.key === "Enter" || e.key === " ") && sel) { e.preventDefault(); t._ph(e); } });
+  });
+}
+
+
+const RND = {
+/* 1 — recommend activities */
+recommend(r){
+  const ACT = {
+    ar:{tg:"Search AR", n:"An animal in your living room", how:"In the Google app, search “about [animal]” and tap View in 3D."},
+    lens:{tg:"Lens", n:"Homework help", how:"Snap the problem in the Google app with the homework filter. It guides step by step instead of just giving the answer."},
+    tr:{tg:"Lens Translate", n:"Translate walk", how:"Walk the neighborhood and translate signs together with Lens."},
+    maps:{tg:"Maps", n:"Famous building tour", how:"Pick a landmark and explore it in Maps immersive view."},
+    arts:{tg:"Arts & Culture", n:"Virtual field trip", how:"Use the Google Arts & Culture app to visit museums and historic places together."},
+    play:{tg:"Google Play", n:"Expert Approved apps", how:"Browse the Children tab: apps rated by teachers and children's media experts."},
+    yt:{tg:"YouTube", n:"Watch together", how:"When you hear your child laughing at a video, sit down and enjoy it with them."}
+  };
+  const PAR = [
+    {n:"Maria", c:"#C2541C", q:"My 7-year-old is obsessed with animals. Anything we could do together?", ok:["ar"], yes:"A tiger in our living room? She's going to scream. 😄",
+      no:{lens:"That's for homework, though. She just loves animals.", tr:"Hmm, she isn't learning a language.", play:"Maybe, but I'd love something we do together right now."}},
+    {n:"James", c:"#3B57C4", q:"My son's math homework is way past what I remember. I can't help him anymore.", ok:["lens"], yes:"Step by step, so he still does the thinking. Perfect.",
+      no:{ar:"Fun, but it won't help with fractions tonight.", yt:"He'd love that, but it won't get the homework done."}},
+    {n:"Priya", c:"#1F7A5A", q:"He's taking Spanish at school and hates practicing.", ok:["tr"], yes:"Turning it into a walk might actually work!",
+      no:{lens:"It's not homework he's stuck on, he just finds practice boring.", maps:"Hmm, I need something for the language part."}},
+    {n:"Dev", c:"#7A3FC4", q:"My daughter keeps asking about faraway places. We can't travel much right now.", ok:["maps","arts"], yes:"We can “visit” places from the couch. Love it.",
+      no:{tr:"She's curious about places, not languages.", play:"I'd rather explore with her than hand her another app."}},
+    {n:"Ana", c:"#B3382E", q:"There are so many kids' apps. How do I find ones that are actually good for him?", ok:["play"], yes:"Rated by teachers? That saves me so much time.",
+      no:{yt:"I'm asking about apps, not videos.", lens:"That's one tool, but I mean apps in general."}}
+  ];
+  const S = R0(); S.k ??= 0; S.served ??= [];
+  shell(r, "Parents in your session ask for ideas. <strong>Drag an activity card to the parent</strong> (or tap a card, then tap the parent).",
+    `<div class="goal"></div><div id="pc"></div>
+    <div class="acts">${Object.entries(ACT).map(([k, a]) => `<button class="chipc act" data-item="${k}"><span class="tg">${a.tg}</span><span class="nm">${a.n}</span></button>`).join("")}</div>
+    <div class="served" id="served"></div><div id="out"></div>`);
+  const tally = () => {
+    goal("Parents helped", S.k, PAR.length);
+    $("served").innerHTML = S.served.map(([n, a]) => `<span>${esc(n)} → ${esc(ACT[a].n)}</span>`).join("");
+  };
+  const draw = () => {
+    tally();
+    if (S.k >= PAR.length) {
+      $("pc").innerHTML = "";
+      note($("out"), "Every parent left with something to try. In your session, connect each idea to the child's interest, show how it works, and encourage families to explore <strong>together</strong>. That's the heart of Exploring responsibly.");
+      finish(); return;
+    }
+    const pa = PAR[S.k];
+    $("pc").innerHTML = `<div class="parentcard" data-bin="parent"><span class="av" style="background:${pa.c}">${pa.n[0]}</span><div><div class="small" style="font-weight:800">${pa.n}</div><div class="bub" id="pb">${esc(pa.q)}</div><div class="bub answer" id="pr" hidden></div><div class="drop" id="pd">Drop an activity here</div></div></div>`;
+    placeable(drop);
+  };
+  /* the parent's reply stays on screen under their question: until the next try if it missed,
+     until the trainer moves on if it fit */
+  let busy = false;
+  const answer = (txt, yes) => {
+    const pr = $("pr"); pr.hidden = false; pr.textContent = txt; pr.classList.toggle("yes", yes);
+    pr.style.animation = "none"; void pr.offsetWidth; pr.style.animation = "";
+  };
+  const drop = (id, bin) => {
+    if (busy) return;
+    qa(".chipc.sel").forEach(x => x.classList.remove("sel"));
+    const pa = PAR[S.k], card = $("pc").firstElementChild;
+    if (!pa.ok.includes(id)) {
+      wrong(S.k); bump(card);
+      answer(pa.no[id] || "Hmm, I'm not sure that fits what I asked.", false);
+      $("pd").textContent = "Drop a different activity here";
+      note($("out"), "Listen for the child's interest or the parent's real need, then match the activity to it.", "warn");
+      return;
+    }
+    busy = true;
+    right(S.k); answer(pa.yes, true);
+    card.classList.add("answered"); card.removeAttribute("data-bin"); $("pd").hidden = true;
+    S.served.push([pa.n, id]); S.k++; save(); tally();
+    noteNext($("out"), `<strong>Good match.</strong> How to explain it: ${esc(ACT[id].how)}`,
+      S.k >= PAR.length ? "Finish this round" : "Next parent",
+      () => { busy = false; qa(".chipc.sel").forEach(x => x.classList.remove("sel")); $("out").innerHTML = ""; draw(); });
+  };
+  draw();
+},
+
+/* 2 — safesearch defaults */
+safesearch(r){
+  const L = [{id:"kid", t:"Default for under-18s", ans:"filter"}, {id:"adult", t:"Default for adults & signed-out users", ans:"blur"}];
+  const S = R0(); S.p ??= {};
+  const M = {off:"Shows all relevant results", blur:"Blurs explicit thumbnails and images", filter:"Filters out explicit content"};
+  shell(r, "<strong>Drag each label</strong> onto the SafeSearch setting it describes.",
+    `<div class="goal"></div><div class="tray" id="tray"></div>
+    <div class="ssrow">${["off","blur","filter"].map(m => `<div class="ss" data-bin="${m}"><b>${m[0].toUpperCase() + m.slice(1)}</b>
+      <div class="thumbs"><span class="th"></span><span class="th x ${m === "blur" ? "blur" : m === "filter" ? "gone" : ""}"></span><span class="th"></span></div>
+      <span class="small muted">${M[m]}</span><div class="tray" id="s-${m}"></div></div>`).join("")}</div>
+    <div id="out"></div>`);
+  const draw = () => {
+    $("tray").innerHTML = L.filter(l => !S.p[l.id]).map(l => `<button class="chipc" data-item="${l.id}">${esc(l.t)}</button>`).join("") || `<span class="muted small">Both placed.</span>`;
+    ["off","blur","filter"].forEach(m => $("s-" + m).innerHTML = L.filter(l => S.p[l.id] === m).map(l => `<span class="chipc placed">${esc(l.t)}</span>`).join(""));
+    goal("Labels placed", Object.keys(S.p).length, 2);
+    placeable(drop);
+    if (Object.keys(S.p).length === 2) { note($("out"), "Right. Parents and schools can also <strong>lock Filter on</strong> for supervised kids. Tip for your session: tell parents to search “Google parental controls” to see their child's settings."); finish(); }
+  };
+  const drop = (id, bin) => {
+    const l = L.find(x => x.id === id);
+    if (l.ans !== bin.dataset.bin) { wrong(id); bump(bin); note($("out"), "Not that one. Remember: kids get the strongest protection by default, and grown-ups get a middle setting. <strong>Tap another setting</strong> to move the label.", "warn"); return false; }
+    right(id); S.p[id] = l.ans; save(); $("out").innerHTML = ""; draw();
+  };
+  draw();
+},
+
+/* 3 — family link recall */
+familylink(r){
+  const W = [
+    {w:"“My son is on his tablet until midnight.”", a:"time", e:"Screen time limits and downtime can lock the device at night."},
+    {w:"“She downloaded a game I'd never heard of.”", a:"apps", e:"Require approval for downloads and set rating limits for apps and games."},
+    {w:"“He keeps finding things he shouldn't on Search.”", a:"search", e:"Manage SafeSearch and content settings from Family Link."},
+    {w:"“I worry when she walks home from practice.”", a:"map", e:"See your child's location when they have their device with them."}
+  ];
+  const APPS = {time:{n:"Screen time", ic:"clock", c:"var(--rules)", bg:"var(--rules-soft)"}, apps:{n:"App approvals", ic:"bag", c:"var(--explore)", bg:"var(--explore-soft)"}, search:{n:"Content settings", ic:"shield", c:"var(--safe)", bg:"var(--safe-soft)"}, map:{n:"Location", ic:"pin", c:"#B3382E", bg:"#FBE4E1"}};
+  const S = R0(); S.k ??= 0;
+  shell(r, "A parent shares a worry. <strong>Tap the part of Family Link</strong> you'd show them.",
+    `<div class="goal"></div>
+    <div class="scene" style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center">
+      <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:10px"><div class="who muted">Parent in your session</div><div id="wq"></div><div id="out"></div></div>
+      <div class="phone"><div class="screen"><div class="sbar"><span>9:41</span><span>Family Link</span></div>
+        <div class="home">${Object.entries(APPS).map(([k, a]) => `<button class="app" data-k="${k}"><span class="ic" style="background:${a.bg};color:${a.c}">${ICON[a.ic]}</span>${a.n}</button>`).join("")}</div></div></div>
+    </div>`);
+  const draw = () => {
+    goal("Worries solved", S.k, 4);
+    qa(".app").forEach(b => b.classList.remove("right"));
+    if (S.k >= 4) { $("wq").innerHTML = `<div class="worry">Thanks, that covers everything!</div>`; finish(); return; }
+    $("wq").innerHTML = `<div class="worry">${esc(W[S.k].w)}</div>`;
+  };
+  let waiting = false;
+  qa(".app").forEach(b => b.onclick = async () => {
+    if (S.k >= 4 || waiting) return;
+    const w = W[S.k];
+    if (b.dataset.k !== w.a) { wrong(S.k); bump(b); note($("out"), "That feature won't solve this one. Try another.", "warn"); return; }
+    right(S.k); b.classList.add("right"); S.k++; save(); goal("Worries solved", S.k, 4);
+    if (S.k >= 4) { note($("out"), esc(w.e)); await wait(1100); draw(); return; }  // the last explanation stays with the closing message
+    waiting = true;
+    noteNext($("out"), esc(w.e), "Next parent", () => { waiting = false; $("out").innerHTML = ""; draw(); });
+  });
+  draw();
+},
+
+/* 3 — youtube for each family */
+youtube(r){
+  const O = {
+    kids:{n:"YouTube Kids", d:"A separate app built from the ground up for kids, with a much smaller set of family-friendly videos and tools for parents.", age:"Designed for kids under 13."},
+    sup:{n:"Supervised experience", d:"The main YouTube app, with content settings, parental controls and wellbeing protections for kids ready to explore more.", age:"For kids under 13, or families who choose to keep using it."},
+    teen:{n:"Teen supervised experience", d:"Supervision designed for teens, plus safeguards that vary recommendations if a teen watches many similar videos in a row.", age:"For ages 13 to 17."}
+  };
+  const K = [
+    {id:"leo", n:"Leo, 6", c:"#C2541C", ctx:"Just started watching videos on the family tablet. His mom wants a simple space with only family-friendly videos.", ok:"kids",
+      yes:"A separate, simpler app with a much smaller set of videos is exactly what a 6-year-old's first steps need.",
+      no:{sup:"The main YouTube app is a big step for a first-time viewer. Mom asked for a simple space with a small set of videos.", teen:"Teen supervision is built for 13 to 17. Leo is 6."}},
+    {id:"mia", n:"Mia, 11", c:"#3B57C4", ctx:"Says the kids' app is “for babies” and wants real YouTube for science channels. Her dad thinks she's ready but wants to tailor what she sees.", ok:"sup",
+      yes:"Supervised experience is for parents who decide their child is ready for the main app but want to tailor it.",
+      no:{kids:"That's the app Mia says she's outgrown. Her dad already thinks she's ready for more.", teen:"Mia is 11. Teen supervision starts at 13."}},
+    {id:"sam", n:"Sam, 15", c:"#1F7A5A", ctx:"Uses YouTube every day for music and gaming. His parents want to stay involved without treating him like a little kid.", ok:"teen",
+      yes:"Teen supervision is designed for 13 to 17. It keeps parents involved in a way that fits a teenager.",
+      no:{kids:"YouTube Kids is designed for under-13s. Sam would never accept it at 15.", sup:"The supervised experience is aimed at under-13s. There's an option designed for teens."}},
+    {id:"ava", n:"Ava, 9", c:"#7A3FC4", ctx:"Loves animal videos. Her grandma is setting up Ava's first device and worries she'll stumble onto something upsetting.", ok:"kids",
+      yes:"For a first device and a nervous grandparent, a separate app with a much smaller, filtered set of videos gives the most peace of mind.",
+      no:{sup:"It's an option for her age, but it opens the broad main app. Grandma's worry points to the smallest, most filtered option.", teen:"Ava is 9. Teen supervision starts at 13."}}
+  ];
+  const S = R0(); S.p ??= {};
+  shell(r, "Read each family's story. <strong>Drag the child</strong> (or tap them, then tap an option) to the YouTube experience you'd recommend.",
+    `<div class="goal"></div><div class="tray kidsrow" id="tray"></div>
+    <div class="bins">${Object.entries(O).map(([k, o]) => `<div class="bin b-rules" data-bin="${k}"><h3>${o.n}</h3><span class="small muted">${o.d}</span><div class="tray" id="y-${k}" style="flex-direction:column"></div></div>`).join("")}</div>
+    <div id="out"></div>`);
+  const card = k => `<span class="who2"><span class="av2" style="background:${k.c}">${k.n[0]}</span><b style="font-size:16px">${esc(k.n)}</b></span>`;
+  const draw = () => {
+    $("tray").innerHTML = K.filter(k => !S.p[k.id]).map(k => `<button class="chipc story" data-item="${k.id}">${card(k)}<span class="ctx">${esc(k.ctx)}</span></button>`).join("") || `<span class="muted small">Every family has a recommendation.</span>`;
+    Object.keys(O).forEach(o => $("y-" + o).innerHTML = K.filter(k => S.p[k.id] === o).map(k => `<span class="chipc placed story">${card(k)}</span>`).join(""));
+    goal("Families helped", Object.keys(S.p).length, K.length);
+    placeable(drop);
+    if (Object.keys(S.p).length === K.length) {
+      note($("out"), `All four families have a fit. Quick recap: ${Object.values(O).map(o => `<strong>${o.n}</strong>: ${o.age}`).join(" ")} Remind parents they can manage YouTube settings in <strong>Family Link</strong>, and that the goal is choosing what's right for each child.`);
+      finish();
+    }
+  };
+  const drop = (id, bin) => {
+    const k = K.find(x => x.id === id), b = bin.dataset.bin;
+    if (k.ok !== b) { wrong(id); bump(bin); note($("out"), `${esc(k.no[b] || "Not the best fit for this family.")} <strong>Tap another option</strong> to move ${esc(k.n.split(",")[0])}.`, "warn"); return false; }
+    right(id); S.p[id] = b; save(); note($("out"), `<strong>Good fit.</strong> ${esc(k.yes)} <span class="muted">(${O[b].age})</span>`); draw();
+  };
+  draw();
+},
+
+/* 5 — parent Q&A */
+parentqa(r){
+  const Q = [
+    {q:"I don't have Gmail. Can I still use any of this?", o:[
+      {t:"If you have Gmail you already have a Google account. If not, you can create one, and the resource guide shows how, including adding a child account. Let's do that after the session.", ok:true, c:"Matches the deck: reassure them, point to the resource guide, and don't spend session time troubleshooting accounts."},
+      {t:"Let's pause and set up your account together right now.", c:"The deck advises not to spend too much time troubleshooting accounts. Point to the guide and keep going."},
+      {t:"You'll need your child's account to sign in.", c:"Parents use their own Google account and add a separate child account to supervise."}]},
+    {q:"Is SafeSearch on for my 12-year-old, or do I have to turn it on?", o:[
+      {t:"Filter is already on by default for under-18s, and you can lock it on for a supervised account. Search “Google parental controls” to check.", ok:true, c:"Exactly what the deck teaches: default for kids, can be locked, easy to check."},
+      {t:"You'll need to turn it on yourself in settings.", c:"For under-18s it's on by default already."},
+      {t:"Kids get Blur by default.", c:"Blur is the default for adults and signed-out users. Kids get Filter."}]},
+    {q:"Our family uses iPhones. Does Family Link work for us?", o:[
+      {t:"Yes. Family Link is available on iOS and Android. Some controls, like Play Store approvals, apply on Android devices.", ok:true, c:"Right. The deck says the app is on both, and the Play Store controls are for Android."},
+      {t:"No, it only works on Android phones.", c:"Family Link is available for both iOS and Android."},
+      {t:"Only if your child also has a Gmail address they made themselves.", c:"Parents set up a supervised child account. The child doesn't need to create one alone."}]},
+    {q:"Can my daughter trust what AI Overviews tells her?", o:[
+      {t:"AI can make mistakes. AI Overviews include links to sources, and under-18s see a reminder to double-check important info. Check sources together.", ok:true, c:"Balanced and accurate: it names the safeguards and keeps the parent involved."},
+      {t:"Yes, it's built on Google's systems, so it's always correct.", c:"Grounded doesn't mean always right. The deck stresses that AI can still make mistakes."},
+      {t:"No. It's best to block AI completely.", c:"The deck encourages exploring responsibly and talking about AI, not avoiding it."}]},
+    {q:"My 15-year-old says YouTube Kids is for babies. What now?", o:[
+      {t:"There's a teen supervised experience for ages 13 to 17, with parental controls, that you can set up together.", ok:true, c:"Right option for the age, and it keeps it a shared decision."},
+      {t:"Keep them on YouTube Kids until they're 18.", c:"YouTube Kids is designed for under-13s."},
+      {t:"There's nothing for teens, so just trust them.", c:"The teen supervised experience exists for exactly this age."}]}
+  ];
+  const S = R0(); S.k ??= 0; S.h ??= [];
+  shell(r, "You're the trainer. Parents ask questions in the chat. <strong>Tap the best answer.</strong>",
+    `<div class="goal"></div><div class="chat" id="chat"></div><div class="replies" id="rep"></div>`);
+  const chat = $("chat"), rep = $("rep");
+  const add = (cls, html, who) => chat.insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${who ? `<div class="who">${who}</div>` : ""}${html}</div>`);
+  const typing = async () => { const t = document.createElement("div"); t.className = "typing"; t.innerHTML = "<i></i><i></i><i></i>"; chat.appendChild(t); await wait(800); t.remove(); };
+  const showReplies = () => {
+    goal("Questions answered", S.k, 5);
+    if (S.k >= 5) { rep.innerHTML = ""; add("coach", "<strong>All five handled.</strong> These come up often in parent sessions. Keep answers short and accurate, and point parents back to the resource guide."); finish(); return; }
+    const tried = S.h.filter(([k]) => k === S.k).map(([, j]) => j);
+    rep.innerHTML = Q[S.k].o.map((o, j) => `<button class="reply ${tried.includes(j) ? "tried" : ""}" data-j="${j}">${esc(o.t)}</button>`).join("");
+    qa(".reply").forEach(b => b.onclick = () => pick(+b.dataset.j));
+  };
+  let busy = false;
+  const pick = async j => {
+    if (busy) return; busy = true;
+    const k = S.k, o = Q[k].o[j]; S.h.push([k, j]); save(); rep.innerHTML = "";
+    add("me", esc(o.t));
+    if (o.ok) {
+      right(k); add("coach", "<strong>Good answer.</strong> " + esc(o.c)); S.k++; save();
+      if (S.k < 5) { await typing(); add("parent", esc(Q[S.k].q), "Parent"); }
+    } else { wrong(k); add("coach warn", esc(o.c) + " <strong>Try again.</strong>"); }
+    showReplies(); busy = false;
+  };
+  for (let k = 0; k <= Math.min(S.k, 4); k++) {
+    add("parent", esc(Q[k].q), "Parent");
+    S.h.filter(([x]) => x === k).forEach(([, j]) => { const o = Q[k].o[j]; add("me", esc(o.t)); add(o.ok ? "coach" : "coach warn", esc(o.c)); });
+  }
+  showReplies();
+},
+
+/* 6 — facilitation simulation */
+facilitate(r){
+  const P = {M:{n:"Maria", c:"#C2541C"}, J:{n:"James", c:"#3B57C4"}, Y:{n:"Priya", c:"#1F7A5A"}, D:{n:"Dev", c:"#7A3FC4"}};
+  const PH = ["Set the scene","Start","Listen","Partner","Wrap up"];
+  const D = [
+    {ph:0, prompt:"Open the activity. What do you say first?", o:[
+      {t:"“Picture this: on the way to soccer practice, your child says they're exhausted, and you know they were up late watching videos.”", ok:true,
+        after:[["J","Ha, that's literally my house on Tuesdays."],["Y","👍"]], rx:{J:"😂", Y:"👍"},
+        c:"An everyday moment makes it real. The deck suggests ordinary times like dinner or the drive to school."},
+      {t:"“Today let's review what the research says about screen time and sleep.”", rx:{M:"🥱", D:"🥱"}, after:[["sys","(the chat goes quiet)"]],
+        c:"That turns the activity into a lecture. Start from a familiar moment parents can picture."},
+      {t:"“Be honest: who lets their kids keep phones in bed?”", rx:{M:"😬", J:"😬"}, after:[["sys","(two cameras turn off)"]],
+        c:"It feels like a judgment, so parents get defensive. Set up a shared moment instead."}]},
+    {ph:1, prompt:"Now ask the group the first question.", o:[
+      {t:"“In that moment, what's a question you could ask to start a conversation about tech ground rules?”", ok:true,
+        after:[["Y","“Do you feel like you're getting enough sleep?”"],["D","“When I stay up late on my phone I can't fall asleep. Does that happen to you?”"],["M","“Why were you up so late?!”"]],
+        c:"That's the deck's first question, word for word. Parents brainstorm openers, which is the skill they'll use at home."},
+      {t:"“What rule should you set after that?”", rx:{J:"🤔"}, after:[["J","Uh, no phones after 9?"],["sys","(nobody else answers)"]],
+        c:"This skips the conversation and jumps to rules. Start with how to open the conversation."},
+      {t:"“Would you take the phone away? Yes or no?”", rx:{M:"🤷", D:"🤷"}, after:[["M","Yes?"],["D","No?"]],
+        c:"A closed question ends the discussion fast. Ask an open question that invites ideas."}]},
+    {ph:1, prompt:"Maria typed “Why were you up so late?!” How do you respond?", o:[
+      {t:"“Thanks, Maria, that's such a natural reaction. How might a child hear that question? Can anyone think of a way to ask it that helps them open up?”", ok:true,
+        after:[["M","Fair, they'd probably get defensive. 😅"],["Y","Maybe start with how they're feeling?"]], rx:{M:"😅"},
+        c:"You thanked her, then turned it into learning for the whole group. Nobody gets shamed and everyone thinks harder."},
+      {t:"“That's the wrong approach, Maria.”", rx:{M:"😶"}, after:[["sys","(Maria stops typing)"]],
+        c:"Correcting someone publicly shuts them, and the group, down. Validate first, then invite the group to reframe."},
+      {t:"(Skip it and go to the next question.)", after:[["M","…was mine wrong?"]], rx:{M:"🤔"},
+        c:"That's a missed teaching moment, and Maria is left wondering. Use it."}]},
+    {ph:2, prompt:"Time for the second question.", o:[
+      {t:"“What do you think you might hear in response?”", ok:true,
+        after:[["J","“I can't get more sleep, I have so much homework!”"],["D","“I like watching videos at night. It's the studying that's keeping me up.”"]],
+        c:"The deck's second question. Rehearsing pushback helps parents stay calm when it happens for real."},
+      {t:"“Great, let's move on to setting up Family Link.”", rx:{Y:"🤔"}, after:[["Y","Wait, are we done with this?"]],
+        c:"You skipped two of the three questions. The activity is designed to run all three."},
+      {t:"“Kids should just listen to us, right?”", rx:{D:"😬"}, after:[["D","Mine definitely doesn't. 😂"]],
+        c:"This ends the discussion instead of preparing parents for real reactions."}]},
+    {ph:2, prompt:"Priya has her hand up but hasn't spoken. Several parents seem to have tried this at home.", hand:"Y", o:[
+      {t:"“Priya, I see your hand. Has a conversation like this worked, or not worked, in your home?”", ok:true,
+        after:[["Y","We tried a no-phones-at-dinner rule. It only stuck when I followed it too."],["J","Same! The kids called me out immediately."]], rx:{Y:"🙋", J:"💯"},
+        c:"The deck invites the group to add personal perspective on what has or hasn't worked at home. Real stories are the most persuasive part."},
+      {t:"(Keep going. You're short on time.)", after:[["sys","(Priya lowers her hand)"]],
+        c:"A raised hand ignored is a voice lost. Personal stories are what make this activity land."},
+      {t:"“Let's keep personal stories out of it and stay on the slides.”", rx:{Y:"😕"}, after:[["sys","(Priya lowers her hand)"]],
+        c:"The deck encourages personal perspectives. They're what turn tips into habits."}]},
+    {ph:3, prompt:"Ask the third question.", o:[
+      {t:"“What could you suggest to partner with your child on this?”", ok:true,
+        after:[["D","Charge all our phones in the living room, mine too."],["M","No screens 30 minutes before bed. Try it for two weeks and see."]],
+        c:"The third question moves from talking to a plan the family makes together."},
+      {t:"“So the answer is: turn on downtime in Family Link.”", rx:{J:"🤔"}, after:[["J","Should we tell them first though?"]],
+        c:"The tool can help, but this skips partnering. Parents should also be open about any controls they use."},
+      {t:"“Any other complaints your kids make?”", rx:{M:"😂"}, after:[["M","How long do you have? 😂"]],
+        c:"Fun, but it drifts. The final question is about partnering."}]},
+    {ph:4, prompt:"Wrap up the activity.", o:[
+      {t:"“Notice how many of these ideas include us too. Most of us struggle with tech time, so keep ground rules about the whole family.”", ok:true,
+        after:[["Y","👏"],["J","Guilty. 🙋"],["M","Trying the living-room charger this week!"]], rx:{Y:"👏", J:"🙋", M:"💡", D:"👍"},
+        c:"That's the closing message from the deck: tech habits are a family issue, adults included."},
+      {t:"“Great. Now make sure your kids follow these rules.”", rx:{D:"🤨"}, after:[["D","Just the kids?"]],
+        c:"This undoes the point of the activity. Make it about the whole family."},
+      {t:"“We're out of time, moving on.”", after:[["sys","(the ideas are left hanging)"]],
+        c:"Even 20 seconds to land the key message makes the activity stick."}]}
+  ];
+  const S = R0(); S.k ??= 0; S.h ??= []; S.e ??= 50;
+  shell(r, "You're the trainer. Four parents are in your virtual session. <strong>Choose what to say</strong> at each moment and watch how the group responds.",
+    `<div class="goal"></div><div class="phase" id="ph">${PH.map(p => `<span>${p}</span>`).join("")}</div>
+    <div class="room">
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+        <div class="tiles">${Object.entries(P).map(([k, p]) => `<div class="tile" id="t-${k}"><span class="face" style="background:${p.c}">${p.n[0]}</span><span class="nm">${p.n}</span></div>`).join("")}
+          <div class="tile you"><span class="face">You</span><div><div class="small muted" id="prompt"></div><div class="said" id="said"></div></div></div></div>
+        <div class="say" id="say"></div>
+      </div>
+      <div class="side">
+        <div class="engage"><div class="small" style="font-weight:800;display:flex;justify-content:space-between"><span>Group engagement</span><span id="ev"></span></div><div class="bar"><i id="eb"></i></div></div>
+        <div class="zchat" id="zc"><div class="sys">Session chat</div></div>
+      </div>
+    </div>
+    <div id="out"></div>`);
+  const zc = $("zc");
+  const chatLine = (who, txt) => { zc.insertAdjacentHTML("beforeend", who === "sys" ? `<div class="ln sys">${esc(txt)}</div>` : `<div class="ln"><b style="color:${P[who].c}">${P[who].n}:</b> ${esc(txt)}</div>`); zc.scrollTop = zc.scrollHeight; };
+  const tiles = (rx = {}, talk = []) => Object.keys(P).forEach(k => { const t = $("t-" + k); t.classList.toggle("talk", talk.includes(k)); t.querySelectorAll(".rx,.hand").forEach(x => x.remove()); if (rx[k]) t.insertAdjacentHTML("beforeend", `<span class="rx">${rx[k]}</span>`); });
+  const meter = () => { $("eb").style.width = S.e + "%"; $("ev").textContent = S.e >= 75 ? "High" : S.e >= 45 ? "Okay" : "Low"; };
+  const phases = () => qa("#ph span").forEach((sp, i) => { const cur = S.k < D.length ? D[S.k].ph : 5; sp.classList.toggle("on", i === cur); sp.classList.toggle("done", i < cur); });
+  const show = () => {
+    goal("Facilitation moves", S.k, D.length); phases(); meter();
+    if (S.k >= D.length) {
+      $("prompt").textContent = ""; $("say").innerHTML = "";
+      note($("out"), `<strong>Activity complete.</strong> You ran all three questions: <em>start</em>, <em>listen</em>, <em>partner</em>. You also turned a weak answer into group learning, brought in a quiet voice, and closed on the family message. Ending engagement: <strong>${S.e >= 75 ? "high" : S.e >= 45 ? "okay" : "low"}</strong>.`);
+      finish(); return;
+    }
+    const d = D[S.k]; $("prompt").textContent = d.prompt;
+    if (d.hand) $("t-" + d.hand).insertAdjacentHTML("beforeend", `<span class="hand">✋ hand raised</span>`);
+    const tried = S.h.filter(([k]) => k === S.k).map(([, j]) => j);
+    $("say").innerHTML = d.o.map((o, j) => `<button class="sayb ${tried.includes(j) ? "tried" : ""}" data-j="${j}">${esc(o.t)}</button>`).join("");
+    qa(".sayb").forEach(b => b.onclick = () => pick(+b.dataset.j));
+  };
+  let busy = false;
+  const pick = async j => {
+    if (busy) return; busy = true;
+    const k = S.k, o = D[k].o[j]; S.h.push([k, j]); save();
+    $("say").innerHTML = "";
+    const said = $("said"); said.textContent = "";
+    for (const ch of o.t) { said.textContent += ch; if (!RM && ch !== " ") await wait(8); }
+    await wait(300);
+    tiles(o.rx || {}, []);
+    for (const [who, txt] of o.after || []) { if (who !== "sys") tiles(o.rx || {}, [who]); await wait(650); chatLine(who, txt); }
+    tiles(o.rx || {}, []);
+    S.e = Math.max(5, Math.min(100, S.e + (o.ok ? 8 : -12)));
+    if (o.ok) { right(k); note($("out"), "<strong>Good move.</strong> " + esc(o.c)); S.k++; }
+    else { wrong(k); note($("out"), esc(o.c) + " <strong>Try a different move.</strong>", "warn"); }
+    save(); busy = false; show();
+  };
+  // replay finished moves silently
+  for (let k = 0; k < S.k; k++) { const okj = S.h.filter(([x]) => x === k).map(([, j]) => j).find(j => D[k].o[j].ok); const o = D[k].o[okj ?? 0]; (o.after || []).forEach(([w, t]) => chatLine(w, t)); }
+  if (S.k > 0 && S.k <= D.length) { const last = D[S.k - 1].o.find(o => o.ok); $("said").textContent = last.t; }
+  show();
+},
+
+/* 7 — agenda */
+agenda(r){
+  const SL = [
+    {t:"Icebreaker", opt:true}, {t:"Search quiz: 15% new", opt:true}, {t:"Google account setup", opt:false},
+    {t:"SafeSearch", opt:false}, {t:"Conversation activity: online safety", opt:true}, {t:"Family Link", opt:false},
+    {t:"YouTube options", opt:false}, {t:"Conversation activity: ground rules", opt:true}, {t:"AI & AI in Search", opt:false},
+    {t:"Gemini for young learners", opt:true}, {t:"Expert Approved apps", opt:false}, {t:"AR & Arts and Culture", opt:true},
+    {t:"Translate with Lens", opt:true}, {t:"Maps immersive view", opt:true}, {t:"Lens homework help", opt:true}, {t:"Resources QR code", opt:false}
+  ];
+  const S = R0(); S.f ??= []; S.inc ??= [];
+  shell(r, S.checked ? "Now build <strong>your</strong> session: tap optional slides to include or skip them. Core slides always stay in."
+      : "The parent session runs about 15 minutes, with optional slides if you have more time. <strong>Tap every slide you think the deck marks as optional</strong>, then check.",
+    `<div class="goal"></div>
+    <div class="strip">${SL.map((s, k) => `<button class="sl" data-k="${k}"><span class="tg muted">Slide</span>${esc(s.t)}</button>`).join("")}</div>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn primary" id="chk" ${S.checked ? "hidden" : ""}>Check my picks</button><span class="muted small" id="cnt"></span></div>
+    <div id="out"></div>`);
+  const paint = () => {
+    qa(".sl").forEach(b => {
+      const k = +b.dataset.k, s = SL[k];
+      b.classList.toggle("flag", !S.checked && S.f.includes(k));
+      if (S.checked) {
+        b.classList.toggle("r-ok", S.f.includes(k) === s.opt); b.classList.toggle("r-miss", S.f.includes(k) !== s.opt);
+        b.querySelector(".tg").textContent = s.opt ? (S.inc.includes(k) ? "Optional · included" : "Optional · skipped") : "Core";
+        b.classList.toggle("out", s.opt && !S.inc.includes(k)); b.classList.toggle("core-lock", !s.opt);
+      }
+    });
+    if (S.checked) {
+      const n = SL.filter((s, k) => !s.opt || S.inc.includes(k)).length;
+      $("cnt").textContent = `${n} slides in your session (${SL.filter(s => !s.opt).length} core + ${S.inc.length} optional)`;
+      goal("Correct guesses", S.pts ?? 0, 16);
+    } else goal("Flagged as optional", S.f.length, SL.filter(s => s.opt).length);
+  };
+  qa(".sl").forEach(b => b.onclick = () => {
+    const k = +b.dataset.k;
+    if (!S.checked) { S.f = S.f.includes(k) ? S.f.filter(x => x !== k) : [...S.f, k]; save(); paint(); return; }
+    if (!SL[k].opt) { bump(b); note($("out"), "That's a core slide, so it stays in every session.", "warn"); return; }
+    S.inc = S.inc.includes(k) ? S.inc.filter(x => x !== k) : [...S.inc, k]; save(); paint();
+  });
+  $("chk").onclick = () => {
+    S.checked = true; let pts = 0; SL.forEach((s, k) => { if (S.f.includes(k) === s.opt) pts++; });
+    S.pts = pts; save(); finish(); render();
+  };
+  if (S.checked) note($("out"), `You classified <strong>${S.pts} of 16</strong> slides correctly (dashed outlines are the ones to review). The icebreaker, quiz and conversation activities are optional depending on time, and so are Gemini and the explore-together tools.`);
+  paint();
+},
+
+/* 8 — readiness */
+ready(r){
+  const topics = [["safe","Being safe & SafeSearch"],["rules","Ground rules, Family Link & YouTube"],["explore","Exploring responsibly & AI"],["facil","Running the conversation activities"]];
+  const prep = ["Explore the resources and products myself before my session","Set up a test Google account and child account in Family Link","Have the parent resource guide link or QR code ready","Choose which optional slides fit my time","Prepare a real everyday moment to open a Family Conversations activity"];
+  const S = R0(); S.c ??= {...(st.pre || {safe:3, rules:3, explore:3, facil:3})}; S.p ??= [];
+  const LV = ["", "Not yet", "Shaky", "Okay", "Confident", "Could teach it"];
+  const t = totals(), done = ROUNDS.slice(0, -1).filter((_, i) => st.r[i]?.done).length;
+  const weak = ROUNDS.map((x, i) => ({x, i, s: st.r[i]})).filter(o => o.x.max && o.s?.done && o.s.pts < o.x.max);
+  shell(r, st.pre ? "Rate your confidence again and compare it with where you started. Then replay any round you'd like to strengthen and tick off your prep list." : "Rate your confidence, replay any round you'd like to strengthen, and tick off your prep list.",
+    `<div class="scene" style="display:flex;flex-direction:column;gap:12px">
+      <div class="row" style="display:flex;gap:24px;flex-wrap:wrap;align-items:baseline"><div><div class="eyebrow muted">Self-check score</div><b style="font-family:var(--display);font-size:40px">${t.p} / ${t.m}</b></div>
+      <div class="muted">${done} of ${ROUNDS.length - 1} rounds completed</div></div>
+      ${weak.length ? `<div><div class="small" style="font-weight:800;margin-bottom:6px">Worth another try</div><div class="review">${weak.map(o => `<button class="rv" data-i="${o.i}">${o.x.short} · ${o.s.pts}/${o.x.max}</button>`).join("")}</div></div>` : done ? `<div class="small" style="font-weight:800">Every completed round was perfect on the first try.</div>` : ""}
+    </div>
+    <div class="sliders">${topics.map(([k, n]) => `<div class="sld"><label for="c-${k}"><span>${n}</span><span><span class="muted small" style="font-weight:700">${st.pre ? `Before: ${LV[st.pre[k]]} · Now: ` : ""}</span><span id="v-${k}"></span></span></label><input type="range" min="1" max="5" id="c-${k}" data-k="${k}" value="${S.c[k]}"></div>`).join("")}</div>
+    <div><div class="small" style="font-weight:800;margin-bottom:6px">Readiness</div><div class="meter2"><i id="rm"></i></div><p class="small muted" id="rmt" style="margin-top:6px"></p><p class="small" id="grow" style="font-weight:800;margin-top:4px"></p></div>
+    <div class="checklist"><h3 style="margin-bottom:6px">Before your session</h3>${prep.map((p, k) => `<label><input type="checkbox" id="p${k}" data-k="${k}" ${S.p.includes(k) ? "checked" : ""}><span>${esc(p)}</span></label>`).join("")}</div>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn primary" id="copy">Copy my prep plan</button><button class="btn" id="reset">Reset all practice</button><span class="muted small" id="copied" role="status"></span></div>
+    <div><h3 style="margin-bottom:8px">Resources to share with parents</h3><ul class="resl">
+      <li><a href="https://support.google.com/mail/answer/56256?hl=en" target="_blank" rel="noopener">Create a Google account</a></li>
+      <li><a href="https://guidebooks.google.com/family-link/add-account/create-account-parent-android" target="_blank" rel="noopener">Add a child account</a></li>
+      <li><a href="https://support.google.com/websearch/answer/510?hl=en" target="_blank" rel="noopener">SafeSearch settings</a></li>
+      <li><a href="https://support.google.com/families/answer/7101025?hl=en" target="_blank" rel="noopener">Family Link help</a></li>
+      <li><a href="https://www.youtube.com/myfamily/" target="_blank" rel="noopener">YouTube for families</a></li>
+      <li><a href="https://support.google.com/websearch/answer/16011537?hl=en" target="_blank" rel="noopener">Generative AI in Search</a></li>
+      <li><a href="https://play.google.com/store/apps/category/FAMILY" target="_blank" rel="noopener">Google Play Children tab</a></li>
+      <li>Digital4Good: <a href="https://bit.ly/MEETLeo" target="_blank" rel="noopener">bit.ly/MEETLeo</a></li>
+    </ul></div>`);
+  qa(".rv").forEach(b => b.onclick = () => { const i = +b.dataset.i; st.r[i] = {pts:0, miss:[], done:false}; save(); go(i); });
+  const upd = () => {
+    topics.forEach(([k]) => $("v-" + k).textContent = LV[S.c[k]]);
+    if (st.pre) { const up = topics.filter(([k]) => S.c[k] > st.pre[k]).length; $("grow").textContent = up ? `Your confidence grew in ${up} of 4 areas since you started.` : ""; }
+    const conf = Object.values(S.c).reduce((a, b) => a + b, 0) / 20, prepP = S.p.length / prep.length, prac = t.m ? t.p / t.m : 0;
+    const score = Math.round((conf * 0.4 + prepP * 0.3 + prac * 0.3) * 100);
+    $("rm").style.width = score + "%";
+    const low = topics.filter(([k]) => S.c[k] <= 2).map(([, n]) => n);
+    $("rmt").textContent = score >= 80 ? "You're ready. Enjoy your session!" : low.length ? `Spend extra prep time on: ${low.join(", ")}.` : "Getting there. Finish your prep list and replay any rounds above.";
+    if (S.p.length || Object.values(S.c).some(v => v !== 3)) { finish(); trackFinish({...S.c}); }
+  };
+  qa("input[type=range]").forEach(i => i.oninput = () => { S.c[i.dataset.k] = +i.value; save(); upd(); });
+  qa(".checklist input").forEach(c => c.onchange = () => { const k = +c.dataset.k; S.p = c.checked ? [...new Set([...S.p, k])] : S.p.filter(x => x !== k); save(); upd(); });
+  $("copy").onclick = async () => {
+    const txt = `My Meet LEO prep plan\nSelf-check score: ${t.p}/${t.m}\n\nConfidence:\n${topics.map(([k, n]) => `- ${n}: ${S.c[k]}/5`).join("\n")}\n\nTo do:\n${prep.map((p, k) => `[${S.p.includes(k) ? "x" : " "}] ${p}`).join("\n")}`;
+    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied."; } catch { $("copied").textContent = "Copy isn't available here. Select the text and copy it manually."; }
+  };
+  $("reset").onclick = () => { st = fresh(); save(); go(-1); };
+  upd();
+}
+};
+
+function renderIntro(){
+  const topics = [["safe","Being safe & SafeSearch"],["rules","Ground rules, Family Link & YouTube"],["explore","Exploring responsibly & AI"],["facil","Running the conversation activities"]];
+  const LV = ["", "Not yet", "Shaky", "Okay", "Confident", "Could teach it"];
+  const pre = st.pre || {safe:3, rules:3, explore:3, facil:3};
+  const goals = [
+    ["1","Explain SafeSearch defaults and Family Link features to parents accurately"],
+    ["2","Recommend the YouTube experience that fits a child and family"],
+    ["3","Suggest an explore-together activity that matches a family's interests"],
+    ["4","Answer common parent questions with what the training covered"],
+    ["5","Lead the three-question Family Conversations activity"],
+    ["6","Plan a 15-minute parent session from core and optional slides"]
+  ];
+  $("stage").innerHTML = `
+    <div class="intro-hero">
+      <div class="eyebrow muted">After the Meet LEO webinar</div>
+      <h2>What stuck? A quick self-check before you share Meet LEO with families</h2>
+      <p class="lead">You've just finished the Meet LEO train-the-trainer webinar. In the coming weeks you'll bring it to the parents and caregivers you work with. This page helps you see what you remember and practice the moments that matter most when you're in front of families.</p>
+      <div class="note">This is not a test. There's no pass mark, and you can replay any round you've reached as often as you like. This is a portfolio copy of the tool and it collects no data. (The live version collects anonymous usage data for Digital4Good: rounds completed, self-check points and confidence ratings, never names or emails.)</div>
+    </div>
+    <div><h3 style="margin-bottom:10px">After practicing, you'll be able to</h3>
+      <ul class="goals">${goals.map(([n, g]) => `<li><span class="n">${n}</span><span>${g}</span></li>`).join("")}</ul></div>
+    <div class="howto">
+      <div><b>8 short rounds</b>About 15 minutes in total. Finish a round to unlock the next. Stop and return anytime.</div>
+      <div><b>Answer from memory</b>Try before you check the slides. Recalling is what makes it stick.</div>
+      <div><b>Points show what to review</b>A point means you got it on the first try. Misses point you to what to revisit.</div>
+      <div><b>Come back later</b>Your progress stays on this device. Replay it the week before your session.</div>
+    </div>
+    <div class="scene" style="display:flex;flex-direction:column;gap:12px">
+      <h3>Before you start: how confident do you feel right now?</h3>
+      <p class="small">Move each slider to one of 5 levels: ${LV.slice(1).join(", ")}.</p>
+      <div class="sliders">${topics.map(([k, n]) => `<div class="sld scaled"><label for="pre-${k}"><span>${n}</span><span id="pv-${k}">${LV[pre[k]]}</span></label><input type="range" min="1" max="5" id="pre-${k}" data-k="${k}" value="${pre[k]}" aria-valuetext="${LV[pre[k]]}"><div class="scale" aria-hidden="true">${LV.slice(1).map((l, x) => `<span data-v="${x + 1}" class="${x + 1 === pre[k] ? "on" : ""}">${l}</span>`).join("")}</div></div>`).join("")}</div>
+      <p class="small muted">You'll rate these again at the end to see how far you've come.</p>
+    </div>
+    <div class="navrow"><span></span><button class="btn primary" id="startbtn">${st.pre ? "Continue practicing" : "Start round 1"}</button></div>`;
+  qa("#stage input[type=range]").forEach(i => {
+    const set = v => {
+      i.value = v; pre[i.dataset.k] = v; $("pv-" + i.dataset.k).textContent = LV[v]; i.setAttribute("aria-valuetext", LV[v]);
+      qa("span", i.nextElementSibling).forEach(sp => sp.classList.toggle("on", +sp.dataset.v === v));
+    };
+    i.oninput = () => set(+i.value);
+    qa("span", i.nextElementSibling).forEach(sp => sp.onclick = () => set(+sp.dataset.v));
+  });
+  $("startbtn").onclick = () => { const firstStart = !st.pre; st.pre = {...pre}; st.far = Math.max(st.far, 0); save(); if (firstStart) track("start"); const first = ROUNDS.findIndex((_, i) => !st.r[i]?.done); go(first < 0 ? 0 : first); };
+}
+
+function render(){ if (st.i < 0) { renderIntro(); renderMap(); return; } const r = ROUNDS[st.i]; RND[r.type](r); }
+render();
+</script>
+
+</body></html>

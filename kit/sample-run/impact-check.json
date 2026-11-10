@@ -1,0 +1,85 @@
+[
+  {
+    "asset": "HC-104",
+    "release_item": "R1",
+    "decision": "update",
+    "reason": "Steps, heading and alt text name the Timeline tab, which is now Roadmap under Plan.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "ACA-301",
+    "release_item": "R1",
+    "decision": "update",
+    "reason": "Practice step and knowledge check send learners to a tab that no longer exists.",
+    "human_owned_parts": [
+      "learning objective",
+      "assessment item"
+    ],
+    "question_for_owner": null
+  },
+  {
+    "asset": "IAG-12",
+    "release_item": "R1",
+    "decision": "update",
+    "reason": "Tooltip names the Timeline tab.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "HC-050",
+    "release_item": "R1",
+    "decision": "unsure",
+    "reason": "The shortcut table says T opens the Timeline. The release doesn't say whether the shortcut still works.",
+    "human_owned_parts": [],
+    "question_for_owner": "Product: does the T shortcut still open this view (now Roadmap)?"
+  },
+  {
+    "asset": "HC-310",
+    "release_item": "R3",
+    "decision": "update",
+    "reason": "Says any member can invite guests; in new workspaces an admin must turn guest access on first.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "JA-07",
+    "release_item": "R3",
+    "decision": "update",
+    "reason": "Checklist says guests are on by default, which is now false for new workspaces.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "WS-02",
+    "release_item": "R4",
+    "decision": "update",
+    "reason": "Facilitator demo uses Reports > Export, which moved to the Share menu.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "HC-221",
+    "release_item": "R2",
+    "decision": "update",
+    "reason": "Says each step has exactly one person as approver; groups are now allowed.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "JA-07",
+    "release_item": "R2",
+    "decision": "no_update",
+    "reason": "'Set up approval steps' is still accurate; the checklist doesn't say who can approve.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  },
+  {
+    "asset": "HC-415",
+    "release_item": "R5",
+    "decision": "no_update",
+    "reason": "Faster loading doesn't make the advice wrong; archiving still helps.",
+    "human_owned_parts": [],
+    "question_for_owner": null
+  }
+]

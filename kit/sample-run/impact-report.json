@@ -1,0 +1,135 @@
+{
+  "release": "4.2",
+  "assets_scanned": 9,
+  "flags": [
+    {
+      "asset": "ACA-301",
+      "title": "Projects 101, Lesson 3: Build your first timeline",
+      "owner": "Academy",
+      "release_item": "R1",
+      "change_type": "rename_move",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.",
+        "Check: your timeline should show 2 dependencies and end by week 4.",
+        "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"
+      ]
+    },
+    {
+      "asset": "HC-050",
+      "title": "Keyboard shortcuts",
+      "owner": "Help Center",
+      "release_item": "R1",
+      "change_type": "rename_move",
+      "match": "text",
+      "severity": "high",
+      "evidence_lines": [
+        "| T | Open the Timeline |"
+      ]
+    },
+    {
+      "asset": "HC-104",
+      "title": "Plan work with the Timeline view",
+      "owner": "Help Center",
+      "release_item": "R1",
+      "change_type": "rename_move",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "## Open the Timeline view",
+        "2. Select the **Timeline** tab at the top of the project.",
+        "## Share a timeline",
+        "Select **Share** to give teammates view access to the Timeline.",
+        "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"
+      ]
+    },
+    {
+      "asset": "HC-310",
+      "title": "Invite guests to a project",
+      "owner": "Help Center",
+      "release_item": "R3",
+      "change_type": "default",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "Any project member can invite guests.",
+        "2. Enter the guest's email and choose **Guest**."
+      ]
+    },
+    {
+      "asset": "IAG-12",
+      "title": "Tooltip: Timeline tab",
+      "owner": "In-App Guidance",
+      "release_item": "R1",
+      "change_type": "rename_move",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."
+      ]
+    },
+    {
+      "asset": "JA-07",
+      "title": "Admin quick-start checklist",
+      "owner": "Education Services",
+      "release_item": "R3",
+      "change_type": "default",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "☐ Decide who can invite guests (guests are on by default)"
+      ]
+    },
+    {
+      "asset": "WS-02",
+      "title": "Enterprise kickoff workshop, module 2: Reporting",
+      "owner": "Education Services",
+      "release_item": "R4",
+      "change_type": "rename_move",
+      "match": "tag+text",
+      "severity": "high",
+      "evidence_lines": [
+        "Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."
+      ]
+    },
+    {
+      "asset": "HC-221",
+      "title": "Set up approvals",
+      "owner": "Help Center",
+      "release_item": "R2",
+      "change_type": "behavior",
+      "match": "tag+text",
+      "severity": "medium",
+      "evidence_lines": [
+        "## Add an approver",
+        "1. Open a task and select **Request approval**.",
+        "2. Choose one person as the approver.",
+        "3. The approver gets an email and can approve or reject.",
+        "Note: each approval step has exactly one approver."
+      ]
+    },
+    {
+      "asset": "JA-07",
+      "title": "Admin quick-start checklist",
+      "owner": "Education Services",
+      "release_item": "R2",
+      "change_type": "behavior",
+      "match": "tag+text",
+      "severity": "medium",
+      "evidence_lines": [
+        "☐ Set up approval steps for client deliverables"
+      ]
+    },
+    {
+      "asset": "HC-415",
+      "title": "Speed up large projects",
+      "owner": "Help Center",
+      "release_item": "R5",
+      "change_type": "performance",
+      "match": "tag",
+      "severity": "low",
+      "evidence_lines": []
+    }
+  ]
+}

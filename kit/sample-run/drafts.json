@@ -1,0 +1,160 @@
+[
+  {
+    "asset": "HC-104",
+    "title": "Plan work with the Timeline view",
+    "owner": "Help Center",
+    "old": [
+      "## Open the Timeline view",
+      "1. Open your project.",
+      "2. Select the **Timeline** tab at the top of the project.",
+      "3. Drag tasks to change their start and end dates.",
+      "## Share a timeline",
+      "Select **Share** to give teammates view access to the Timeline.",
+      "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"
+    ],
+    "lines": [
+      {
+        "text": "## Open the Roadmap view",
+        "source": "R1"
+      },
+      {
+        "text": "1. Open your project.",
+        "source": "unchanged"
+      },
+      {
+        "text": "2. Select the **Plan** tab, then select **Roadmap**.",
+        "source": "R1"
+      },
+      {
+        "text": "3. Drag tasks to change their start and end dates.",
+        "source": "unchanged"
+      },
+      {
+        "text": "## Share a roadmap",
+        "source": "R1"
+      },
+      {
+        "text": "Select **Share** to give teammates view access to the Roadmap.",
+        "source": "R1"
+      },
+      {
+        "text": "Roadmaps can now be shared publicly with anyone who has the link.",
+        "source": "R1",
+        "unsupported": true
+      },
+      {
+        "text": "![Plan tab open with Roadmap selected, tasks shown as bars across weeks](roadmap.png)",
+        "source": "R1"
+      }
+    ],
+    "open_questions": [
+      "Screenshot roadmap.png needs to be captured from the 4.2 build."
+    ],
+    "human_decides": [],
+    "correct": "edit",
+    "why": "Fix it, then publish: delete the unsupported sentence. Everything else is traceable to R1, and the screenshot question goes to the Help Center owner."
+  },
+  {
+    "asset": "HC-221",
+    "title": "Set up approvals",
+    "owner": "Help Center",
+    "old": [
+      "## Add an approver",
+      "1. Open a task and select **Request approval**.",
+      "2. Choose one person as the approver.",
+      "3. The approver gets an email and can approve or reject.",
+      "Note: each approval step has exactly one approver."
+    ],
+    "lines": [
+      {
+        "text": "## Add an approver",
+        "source": "unchanged"
+      },
+      {
+        "text": "1. Open a task and select **Request approval**.",
+        "source": "unchanged"
+      },
+      {
+        "text": "2. Choose a person or a group as the approver.",
+        "source": "R2"
+      },
+      {
+        "text": "3. The approver gets an email and can approve or reject. If you chose a group, any one member can approve.",
+        "source": "R2"
+      },
+      {
+        "text": "Note: each approval step has one approver, which can be a person or a group.",
+        "source": "R2"
+      }
+    ],
+    "open_questions": [],
+    "human_decides": [],
+    "correct": "approve",
+    "why": "Every changed line traces to R2, the steps stay in order, and nothing new is claimed. Approve it."
+  },
+  {
+    "asset": "ACA-301",
+    "title": "Projects 101, Lesson 3: Build your first timeline",
+    "owner": "Academy",
+    "old": [
+      "Objective: Learners will build a project timeline with dependencies for a 4-week launch plan.",
+      "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.",
+      "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"
+    ],
+    "lines": [
+      {
+        "text": "Objective: Learners will build a project roadmap with dependencies for a 4-week launch plan.",
+        "source": "R1",
+        "human": true
+      },
+      {
+        "text": "Practice: open the sample project, select the **Plan** tab, then **Roadmap**, and set dates for the 6 launch tasks.",
+        "source": "R1"
+      },
+      {
+        "text": "Knowledge check: Where do you find the Roadmap? (a) Reports (b) the Plan tab (c) Settings",
+        "source": "R1",
+        "human": true
+      }
+    ],
+    "open_questions": [
+      "Lesson title still says 'timeline'. Rename it?"
+    ],
+    "human_decides": [
+      "learning objective",
+      "assessment item"
+    ],
+    "correct": "route",
+    "why": "The draft is accurate, but it changes a learning objective and an assessment item. Those belong to the Academy owner, who may also want a better question than 'where is the button.' Route it."
+  },
+  {
+    "asset": "HC-050",
+    "title": "Keyboard shortcuts",
+    "owner": "Help Center",
+    "old": [
+      "| N | New task |",
+      "| T | Open the Timeline |",
+      "| / | Search |"
+    ],
+    "lines": [
+      {
+        "text": "| N | New task |",
+        "source": "unchanged"
+      },
+      {
+        "text": "| T | Open the Roadmap |",
+        "source": "R1"
+      },
+      {
+        "text": "| / | Search |",
+        "source": "unchanged"
+      }
+    ],
+    "open_questions": [
+      "Release notes don't confirm the T shortcut still opens this view. Verify with Product."
+    ],
+    "human_decides": [],
+    "correct": "route",
+    "why": "The rename is traceable, but nobody has confirmed the shortcut still works. Publishing a broken shortcut is worse than waiting a day. Route it to Product."
+  }
+]

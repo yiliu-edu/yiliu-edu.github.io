@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact · Yi Liu</title>
+<meta name="description" content="Contact Yi Liu about learning experience design and instructional design roles.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Contact · Yi Liu">
+<meta property="og:description" content="Contact Yi Liu about learning experience design and instructional design roles.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
+    <nav class="links" aria-label="Main">
+      <a href="work.html">Selected Work</a>
+      <a href="approach.html">Approach</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="heroband on-dark"><div class="wrap cs-hero">
+    <p class="eyebrow">Join the conversation</p>
+    <h1>Let's <span class="warm">talk</span></h1>
+    <p class="lead measure">Building learning for new hires, customers, educators or families? I would love to hear about it.</p>
+  </div></div>
+  <section class="wrap" id="contact" aria-labelledby="ct-h">
+    <div class="contact">
+            <h2 id="ct-h">Email is the best way to reach me</h2>
+      <p class="measure">I'm open to learning experience design and instructional design roles starting in 2027. Email me at <span id="em" style="font-weight:700;color:var(--grape);user-select:all">eloisely1003@gmail.com</span>.</p>
+      <div class="btns">
+        <a class="btn primary" href="mailto:eloisely1003@gmail.com">Send a message</a>
+        <button class="btn" id="copyem" type="button">Copy my email</button>
+        <a class="btn" href="work.html">Back to selected work</a>
+        
+      </div>
+      <p id="copied" role="status" class="muted" style="font-size:14.5px;min-height:1.4em"></p>
+<script>
+document.getElementById("copyem").addEventListener("click", async function(){
+  var msg = document.getElementById("copied"), em = "eloisely1003@gmail.com";
+  try { await navigator.clipboard.writeText(em); msg.textContent = "Copied. Paste it into your email app."; }
+  catch (e) {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById("em"));
+    var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    msg.textContent = "Email selected. Press Ctrl+C (or Cmd+C) to copy it.";
+  }
+});
+</script>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><p style="font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase">Yi <span style="font-family:var(--script);text-transform:none;letter-spacing:0;font-weight:400;font-size:24px;color:var(--buckthorn)">Liu</span></p><p class="soft" style="font-size:14.5px;margin-top:6px">Portfolio of Yi Liu, learning experience designer and bilingual educator. Based in Chicago.</p></div>
+      <div><h4>Navigate</h4><ul><li><a href="work.html">Selected Work</a></li><li><a href="approach.html">Approach</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h4>Projects</h4><ul><li><a href="release-ready-content.html">Release-Ready Learning Content</a></li><li><a href="curriculum-design-onboarding.html">Curriculum Designer Onboarding</a></li><li><a href="leo-trainer-practice.html">LEO Trainer Practice</a></li></ul></div>
+      <div><h4>Focus areas</h4><ul class="soft"><li>AI-assisted content systems</li><li>Role-based onboarding</li><li>Train-the-trainer enablement</li><li>Scenario-based practice</li></ul></div>
+    </div>
+    <div class="fine"><span>© 2026 Yi Liu.</span><span>Designed for clarity. Built for practice.</span></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Release-Ready Learning Content Case Study</title>
+<meta name="description" content="Case study: an AI-assisted workflow that keeps customer learning content current with every product release. Designed and built by Yi Liu.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Release-Ready Learning Content Case Study">
+<meta property="og:description" content="Case study: an AI-assisted workflow that keeps customer learning content current with every product release. Designed and built by Yi Liu.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.code{background:#1E1424;color:#F3E9F5;border-radius:18px;padding:16px 18px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;line-height:1.65;overflow-x:auto;white-space:pre;margin:0}
+.code .c{color:#A68FAD}.code .k{color:#FCB442}
+.files{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.files{grid-template-columns:minmax(0,1fr)}}
+.file{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;text-decoration:none;color:var(--foreground);display:flex;flex-direction:column;gap:2px}
+.file b{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;color:var(--grape)}
+.file span{font-size:14px;color:var(--muted-fg)}
+.file:hover{border-color:var(--grape)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
+    <nav class="links" aria-label="Main">
+      <a href="work.html">Selected Work</a>
+      <a href="approach.html">Approach</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="heroband on-dark"><div class="wrap cs-hero">
+    <a class="crumb" href="work.html">← Selected work</a>
+    <p class="eyebrow">AI content system · Customer education</p>
+    <h1>Release-Ready <span class="warm">Learning Content</span></h1>
+    <p class="lead measure">An AI-assisted workflow that keeps help articles, Academy lessons, in-app guides and workshop kits current with every product release. It flags what a release breaks, drafts the smallest correct fix, and leaves every publish decision to a person.</p>
+    <div class="btns"><a class="btn warm" href="#demo">Try the workflow</a><a class="btn" href="demos/release-ready-content.html#full">Open full screen</a></div>
+  </div></div>
+  <div class="wrap" style="margin-top:28px">
+    <dl class="meta">
+      <div><dt>Type</dt><dd>Prototype on a fictional B2B SaaS product (Kitebird Projects)</dd></div>
+      <div><dt>My role</dt><dd>Workflow designer, prompt and skill author, developer</dd></div>
+      <div><dt>Users</dt><dd>Customer education, Academy, Help Center and in-app guidance teams</dd></div>
+      <div><dt>Timeline</dt><dd>November 2026</dd></div>
+      <div><dt>AI</dt><dd>Claude, with four reusable skills</dd></div>
+      <div><dt>Code</dt><dd>Python impact scan, JSON content schema</dd></div>
+      <div><dt>Content types</dt><dd>Help article, course lesson, in-app guide, job aid, workshop module</dd></div>
+      <div><dt>Review</dt><dd>7-point rubric, human decision on every publish</dd></div>
+    </dl>
+  </div>
+
+  <section class="wrap prose" style="padding-top:28px">
+    <div class="two">
+      <h2>The problem</h2>
+      <div class="prose">
+        <p class="measure">Every SaaS release quietly breaks learning content. A renamed tab makes a help article wrong, a quiz question points to a menu that no longer exists, and a workshop demo walks enterprise customers to the wrong screen. Teams usually find out when a customer does.</p>
+        <p class="measure">Asking AI to "rewrite the docs" makes it worse: drafts sound right and can invent features. I wanted a system that finds every affected asset, drafts only what the release supports, and makes it easy for a person to check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap prose" style="padding-top:0" aria-labelledby="wf-h">
+    <div class="two" style="grid-template-columns:minmax(0,1fr)">
+      <h2 id="wf-h">The workflow</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>#</th><th>Step</th><th>What happens</th><th>Who</th><th>Check built in</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Intake</td><td>Release notes become structured change records</td><td><span class="lvl apply">AI drafts</span></td><td>Every record quotes its exact source line</td></tr>
+            <tr><td>2</td><td>Impact scan</td><td>Every asset is matched to every change by feature tag and UI keyword</td><td><span class="lvl recall">Script</span></td><td>Deterministic and repeatable; over-flags on purpose</td></tr>
+            <tr><td>3</td><td>Impact check</td><td>Each flag is confirmed, dismissed or turned into a question</td><td><span class="lvl apply">AI drafts</span></td><td>"Update" requires a conflicting line; dismissals show a reason</td></tr>
+            <tr><td>4</td><td>Draft</td><td>Smallest correct edit, each changed line tagged with its release item</td><td><span class="lvl apply">AI drafts</span></td><td>Human-owned parts marked; unknowns become open questions</td></tr>
+            <tr><td>5</td><td>Review</td><td>Rubric checks run; a person approves, edits, routes or rejects</td><td><span class="lvl perform">Person</span></td><td>Traceability, scope, terms, accessibility, ownership</td></tr>
+            <tr><td>6</td><td>Learn</td><td>Review decisions become new rules in the skills</td><td><span class="lvl plan">Person</span></td><td>Versioned change log in each skill</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
+    <div class="sechead">
+      <p class="eyebrow">Interactive demo</p>
+      <h2 id="demo-h">Review release 4.2 yourself</h2>
+      <p class="muted measure">You play the learning designer: predict which flags don't matter, check AI drafts line by line, and decide what publishes. The scan is the real script's output; the AI steps are a sample run.</p>
+    </div>
+    <div class="demo">
+      <div class="bar"><span>Release-Ready Learning Content · release 4.2</span><a href="demos/release-ready-content.html#full">Open full screen ↗</a></div>
+      <iframe src="demos/release-ready-content.html" title="Release-ready learning content workflow demo"></iframe>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="chk-h">
+    <h2 id="chk-h">How I check the AI's output</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In the sample run, the keyword pass caught a shortcut table with no feature tag, and the AI dismissed 2 of 10 flags with reasons the owner can see.</p></div>
+      <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes invented content easy to spot: in the sample run, one draft claimed roadmaps could be shared publicly, and the traceability check flagged it.</p></div>
+      <div class="decision"><h3>"Unsure" is an allowed answer</h3><p>When the release doesn't say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
+      <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
+      <div class="decision"><h3>Review decisions become rules</h3><p>The invented-feature edit became rule 7 in the draft skill (v1.1). Re-running the same draft with v1.1 moved the guess into an open question instead of the body.</p></div>
+      <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="sys-h">
+    <div class="two">
+      <h2 id="sys-h">The system underneath</h2>
+      <div class="prose">
+        <p class="measure">The workflow only works because content is structured. Every asset is an AI-ready content type with the same metadata, so agents can find it, check it and update it without guessing.</p>
+<pre class="code"><span class="c">// content/library.json · one asset</span>
+{
+  <span class="k">"id"</span>: "HC-104",
+  <span class="k">"type"</span>: "help_article",
+  <span class="k">"features"</span>: ["timeline"],
+  <span class="k">"owner"</span>: "Help Center",
+  <span class="k">"last_reviewed"</span>: "2026-06-02",
+  <span class="k">"customer_facing"</span>: true,
+  <span class="k">"body"</span>: ["## Open the Timeline view", "1. Open your project.", ...]
+}</pre>
+        <p class="measure">The design decisions I'd otherwise repeat by hand live in four reusable skills.</p>
+        <div class="files">
+          <a class="file" href="kit/skills/01-intake-classify.md"><b>01-intake-classify.md</b><span>Release notes to change records</span></a>
+          <a class="file" href="kit/skills/02-impact-check.md"><b>02-impact-check.md</b><span>Confirm, dismiss or question each flag</span></a>
+          <a class="file" href="kit/skills/03-draft-update.md"><b>03-draft-update.md</b><span>Minimal, traceable edits (v1.1)</span></a>
+          <a class="file" href="kit/skills/04-review-rubric.md"><b>04-review-rubric.md</b><span>7-point review rubric and decisions</span></a>
+          <a class="file" href="kit/flag_impacted.py"><b>flag_impacted.py</b><span>The impact scan script</span></a>
+          <a class="file" href="kit/README.md"><b>README.md</b><span>How the kit fits together</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="ev-h">
+    <div class="two">
+      <h2 id="ev-h">Results and next steps</h2>
+      <div class="prose">
+        <p class="measure">Sample run on release 4.2: 9 assets scanned, 10 flags, 2 dismissed with reasons, 1 question sent to Product, 4 drafts reviewed (2 published, 1 of them after an edit; 2 routed to owners), 1 invented claim caught and turned into a new prompt rule.</p>
+        <p class="measure">Next, I'd connect intake to the real release feed, run the scan on a schedule, and track time from release to updated content and the share of drafts published without edits. That share is the clearest sign the system needs less upkeep over time.</p>
+        <div class="placeholder">Results from running the skills on a larger content library will go here: flag precision, drafts published without edits, and time saved per release.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="nextcase">
+      <a class="btn" href="work.html">← All projects</a>
+      <a class="btn primary" href="curriculum-design-onboarding.html">Next: Curriculum Designer Onboarding</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="fine" style="margin-top:0;border-top:0;padding-top:0">© 2026 Yi Liu. Kitebird Projects is a fictional product created for this portfolio.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "$comment": "AI-ready content type: every learning asset carries this metadata so agents can find, check and update it.",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "audience",
+    "features",
+    "owner",
+    "last_reviewed",
+    "customer_facing",
+    "body"
+  ],
+  "properties": {
+    "id": "Stable ID, e.g. HC-104",
+    "type": "help_article | course_lesson | in_app_guide | job_aid | workshop_module | video_script",
+    "title": "",
+    "audience": "Who it's for",
+    "features": "Product feature tags from the shared taxonomy",
+    "owner": "Team that approves changes",
+    "last_reviewed": "ISO date",
+    "customer_facing": "true if customers see it",
+    "objective": "Required for course_lesson and workshop_module",
+    "body": "Ordered lines in the content type's template structure"
+  }
+}

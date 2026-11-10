@@ -1,0 +1,67 @@
+{
+  "release": "4.2",
+  "date": "2026-11-04",
+  "source": "release-4.2.md",
+  "items": [
+    {
+      "id": "R1",
+      "change_type": "rename_move",
+      "features": [
+        "timeline"
+      ],
+      "keywords": [
+        "Timeline"
+      ],
+      "summary": "Timeline view is renamed Roadmap and moves under the Plan tab.",
+      "source_line": "The Timeline view is now called Roadmap, and it lives under the new Plan tab."
+    },
+    {
+      "id": "R2",
+      "change_type": "behavior",
+      "features": [
+        "approvals"
+      ],
+      "keywords": [
+        "approver",
+        "approval"
+      ],
+      "summary": "A group can now be an approver; any one member can approve.",
+      "source_line": "You can now assign a group as an approver. Any one member of the group can approve."
+    },
+    {
+      "id": "R3",
+      "change_type": "default",
+      "features": [
+        "guest_access"
+      ],
+      "keywords": [
+        "guest"
+      ],
+      "summary": "Guest access is off by default for new workspaces; admins turn it on in Settings > Security.",
+      "source_line": "Guest access is now off by default for new workspaces. Admins can turn it on in Settings > Security."
+    },
+    {
+      "id": "R4",
+      "change_type": "rename_move",
+      "features": [
+        "export"
+      ],
+      "keywords": [
+        "Export",
+        "CSV"
+      ],
+      "summary": "CSV export moves from Reports > Export to the Share menu on any report; PDF export is new.",
+      "source_line": "CSV export has moved from Reports > Export to the Share menu on every report. You can also export to PDF."
+    },
+    {
+      "id": "R5",
+      "change_type": "performance",
+      "features": [
+        "performance"
+      ],
+      "keywords": [],
+      "summary": "Projects with 5,000+ tasks load up to 40% faster.",
+      "source_line": "Projects with more than 5,000 tasks now load up to 40% faster."
+    }
+  ]
+}
