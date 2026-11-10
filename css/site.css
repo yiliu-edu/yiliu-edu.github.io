@@ -63,7 +63,8 @@ h3.sub{font-size:20px;color:var(--navy);font-weight:600}
 .intro .name{font-size:22px;color:var(--navy);font-weight:700;margin-top:-10px}
 .banner{background:var(--band);border-radius:4px;padding:14px;aspect-ratio:16/10;display:flex}
 .banner .in{flex:1;border:3px solid #fff;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 14px 12px;color:#fff;text-align:center}
-.banner svg{width:78%;height:auto;flex:1}
+.banner svg{width:auto;height:100%;max-width:80%;flex:1;min-height:0}
+.banner span{font-size:clamp(14px,1.6vw,18px)}
 .banner span{font-family:var(--title);font-size:clamp(12px,1.4vw,15px);letter-spacing:.02em}
 .me{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:start}
 @media (max-width:640px){.me{grid-template-columns:minmax(0,1fr)}}
