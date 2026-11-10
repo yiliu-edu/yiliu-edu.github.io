@@ -3,86 +3,68 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>About · Yi Liu</title>
-<meta name="description" content="About Yi Liu: learning experience designer and bilingual educator based in Chicago.">
+<title>About Me · Yi Liu</title>
+<meta name="description" content="About Yi Liu: instructional designer, learning experience designer and bilingual educator based in Chicago.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="About · Yi Liu">
-<meta property="og:description" content="About Yi Liu: learning experience designer and bilingual educator based in Chicago.">
+<meta property="og:title" content="About Me · Yi Liu">
+<meta property="og:description" content="About Yi Liu: instructional designer, learning experience designer and bilingual educator based in Chicago.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-
-<body>
-
-<header class="top">
+<header class="bar">
   <div class="wrap">
-    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
-    <nav class="links" aria-label="Main">
-      <a href="work.html">Selected Work</a>
+    <a class="site" href="index.html"><svg viewBox="0 0 48 36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 30c6-2 13-2 20 2 7-4 14-4 20-2V8c-6-2-13-2-20 2C17 6 10 6 4 8z"/><path d="M24 10v22"/><path d="M10 22l5-5 4 3 6-7"/><path d="M33 7l1.2 2.6L37 10.8l-2.8 1.2L33 14.6l-1.2-2.6L29 10.8l2.8-1.2z"/></svg><span>Yi Liu</span></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html">AI Content Systems</a><a href="curriculum-design-onboarding.html">Onboarding</a><a href="leo-trainer-practice.html">Train-the-Trainer</a></div></div>
       <a href="approach.html">Approach</a>
-      <a href="about.html" aria-current="page">About</a>
+      <a href="about.html" aria-current="page">About Me</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
-
-<main id="top">
-  <div class="heroband on-dark"><div class="wrap cs-hero">
-    <p class="eyebrow">About</p>
-    <h1>Teacher first, <span class="warm">designer by habit</span></h1>
-    <p class="lead measure">I'm Yi Liu (Louise), a learning experience designer and bilingual educator based in Chicago.</p>
-  </div></div>
-  <section class="wrap" id="about" aria-labelledby="ab-h">
-    <div class="sechead">
-      <h2 id="ab-h">My story</h2>
+<main>
+<div class="ptitle wrap"><h1>About Me</h1></div>
+<div class="wrap">
+  <hr class="rule">
+  <div class="me">
+    <div><img class="photo" src="images/yi-liu.jpg" alt="Portrait of Yi Liu" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="mono" style="display:none" aria-hidden="true">YL</div></div>
+    <div class="prose">
+      <p>I've taught in K–12 classrooms, IB programs and university tutorials across Hong Kong, Shanghai and Chicago. Along the way I kept building things for learners and for the people who teach them: lesson sequences, staff onboarding, a school website, coding courses, and now interactive practice tools for a Google-partnered program at Digital4Good.</p>
+      <p>Right now I lead curriculum for Meet LEO (online safety for families) and Meet LEA (AI literacy for educators). I also built the program's data system: a pre-webinar survey that estimates how many families each attendee will reach, and a post-webinar practice site that shows what trainers actually remember.</p>
+      <p>I'm finishing an MSEd in Elementary Education at Northwestern with ESL and Bilingual endorsements.</p>
     </div>
-    <div class="about">
-      <div class="bio">
-        <p class="measure">I've taught in K–12 classrooms, IB programs and university tutorials across Hong Kong, Shanghai and Chicago. Along the way I kept building things for learners and for the people who teach them: lesson sequences, staff onboarding, a school website, coding courses, and now interactive practice tools for a Google-partnered program at Digital4Good.</p>
-        <p class="measure">Right now I lead curriculum for Meet LEO (online safety for families) and Meet LEA (AI literacy for educators). I also built the program's data system: a pre-webinar survey that estimates how many families each attendee will reach, and a post-webinar practice site that shows what trainers actually remember.</p>
-        <p class="measure">I'm finishing an MSEd in Elementary Education at Northwestern with ESL and Bilingual endorsements, and I student-teach 2nd grade in Chicago Public Schools.</p>
-      </div>
-      <ul class="tl" aria-label="Experience and education">
-        <li><span class="when">2026–now</span><span><b>Digital4Good x #ICANHELP</b>Curriculum Development Intern</span></li>
-        <li><span class="when">2025</span><span><b>Yanmai Education Technology</b>IB MYP and DP Chinese teacher</span></li>
-        <li><span class="when">2021–2025</span><span><b>UK Metrotown Academy</b>Learning Experience Designer and Student Success Manager</span></li>
-        <li><span class="when">2018–now</span><span><b>ITI Informatics Academy</b>Co-founder, nonprofit coding courses</span></li>
-        <li><span class="when">2025–2027</span><span><b>Northwestern University</b>MSEd, Elementary Education (Grades 1–6, ESL and Bilingual)</span></li>
-        <li><span class="when">2021–2025</span><span><b>University of Hong Kong</b>BA, Chinese Language and Literature, First Class Honors</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="wrap" aria-labelledby="ai-h" style="padding-top:0">
-    <div class="sechead">
-      <p class="eyebrow">AI in my practice</p>
-      <h2 id="ai-h">I design with AI, and I teach others to use it well</h2>
-      <p class="muted measure">AI is part of how I build, not a side skill. I use it to prototype faster, to keep content accurate, and to help educators use it responsibly, always with a person reviewing what goes out.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><h3>Build with Claude</h3><p>I prototype interactive learning with Claude and code: scenario practice, onboarding paths and simulations that learners can try the same week.</p></div>
-      <div class="step"><h3>Design AI workflows</h3><p>I write reusable skills and prompts, structure content so AI can work with it, and set review rules for accuracy and accessibility. See <a href="release-ready-content.html">Release-Ready Learning Content</a>.</p></div>
-      <div class="step"><h3>Teach AI literacy</h3><p>I develop Meet LEA, AI literacy training for educators in a Google partnership, and I've introduced K–12 students to AI with tools like Teachable Machine.</p></div>
-      <div class="step"><h3>Create content faster</h3><p>I use Gemini for research and drafts, Canva for visuals and CapCut for short learning videos, then edit everything to my own standard.</p></div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="cols">
-      <div><p style="font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase">Yi <span style="font-family:var(--script);text-transform:none;letter-spacing:0;font-weight:400;font-size:24px;color:var(--buckthorn)">Liu</span></p><p class="soft" style="font-size:14.5px;margin-top:6px">Portfolio of Yi Liu, learning experience designer and bilingual educator. Based in Chicago.</p></div>
-      <div><h4>Navigate</h4><ul><li><a href="work.html">Selected Work</a></li><li><a href="approach.html">Approach</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div><h4>Projects</h4><ul><li><a href="release-ready-content.html">Release-Ready Learning Content</a></li><li><a href="curriculum-design-onboarding.html">Curriculum Designer Onboarding</a></li><li><a href="leo-trainer-practice.html">LEO Trainer Practice</a></li></ul></div>
-      <div><h4>Focus areas</h4><ul class="soft"><li>AI-assisted content systems</li><li>Role-based onboarding</li><li>Train-the-trainer enablement</li><li>Scenario-based practice</li></ul></div>
-    </div>
-    <div class="fine"><span>© 2026 Yi Liu.</span><span>Designed for clarity. Built for practice.</span></div>
   </div>
-</footer>
+  <hr class="rule">
+  <h2 class="sec">AI in my practice</h2>
+  <p class="measure" style="margin-bottom:18px">AI is part of how I build, not a side skill. I use it to prototype faster, to keep content accurate, and to help educators use it responsibly, always with a person reviewing what goes out.</p>
+  <div class="steps" style="padding-top:0"><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="14" width="36" height="36" rx="6"/><path d="M24 34l4-12 4 12M25.5 30h5M38 22v12"/><path d="M22 6v8M32 6v8M42 6v8M22 50v8M32 50v8M42 50v8M6 22h8M6 32h8M6 42h8M50 22h8M50 32h8M50 42h8"/></svg></div><div><h3>Build with Claude</h3><p>I prototype interactive learning with Claude and code: scenario practice, onboarding paths and simulations that learners can try the same week.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="8"/><path d="M32 10v6M32 48v6M10 32h6M48 32h6M16.5 16.5l4.2 4.2M43.3 43.3l4.2 4.2M16.5 47.5l4.2-4.2M43.3 20.7l4.2-4.2"/></svg></div><div><h3>Design AI workflows</h3><p>I write reusable skills and prompts, structure content so AI can work with it, and set review rules for accuracy and accessibility. See <a href="release-ready-content.html">Release-Ready Learning Content</a>.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="20" r="7"/><path d="M10 46c0-8 5-13 12-13s12 5 12 13"/><path d="M34 10h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 5v-5h-5a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z"/><path d="M39 18h10"/></svg></div><div><h3>Teach AI literacy</h3><p>I develop Meet LEA, AI literacy training for educators in a Google partnership, and I've introduced K–12 students to AI with tools like Teachable Machine.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="12" width="48" height="32" rx="3"/><path d="M24 52h16M32 44v8"/><path d="M28 22l10 6-10 6z"/></svg></div><div><h3>Create content faster</h3><p>I use Gemini for research and drafts, Canva for visuals and CapCut for short learning videos, then edit everything to my own standard.</p></div></div></div>
+  <hr class="rule">
+  <h2 class="sec">Experience and education</h2>
+  <ul class="tl">
+    <li><span class="when">2026–now</span><span><b>Digital4Good x #ICANHELP</b>Curriculum Development Intern</span></li>
+    <li><span class="when">2025–now</span><span><b>Yanmai Education Technology</b>IB MYP and DP Chinese teacher</span></li>
+    <li><span class="when">2021–2025</span><span><b>UK Metrotown Academy</b>Learning Experience Designer and Student Success Manager</span></li>
+    <li><span class="when">2018–now</span><span><b>ITI Informatics Academy</b>Co-founder, nonprofit coding courses</span></li>
+    <li><span class="when">2025–2027</span><span><b>Northwestern University</b>MSEd, Elementary Education (Grades 1–6, ESL and Bilingual)</span></li>
+    <li><span class="when">2021–2025</span><span><b>The University of Hong Kong</b>BA, Chinese Language and Literature, First Class Honors</span></li>
+  </ul>
+</div>
+  <div class="collab">
+    <h2>Let's Collaborate!</h2>
+    <div class="icons"><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
 </body>
 </html>

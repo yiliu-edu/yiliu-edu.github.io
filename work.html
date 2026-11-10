@@ -3,189 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Selected Work · Yi Liu</title>
+<title>Portfolio · Yi Liu</title>
 <meta name="description" content="Selected learning design projects by Yi Liu, with interactive demos and case studies.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Selected Work · Yi Liu">
+<meta property="og:title" content="Portfolio · Yi Liu">
 <meta property="og:description" content="Selected learning design projects by Yi Liu, with interactive demos and case studies.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-
-<body>
-
-<header class="top">
+<header class="bar">
   <div class="wrap">
-    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
-    <nav class="links" aria-label="Main">
-      <a href="work.html" aria-current="page">Selected Work</a>
+    <a class="site" href="index.html"><svg viewBox="0 0 48 36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 30c6-2 13-2 20 2 7-4 14-4 20-2V8c-6-2-13-2-20 2C17 6 10 6 4 8z"/><path d="M24 10v22"/><path d="M10 22l5-5 4 3 6-7"/><path d="M33 7l1.2 2.6L37 10.8l-2.8 1.2L33 14.6l-1.2-2.6L29 10.8l2.8-1.2z"/></svg><span>Yi Liu</span></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html" aria-current="page">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html">AI Content Systems</a><a href="curriculum-design-onboarding.html">Onboarding</a><a href="leo-trainer-practice.html">Train-the-Trainer</a></div></div>
       <a href="approach.html">Approach</a>
-      <a href="about.html">About</a>
+      <a href="about.html">About Me</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
-
-<main id="top">
-  <div class="heroband on-dark"><div class="wrap cs-hero">
-    <p class="eyebrow">Selected work</p>
-    <h1>A few projects worth <span class="warm">walking through</span></h1>
-    <p class="lead measure">Each project starts from what learners need to do afterward, then gives them a safe place to rehearse it. Open a case study for the design decisions, or try the experience yourself.</p>
-  </div></div>
-  <section class="wrap" id="work" aria-labelledby="work-h">
-    <div class="sechead">
-      <h2 id="work-h">Live projects</h2>
-      <p class="muted measure">Each project starts from what learners need to do afterward, then gives them a safe place to rehearse it. Open a case study to see the design decisions and try the experience yourself.</p>
-    </div>
-
-    <div class="cards">
-      <article class="proj">
-        <div class="story on-dark">
-          <span class="status live">Live · try it</span>
-          <p class="eyebrow">AI content system · Customer education</p>
-          <h3>Release-Ready Learning Content</h3>
-          <p>An AI-assisted workflow that keeps help articles, Academy lessons, in-app guides and workshop kits current with every product release. It flags what a release breaks, drafts traceable fixes, and leaves every publish decision to a person.</p>
-          <div class="chips"><span>Claude skills</span><span>Python</span><span>Content schema</span><span>Review rubric</span><span>Human in the loop</span></div>
-          <div class="obprev" aria-hidden="true" style="font-family:'JetBrains Mono',ui-monospace,monospace">
-            <div class="path"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
-            <div class="obj" style="font-size:11px">2. Select the <b>Plan</b> tab, then select <b>Roadmap</b>. <u class="d">R1</u></div>
-            <div class="obj" style="font-size:11px;text-decoration:line-through;color:#9A3A12;background:#FCE6DB">Roadmaps can now be shared publicly… <u class="b">no source</u></div>
-          </div>
-        </div>
-        <div class="detail">
-          <dl class="spec">
-            <div><dt>Users</dt><dd>Customer education and content teams</dd></div>
-            <div><dt>Format</dt><dd>AI workflow, skills and interactive demo</dd></div>
-            <div><dt>Built with</dt><dd>Claude, Python, JSON</dd></div>
-          </dl>
-          <p>Release notes go in. A script flags every affected asset, Claude checks and drafts each fix with a citation to the release, and a reviewer approves, edits or routes it. Each review decision becomes a new rule in the prompts.</p>
-          <div class="metrics">
-            <div><b>6</b><span>workflow steps, intake to publish</span></div>
-            <div><b>4</b><span>reusable Claude skills</span></div>
-            <div><b>7</b><span>review rubric checks</span></div>
-            <div><b>1</b><span>invented claim caught and turned into a prompt rule</span></div>
-          </div>
-          <a class="btn primary" href="release-ready-content.html">Explore the project</a>
-        </div>
-      </article>
-
-      <article class="proj">
-        <div class="story on-dark">
-          <span class="status live">Live · try it</span>
-          <p class="eyebrow">Onboarding · Corporate learning design</p>
-          <h3>Your First Week as a Curriculum Designer</h3>
-          <p>A role-based onboarding path for new learning designers. They work one real assignment from a stakeholder request to a signed-off design brief, with an onboarding buddy who adapts tips to their background.</p>
-          <div class="chips"><span>Onboarding</span><span>Gilbert's BEM</span><span>Action Mapping</span><span>Kirkpatrick</span><span>Adaptive tips</span></div>
-          <div class="obprev" aria-hidden="true">
-            <div class="path"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
-            <div class="msg">Marcus: Refund tickets are a mess. Can you build a training by end of month?</div>
-            <div class="obj"><u class="a">New support agents</u> will <u class="b">issue a standard refund</u> <u class="c">given a ticket and the policy</u> <u class="d">in 9 of 10 practice tickets</u>.</div>
-          </div>
-        </div>
-        <div class="detail">
-          <dl class="spec">
-            <div><dt>Learners</dt><dd>New curriculum and learning designers</dd></div>
-            <div><dt>Format</dt><dd>Interactive onboarding path</dd></div>
-            <div><dt>Seat time</dt><dd>About 25 minutes</dd></div>
-          </dl>
-          <p>New designers often get a folder of templates and a deadline. This path teaches the job by doing it: question the request, write a measurable objective, plan backward, choose practice formats, fix a weak storyboard and set up evaluation.</p>
-          <div class="metrics">
-            <div><b>6</b><span>work-based modules</span></div>
-            <div><b>6</b><span>interaction types</span></div>
-            <div><b>4</b><span>learner backgrounds with tailored tips</span></div>
-            <div><b>1</b><span>design brief built from the learner's choices</span></div>
-          </div>
-          <a class="btn primary" href="curriculum-design-onboarding.html">Explore the project</a>
-        </div>
-      </article>
-
-      <article class="proj">
-        <div class="story on-dark">
-          <span class="status live">Live · try it</span>
-          <p class="eyebrow">Train-the-trainer · Digital safety for families</p>
-          <h3>LEO Trainer Practice</h3>
-          <p>Educators leave the Meet LEO webinar and teach parents weeks later. This practice room lets them rehearse from memory first and run a live conversation activity with a simulated group.</p>
-          <div class="chips"><span>Retrieval practice</span><span>Scenario design</span><span>Facilitation simulation</span></div>
-          <div class="preview" aria-hidden="true">
-            <div class="side">
-              <b>LEO Trainer Practice</b>
-              <div class="rd"><i class="ok"></i>SafeSearch</div>
-              <div class="rd"><i class="ok"></i>Family Link</div>
-              <div class="rd"><i class="mid"></i>YouTube</div>
-              <div class="rd"><i class="ok"></i>Parent Q&amp;A</div>
-              <div class="rd cur"><i></i>Facilitate</div>
-            </div>
-            <div class="main">
-              <h4>Facilitate a Family Conversations activity</h4>
-              <div class="tiles">
-                <div class="tile"><span style="background:#C2541C">M</span></div>
-                <div class="tile talk"><span style="background:#3B57C4">J</span></div>
-                <div class="tile"><span style="background:#1F7A5A">P</span></div>
-                <div class="tile"><span style="background:#7A3FC4">D</span></div>
-              </div>
-              <div class="say">“What's a question you could ask to start a conversation about tech ground rules?”</div>
-            </div>
-          </div>
-        </div>
-        <div class="detail">
-          <dl class="spec">
-            <div><dt>Learners</dt><dd>Educators and community trainers</dd></div>
-            <div><dt>Format</dt><dd>Scenario-based web practice</dd></div>
-            <div><dt>Seat time</dt><dd>About 15 minutes</dd></div>
-          </dl>
-          <p>Built for Digital4Good x Google's Meet LEO program. Trainers match Google's family safety tools to real parent worries, answer tough questions and plan their own session.</p>
-          <div class="metrics">
-            <div><b>8</b><span>practice rounds</span></div>
-            <div><b>18</b><span>parent and family scenarios</span></div>
-            <div><b>43</b><span>first-try self-check points</span></div>
-            <div><b>4</b><span>confidence areas rated before and after</span></div>
-          </div>
-          <a class="btn primary" href="leo-trainer-practice.html">Explore the project</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="status dev">In development</span>
-        <p class="eyebrow">Process tool · Learning design operations</p>
-        <h3>Design Review Rubric and Intake Board</h3>
-        <p>One intake form for every learning request, scored by impact and effort, plus a rubric any team can use to review customer-facing assets before they ship.</p>
-        <div class="tags"><span>Intake and prioritization</span><span>Quality rubric</span><span>Accessibility</span></div>
-      </article>
-
-      <article class="card">
-        <span class="status dev">In development</span>
-        <p class="eyebrow">Enablement kit · Customer education</p>
-        <h3>Feature Launch Enablement Kit</h3>
-        <p>A modular kit for one product feature: a Storyline microlearning, a job aid and a 30-minute workshop guide, with a clear line between free Academy content and premium services.</p>
-        <div class="tags"><span>Articulate Storyline</span><span>Job aid</span><span>Workshop design</span></div>
-      </article>
-
-      <article class="card">
-        <span class="status dev">In development</span>
-        <p class="eyebrow">Articulate Storyline · AI literacy</p>
-        <h3>Check the AI Before Class</h3>
-        <p>Teachers review an AI-drafted lesson, catch a made-up fact, a biased example and a privacy risk, then rewrite the prompt so the next draft is safer to use.</p>
-        <div class="tags"><span>Articulate Storyline</span><span>AI ethics</span><span>Prompt revision</span></div>
-      </article>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="cols">
-      <div><p style="font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase">Yi <span style="font-family:var(--script);text-transform:none;letter-spacing:0;font-weight:400;font-size:24px;color:var(--buckthorn)">Liu</span></p><p class="soft" style="font-size:14.5px;margin-top:6px">Portfolio of Yi Liu, learning experience designer and bilingual educator. Based in Chicago.</p></div>
-      <div><h4>Navigate</h4><ul><li><a href="work.html">Selected Work</a></li><li><a href="approach.html">Approach</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div><h4>Projects</h4><ul><li><a href="release-ready-content.html">Release-Ready Learning Content</a></li><li><a href="curriculum-design-onboarding.html">Curriculum Designer Onboarding</a></li><li><a href="leo-trainer-practice.html">LEO Trainer Practice</a></li></ul></div>
-      <div><h4>Focus areas</h4><ul class="soft"><li>AI-assisted content systems</li><li>Role-based onboarding</li><li>Train-the-trainer enablement</li><li>Scenario-based practice</li></ul></div>
-    </div>
-    <div class="fine"><span>© 2026 Yi Liu.</span><span>Designed for clarity. Built for practice.</span></div>
+<main>
+<div class="ptitle wrap"><h1>Portfolio</h1></div>
+<div class="wrap">
+  <p style="padding-left:6%">Select the buttons to view my work below:</p>
+  <hr class="rule">
+  <div class="bigbtns stack">
+    <a class="big" href="release-ready-content.html">AI Content Systems<small>Release-Ready Learning Content</small></a><a class="big" href="curriculum-design-onboarding.html">Onboarding<small>Your First Week as a Curriculum Designer</small></a><a class="big" href="leo-trainer-practice.html">Train-the-Trainer<small>LEO Trainer Practice</small></a>
   </div>
-</footer>
+  <hr class="rule">
+  <h2 class="sec">In development</h2>
+  <div class="dev"><div><h3>Design Review Rubric and Intake Board</h3><p class="tag">Process tool · Learning design operations</p><p>One intake form for every learning request, scored by impact and effort, plus a rubric any team can use to review customer-facing assets before they ship.</p></div><div><h3>Feature Launch Enablement Kit</h3><p class="tag">Enablement kit · Customer education</p><p>A modular kit for one product feature: a Storyline microlearning, a job aid and a 30-minute workshop guide, with a clear line between free Academy content and premium services.</p></div><div><h3>Check the AI Before Class</h3><p class="tag">Articulate Storyline · AI literacy</p><p>Teachers review an AI-drafted lesson, catch a made-up fact, a biased example and a privacy risk, then rewrite the prompt so the next draft is safer to use.</p></div></div>
+</div>
+<section class="band" style="margin-top:36px"><svg class="bgart" viewBox="0 0 1200 400" preserveAspectRatio="none" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M0 300c120-60 220-40 320-90s180-120 300-80 200 120 320 90 200-100 260-80"/><path d="M0 340c160-50 260-20 380-70s200-90 320-60 220 90 330 70 130-40 170-30"/><path d="M0 260c100-40 180-90 280-110s170 30 260-20 160-120 260-100 220 120 400 70"/></svg>
+  <div class="wrap"><h2><span>My process while working with stakeholders:</span></h2></div>
+</section>
+<div class="wrap">
+  <div class="steps"><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="20" r="7"/><path d="M10 46c0-8 5-13 12-13s12 5 12 13"/><path d="M34 10h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 5v-5h-5a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z"/><path d="M39 18h10"/></svg></div><div><h3>Needs Analysis</h3><p>Find the performance gap behind the request. I interview stakeholders, observe the work and sort causes with Gilbert's Behavior Engineering Model, so training is only built where training is the fix.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 8a14 14 0 0 0-8 25c2 2 3 4 3 7h10c0-3 1-5 3-7a14 14 0 0 0-8-25z"/><path d="M27 46h10M28 52h8"/><path d="M32 2v2M12 22h2M50 22h2M17 9l2 2M47 9l-2 2"/></svg></div><div><h3>Design</h3><p>Write measurable objectives, plan backward from the evidence of success, and choose the lightest format that changes the behavior: a job aid, a scenario, a simulation or a workshop.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="8"/><path d="M32 10v6M32 48v6M10 32h6M48 32h6M16.5 16.5l4.2 4.2M43.3 43.3l4.2 4.2M16.5 47.5l4.2-4.2M43.3 20.7l4.2-4.2"/></svg></div><div><h3>Develop</h3><p>Build realistic practice with feedback for every choice, in plain language and accessible by default. I prototype quickly with HTML and AI tools, then refine with real learners.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="12" width="48" height="32" rx="3"/><path d="M24 52h16M32 44v8"/><path d="M28 22l10 6-10 6z"/></svg></div><div><h3>Implement</h3><p>Launch with the people who deliver it: facilitator guides, train-the-trainer sessions and clear ownership, so the learning keeps working after hand-off.</p></div></div><div class="stp"><div class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 52h44"/><rect x="14" y="34" width="8" height="18"/><rect x="28" y="24" width="8" height="28"/><rect x="42" y="14" width="8" height="38"/><path d="M12 26l14-10 10 6 16-12"/></svg></div><div><h3>Evaluate</h3><p>Agree on Kirkpatrick-level measures before launch, collect first-try accuracy and confidence data, and fold every finding back into the next version.</p></div></div></div>
+</div>
+  <div class="collab">
+    <h2>Let's Collaborate!</h2>
+    <div class="icons"><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
 </body>
 </html>

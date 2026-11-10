@@ -3,53 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Curriculum Designer Onboarding Case Study</title>
+<title>Your First Week as a Curriculum Designer · Yi Liu</title>
 <meta name="description" content="Case study: Your First Week as a Curriculum Designer, a role-based interactive onboarding path. Designed and developed by Yi Liu.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Curriculum Designer Onboarding Case Study">
+<meta property="og:title" content="Your First Week as a Curriculum Designer · Yi Liu">
 <meta property="og:description" content="Case study: Your First Week as a Curriculum Designer, a role-based interactive onboarding path. Designed and developed by Yi Liu.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-
-<header class="top">
+<header class="bar">
   <div class="wrap">
-    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
-    <nav class="links" aria-label="Main">
-      <a href="work.html">Selected Work</a>
+    <a class="site" href="index.html"><svg viewBox="0 0 48 36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 30c6-2 13-2 20 2 7-4 14-4 20-2V8c-6-2-13-2-20 2C17 6 10 6 4 8z"/><path d="M24 10v22"/><path d="M10 22l5-5 4 3 6-7"/><path d="M33 7l1.2 2.6L37 10.8l-2.8 1.2L33 14.6l-1.2-2.6L29 10.8l2.8-1.2z"/></svg><span>Yi Liu</span></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html">AI Content Systems</a><a href="curriculum-design-onboarding.html" aria-current="page">Onboarding</a><a href="leo-trainer-practice.html">Train-the-Trainer</a></div></div>
       <a href="approach.html">Approach</a>
-      <a href="about.html">About</a>
+      <a href="about.html">About Me</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
-
 <main>
-  <div class="heroband on-dark"><div class="wrap cs-hero">
-    <a class="crumb" href="work.html">← Selected work</a>
-    <p class="eyebrow">Onboarding · Corporate learning design</p>
-    <h1>Your First Week as a <span class="warm">Curriculum Designer</span></h1>
-    <p class="lead measure">A role-based onboarding path that teaches new learning designers the job by doing it. In about 25 minutes they take one stakeholder request from "can you build a training?" to a design brief ready for sign-off.</p>
-    <div class="btns"><a class="btn warm" href="#demo">Try it below</a><a class="btn" href="demos/curriculum-design-onboarding.html#full">Open full screen</a></div>
-  </div></div>
-  <div class="wrap" style="margin-top:28px">
-    <dl class="meta">
-      <div><dt>Type</dt><dd>Concept project for a fictional SaaS company (Kitebird)</dd></div>
-      <div><dt>My role</dt><dd>Instructional designer, writer and developer</dd></div>
-      <div><dt>Learners</dt><dd>New curriculum and learning designers in their first week</dd></div>
-      <div><dt>Timeline</dt><dd>November 2026</dd></div>
-      <div><dt>Format</dt><dd>Interactive onboarding path, 7 modules</dd></div>
-      <div><dt>Seat time</dt><dd>About 25 minutes</dd></div>
-      <div><dt>Built with</dt><dd>HTML, CSS, JavaScript</dd></div>
-      <div><dt>Frameworks</dt><dd>Gilbert's BEM, Action Mapping, ABCD objectives, Kirkpatrick, Knowles</dd></div>
-    </dl>
-  </div>
-
-  <section class="wrap prose" style="padding-top:28px">
+<div class="ptitle wrap"><h1>Onboarding</h1></div>
+<div class="wrap">
+  <hr class="rule">
+  <article class="proj">
+    <h2>Your First Week as a Curriculum Designer</h2>
+    <div class="shot"><a href="demos/curriculum-design-onboarding.html#full"><img src="images/onboarding.jpg" alt="Screenshot of Your First Week as a Curriculum Designer" width="960" height="600"></a><em>Click the image to experience the project.</em></div>
+    <div class="facts">
+      <p><b>Purpose:</b> New learning designers usually get a template folder and a deadline, then learn the real job by making mistakes on live projects. This role-based onboarding path lets them work one realistic assignment, from a stakeholder's "can you build a training?" to a design brief ready for sign-off, in about 25 minutes. An onboarding buddy adapts tips to each new hire's background.</p>
+      <p><b>Tools:</b> HTML, CSS, JavaScript</p>
+      <p><b>Highlights:</b> Needs analysis with Gilbert's Behavior Engineering Model, Action Mapping, ABCD objectives, backward design, Kirkpatrick evaluation, branching dialogue, adaptive feedback</p>
+      <p><b>Project Deliverables:</b> <a href="demos/curriculum-design-onboarding.html#full">Interactive Onboarding Path</a>, Design Brief Template (built into the path)</p>
+    </div>
+  </article>
+  <hr class="rule">
+</div>
+<section class="wrap prose" style="padding-top:28px">
     <div class="two">
       <h2>The challenge</h2>
       <div class="prose">
@@ -99,12 +94,11 @@
 
   <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
     <div class="sechead">
-      <p class="eyebrow">Interactive demo</p>
       <h2 id="demo-h">Try your first week</h2>
       <p class="muted measure">Pick a background on the welcome screen to see how the buddy's tips change. Progress saves only in your browser.</p>
     </div>
     <div class="demo">
-      <div class="bar"><span>Your First Week as a Curriculum Designer</span><a href="demos/curriculum-design-onboarding.html#full">Open full screen ↗</a></div>
+      <div class="bar2"><span>Your First Week as a Curriculum Designer</span><a href="demos/curriculum-design-onboarding.html#full">Open full screen ↗</a></div>
       <iframe src="demos/curriculum-design-onboarding.html" title="Curriculum designer onboarding interactive demo"></iframe>
     </div>
   </section>
@@ -137,12 +131,16 @@
       <a class="btn primary" href="leo-trainer-practice.html">Next: LEO Trainer Practice</a>
     </div>
   </section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <p class="fine" style="margin-top:0;border-top:0;padding-top:0">© 2026 Yi Liu. Kitebird, Marcus and Dana are fictional, created for this onboarding demo.</p>
+  <div class="collab">
+    <h2>Let's Collaborate!</h2>
+    <div class="icons"><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
   </div>
-</footer>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu. Kitebird, Marcus and Dana are fictional, created for this onboarding demo.</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
 </body>
 </html>

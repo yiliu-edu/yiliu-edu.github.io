@@ -9,16 +9,16 @@
 <meta name="description" content="Your First Week as a Curriculum Designer: an interactive onboarding path. Designed and developed by Yi Liu, 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@500;600&display=swap">
 <style>
 /* Layout: an onboarding workspace. Week path, buddy and the growing design brief on the left; one module at a time on the right. */
 :root{
-  --bg:#FDFAF4; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#E4DAE6; --soft:#F8F1E7; --tint:#F1E3F5;
-  --grape:#491355; --disco:#6D0B47; --cinnamon:#E65F2A; --buckthorn:#FCB442; --on-dark:#FEF9F3;
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#DADCE0; --soft:#F3F6FA; --tint:#EAF1FB;
+  --grape:#1C4587; --disco:#2F62B5; --cinnamon:#3878BC; --buckthorn:#9EC5EE; --on-dark:#FFFFFF;
   --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB;
-  --gradient-hero:linear-gradient(135deg,#491355 0%,#6D0B47 55%,#831A1D 100%);
-  --gradient-warm:linear-gradient(120deg,#E65F2A,#FCB442);
-  --body:"Open Sans",system-ui,sans-serif; --script:"Nothing You Could Do","Segoe Print",cursive;
+  --gradient-hero:linear-gradient(135deg,#3878BC 0%,#2F62B5 100%);
+  --gradient-warm:linear-gradient(120deg,#2F62B5,#6FA8DC);
+  --body:"Bitter",Georgia,serif; --script:"Bitter",Georgia,serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -49,7 +49,7 @@ aside{position:sticky;top:16px;display:flex;flex-direction:column;gap:14px}
 .pd[aria-current="true"] .nm{font-weight:700;color:var(--grape)}
 .pd .dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--muted)}
 .pd .dot.ok{background:var(--good);border-color:var(--good);color:#fff}
-.pd .dot.mid{background:var(--buckthorn);border-color:var(--buckthorn);color:#2A1030}
+.pd .dot.mid{background:var(--buckthorn);border-color:var(--buckthorn);color:#1C2B44}
 .pd .day{display:block;font-size:11px;color:var(--muted);line-height:1.1}
 .pd .nm{font-size:14px;line-height:1.25}
 .pd.locked{opacity:.5;cursor:not-allowed}
@@ -63,7 +63,7 @@ aside{position:sticky;top:16px;display:flex;flex-direction:column;gap:14px}
 
 /* main */
 main{min-width:0}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;display:flex;flex-direction:column;gap:18px;min-height:520px;box-shadow:0 10px 30px rgba(73,19,85,.06)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;display:flex;flex-direction:column;gap:18px;min-height:520px;box-shadow:0 10px 30px rgba(28,69,135,.06)}
 @media (max-width:560px){.card{padding:18px}}
 .card h2{font-size:clamp(24px,3vw,32px);color:var(--grape);letter-spacing:-.015em}
 .lead{font-size:17px;max-width:66ch}
@@ -97,7 +97,7 @@ main{min-width:0}
 .chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:9px 13px;cursor:grab;touch-action:none;user-select:none;text-align:left;font-size:14.5px;font-weight:600;max-width:100%;transition:transform .2s,box-shadow .2s}
 .chip.sel{border-color:var(--grape);box-shadow:0 0 0 2px var(--grape);transform:translateY(-3px)}
 .chip.placed{cursor:default;animation:pop .35s both;font-size:13px;padding:6px 10px;font-weight:600}
-.chip.lifting{position:relative;z-index:60;cursor:grabbing;box-shadow:0 10px 24px rgba(73,19,85,.25)}
+.chip.lifting{position:relative;z-index:60;cursor:grabbing;box-shadow:0 10px 24px rgba(28,69,135,.25)}
 .bins{display:grid;gap:12px}
 .bins.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .bins.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -217,9 +217,9 @@ main{min-width:0}
 </style>
 </head>
 <body>
-<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:'Open Sans',system-ui,sans-serif;font-size:14px;font-weight:700">
-<a href="../curriculum-design-onboarding.html" style="background:#491355;color:#FEF9F3;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(73,19,85,.3)">← Back to case study</a>
-<a href="../index.html" style="background:#FEF9F3;color:#491355;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #491355;box-shadow:0 6px 18px rgba(73,19,85,.15)">Portfolio home</a></div>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../curriculum-design-onboarding.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
 <script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
 
 <div class="wrap">

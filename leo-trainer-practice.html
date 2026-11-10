@@ -3,53 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LEO Trainer Practice Case Study</title>
+<title>LEO Trainer Practice · Yi Liu</title>
 <meta name="description" content="Case study: LEO Trainer Practice, a scenario-based self-check for educators after the Meet LEO train-the-trainer webinar. Designed and developed by Yi Liu.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="LEO Trainer Practice Case Study">
+<meta property="og:title" content="LEO Trainer Practice · Yi Liu">
 <meta property="og:description" content="Case study: LEO Trainer Practice, a scenario-based self-check for educators after the Meet LEO train-the-trainer webinar. Designed and developed by Yi Liu.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-
-<header class="top">
+<header class="bar">
   <div class="wrap">
-    <a class="logo" href="index.html"><b>Yi <span>Liu</span></b><small>Learning experience designer</small></a>
-    <nav class="links" aria-label="Main">
-      <a href="work.html">Selected Work</a>
+    <a class="site" href="index.html"><svg viewBox="0 0 48 36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 30c6-2 13-2 20 2 7-4 14-4 20-2V8c-6-2-13-2-20 2C17 6 10 6 4 8z"/><path d="M24 10v22"/><path d="M10 22l5-5 4 3 6-7"/><path d="M33 7l1.2 2.6L37 10.8l-2.8 1.2L33 14.6l-1.2-2.6L29 10.8l2.8-1.2z"/></svg><span>Yi Liu</span></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html">AI Content Systems</a><a href="curriculum-design-onboarding.html">Onboarding</a><a href="leo-trainer-practice.html" aria-current="page">Train-the-Trainer</a></div></div>
       <a href="approach.html">Approach</a>
-      <a href="about.html">About</a>
+      <a href="about.html">About Me</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
-
 <main>
-  <div class="heroband on-dark"><div class="wrap cs-hero">
-    <a class="crumb" href="work.html">← Selected work</a>
-    <p class="eyebrow">Train-the-trainer · Digital safety for families</p>
-    <h1>LEO Trainer Practice</h1>
-    <p class="lead measure">A 15-minute practice room for educators who just finished the Meet LEO train-the-trainer webinar. They rehearse the moments that matter in front of parents, see what they remember, and leave with a prep plan.</p>
-    <div class="btns"><a class="btn warm" href="#demo">Try it below</a><a class="btn" href="demos/leo-trainer-practice.html#full">Open full screen</a></div>
-  </div></div>
-  <div class="wrap" style="margin-top:28px">
-    <dl class="meta">
-      <div><dt>Partner</dt><dd>Digital4Good x #ICANHELP, for Google's Meet LEO program</dd></div>
-      <div><dt>My role</dt><dd>Instructional designer and developer</dd></div>
-      <div><dt>Learners</dt><dd>Educators, PTA leaders and community trainers</dd></div>
-      <div><dt>Timeline</dt><dd>October 2026</dd></div>
-      <div><dt>Format</dt><dd>Scenario-based web practice, 8 rounds</dd></div>
-      <div><dt>Seat time</dt><dd>About 15 minutes</dd></div>
-      <div><dt>Built with</dt><dd>HTML, CSS, JavaScript</dd></div>
-      <div><dt>Frameworks</dt><dd>Retrieval practice, scenario-based learning, Kirkpatrick levels 1–2</dd></div>
-    </dl>
-  </div>
-
-  <section class="wrap prose" style="padding-top:28px">
+<div class="ptitle wrap"><h1>Train-the-Trainer</h1></div>
+<div class="wrap">
+  <hr class="rule">
+  <article class="proj">
+    <h2>LEO Trainer Practice</h2>
+    <div class="shot"><a href="demos/leo-trainer-practice.html#full"><img src="images/leo.jpg" alt="Screenshot of LEO Trainer Practice" width="960" height="600"></a><em>Click the image to experience the project.</em></div>
+    <div class="facts">
+      <p><b>Purpose:</b> Meet LEO is a Google program that trains educators, PTA leaders and community trainers to teach families about Google's online safety tools. Trainers often present weeks after the webinar, so I built a 15-minute practice room where they rehearse from memory, answer tough parent questions and run a simulated group activity before facing real parents.</p>
+      <p><b>Tools:</b> HTML, CSS, JavaScript, Google Apps Script</p>
+      <p><b>Highlights:</b> Retrieval practice, scenario-based learning, facilitation simulation, pre/post confidence ratings, accessible drag-or-tap interactions</p>
+      <p><b>Project Deliverables:</b> <a href="demos/leo-trainer-practice.html#full">Interactive Practice Tool</a></p>
+    </div>
+  </article>
+  <hr class="rule">
+</div>
+<section class="wrap prose" style="padding-top:28px">
     <div class="two">
       <h2>The challenge</h2>
       <div class="prose">
@@ -100,12 +95,11 @@
 
   <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
     <div class="sechead">
-      <p class="eyebrow">Interactive demo</p>
       <h2 id="demo-h">Try it yourself</h2>
       <p class="muted measure">This portfolio copy saves progress only in your browser and sends no data. Start with the confidence check, then play any round.</p>
     </div>
     <div class="demo">
-      <div class="bar"><span>LEO Trainer Practice · portfolio copy</span><a href="demos/leo-trainer-practice.html#full">Open full screen ↗</a></div>
+      <div class="bar2"><span>LEO Trainer Practice · portfolio copy</span><a href="demos/leo-trainer-practice.html#full">Open full screen ↗</a></div>
       <iframe src="demos/leo-trainer-practice.html" title="LEO Trainer Practice interactive demo"></iframe>
     </div>
   </section>
@@ -139,12 +133,16 @@
       <a class="btn primary" href="contact.html">Contact Yi</a>
     </div>
   </section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <p class="fine" style="margin-top:0;border-top:0;padding-top:0">© 2026 Yi Liu. LEO Trainer Practice was designed and developed by Yi Liu for Digital4Good x Google, October 2026. Meet LEO is a Google program; content is based on the Meet LEO training deck.</p>
+  <div class="collab">
+    <h2>Let's Collaborate!</h2>
+    <div class="icons"><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
   </div>
-</footer>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu. LEO Trainer Practice was designed and developed by Yi Liu for Digital4Good x Google, October 2026. Meet LEO is a Google program; content is based on the Meet LEO training deck.</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
 </body>
 </html>

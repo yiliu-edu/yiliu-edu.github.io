@@ -9,16 +9,16 @@
 <meta name="description" content="Interactive walkthrough of an AI-assisted workflow that keeps customer learning content current with each product release. Designed and built by Yi Liu, 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: a content-ops console. Pipeline stepper across the top, one stage at a time below, a running log on the side. */
 :root{
-  --bg:#FDFAF4; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#E4DAE6; --soft:#F8F1E7; --tint:#F1E3F5;
-  --grape:#491355; --disco:#6D0B47; --cinnamon:#E65F2A; --buckthorn:#FCB442; --on-dark:#FEF9F3;
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A505C; --line:#DADCE0; --soft:#F3F6FA; --tint:#EAF1FB;
+  --grape:#1C4587; --disco:#2F62B5; --cinnamon:#3878BC; --buckthorn:#9EC5EE; --on-dark:#FFFFFF;
   --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB; --info:#24456F; --info-soft:#E7EEF9;
-  --gradient-hero:linear-gradient(135deg,#491355 0%,#6D0B47 55%,#831A1D 100%);
-  --gradient-warm:linear-gradient(120deg,#E65F2A,#FCB442);
-  --body:"Open Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --script:"Nothing You Could Do","Segoe Print",cursive;
+  --gradient-hero:linear-gradient(135deg,#3878BC 0%,#2F62B5 100%);
+  --gradient-warm:linear-gradient(120deg,#2F62B5,#6FA8DC);
+  --body:"Bitter",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --script:"Bitter",Georgia,serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -62,7 +62,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:16px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
 @media (max-width:760px){.split{grid-template-columns:minmax(0,1fr)}}
-.src{background:#1E1424;color:#F3E9F5;border-radius:16px;padding:14px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap}
+.src{background:#1B2A41;color:#E6EDF7;border-radius:16px;padding:14px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap}
 .src .hl{background:rgba(252,180,66,.28);border-radius:4px}
 .rec{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;animation:rise .35s both;background:var(--surface)}
 .rec .id{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--cinnamon)}
@@ -139,18 +139,18 @@ button.ln:focus-visible{outline:3px solid var(--grape);outline-offset:-3px}
 .own ul{margin:6px 0 0;padding-left:18px;font-size:14px}
 aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
 @media (max-width:960px){aside{position:static}}
-.log{background:#1E1424;color:#E9DDEC;border-radius:18px;padding:14px;font-family:var(--mono);font-size:12px;line-height:1.6;max-height:520px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
-.log .t{color:#A68FAD}
-.log .ai{color:#9EC1F2} .log .hm{color:var(--buckthorn)} .log .cd{color:#C9B8CF} .log .ok{color:#7FD6AA}
+.log{background:#1B2A41;color:#E3EAF3;border-radius:18px;padding:14px;font-family:var(--mono);font-size:12px;line-height:1.6;max-height:520px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.log .t{color:#8FA3BF}
+.log .ai{color:#9EC1F2} .log .hm{color:var(--buckthorn)} .log .cd{color:#B9C6D8} .log .ok{color:#7FD6AA}
 .side-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
 .foot{font-size:12.5px;color:var(--muted);max-width:1200px;margin:0 auto;padding:0 16px 32px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:'Open Sans',system-ui,sans-serif;font-size:14px;font-weight:700">
-<a href="../release-ready-content.html" style="background:#491355;color:#FEF9F3;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(73,19,85,.3)">← Back to case study</a>
-<a href="../index.html" style="background:#FEF9F3;color:#491355;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #491355;box-shadow:0 6px 18px rgba(73,19,85,.15)">Portfolio home</a></div>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../release-ready-content.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
 <script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
 
 <header class="top"><div class="in">
