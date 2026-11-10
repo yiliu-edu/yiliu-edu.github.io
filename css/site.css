@@ -10,7 +10,8 @@
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.75}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
+.shot img{width:100%}
 a{color:var(--ink)}
 :focus-visible{outline:3px solid var(--navy);outline-offset:3px}
 h1,h2,h3{font-family:var(--serif);line-height:1.25;margin:0;text-wrap:balance}
