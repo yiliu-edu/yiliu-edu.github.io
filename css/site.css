@@ -209,8 +209,8 @@ nav.links{margin-left:auto}
 .sgallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:620px;margin-top:4px}
 .sgallery figure{margin:0}
 @media (max-width:480px){.sgallery{grid-template-columns:minmax(0,1fr)}}
-.about-me{grid-template-columns:175px minmax(0,1fr)}
+.about-me{grid-template-columns:210px minmax(0,1fr)}
 .photos{display:flex;flex-direction:column;gap:12px}
-.photos .photo,.photos .mono{width:175px}
-.sidepic{width:175px;height:auto;border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.photos .photo,.photos .mono{width:210px}
+.sidepic{width:210px;height:auto;border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
 @media (max-width:640px){.about-me{grid-template-columns:minmax(0,1fr)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.photos .photo,.photos .mono,.sidepic{width:100%}}
