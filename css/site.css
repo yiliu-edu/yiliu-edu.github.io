@@ -213,4 +213,4 @@ nav.links{margin-left:auto}
 .photos{display:flex;flex-direction:column;gap:12px}
 .photos .photo,.photos .mono{width:175px}
 .sidepic{width:175px;height:auto;border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-@media (max-width:640px){.about-me{grid-template-columns:minmax(0,1fr)}.photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.photos .photo,.photos .mono,.sidepic{width:100%}}
+@media (max-width:640px){.about-me{grid-template-columns:minmax(0,1fr)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.photos .photo,.photos .mono,.sidepic{width:100%}}
