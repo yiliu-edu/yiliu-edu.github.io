@@ -71,7 +71,7 @@ h3.sub{font-size:20px;color:var(--navy);font-weight:600}
 @media (max-width:640px){.me{grid-template-columns:minmax(0,1fr)}}
 .photo{width:180px;aspect-ratio:4/5;object-fit:cover;border-radius:2px}
 .mono{width:180px;aspect-ratio:4/5;background:var(--tint);color:var(--blue);display:grid;place-items:center;font-family:var(--title);font-size:46px;border:1px solid var(--line)}
-.me p{font-size:15px;line-height:1.8}
+.me p{font-size:15.5px;line-height:1.85}
 .me .k{text-decoration:underline;margin-top:14px}
 .nums{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;text-align:center}
 @media (max-width:900px){.nums{grid-template-columns:repeat(3,minmax(0,1fr))}}
