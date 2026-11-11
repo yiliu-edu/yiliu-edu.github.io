@@ -251,7 +251,7 @@ function scan(){
   $("stage").innerHTML = `<section class="panel">
     <div class="row"><span class="label">Stage 2 · Impact scan</span><span class="who code">Script</span><span class="who ai">AI checks</span></div>
     <h2>${DATA.report.flags.length} flags across ${new Set(F.map(f => f.asset)).size} of ${DATA.report.assets_scanned} assets</h2>
-    <p class="lead">The script over-flags on purpose: it matches every asset by feature tag <em>and</em> by UI keyword. Then the AI checks each flag and must point to a conflicting line before it can say "update."</p>
+    <p class="lead">The script over-flags on purpose: it matches every asset by feature tag <em>and</em> by UI keyword. Then the AI checks each flag and must point to a conflicting line before it can say “update.”</p>
     ${st.checked ? "" : `<div class="note info"><strong>Your call first:</strong> click the two flags you think need <em>no</em> update, then run the AI check and compare.</div>`}
     <div class="tablewrap"><table><thead><tr><th>Asset</th><th>Title</th><th>Change</th><th>Match</th><th>Severity</th><th>AI check</th></tr></thead><tbody>
       ${F.map(f => { const c = chk(f); return `<tr class="${st.checked ? "" : "pick"} ${st.guess.includes(key(f)) ? "picked" : ""}" data-k="${key(f)}" tabindex="${st.checked ? -1 : 0}">

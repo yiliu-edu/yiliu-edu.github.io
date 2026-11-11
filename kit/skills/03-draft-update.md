@@ -28,4 +28,4 @@ Return JSON only:
 
 ## Change log
 - v1.0 (Nov 4): first version.
-- v1.1 (Nov 5): added rule 7. In the 4.2 sample run, the HC-104 draft added "Roadmaps can now be shared publicly with anyone who has the link," which no release item supports. The reviewer caught it through the traceability check.
+- v1.1 (Nov 5): added rule 7. In the 4.2 sample run, the HC-104 draft added “Roadmaps can now be shared publicly with anyone who has the link,” which no release item supports. The reviewer caught it through the traceability check.

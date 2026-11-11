@@ -78,7 +78,7 @@
     <h2>Release-Ready Learning Content</h2>
     <div class="shot"><a href="demos/release-ready-content.html#full"><img src="images/release.jpg" alt="Screenshot of Release-Ready Learning Content" width="960" height="600"></a><em>Click the image to experience the project.</em></div>
     <div class="facts">
-      <p><b>Purpose:</b> Every SaaS release quietly breaks help articles, Academy lessons and workshop kits, and asking AI to "rewrite the docs" can invent features. I designed an AI-assisted workflow that flags what a release affects, drafts the smallest correct fix with a citation to the release notes, and leaves every publish decision to a person. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
+      <p><b>Purpose:</b> Every SaaS release quietly breaks help articles, Academy lessons and workshop kits, and asking AI to “rewrite the docs” can invent features. I designed an AI-assisted workflow that flags what a release affects, drafts the smallest correct fix with a citation to the release notes, and leaves every publish decision to a person. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
       <p><b>Tools:</b> Claude (four reusable skills), Python, JSON content schema</p>
       <p><b>Highlights:</b> Workflow design, prompt and skill writing, content modeling, review rubric, human-in-the-loop quality checks, accessibility checks</p>
       <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a></p>
@@ -91,7 +91,7 @@
       <h2>The problem</h2>
       <div class="prose">
         <p class="measure">Every SaaS release quietly breaks learning content. A renamed tab makes a help article wrong, a quiz question points to a menu that no longer exists, and a workshop demo walks enterprise customers to the wrong screen. Teams usually find out when a customer does.</p>
-        <p class="measure">Asking AI to "rewrite the docs" makes it worse: drafts sound right and can invent features. I wanted a system that finds every affected asset, drafts only what the release supports, and makes it easy for a person to check.</p>
+        <p class="measure">Asking AI to “rewrite the docs” makes it worse: drafts sound right and can invent features. I wanted a system that finds every affected asset, drafts only what the release supports, and makes it easy for a person to check.</p>
       </div>
     </div>
   </section>
@@ -105,7 +105,7 @@
           <tbody>
             <tr><td>1</td><td>Intake</td><td>Release notes become structured change records</td><td><span class="lvl apply">AI drafts</span></td><td>Every record quotes its exact source line</td></tr>
             <tr><td>2</td><td>Impact scan</td><td>Every asset is matched to every change by feature tag and UI keyword</td><td><span class="lvl recall">Script</span></td><td>Deterministic and repeatable; over-flags on purpose</td></tr>
-            <tr><td>3</td><td>Impact check</td><td>Each flag is confirmed, dismissed or turned into a question</td><td><span class="lvl apply">AI drafts</span></td><td>"Update" requires a conflicting line; dismissals show a reason</td></tr>
+            <tr><td>3</td><td>Impact check</td><td>Each flag is confirmed, dismissed or turned into a question</td><td><span class="lvl apply">AI drafts</span></td><td>“Update” requires a conflicting line; dismissals show a reason</td></tr>
             <tr><td>4</td><td>Draft</td><td>Smallest correct edit, each changed line tagged with its release item</td><td><span class="lvl apply">AI drafts</span></td><td>Human-owned parts marked; unknowns become open questions</td></tr>
             <tr><td>5</td><td>Review</td><td>Rubric checks run; a person approves, edits, routes or rejects</td><td><span class="lvl perform">Person</span></td><td>Traceability, scope, terms, accessibility, ownership</td></tr>
             <tr><td>6</td><td>Learn</td><td>Review decisions become new rules in the skills</td><td><span class="lvl plan">Person</span></td><td>Versioned change log in each skill</td></tr>
@@ -131,7 +131,7 @@
     <div class="decisions">
       <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In the sample run, the keyword pass caught a shortcut table with no feature tag, and the AI dismissed 2 of 10 flags with reasons the owner can see.</p></div>
       <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes invented content easy to spot: in the sample run, one draft claimed roadmaps could be shared publicly, and the traceability check flagged it.</p></div>
-      <div class="decision"><h3>"Unsure" is an allowed answer</h3><p>When the release doesn't say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
+      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn't say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
       <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
       <div class="decision"><h3>Review decisions become rules</h3><p>The invented-feature edit became rule 7 in the draft skill (v1.1). Re-running the same draft with v1.1 moved the guess into an open question instead of the body.</p></div>
       <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
@@ -194,6 +194,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=11" defer></script>
+<script src="js/search.js?v=12" defer></script>
 </body>
 </html>

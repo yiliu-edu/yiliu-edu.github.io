@@ -1,7 +1,7 @@
 # Skill 02: Check whether a flagged asset needs an update
 
 Purpose: filter the deterministic impact scan (flag_impacted.py), which over-flags on purpose.
-Who runs it: the AI, once per flag. Who checks it: the asset owner sees every "no update" decision with its reason.
+Who runs it: the AI, once per flag. Who checks it: the asset owner sees every “no update” decision with its reason.
 
 ## Instructions
 

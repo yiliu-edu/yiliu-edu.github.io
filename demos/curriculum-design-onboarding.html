@@ -708,7 +708,7 @@ function renderIntro(){
   $("stage").innerHTML = `
     <p class="eyebrow">Welcome to Kitebird's learning team</p>
     <h2>Your first week starts with a real request</h2>
-    <p class="lead">Instead of reading a handbook, you'll work one real assignment from start to finish: a stakeholder asks for "a training," and by Friday you'll have a design brief ready for sign-off. About 25 minutes in total. Stop and come back anytime.</p>
+    <p class="lead">Instead of reading a handbook, you'll work one real assignment from start to finish: a stakeholder asks for “a training,” and by Friday you'll have a design brief ready for sign-off. About 25 minutes in total. Stop and come back anytime.</p>
     ${buddy("Hi, I'm Dana. I'll check in with tips along the way. Tell me a bit about your background so I can make them useful.")}
     <div class="part"><h3>What best describes you?</h3><div class="bgs">${Object.entries(BG).map(([k, b]) => `<button class="bgb" data-bg="${k}" aria-pressed="${bg === k}"><b>${b.n}</b><span>${b.d}</span></button>`).join("")}</div></div>
     <div class="part"><h3>Your week</h3><div class="week">
