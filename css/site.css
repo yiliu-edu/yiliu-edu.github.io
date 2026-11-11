@@ -202,3 +202,10 @@ nav.links{margin-left:auto}
 #results mark{background:#FFF0B3;color:inherit;padding:0 1px}
 #results .hint{padding:10px 4px;color:var(--muted);font-size:14px;border:0}
 .site{order:1} nav.links{order:2} .search-btn{order:3} .menu-btn{order:4}
+
+/* story photos */
+.sphoto{margin:4px 0;max-width:360px}
+.sphoto img,.sgallery img{width:100%;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.sgallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:620px;margin-top:4px}
+.sgallery figure{margin:0}
+@media (max-width:480px){.sgallery{grid-template-columns:minmax(0,1fr)}}
