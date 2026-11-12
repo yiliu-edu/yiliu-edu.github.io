@@ -81,7 +81,7 @@
       <p><b>Purpose:</b> Any new SaaS release will inevitably change help articles, Academy lessons and workshop materials. Asking AI to “rewrite” the documents would likely introduce unwanted new features. I designed an AI-assisted workflow that determines how a release affects the documentation and drafts a minimal correction with proper citations to the release notes. A human then checks the draft and decides whether to publish it. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
       <p><b>Tools:</b> Claude (four reusable skills), Python, JSON content schema</p>
       <p><b>Highlights:</b> Workflow design, prompt and skill writing, content modeling, review rubric, human-in-the-loop quality checks, Action Mapping, Gilbert’s Behavior Engineering Model, ABCD objectives, retrieval practice, Kirkpatrick evaluation plan</p>
-      <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a>, <a href="kit/run-log-template.md">Run Log Template</a></p>
+      <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a>, <a href="kit/run-log-2026-11-12.md">Real Run Log</a></p>
     </div>
   </article>
   <hr class="rule">
@@ -158,7 +158,7 @@
           <tr><td>4</td><td>Results</td><td>Support tickets tagged “outdated docs”; satisfaction ratings on help articles</td><td>Support system, quarterly</td><td>30% fewer tickets within two quarters</td></tr>
         </tbody>
       </table></div>
-      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Real runs are recorded in the <a href="kit/run-log-template.md">run log</a>.</p>
+      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Real runs so far are recorded in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
     </div>
   </div>
 </section>
@@ -206,11 +206,11 @@
   <section class="wrap prose" aria-labelledby="chk-h">
     <h2 id="chk-h">How I check the AI’s output</h2>
     <div class="decisions">
-      <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In the sample run, the keyword pass caught a shortcut table with no feature tag, and the AI dismissed 2 of 10 flags with reasons the owner can see.</p></div>
-      <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes invented content easy to spot: in the sample run, one draft claimed roadmaps could be shared publicly, and the traceability check flagged it.</p></div>
+      <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In a real run, the AI correctly dismissed the load-speed flag on HC-415 with a reason the owner can check. On HC-104 it found the outdated article title, which sits outside the body, while the scan caught a lowercase heading (“Share a timeline”) the AI missed. Each pass covered the other’s gap.</p></div>
+      <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes unsupported content easy to spot. In a real run, a v1.0 draft kept “at the top of the project” from the old article, a location the release never stated. The AI reviewer failed that line on traceability and scope.</p></div>
       <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn’t say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
       <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
-      <div class="decision"><h3>Review decisions become rules</h3><p>The invented-feature edit became rule 7 in the draft skill (v1.1). Re-running the same draft with v1.1 moved the guess into an open question instead of the body.</p></div>
+      <div class="decision"><h3>Review decisions become rules</h3><p>That finding became rule 7 in the draft skill: never state what a change record doesn’t support. Re-running the same input with v1.1 removed the unsupported location from the step and turned it into a question, and open questions fell from 7 to 5.</p></div>
       <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
     </div>
   </section>
@@ -234,7 +234,7 @@
         <div class="files">
           <a class="file" href="kit/skills/01-intake-classify.md"><b>01-intake-classify.md</b><span>Release notes to change records</span></a>
           <a class="file" href="kit/skills/02-impact-check.md"><b>02-impact-check.md</b><span>Confirm, dismiss or question each flag</span></a>
-          <a class="file" href="kit/skills/03-draft-update.md"><b>03-draft-update.md</b><span>Minimal, traceable edits (v1.1)</span></a>
+          <a class="file" href="kit/skills/03-draft-update.md"><b>03-draft-update.md</b><span>Minimal, traceable edits (v1.2)</span></a>
           <a class="file" href="kit/skills/04-review-rubric.md"><b>04-review-rubric.md</b><span>7-point review rubric and decisions</span></a>
           <a class="file" href="kit/flag_impacted.py"><b>flag_impacted.py</b><span>The impact scan script</span></a>
           <a class="file" href="kit/README.md"><b>README.md</b><span>How the kit fits together</span></a>
@@ -245,11 +245,28 @@
 
   <section class="wrap prose" aria-labelledby="ev-h">
     <div class="two">
-      <h2 id="ev-h">Results and next steps</h2>
+      <h2 id="ev-h">Results from real runs</h2>
       <div class="prose">
-        <p class="measure">Sample run on release 4.2: 9 assets scanned, 10 flags, 2 dismissed with reasons, 1 question sent to Product, 4 drafts reviewed (2 published, 1 of them after an edit; 2 routed to owners), 1 invented claim caught and turned into a new prompt rule.</p>
-        <p class="measure">Next, I’d connect intake to the real release feed, run the scan on a schedule, and track time from release to updated content and the share of drafts published without edits. That share is the clearest sign the system needs less upkeep over time.</p>
-        <div class="placeholder">Results from running the skills on a larger content library will go here: flag precision, drafts published without edits, and time saved per release.</div>
+        <p class="measure">On November 12, 2026, I ran each skill in a fresh Claude chat on the release 4.2 inputs and checked every output against the rubric. The interactive demo above uses sample drafts written to train reviewers; the results below are from the real runs.</p>
+        <div class="tablewrap"><table>
+          <thead><tr><th>#</th><th>Run</th><th>What happened</th><th>What I changed</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Intake (01 v1.0)</td><td>Quoted all 5 release lines exactly and split one line into two changes (CSV moved, PDF added), with a question for the product manager. Chose a common word (“Plan”) and a multi-word phrase as scan keywords, added an unsupported “sharing” tag, and typed the approvals change inconsistently.</td><td>01 v1.1: change-type definitions, keyword and tag rules, split rule</td></tr>
+            <tr><td>2</td><td>Impact check, HC-104 (02 v1.0)</td><td>Correct “update”. Found the outdated title; missed the lowercase heading the scan had caught.</td><td>02 v1.1: check title and metadata; match old names in any case and plural</td></tr>
+            <tr><td>3</td><td>Impact check, HC-415 (02 v1.0)</td><td>Correct “no update”, with a clear reason. The planted false positive was filtered.</td><td>None</td></tr>
+            <tr><td>4</td><td>Draft, HC-104 (03 v1.0)</td><td>No invented features, but kept an unsupported location in step 2 and listed 7 open questions without owners.</td><td>Added rule 7 (v1.1)</td></tr>
+            <tr><td>5</td><td>Draft, HC-104 (03 v1.1)</td><td>Removed the unsupported location and flagged it; open questions fell from 7 to 5.</td><td>03 v1.2: owner and blocking label on every question; no style-only questions</td></tr>
+            <tr><td>6</td><td>Review of the v1.0 draft (04)</td><td>Failed 5 of 7 checks, caught the unsupported line, recommended “route to owner” and assigned owners to every question. Pointed out that my prompt had left out the style guide.</td><td>04 v1.1: style guide is a required input</td></tr>
+          </tbody>
+        </table></div>
+        <ul class="measure" style="margin:0;padding-left:20px">
+          <li>Impact decisions correct: 2 of 2</li>
+          <li>Unsupported claims in drafts: 1 with v1.0, 0 with v1.1</li>
+          <li>Drafts published without a human decision: 0</li>
+          <li>Prompt gaps found and fixed: 4 skills updated</li>
+        </ul>
+        <p class="measure">The biggest lesson was not the one I expected. I planned for the model to invent features; in practice it was cautious, and the real risks were subtler: an old assumption carried into new text, and more open questions than a reviewer can handle. Both became rules. The full record is in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
+        <p class="measure">Next, I’d run the updated skills on a larger library, connect intake to a real release feed, and track time from release to updated content and the share of drafts published without edits.</p>
       </div>
     </div>
   </section>
@@ -271,6 +288,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=16" defer></script>
+<script src="js/search.js?v=17" defer></script>
 </body>
 </html>

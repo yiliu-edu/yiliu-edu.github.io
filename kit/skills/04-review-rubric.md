@@ -1,7 +1,9 @@
-# Skill 04: Review rubric for customer-facing learning content
+# Skill 04: Review rubric for customer-facing learning content (v1.1)
 
 Used two ways: the AI runs the automatic checks and reports them; a person makes the publish decision.
 The same rubric applies to new assets before they reach customers.
+
+Required inputs: the release notes, the original asset, the draft, and the style guide’s product terms. Without the style guide, check 3 cannot be scored.
 
 | # | Check | Automatic? | Pass when |
 |---|-------|------------|-----------|
@@ -20,3 +22,7 @@ The same rubric applies to new assets before they reach customers.
 - Reject: the draft misreads the change. Log the reason and re-run.
 
 Every decision goes into the review log. Patterns in the log become new rules in skills 01–03.
+
+## Change log
+- v1.0 (Nov 4): first version.
+- v1.1 (Nov 12): made the style guide a required input. In a real run, the reviewer pointed out that the prompt left it out.

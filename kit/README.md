@@ -38,3 +38,7 @@ python3 flag_impacted.py content/library.json content/release-4.2.json > sample-
 - The edit removed one unsupported claim in HC-104. That led to rule 7 in skill 03 (v1.1).
 
 The sample outputs in `sample-run/` were drafted with Claude for this portfolio demo. Re-run the skills on the same inputs to compare results.
+
+## Real runs (November 12, 2026)
+
+Each skill was run in a fresh Claude chat and checked against the rubric. See `run-log-2026-11-12.md`. Findings led to 01 v1.1, 02 v1.1, 03 v1.2 and 04 v1.1.
