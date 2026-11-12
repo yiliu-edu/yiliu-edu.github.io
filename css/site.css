@@ -214,3 +214,15 @@ nav.links{margin-left:auto}
 .photos .photo,.photos .mono{width:210px}
 .sidepic{width:210px;height:auto;border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
 @media (max-width:640px){.about-me{grid-template-columns:minmax(0,1fr)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.photos .photo,.photos .mono,.sidepic{width:100%}}
+
+/* action map */
+.amap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;position:relative}
+@media (max-width:900px){.amap{grid-template-columns:minmax(0,1fr)}}
+.amap > div{border:2px solid var(--band);border-radius:6px;padding:12px 14px;background:#fff;position:relative}
+.amap > div:first-child{background:var(--band);color:#fff}
+.amap > div:first-child .lbl{color:#E6EEF9}
+.amap > div:not(:last-child)::after{content:"→";position:absolute;right:-18px;top:50%;transform:translateY(-50%);color:var(--band);font-weight:700;font-size:18px}
+@media (max-width:900px){.amap > div:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-22px;transform:translateX(-50%)}}
+.amap .lbl{display:block;font-size:12.5px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.amap ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.6}
+.amap p{font-size:15px}

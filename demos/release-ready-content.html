@@ -36,7 +36,7 @@ button{font:inherit}
 .top h1{font-size:clamp(22px,3vw,30px);margin-top:2px}
 .top p.sub{color:rgba(254,249,243,.82);font-size:14.5px;margin-top:4px;max-width:80ch}
 .stepper{display:flex;gap:4px;margin-top:16px;overflow-x:auto}
-.stp{flex:1;min-width:150px;background:rgba(254,249,243,.08);border:0;border-radius:14px 14px 0 0;color:rgba(254,249,243,.7);text-align:left;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;gap:1px}
+.stp{flex:1;min-width:128px;background:rgba(254,249,243,.08);border:0;border-radius:14px 14px 0 0;color:rgba(254,249,243,.7);text-align:left;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;gap:1px}
 .stp b{font-size:14.5px;color:inherit}
 .stp span{font-size:12px}
 .stp .n{font-family:var(--mono);font-size:11.5px;color:var(--buckthorn)}
@@ -158,7 +158,7 @@ aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
 <header class="top"><div class="in">
   <p class="eyebrow">Content operations · Kitebird Projects 4.2</p>
   <h1>Release-Ready Learning Content</h1>
-  <p class="sub">An AI-assisted workflow that keeps help articles, Academy lessons, in-app guides and workshop kits current with every release. You play the learning designer who reviews it.</p>
+  <p class="sub">An AI-assisted workflow that keeps help articles, Academy lessons, in-app guides and workshop kits current with every release. You decide what publishes.</p>
   <nav class="stepper" id="stepper" aria-label="Workflow stages"></nav>
 </div></header>
 <div class="wrap">
@@ -178,13 +178,15 @@ aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
 <script>
 const DATA = {"library": [{"id": "HC-104", "type": "help_article", "title": "Plan work with the Timeline view", "audience": "All users", "features": ["timeline"], "owner": "Help Center", "last_reviewed": "2026-06-02", "customer_facing": true, "body": ["## Open the Timeline view", "1. Open your project.", "2. Select the **Timeline** tab at the top of the project.", "3. Drag tasks to change their start and end dates.", "", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"]}, {"id": "ACA-301", "type": "course_lesson", "title": "Projects 101, Lesson 3: Build your first timeline", "audience": "New customers", "features": ["timeline", "sharing"], "owner": "Academy", "last_reviewed": "2026-04-18", "customer_facing": true, "objective": "Learners will build a project timeline with dependencies for a 4-week launch plan.", "body": ["In this lesson you'll turn your task list into a visual plan.", "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Check: your timeline should show 2 dependencies and end by week 4.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"]}, {"id": "IAG-12", "type": "in_app_guide", "title": "Tooltip: Timeline tab", "audience": "All users", "features": ["timeline"], "owner": "In-App Guidance", "last_reviewed": "2026-05-11", "customer_facing": true, "body": ["New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."]}, {"id": "HC-221", "type": "help_article", "title": "Set up approvals", "audience": "Admins, project leads", "features": ["approvals"], "owner": "Help Center", "last_reviewed": "2026-03-30", "customer_facing": true, "body": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "", "Note: each approval step has exactly one approver."]}, {"id": "JA-07", "type": "job_aid", "title": "Admin quick-start checklist", "audience": "Workspace admins", "features": ["guest_access", "approvals", "permissions"], "owner": "Education Services", "last_reviewed": "2026-02-14", "customer_facing": true, "body": ["☐ Set workspace permissions", "☐ Decide who can invite guests (guests are on by default)", "☐ Set up approval steps for client deliverables", "☐ Turn on single sign-on"]}, {"id": "HC-310", "type": "help_article", "title": "Invite guests to a project", "audience": "All users", "features": ["guest_access"], "owner": "Help Center", "last_reviewed": "2026-01-20", "customer_facing": true, "body": ["Any project member can invite guests.", "1. Open the project and select **Invite**.", "2. Enter the guest's email and choose **Guest**."]}, {"id": "WS-02", "type": "workshop_module", "title": "Enterprise kickoff workshop, module 2: Reporting", "audience": "Enterprise customers", "features": ["export", "reporting"], "owner": "Education Services", "last_reviewed": "2026-05-27", "customer_facing": true, "body": ["Activity (10 min): each team builds a status report for their pilot project.", "Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."]}, {"id": "HC-050", "type": "help_article", "title": "Keyboard shortcuts", "audience": "All users", "features": ["shortcuts"], "owner": "Help Center", "last_reviewed": "2026-06-15", "customer_facing": true, "body": ["| Key | Action |", "| N | New task |", "| T | Open the Timeline |", "| / | Search |"]}, {"id": "HC-415", "type": "help_article", "title": "Speed up large projects", "audience": "Admins", "features": ["performance"], "owner": "Help Center", "last_reviewed": "2026-05-05", "customer_facing": true, "body": ["Projects with thousands of tasks can load slowly. Archive completed tasks and split very large projects by phase."]}], "release": {"release": "4.2", "date": "2026-11-04", "source": "release-4.2.md", "items": [{"id": "R1", "change_type": "rename_move", "features": ["timeline"], "keywords": ["Timeline"], "summary": "Timeline view is renamed Roadmap and moves under the Plan tab.", "source_line": "The Timeline view is now called Roadmap, and it lives under the new Plan tab."}, {"id": "R2", "change_type": "behavior", "features": ["approvals"], "keywords": ["approver", "approval"], "summary": "A group can now be an approver; any one member can approve.", "source_line": "You can now assign a group as an approver. Any one member of the group can approve."}, {"id": "R3", "change_type": "default", "features": ["guest_access"], "keywords": ["guest"], "summary": "Guest access is off by default for new workspaces; admins turn it on in Settings > Security.", "source_line": "Guest access is now off by default for new workspaces. Admins can turn it on in Settings > Security."}, {"id": "R4", "change_type": "rename_move", "features": ["export"], "keywords": ["Export", "CSV"], "summary": "CSV export moves from Reports > Export to the Share menu on any report; PDF export is new.", "source_line": "CSV export has moved from Reports > Export to the Share menu on every report. You can also export to PDF."}, {"id": "R5", "change_type": "performance", "features": ["performance"], "keywords": [], "summary": "Projects with 5,000+ tasks load up to 40% faster.", "source_line": "Projects with more than 5,000 tasks now load up to 40% faster."}]}, "releaseMd": "# Kitebird Projects 4.2 release notes (November 4, 2026)\n\n- The Timeline view is now called Roadmap, and it lives under the new Plan tab.\n- You can now assign a group as an approver. Any one member of the group can approve.\n- Guest access is now off by default for new workspaces. Admins can turn it on in Settings > Security.\n- CSV export has moved from Reports > Export to the Share menu on every report. You can also export to PDF.\n- Projects with more than 5,000 tasks now load up to 40% faster.\n\nKitebird Projects is a fictional product created for this portfolio demo.\n", "report": {"release": "4.2", "assets_scanned": 9, "flags": [{"asset": "ACA-301", "title": "Projects 101, Lesson 3: Build your first timeline", "owner": "Academy", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Check: your timeline should show 2 dependencies and end by week 4.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"]}, {"asset": "HC-050", "title": "Keyboard shortcuts", "owner": "Help Center", "release_item": "R1", "change_type": "rename_move", "match": "text", "severity": "high", "evidence_lines": ["| T | Open the Timeline |"]}, {"asset": "HC-104", "title": "Plan work with the Timeline view", "owner": "Help Center", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["## Open the Timeline view", "2. Select the **Timeline** tab at the top of the project.", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"]}, {"asset": "HC-310", "title": "Invite guests to a project", "owner": "Help Center", "release_item": "R3", "change_type": "default", "match": "tag+text", "severity": "high", "evidence_lines": ["Any project member can invite guests.", "2. Enter the guest's email and choose **Guest**."]}, {"asset": "IAG-12", "title": "Tooltip: Timeline tab", "owner": "In-App Guidance", "release_item": "R1", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["New here? The Timeline tab shows your tasks as bars on a calendar. Drag a bar to reschedule."]}, {"asset": "JA-07", "title": "Admin quick-start checklist", "owner": "Education Services", "release_item": "R3", "change_type": "default", "match": "tag+text", "severity": "high", "evidence_lines": ["☐ Decide who can invite guests (guests are on by default)"]}, {"asset": "WS-02", "title": "Enterprise kickoff workshop, module 2: Reporting", "owner": "Education Services", "release_item": "R4", "change_type": "rename_move", "match": "tag+text", "severity": "high", "evidence_lines": ["Facilitator demo: go to **Reports > Export** and choose CSV to share the report with leadership."]}, {"asset": "HC-221", "title": "Set up approvals", "owner": "Help Center", "release_item": "R2", "change_type": "behavior", "match": "tag+text", "severity": "medium", "evidence_lines": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "Note: each approval step has exactly one approver."]}, {"asset": "JA-07", "title": "Admin quick-start checklist", "owner": "Education Services", "release_item": "R2", "change_type": "behavior", "match": "tag+text", "severity": "medium", "evidence_lines": ["☐ Set up approval steps for client deliverables"]}, {"asset": "HC-415", "title": "Speed up large projects", "owner": "Help Center", "release_item": "R5", "change_type": "performance", "match": "tag", "severity": "low", "evidence_lines": []}]}, "checks": [{"asset": "HC-104", "release_item": "R1", "decision": "update", "reason": "Steps, heading and alt text name the Timeline tab, which is now Roadmap under Plan.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "ACA-301", "release_item": "R1", "decision": "update", "reason": "Practice step and knowledge check send learners to a tab that no longer exists.", "human_owned_parts": ["learning objective", "assessment item"], "question_for_owner": null}, {"asset": "IAG-12", "release_item": "R1", "decision": "update", "reason": "Tooltip names the Timeline tab.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-050", "release_item": "R1", "decision": "unsure", "reason": "The shortcut table says T opens the Timeline. The release doesn't say whether the shortcut still works.", "human_owned_parts": [], "question_for_owner": "Product: does the T shortcut still open this view (now Roadmap)?"}, {"asset": "HC-310", "release_item": "R3", "decision": "update", "reason": "Says any member can invite guests; in new workspaces an admin must turn guest access on first.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "JA-07", "release_item": "R3", "decision": "update", "reason": "Checklist says guests are on by default, which is now false for new workspaces.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "WS-02", "release_item": "R4", "decision": "update", "reason": "Facilitator demo uses Reports > Export, which moved to the Share menu.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-221", "release_item": "R2", "decision": "update", "reason": "Says each step has exactly one person as approver; groups are now allowed.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "JA-07", "release_item": "R2", "decision": "no_update", "reason": "'Set up approval steps' is still accurate; the checklist doesn't say who can approve.", "human_owned_parts": [], "question_for_owner": null}, {"asset": "HC-415", "release_item": "R5", "decision": "no_update", "reason": "Faster loading doesn't make the advice wrong; archiving still helps.", "human_owned_parts": [], "question_for_owner": null}], "drafts": [{"asset": "HC-104", "title": "Plan work with the Timeline view", "owner": "Help Center", "old": ["## Open the Timeline view", "1. Open your project.", "2. Select the **Timeline** tab at the top of the project.", "3. Drag tasks to change their start and end dates.", "## Share a timeline", "Select **Share** to give teammates view access to the Timeline.", "![Timeline tab selected, with tasks shown as bars across weeks](timeline.png)"], "lines": [{"text": "## Open the Roadmap view", "source": "R1"}, {"text": "1. Open your project.", "source": "unchanged"}, {"text": "2. Select the **Plan** tab, then select **Roadmap**.", "source": "R1"}, {"text": "3. Drag tasks to change their start and end dates.", "source": "unchanged"}, {"text": "## Share a roadmap", "source": "R1"}, {"text": "Select **Share** to give teammates view access to the Roadmap.", "source": "R1"}, {"text": "Roadmaps can now be shared publicly with anyone who has the link.", "source": "R1", "unsupported": true}, {"text": "![Plan tab open with Roadmap selected, tasks shown as bars across weeks](roadmap.png)", "source": "R1"}], "open_questions": ["Screenshot roadmap.png needs to be captured from the 4.2 build."], "human_decides": [], "correct": "edit", "why": "Fix it, then publish: delete the unsupported sentence. Everything else is traceable to R1, and the screenshot question goes to the Help Center owner."}, {"asset": "HC-221", "title": "Set up approvals", "owner": "Help Center", "old": ["## Add an approver", "1. Open a task and select **Request approval**.", "2. Choose one person as the approver.", "3. The approver gets an email and can approve or reject.", "Note: each approval step has exactly one approver."], "lines": [{"text": "## Add an approver", "source": "unchanged"}, {"text": "1. Open a task and select **Request approval**.", "source": "unchanged"}, {"text": "2. Choose a person or a group as the approver.", "source": "R2"}, {"text": "3. The approver gets an email and can approve or reject. If you chose a group, any one member can approve.", "source": "R2"}, {"text": "Note: each approval step has one approver, which can be a person or a group.", "source": "R2"}], "open_questions": [], "human_decides": [], "correct": "approve", "why": "Every changed line traces to R2, the steps stay in order, and nothing new is claimed. Approve it."}, {"asset": "ACA-301", "title": "Projects 101, Lesson 3: Build your first timeline", "owner": "Academy", "old": ["Objective: Learners will build a project timeline with dependencies for a 4-week launch plan.", "Practice: open the sample project, select the **Timeline** tab, and set dates for the 6 launch tasks.", "Knowledge check: Where do you find the Timeline? (a) Reports (b) the Timeline tab (c) Settings"], "lines": [{"text": "Objective: Learners will build a project roadmap with dependencies for a 4-week launch plan.", "source": "R1", "human": true}, {"text": "Practice: open the sample project, select the **Plan** tab, then **Roadmap**, and set dates for the 6 launch tasks.", "source": "R1"}, {"text": "Knowledge check: Where do you find the Roadmap? (a) Reports (b) the Plan tab (c) Settings", "source": "R1", "human": true}], "open_questions": ["Lesson title still says 'timeline'. Rename it?"], "human_decides": ["learning objective", "assessment item"], "correct": "route", "why": "The draft is accurate, but it changes a learning objective and an assessment item. Those belong to the Academy owner, who may also want a better question than 'where is the button.' Route it."}, {"asset": "HC-050", "title": "Keyboard shortcuts", "owner": "Help Center", "old": ["| N | New task |", "| T | Open the Timeline |", "| / | Search |"], "lines": [{"text": "| N | New task |", "source": "unchanged"}, {"text": "| T | Open the Roadmap |", "source": "R1"}, {"text": "| / | Search |", "source": "unchanged"}], "open_questions": ["Release notes don't confirm the T shortcut still opens this view. Verify with Product."], "human_decides": [], "correct": "route", "why": "The rename is traceable, but nobody has confirmed the shortcut still works. Publishing a broken shortcut is worse than waiting a day. Route it to Product."}]};
 const STAGES = [
+  {n:"00", t:"Start", s:"Scenario, goals and your role"},
   {n:"01", t:"Intake", s:"Release notes to change records"},
   {n:"02", t:"Impact scan", s:"Which assets does it touch?"},
   {n:"03", t:"Draft and review", s:"AI drafts, you decide"},
-  {n:"04", t:"Publish and learn", s:"Decisions improve the prompts"}
+  {n:"04", t:"Publish and learn", s:"Decisions improve the prompts"},
+  {n:"05", t:"Release 4.3 check", s:"Use the rubric from memory"}
 ];
-const KEY = "rrlc-v1";
-const fresh = () => ({s:0, far:0, intake:false, guess:[], checked:false, rev:{}, cur:0, struck:false, rerun:false, log:[]});
+const KEY = "rrlc-v2";
+const fresh = () => ({s:0, far:0, intake:false, guess:[], checked:false, rev:{}, cur:0, struck:false, rerun:false, log:[], role:null, c43:{}, c43cur:0});
 let st = fresh();
 try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && typeof x.s === "number") st = Object.assign(fresh(), x); } catch {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
@@ -238,9 +240,9 @@ function intake(){
     st.intake = true; log("ai", "intake: 5 change records, every source line quoted"); log("hm", "checked records against source: OK");
     $("run").textContent = "Records checked"; $("nx").disabled = false;
     $("o").innerHTML = `<div class="note info">Hover a record to see its source line. Quoting the source exactly is what makes the later traceability check possible. Note R5: a performance change. It will be flagged later, and should be dismissed.</div>`;
-    unlock(1);
+    unlock(2);
   };
-  $("nx").onclick = () => go(1);
+  $("nx").onclick = () => go(2);
 }
 
 /* ---------- 2 impact scan ---------- */
@@ -278,9 +280,9 @@ function scan(){
     $("run").disabled = true; await wait(500);
     st.checked = true;
     C.forEach(c => log("ai", `check ${c.asset}·${c.release_item}: ${c.decision}`));
-    unlock(2); scan();
+    unlock(3); scan();
   };
-  $("nx").onclick = () => go(2);
+  $("nx").onclick = () => go(3);
 }
 
 /* ---------- 3 draft and review ---------- */
@@ -321,7 +323,7 @@ function review(){
   qa(".qb").forEach(b => b.onclick = () => { st.cur = +b.dataset.j; save(); review(); });
   $("pv").onclick = () => { st.cur--; save(); review(); };
   if ($("nd")) $("nd").onclick = () => { st.cur++; save(); review(); };
-  if ($("nx")) $("nx").onclick = () => go(3);
+  if ($("nx")) $("nx").onclick = () => go(4);
   const rel = id => DATA.release.items.find(x => x.id === id);
   qa("[data-k]").forEach(el => { const f = () => {
     const l = d.lines[+el.dataset.k], src = rel(l.source);
@@ -340,7 +342,7 @@ function review(){
       r.done = true; save();
       log("hm", `${d.asset}: ${DEC.find(x => x[0] === k)[1].toLowerCase()}${d.correct === "route" ? " → " + (d.asset === "HC-050" ? "Product" : d.owner) : ""}`);
       review(); $("o").innerHTML = `<div class="note"><strong>Right call.</strong> ${esc(d.why)}</div>`;
-      if (DATA.drafts.every(x => st.rev[x.asset]?.done)) unlock(3);
+      if (DATA.drafts.every(x => st.rev[x.asset]?.done)) unlock(4);
     } else {
       save(); bump(b);
       const hint = {approve: unsupported && !st.struck ? "One changed line isn't supported by its source. Check the flagged traceability result." : d.human_decides.length ? "This draft changes human-owned parts: an objective and an assessment item." : d.open_questions.length ? "There's an open question nobody has answered yet." : "",
@@ -352,6 +354,105 @@ function review(){
     }
   });
   if (r.done) $("o").innerHTML = `<div class="note"><strong>Done.</strong> ${esc(d.why)}</div>`;
+}
+
+
+/* ---------- 0 start: scenario, objectives, role ---------- */
+const ROLES = {
+  reviewer:{n:"Content reviewer", d:"I check drafts and decide what publishes."},
+  owner:{n:"Content owner", d:"I own Academy lessons or help articles."},
+  pm:{n:"Product manager", d:"I write release notes and answer questions."}
+};
+const TIPS = {
+  reviewer:["", "Check that every record quotes its source line exactly. You'll trace drafts back to it later.", "Dismiss a flag only when the owner could read the reason and agree.", "Read each changed line against its source. Invented claims are your biggest risk.", "Note the pattern behind your edit, not just the fix. Patterns become rules.", "No automatic checks this time. Use the rubric from memory."],
+  owner:["", "Records that touch your features will turn into flags on your assets.", "Every dismissal on your assets should come with a reason you can check.", "Objectives and assessment items stay yours. Watch for drafts that change them.", "Routed drafts land in your queue with the open question attached.", "Think like the reviewer: what would you need routed to you?"],
+  pm:["", "Ambiguous release lines come back to you as questions. Clear notes save a day.", "An “unsure” flag is a question for you, not a guess.", "Drafts wait on you when a release line leaves something unanswered.", "Each new rule reduces the questions you get next release.", "Check whether the 4.3 notes give reviewers enough to decide."]
+};
+function start(){
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Start · Scenario and goals</span></div>
+    <h2>Last release, outdated help reached customers. This time, it won't.</h2>
+    <p class="lead">After Kitebird's last release, three help articles still pointed to a menu that no longer existed. Support logged dozens of tickets before anyone noticed. Your team now runs an AI-assisted workflow, and you're one of the people who decide what publishes.</p>
+    <div class="note info"><strong>Business goal:</strong> within 3 business days of each release, every affected customer-facing asset is updated, with no invented features reaching customers.</div>
+    <div><div class="label" style="margin-bottom:6px">By the end, you will be able to</div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:15px">
+        <li>Given an AI-drafted update and the release notes it cites, identify every claim the release does not support.</li>
+        <li>Choose the correct publish decision for each draft, routing objectives, assessment items and open questions to their owners.</li>
+        <li>Apply the review rubric from memory to a new release, without automatic checks, for 2 of 2 drafts.</li>
+      </ol></div>
+    <div><div class="label" style="margin-bottom:6px">Choose your role</div>
+      <div class="decide" style="grid-template-columns:repeat(3,minmax(0,1fr))">${Object.entries(ROLES).map(([k, r]) => `<button class="dbtn ${st.role === k ? "right" : ""}" data-r="${k}" aria-pressed="${st.role === k}"><b>${r.n}</b><span>${r.d}</span></button>`).join("")}</div></div>
+    <p style="font-size:13.5px;color:var(--muted)">Every stage is open once you start, so you can jump to any part. About 10 minutes.</p>
+    <div class="row"><button class="btn primary" id="go1" ${st.role ? "" : "disabled"}>Start with release 4.2</button></div>
+  </section>`;
+  qa("[data-r]").forEach(b => b.onclick = () => { st.role = b.dataset.r; save(); start(); });
+  $("go1").onclick = () => { log("hm", `role: ${ROLES[st.role].n.toLowerCase()}`); unlock(5); go(1); };
+}
+function addTip(){
+  if (!st.role || !st.s) return;
+  const t = TIPS[st.role][st.s]; const row = document.querySelector("#stage .panel .row"); if (!t || !row) return;
+  row.insertAdjacentHTML("afterend", `<div class="note" style="background:var(--tint);border-left-color:var(--grape)"><strong>Tip for a ${esc(ROLES[st.role].n.toLowerCase())}:</strong> ${esc(t)}</div>`);
+}
+
+/* ---------- 5 release 4.3 check: retrieval without automatic checks ---------- */
+const R43 = [
+  {id:"R6", source_line:"Any project member can now resolve a comment, not just its author."},
+  {id:"R7", source_line:"Billing has moved from Settings > Account to its own Settings > Billing page. Invoices can now be downloaded as PDFs."}
+];
+const D43 = [
+  {asset:"HC-512", title:"Resolve comments", owner:"Help Center",
+   old:["## Resolve a comment","Only the comment's author can resolve it.","1. Hover over the comment.","2. Select **Resolve**."],
+   lines:[{text:"## Resolve a comment",source:"unchanged"},{text:"Any project member can resolve a comment.",source:"R6"},{text:"Resolved comments are permanently deleted after 30 days.",source:"R6",unsupported:true},{text:"1. Hover over the comment.",source:"unchanged"},{text:"2. Select **Resolve**.",source:"unchanged"}],
+   correct:"edit", why:"R6 only changes who can resolve a comment. Nothing in 4.3 says resolved comments are deleted, so that line is invented. Strike it, then publish."},
+  {asset:"ACA-410", title:"Admin Essentials, Lesson 2: Billing", owner:"Academy",
+   old:["Practice: go to **Settings > Account** and find last month's invoice.","Knowledge check: Where do admins find invoices? (a) Reports (b) Settings > Account (c) Help menu"],
+   lines:[{text:"Practice: go to **Settings > Billing** and download last month's invoice as a PDF.",source:"R7"},{text:"Knowledge check: Where do admins find invoices? (a) Reports (b) Settings > Billing (c) Help menu",source:"R7"}],
+   correct:"route", why:"Both lines trace to R7, so nothing is invented. But the second line is an assessment item, and assessment items belong to the Academy owner. Route it."}
+];
+function check43(){
+  const i = st.c43cur, d = D43[i]; const r = st.c43[d.asset] ??= {struck:[], dec:null, tries:0, firstOk:null, done:false};
+  const allDone = D43.every(x => st.c43[x.asset]?.done);
+  $("stage").innerHTML = `<section class="panel">
+    <div class="row"><span class="label">Stage 5 · Release 4.3 check</span><span class="who human">You decide, from memory</span></div>
+    <h2>A new release, and no automatic checks</h2>
+    <p class="lead">Release 4.3 shipped. This time the rubric results are hidden. For each draft, click any line the release doesn't support, then choose a decision and submit.</p>
+    <div class="src">${R43.map(x => `<span>${x.id}: ${esc(x.source_line)}</span>`).join("\n")}</div>
+    <div class="queue">${D43.map((x, j) => { const rr = st.c43[x.asset]; return `<button class="qb ${rr?.done ? (rr.firstOk ? "ok" : "miss") : ""}" data-j="${j}" aria-current="${j === i}"><i></i>${x.asset}</button>`; }).join("")}</div>
+    <div><div class="label">${d.asset} · ${esc(d.owner)}</div><h3 style="font-size:19px;margin-top:2px">${esc(d.title)}</h3></div>
+    <div class="diff">
+      <div class="col"><h4>Live version</h4>${d.old.map(t => `<div class="ln old"><span>${md(t)}</span></div>`).join("")}</div>
+      <div class="col"><h4>AI draft · click a line to flag it as unsupported</h4>${d.lines.map((l, k) => l.source === "unchanged" ? `<div class="ln same"><span>${md(l.text)}</span><span class="cite">same</span></div>` : `<button class="ln chg ${r.struck.includes(k) ? "struck" : ""}" data-k="${k}" ${r.done ? "disabled" : ""}><span>${md(l.text)}</span><span class="cite">${l.source}</span></button>`).join("")}</div>
+    </div>
+    <div><div class="label" style="margin-bottom:6px">Your decision</div><div class="decide">${DEC.map(([k, n, s2]) => `<button class="dbtn ${r.dec === k ? (r.done ? (k === d.correct ? "right" : "wrong") : "right") : ""}" data-d="${k}" ${r.done ? "disabled" : ""}><b>${n}</b><span>${s2}</span></button>`).join("")}</div></div>
+    <div class="row"><button class="btn primary" id="sub" ${r.done ? "hidden" : ""}>Submit my review</button></div>
+    <div id="o"></div>
+    ${allDone ? summary43() : ""}
+    <div class="row" style="justify-content:space-between"><button class="btn" id="pv" ${i === 0 ? "disabled" : ""}>Previous draft</button>${i < D43.length - 1 ? `<button class="btn" id="nd">Next draft</button>` : ""}</div>
+  </section>`;
+  qa(".qb").forEach(b => b.onclick = () => { st.c43cur = +b.dataset.j; save(); check43(); });
+  $("pv").onclick = () => { st.c43cur--; save(); check43(); };
+  if ($("nd")) $("nd").onclick = () => { st.c43cur++; save(); check43(); };
+  qa("button.ln[data-k]").forEach(b => b.onclick = () => { if (r.done) return; const k = +b.dataset.k; r.struck = r.struck.includes(k) ? r.struck.filter(x => x !== k) : [...r.struck, k]; save(); check43(); });
+  qa(".dbtn[data-d]").forEach(b => b.onclick = () => { if (r.done) return; r.dec = b.dataset.d; save(); check43(); });
+  if (r.done) $("o").innerHTML = `<div class="note ${r.firstOk ? "" : "warn"}"><strong>${r.firstOk ? "Right on the first try." : "Reviewed."}</strong> ${esc(d.why)}</div>`;
+  $("sub").onclick = () => {
+    if (!r.dec) { $("o").innerHTML = `<div class="note warn">Choose a decision first.</div>`; return; }
+    const want = d.lines.map((l, k) => l.unsupported ? k : -1).filter(k => k >= 0);
+    const linesOk = want.length === r.struck.length && want.every(k => r.struck.includes(k));
+    const ok = linesOk && r.dec === d.correct;
+    r.tries++;
+    if (r.firstOk === null) r.firstOk = ok;
+    log("hm", `4.3 ${d.asset}: ${DEC.find(x => x[0] === r.dec)[1].toLowerCase()}${r.struck.length ? `, flagged ${r.struck.length} line` : ""} → ${ok ? "correct" : "not yet"}`);
+    if (ok) { r.done = true; save(); check43(); return; }
+    save();
+    const hint = !linesOk ? (want.length ? "One changed line isn't supported by the 4.3 release notes. Compare each changed line with R6 and R7." : "No line here is invented. Every changed line traces to R7.") : r.dec === "approve" ? "Look at what kind of content the second line is. Who owns that?" : "Not the best decision for this draft. Think about traceability and ownership.";
+    $("o").innerHTML = `<div class="note warn">${esc(hint)} Try again.</div>`;
+  };
+}
+function summary43(){
+  const s3 = DATA.drafts.filter(d => st.rev[d.asset]?.tries.length === 1).length, s3n = DATA.drafts.filter(d => st.rev[d.asset]?.done).length;
+  const s4 = D43.filter(d => st.c43[d.asset]?.firstOk).length;
+  return `<div class="note" style="background:var(--soft);border-left-color:var(--grape)"><strong>Your results.</strong> Stage 3, with automatic checks: ${s3n ? `${s3} of ${DATA.drafts.length} right on the first try` : "not done yet"}. Release 4.3, from memory: <strong>${s4} of ${D43.length}</strong> right on the first try. ${s4 === D43.length ? "You met objective 3: you applied the rubric without prompts." : "Review the rubric in the case study, then reset to try again."} In a real rollout, this check is Kirkpatrick level 2 evidence.</div>`;
 }
 
 /* ---------- 4 publish and learn ---------- */
@@ -384,7 +485,7 @@ function learn(){
       <div style="background:var(--info-soft)"><span class="who ai">AI drafts</span><ul><li>Classifying release changes</li><li>Checking which assets a change affects</li><li>Minimal edits to steps, UI names and tooltips</li><li>First-draft alt text</li></ul></div>
       <div style="background:var(--tint)"><span class="who human">A person owns</span><ul><li>Learning objectives, assessment and certification items</li><li>Pricing and legal text</li><li>Anything with an open question</li><li>Every publish decision</li></ul></div>
     </div>
-    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    <div class="row"><button class="btn primary" id="to43">Next: release 4.3 check</button><button class="btn" id="reset">Start over</button></div>
   </section>`;
   const showRerun = () => {
     const d = D[0];
@@ -394,9 +495,11 @@ function learn(){
   if (st.rerun) showRerun();
   $("rr").onclick = async () => { $("rr").disabled = true; log("ai", "draft HC-104 with skill v1.1"); await wait(600); st.rerun = true; log("ok", "HC-104 v1.1: traceability 5/5, 2 open questions"); log("ok", "published: HC-104, HC-221 · routed: ACA-301 → Academy, HC-050 → Product"); showRerun(); };
   $("reset").onclick = () => { st = fresh(); save(); render(); };
+  $("to43").onclick = () => { unlock(5); go(5); };
 }
 
-function render(){ stepper(); drawLog(); [intake, scan, review, learn][st.s](); }
+function render(){ stepper(); drawLog(); [start, intake, scan, review, learn, check43][st.s](); }
+new MutationObserver(() => addTip()).observe($("stage"), {childList:true});
 render();
 </script>
 </body>

@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/site.css?v=13">
+<link rel="stylesheet" href="css/site.css?v=14">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
 </head>
 <body>
@@ -80,12 +80,89 @@
     <div class="facts">
       <p><b>Purpose:</b> Every SaaS release quietly breaks help articles, Academy lessons and workshop kits, and asking AI to “rewrite the docs” can invent features. I designed an AI-assisted workflow that flags what a release affects, drafts the smallest correct fix with a citation to the release notes, and leaves every publish decision to a person. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
       <p><b>Tools:</b> Claude (four reusable skills), Python, JSON content schema</p>
-      <p><b>Highlights:</b> Workflow design, prompt and skill writing, content modeling, review rubric, human-in-the-loop quality checks, accessibility checks</p>
-      <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a></p>
+      <p><b>Highlights:</b> Workflow design, prompt and skill writing, content modeling, review rubric, human-in-the-loop quality checks, Action Mapping, Gilbert’s Behavior Engineering Model, ABCD objectives, retrieval practice, Kirkpatrick evaluation plan</p>
+      <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a>, <a href="kit/run-log-template.md">Run Log Template</a></p>
     </div>
   </article>
   <hr class="rule">
 </div>
+<section class="wrap prose" aria-labelledby="ld-h">
+  <h2 id="ld-h" class="sec" style="margin-bottom:4px">Learning design behind the system</h2>
+  <p class="measure">The workflow is a tool, but the people who review its output need to learn a new skill: checking AI drafts. I designed the system and its reviewer training with the same frameworks I use for any learning project.</p>
+
+  <div class="two">
+    <h2>Business goal and action map</h2>
+    <div class="prose">
+      <p class="measure"><b>Goal (Action Mapping):</b> within 3 business days of each release, every affected customer-facing asset is updated, and no invented features reach customers.</p>
+      <div class="amap">
+        <div><span class="lbl">Business goal</span><p>Current content within 3 business days of every release</p></div>
+        <div><span class="lbl">What reviewers must do</span><ul><li>Trace each changed line to a release item</li><li>Strike claims the release doesn’t support</li><li>Route objectives, assessments and open questions to owners</li><li>Turn repeated edits into prompt rules</li></ul></div>
+        <div><span class="lbl">Practice in the demo</span><ul><li>Stage 1: trace records to source</li><li>Stage 3: check lines, then decide</li><li>Stage 4: edit becomes a rule</li><li>Stage 5: recall the rubric without hints</li></ul></div>
+        <div><span class="lbl">Minimum information</span><ul><li>7-point review rubric</li><li>Ownership list</li><li>Release notes with quoted source lines</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Gilbert’s Behavior Engineering Model</h2>
+    <div class="prose">
+      <p class="measure">Out-of-date content is mostly an environment problem. Training fixes one cell; the system and team processes cover the rest.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Information</td><td>Release changes never reach content teams</td><td>Intake turns release notes into change records; every flag comes with a reason</td><td>System</td></tr>
+          <tr><td>2</td><td>Resources</td><td>No way to find every affected asset</td><td>Tag and keyword scan over a shared content schema</td><td>System</td></tr>
+          <tr><td>3</td><td>Incentives</td><td>Updating content isn’t anyone’s measured job</td><td>Named asset owners and a 3-day update target in team goals</td><td>Process</td></tr>
+          <tr><td>4</td><td>Knowledge and skills</td><td>Reviewers haven’t learned to check AI output</td><td>Reviewer practice (this demo) and the review rubric</td><td>Training</td></tr>
+          <tr><td>5</td><td>Capacity</td><td>Big releases overload reviewers</td><td>Severity sorting, AI dismissals with reasons, a cap on drafts per reviewer</td><td>System and process</td></tr>
+          <tr><td>6</td><td>Motives</td><td>Teams distrust AI drafts or fear blame for errors</td><td>Line-level citations, a human decision on every publish, a shared review log</td><td>System and culture</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Objectives and evidence</h2>
+    <div class="prose">
+      <p class="measure">Planned backward: each objective has matching evidence in the demo before any content was written.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Objective (audience, behavior, condition, degree)</th><th>Evidence in the demo</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Given an AI-drafted update and the release notes it cites, a content reviewer will identify every claim the release does not support.</td><td>Stage 3: find the invented sharing claim in HC-104</td></tr>
+          <tr><td>2</td><td>A content reviewer will choose the correct publish decision for each draft, routing objectives, assessment items and open questions to their owners, for 4 of 4 drafts.</td><td>Stage 3: four drafts, first-try accuracy logged</td></tr>
+          <tr><td>3</td><td>Without automatic checks, a content reviewer will apply the review rubric from memory to a new release for 2 of 2 drafts.</td><td>Stage 5: release 4.3 check</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Adult learning and retrieval</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Why it matters, first</h3><p>The start screen opens with a real problem, outdated help that reached customers, and states the business goal before any task (Knowles: need to know).</p></div>
+      <div class="decision"><h3>Built on their role</h3><p>Learners choose content reviewer, content owner or product manager, and every stage shows a tip for that role (Knowles: experience and self-concept).</p></div>
+      <div class="decision"><h3>Learner-directed</h3><p>All stages open once you start, so experienced reviewers can jump straight to the review queue (Knowles: self-direction).</p></div>
+      <div class="decision"><h3>Recall without hints</h3><p>The release 4.3 check hides the automatic rubric results. Reviewers retrieve the rules from memory on a new case, which is what makes them stick (retrieval practice).</p></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Evaluation plan (Kirkpatrick)</h2>
+    <div class="prose">
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th><th>Planned target</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Reaction</td><td>Reviewer trust in AI drafts and ease of review</td><td>Three-question pulse in the review log after each release</td><td>4 of 5 or higher</td></tr>
+          <tr><td>2</td><td>Learning</td><td>First-try accuracy in stage 3 and the release 4.3 check</td><td>Demo data, per reviewer, before they review live drafts</td><td>2 of 2 on the recall check</td></tr>
+          <tr><td>3</td><td>Behavior</td><td>Days from release to updated content; drafts published without edits; invented claims caught before publish</td><td>Review log, every release</td><td>3 business days or fewer; every invented claim caught</td></tr>
+          <tr><td>4</td><td>Results</td><td>Support tickets tagged “outdated docs”; satisfaction ratings on help articles</td><td>Support system, quarterly</td><td>30% fewer tickets within two quarters</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Real runs are recorded in the <a href="kit/run-log-template.md">run log</a>.</p>
+    </div>
+  </div>
+</section>
+
 <section class="wrap prose" style="padding-top:28px">
     <div class="two">
       <h2>The problem</h2>
@@ -194,6 +271,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=14" defer></script>
+<script src="js/search.js?v=15" defer></script>
 </body>
 </html>
