@@ -78,7 +78,7 @@
     <h2>Release-Ready Learning Content</h2>
     <div class="shot"><a href="demos/release-ready-content.html#full"><img src="images/release.jpg" alt="Screenshot of Release-Ready Learning Content" width="960" height="600"></a><em>Click the image to experience the project.</em></div>
     <div class="facts">
-      <p><b>Purpose:</b> Every SaaS release quietly breaks help articles, Academy lessons and workshop kits, and asking AI to “rewrite the docs” can invent features. I designed an AI-assisted workflow that flags what a release affects, drafts the smallest correct fix with a citation to the release notes, and leaves every publish decision to a person. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
+      <p><b>Purpose:</b> Any new SaaS release will inevitably change help articles, Academy lessons and workshop materials. Asking AI to “rewrite” the documents would likely introduce unwanted new features. I designed an AI-assisted workflow that determines how a release affects the documentation and drafts a minimal correction with proper citations to the release notes. A human then checks the draft and decides whether to publish it. Built on a fictional B2B SaaS product (Kitebird Projects).</p>
       <p><b>Tools:</b> Claude (four reusable skills), Python, JSON content schema</p>
       <p><b>Highlights:</b> Workflow design, prompt and skill writing, content modeling, review rubric, human-in-the-loop quality checks, Action Mapping, Gilbert’s Behavior Engineering Model, ABCD objectives, retrieval practice, Kirkpatrick evaluation plan</p>
       <p><b>Project Deliverables:</b> <a href="demos/release-ready-content.html#full">Interactive Demo</a>, <a href="kit/README.md">Workflow Kit</a>, <a href="kit/skills/03-draft-update.md">Draft Skill (v1.1)</a>, <a href="kit/flag_impacted.py">Impact Scan Script</a>, <a href="kit/run-log-template.md">Run Log Template</a></p>
@@ -195,7 +195,7 @@
   <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
     <div class="sechead">
       <h2 id="demo-h">Review release 4.2 yourself</h2>
-      <p class="muted measure">You play the learning designer: predict which flags don't matter, check AI drafts line by line, and decide what publishes. The scan is the real script's output; the AI steps are a sample run.</p>
+      <p class="muted measure">You play the learning designer: predict which flags don’t matter, check AI drafts line by line, and decide what publishes. The scan is the real script’s output; the AI steps are a sample run.</p>
     </div>
     <div class="demo">
       <div class="bar2"><span>Release-Ready Learning Content · release 4.2</span><a href="demos/release-ready-content.html#full">Open full screen ↗</a></div>
@@ -204,11 +204,11 @@
   </section>
 
   <section class="wrap prose" aria-labelledby="chk-h">
-    <h2 id="chk-h">How I check the AI's output</h2>
+    <h2 id="chk-h">How I check the AI’s output</h2>
     <div class="decisions">
       <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In the sample run, the keyword pass caught a shortcut table with no feature tag, and the AI dismissed 2 of 10 flags with reasons the owner can see.</p></div>
       <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes invented content easy to spot: in the sample run, one draft claimed roadmaps could be shared publicly, and the traceability check flagged it.</p></div>
-      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn't say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
+      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn’t say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
       <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
       <div class="decision"><h3>Review decisions become rules</h3><p>The invented-feature edit became rule 7 in the draft skill (v1.1). Re-running the same draft with v1.1 moved the guess into an open question instead of the body.</p></div>
       <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
@@ -230,7 +230,7 @@
   <span class="k">"customer_facing"</span>: true,
   <span class="k">"body"</span>: ["## Open the Timeline view", "1. Open your project.", ...]
 }</pre>
-        <p class="measure">The design decisions I'd otherwise repeat by hand live in four reusable skills.</p>
+        <p class="measure">The design decisions I’d otherwise repeat by hand live in four reusable skills.</p>
         <div class="files">
           <a class="file" href="kit/skills/01-intake-classify.md"><b>01-intake-classify.md</b><span>Release notes to change records</span></a>
           <a class="file" href="kit/skills/02-impact-check.md"><b>02-impact-check.md</b><span>Confirm, dismiss or question each flag</span></a>
@@ -248,7 +248,7 @@
       <h2 id="ev-h">Results and next steps</h2>
       <div class="prose">
         <p class="measure">Sample run on release 4.2: 9 assets scanned, 10 flags, 2 dismissed with reasons, 1 question sent to Product, 4 drafts reviewed (2 published, 1 of them after an edit; 2 routed to owners), 1 invented claim caught and turned into a new prompt rule.</p>
-        <p class="measure">Next, I'd connect intake to the real release feed, run the scan on a schedule, and track time from release to updated content and the share of drafts published without edits. That share is the clearest sign the system needs less upkeep over time.</p>
+        <p class="measure">Next, I’d connect intake to the real release feed, run the scan on a schedule, and track time from release to updated content and the share of drafts published without edits. That share is the clearest sign the system needs less upkeep over time.</p>
         <div class="placeholder">Results from running the skills on a larger content library will go here: flag precision, drafts published without edits, and time saved per release.</div>
       </div>
     </div>
@@ -261,7 +261,7 @@
     </div>
   </section>
   <div class="collab">
-    <h2>Let's Collaborate!</h2>
+    <h2>Let’s Collaborate!</h2>
     <div class="icons"><a class="icon" href="https://www.linkedin.com/in/louisely1003/" target="_blank" rel="noopener" aria-label="Yi Liu on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="9.5" width="3.2" height="10" fill="#fff"/><circle cx="6.1" cy="6.2" r="1.9" fill="#fff"/><path d="M10 9.5h3v1.5c.6-1 1.8-1.8 3.4-1.8 2.6 0 3.6 1.6 3.6 4.4v5.9h-3.2v-5.3c0-1.4-.4-2.3-1.6-2.3-1.3 0-2 .9-2 2.4v5.2H10z" fill="#fff"/></svg></a><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
     <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
   </div>
@@ -271,6 +271,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=15" defer></script>
+<script src="js/search.js?v=16" defer></script>
 </body>
 </html>

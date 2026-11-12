@@ -259,7 +259,7 @@ main{min-width:0}
   </nav>
   <main>
     <section class="card" id="stage" aria-live="polite"></section>
-    <p class="foot">Practice for trainers who attended the Meet LEO train-the-trainer webinar by Digital4Good x Google.<br>Answers follow the Meet LEO training deck; check Google's help pages for current product settings.<br>Designed and developed by Yi Liu for Digital4Good x Google, October 2026. Please keep this credit when sharing or adapting.</p>
+    <p class="foot">Practice for trainers who attended the Meet LEO train-the-trainer webinar by Digital4Good x Google.<br>Answers follow the Meet LEO training deck; check Google’s help pages for current product settings.<br>Designed and developed by Yi Liu for Digital4Good x Google, October 2026. Please keep this credit when sharing or adapting.</p>
   </main>
 </div>
 
@@ -274,7 +274,7 @@ const ICON = {
 
 const ROUNDS = [
   {type:"safesearch", short:"SafeSearch defaults", title:"Label the SafeSearch defaults", max:2},
-  {type:"familylink", short:"Family Link", title:"A parent's worry: which part of Family Link helps?", max:4},
+  {type:"familylink", short:"Family Link", title:"A parent’s worry: which part of Family Link helps?", max:4},
   {type:"youtube", short:"YouTube for each family", title:"Which YouTube experience fits each family?", max:4},
   {type:"recommend", short:"Recommend activities", title:"A parent wants ideas: what do you recommend?", max:5},
   {type:"parentqa", short:"Parent questions", title:"Answer the parents' questions", max:5},
@@ -445,20 +445,20 @@ recommend(r){
     tr:{tg:"Lens Translate", n:"Translate walk", how:"Walk the neighborhood and translate signs together with Lens."},
     maps:{tg:"Maps", n:"Famous building tour", how:"Pick a landmark and explore it in Maps immersive view."},
     arts:{tg:"Arts & Culture", n:"Virtual field trip", how:"Use the Google Arts & Culture app to visit museums and historic places together."},
-    play:{tg:"Google Play", n:"Expert Approved apps", how:"Browse the Children tab: apps rated by teachers and children's media experts."},
+    play:{tg:"Google Play", n:"Expert Approved apps", how:"Browse the Children tab: apps rated by teachers and children’s media experts."},
     yt:{tg:"YouTube", n:"Watch together", how:"When you hear your child laughing at a video, sit down and enjoy it with them."}
   };
   const PAR = [
-    {n:"Maria", c:"#C2541C", q:"My 7-year-old is obsessed with animals. Anything we could do together?", ok:["ar"], yes:"A tiger in our living room? She's going to scream. 😄",
-      no:{lens:"That's for homework, though. She just loves animals.", tr:"Hmm, she isn't learning a language.", play:"Maybe, but I'd love something we do together right now."}},
-    {n:"James", c:"#3B57C4", q:"My son's math homework is way past what I remember. I can't help him anymore.", ok:["lens"], yes:"Step by step, so he still does the thinking. Perfect.",
-      no:{ar:"Fun, but it won't help with fractions tonight.", yt:"He'd love that, but it won't get the homework done."}},
-    {n:"Priya", c:"#1F7A5A", q:"He's taking Spanish at school and hates practicing.", ok:["tr"], yes:"Turning it into a walk might actually work!",
-      no:{lens:"It's not homework he's stuck on, he just finds practice boring.", maps:"Hmm, I need something for the language part."}},
-    {n:"Dev", c:"#7A3FC4", q:"My daughter keeps asking about faraway places. We can't travel much right now.", ok:["maps","arts"], yes:"We can “visit” places from the couch. Love it.",
-      no:{tr:"She's curious about places, not languages.", play:"I'd rather explore with her than hand her another app."}},
+    {n:"Maria", c:"#C2541C", q:"My 7-year-old is obsessed with animals. Anything we could do together?", ok:["ar"], yes:"A tiger in our living room? She’s going to scream. 😄",
+      no:{lens:"That’s for homework, though. She just loves animals.", tr:"Hmm, she isn’t learning a language.", play:"Maybe, but I’d love something we do together right now."}},
+    {n:"James", c:"#3B57C4", q:"My son’s math homework is way past what I remember. I can’t help him anymore.", ok:["lens"], yes:"Step by step, so he still does the thinking. Perfect.",
+      no:{ar:"Fun, but it won’t help with fractions tonight.", yt:"He’d love that, but it won’t get the homework done."}},
+    {n:"Priya", c:"#1F7A5A", q:"He’s taking Spanish at school and hates practicing.", ok:["tr"], yes:"Turning it into a walk might actually work!",
+      no:{lens:"It’s not homework he’s stuck on, he just finds practice boring.", maps:"Hmm, I need something for the language part."}},
+    {n:"Dev", c:"#7A3FC4", q:"My daughter keeps asking about faraway places. We can’t travel much right now.", ok:["maps","arts"], yes:"We can “visit” places from the couch. Love it.",
+      no:{tr:"She’s curious about places, not languages.", play:"I’d rather explore with her than hand her another app."}},
     {n:"Ana", c:"#B3382E", q:"There are so many kids' apps. How do I find ones that are actually good for him?", ok:["play"], yes:"Rated by teachers? That saves me so much time.",
-      no:{yt:"I'm asking about apps, not videos.", lens:"That's one tool, but I mean apps in general."}}
+      no:{yt:"I’m asking about apps, not videos.", lens:"That’s one tool, but I mean apps in general."}}
   ];
   const S = R0(); S.k ??= 0; S.served ??= [];
   shell(r, "Parents in your session ask for ideas. <strong>Drag an activity card to the parent</strong> (or tap a card, then tap the parent).",
@@ -473,14 +473,14 @@ recommend(r){
     tally();
     if (S.k >= PAR.length) {
       $("pc").innerHTML = "";
-      note($("out"), "Every parent left with something to try. In your session, connect each idea to the child's interest, show how it works, and encourage families to explore <strong>together</strong>. That's the heart of Exploring responsibly.");
+      note($("out"), "Every parent left with something to try. In your session, connect each idea to the child’s interest, show how it works, and encourage families to explore <strong>together</strong>. That’s the heart of Exploring responsibly.");
       finish(); return;
     }
     const pa = PAR[S.k];
     $("pc").innerHTML = `<div class="parentcard" data-bin="parent"><span class="av" style="background:${pa.c}">${pa.n[0]}</span><div><div class="small" style="font-weight:800">${pa.n}</div><div class="bub" id="pb">${esc(pa.q)}</div><div class="bub answer" id="pr" hidden></div><div class="drop" id="pd">Drop an activity here</div></div></div>`;
     placeable(drop);
   };
-  /* the parent's reply stays on screen under their question: until the next try if it missed,
+  /* the parent’s reply stays on screen under their question: until the next try if it missed,
      until the trainer moves on if it fit */
   let busy = false;
   const answer = (txt, yes) => {
@@ -493,9 +493,9 @@ recommend(r){
     const pa = PAR[S.k], card = $("pc").firstElementChild;
     if (!pa.ok.includes(id)) {
       wrong(S.k); bump(card);
-      answer(pa.no[id] || "Hmm, I'm not sure that fits what I asked.", false);
+      answer(pa.no[id] || "Hmm, I’m not sure that fits what I asked.", false);
       $("pd").textContent = "Drop a different activity here";
-      note($("out"), "Listen for the child's interest or the parent's real need, then match the activity to it.", "warn");
+      note($("out"), "Listen for the child’s interest or the parent’s real need, then match the activity to it.", "warn");
       return;
     }
     busy = true;
@@ -525,7 +525,7 @@ safesearch(r){
     ["off","blur","filter"].forEach(m => $("s-" + m).innerHTML = L.filter(l => S.p[l.id] === m).map(l => `<span class="chipc placed">${esc(l.t)}</span>`).join(""));
     goal("Labels placed", Object.keys(S.p).length, 2);
     placeable(drop);
-    if (Object.keys(S.p).length === 2) { note($("out"), "Right. Parents and schools can also <strong>lock Filter on</strong> for supervised kids. Tip for your session: tell parents to search “Google parental controls” to see their child's settings."); finish(); }
+    if (Object.keys(S.p).length === 2) { note($("out"), "Right. Parents and schools can also <strong>lock Filter on</strong> for supervised kids. Tip for your session: tell parents to search “Google parental controls” to see their child’s settings."); finish(); }
   };
   const drop = (id, bin) => {
     const l = L.find(x => x.id === id);
@@ -539,13 +539,13 @@ safesearch(r){
 familylink(r){
   const W = [
     {w:"“My son is on his tablet until midnight.”", a:"time", e:"Screen time limits and downtime can lock the device at night."},
-    {w:"“She downloaded a game I'd never heard of.”", a:"apps", e:"Require approval for downloads and set rating limits for apps and games."},
-    {w:"“He keeps finding things he shouldn't on Search.”", a:"search", e:"Manage SafeSearch and content settings from Family Link."},
-    {w:"“I worry when she walks home from practice.”", a:"map", e:"See your child's location when they have their device with them."}
+    {w:"“She downloaded a game I’d never heard of.”", a:"apps", e:"Require approval for downloads and set rating limits for apps and games."},
+    {w:"“He keeps finding things he shouldn’t on Search.”", a:"search", e:"Manage SafeSearch and content settings from Family Link."},
+    {w:"“I worry when she walks home from practice.”", a:"map", e:"See your child’s location when they have their device with them."}
   ];
   const APPS = {time:{n:"Screen time", ic:"clock", c:"var(--rules)", bg:"var(--rules-soft)"}, apps:{n:"App approvals", ic:"bag", c:"var(--explore)", bg:"var(--explore-soft)"}, search:{n:"Content settings", ic:"shield", c:"var(--safe)", bg:"var(--safe-soft)"}, map:{n:"Location", ic:"pin", c:"#B3382E", bg:"#FBE4E1"}};
   const S = R0(); S.k ??= 0;
-  shell(r, "A parent shares a worry. <strong>Tap the part of Family Link</strong> you'd show them.",
+  shell(r, "A parent shares a worry. <strong>Tap the part of Family Link</strong> you’d show them.",
     `<div class="goal"></div>
     <div class="scene" style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center">
       <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:10px"><div class="who muted">Parent in your session</div><div id="wq"></div><div id="out"></div></div>
@@ -562,7 +562,7 @@ familylink(r){
   qa(".app").forEach(b => b.onclick = async () => {
     if (S.k >= 4 || waiting) return;
     const w = W[S.k];
-    if (b.dataset.k !== w.a) { wrong(S.k); bump(b); note($("out"), "That feature won't solve this one. Try another.", "warn"); return; }
+    if (b.dataset.k !== w.a) { wrong(S.k); bump(b); note($("out"), "That feature won’t solve this one. Try another.", "warn"); return; }
     right(S.k); b.classList.add("right"); S.k++; save(); goal("Worries solved", S.k, 4);
     if (S.k >= 4) { note($("out"), esc(w.e)); await wait(1100); draw(); return; }  // the last explanation stays with the closing message
     waiting = true;
@@ -580,20 +580,20 @@ youtube(r){
   };
   const K = [
     {id:"leo", n:"Leo, 6", c:"#C2541C", ctx:"Just started watching videos on the family tablet. His mom wants a simple space with only family-friendly videos.", ok:"kids",
-      yes:"A separate, simpler app with a much smaller set of videos is exactly what a 6-year-old's first steps need.",
+      yes:"A separate, simpler app with a much smaller set of videos is exactly what a 6-year-old’s first steps need.",
       no:{sup:"The main YouTube app is a big step for a first-time viewer. Mom asked for a simple space with a small set of videos.", teen:"Teen supervision is built for 13 to 17. Leo is 6."}},
-    {id:"mia", n:"Mia, 11", c:"#3B57C4", ctx:"Says the kids' app is “for babies” and wants real YouTube for science channels. Her dad thinks she's ready but wants to tailor what she sees.", ok:"sup",
+    {id:"mia", n:"Mia, 11", c:"#3B57C4", ctx:"Says the kids' app is “for babies” and wants real YouTube for science channels. Her dad thinks she’s ready but wants to tailor what she sees.", ok:"sup",
       yes:"Supervised experience is for parents who decide their child is ready for the main app but want to tailor it.",
-      no:{kids:"That's the app Mia says she's outgrown. Her dad already thinks she's ready for more.", teen:"Mia is 11. Teen supervision starts at 13."}},
+      no:{kids:"That’s the app Mia says she’s outgrown. Her dad already thinks she’s ready for more.", teen:"Mia is 11. Teen supervision starts at 13."}},
     {id:"sam", n:"Sam, 15", c:"#1F7A5A", ctx:"Uses YouTube every day for music and gaming. His parents want to stay involved without treating him like a little kid.", ok:"teen",
       yes:"Teen supervision is designed for 13 to 17. It keeps parents involved in a way that fits a teenager.",
-      no:{kids:"YouTube Kids is designed for under-13s. Sam would never accept it at 15.", sup:"The supervised experience is aimed at under-13s. There's an option designed for teens."}},
-    {id:"ava", n:"Ava, 9", c:"#7A3FC4", ctx:"Loves animal videos. Her grandma is setting up Ava's first device and worries she'll stumble onto something upsetting.", ok:"kids",
+      no:{kids:"YouTube Kids is designed for under-13s. Sam would never accept it at 15.", sup:"The supervised experience is aimed at under-13s. There’s an option designed for teens."}},
+    {id:"ava", n:"Ava, 9", c:"#7A3FC4", ctx:"Loves animal videos. Her grandma is setting up Ava’s first device and worries she’ll stumble onto something upsetting.", ok:"kids",
       yes:"For a first device and a nervous grandparent, a separate app with a much smaller, filtered set of videos gives the most peace of mind.",
-      no:{sup:"It's an option for her age, but it opens the broad main app. Grandma's worry points to the smallest, most filtered option.", teen:"Ava is 9. Teen supervision starts at 13."}}
+      no:{sup:"It’s an option for her age, but it opens the broad main app. Grandma’s worry points to the smallest, most filtered option.", teen:"Ava is 9. Teen supervision starts at 13."}}
   ];
   const S = R0(); S.p ??= {};
-  shell(r, "Read each family's story. <strong>Drag the child</strong> (or tap them, then tap an option) to the YouTube experience you'd recommend.",
+  shell(r, "Read each family’s story. <strong>Drag the child</strong> (or tap them, then tap an option) to the YouTube experience you’d recommend.",
     `<div class="goal"></div><div class="tray kidsrow" id="tray"></div>
     <div class="bins">${Object.entries(O).map(([k, o]) => `<div class="bin b-rules" data-bin="${k}"><h3>${o.n}</h3><span class="small muted">${o.d}</span><div class="tray" id="y-${k}" style="flex-direction:column"></div></div>`).join("")}</div>
     <div id="out"></div>`);
@@ -604,7 +604,7 @@ youtube(r){
     goal("Families helped", Object.keys(S.p).length, K.length);
     placeable(drop);
     if (Object.keys(S.p).length === K.length) {
-      note($("out"), `All four families have a fit. Quick recap: ${Object.values(O).map(o => `<strong>${o.n}</strong>: ${o.age}`).join(" ")} Remind parents they can manage YouTube settings in <strong>Family Link</strong>, and that the goal is choosing what's right for each child.`);
+      note($("out"), `All four families have a fit. Quick recap: ${Object.values(O).map(o => `<strong>${o.n}</strong>: ${o.age}`).join(" ")} Remind parents they can manage YouTube settings in <strong>Family Link</strong>, and that the goal is choosing what’s right for each child.`);
       finish();
     }
   };
@@ -619,29 +619,29 @@ youtube(r){
 /* 5 — parent Q&A */
 parentqa(r){
   const Q = [
-    {q:"I don't have Gmail. Can I still use any of this?", o:[
-      {t:"If you have Gmail you already have a Google account. If not, you can create one, and the resource guide shows how, including adding a child account. Let's do that after the session.", ok:true, c:"Matches the deck: reassure them, point to the resource guide, and don't spend session time troubleshooting accounts."},
-      {t:"Let's pause and set up your account together right now.", c:"The deck advises not to spend too much time troubleshooting accounts. Point to the guide and keep going."},
-      {t:"You'll need your child's account to sign in.", c:"Parents use their own Google account and add a separate child account to supervise."}]},
+    {q:"I don’t have Gmail. Can I still use any of this?", o:[
+      {t:"If you have Gmail you already have a Google account. If not, you can create one, and the resource guide shows how, including adding a child account. Let’s do that after the session.", ok:true, c:"Matches the deck: reassure them, point to the resource guide, and don’t spend session time troubleshooting accounts."},
+      {t:"Let’s pause and set up your account together right now.", c:"The deck advises not to spend too much time troubleshooting accounts. Point to the guide and keep going."},
+      {t:"You’ll need your child’s account to sign in.", c:"Parents use their own Google account and add a separate child account to supervise."}]},
     {q:"Is SafeSearch on for my 12-year-old, or do I have to turn it on?", o:[
       {t:"Filter is already on by default for under-18s, and you can lock it on for a supervised account. Search “Google parental controls” to check.", ok:true, c:"Exactly what the deck teaches: default for kids, can be locked, easy to check."},
-      {t:"You'll need to turn it on yourself in settings.", c:"For under-18s it's on by default already."},
+      {t:"You’ll need to turn it on yourself in settings.", c:"For under-18s it’s on by default already."},
       {t:"Kids get Blur by default.", c:"Blur is the default for adults and signed-out users. Kids get Filter."}]},
     {q:"Our family uses iPhones. Does Family Link work for us?", o:[
       {t:"Yes. Family Link is available on iOS and Android. Some controls, like Play Store approvals, apply on Android devices.", ok:true, c:"Right. The deck says the app is on both, and the Play Store controls are for Android."},
       {t:"No, it only works on Android phones.", c:"Family Link is available for both iOS and Android."},
-      {t:"Only if your child also has a Gmail address they made themselves.", c:"Parents set up a supervised child account. The child doesn't need to create one alone."}]},
+      {t:"Only if your child also has a Gmail address they made themselves.", c:"Parents set up a supervised child account. The child doesn’t need to create one alone."}]},
     {q:"Can my daughter trust what AI Overviews tells her?", o:[
       {t:"AI can make mistakes. AI Overviews include links to sources, and under-18s see a reminder to double-check important info. Check sources together.", ok:true, c:"Balanced and accurate: it names the safeguards and keeps the parent involved."},
-      {t:"Yes, it's built on Google's systems, so it's always correct.", c:"Grounded doesn't mean always right. The deck stresses that AI can still make mistakes."},
-      {t:"No. It's best to block AI completely.", c:"The deck encourages exploring responsibly and talking about AI, not avoiding it."}]},
+      {t:"Yes, it’s built on Google’s systems, so it’s always correct.", c:"Grounded doesn’t mean always right. The deck stresses that AI can still make mistakes."},
+      {t:"No. It’s best to block AI completely.", c:"The deck encourages exploring responsibly and talking about AI, not avoiding it."}]},
     {q:"My 15-year-old says YouTube Kids is for babies. What now?", o:[
-      {t:"There's a teen supervised experience for ages 13 to 17, with parental controls, that you can set up together.", ok:true, c:"Right option for the age, and it keeps it a shared decision."},
-      {t:"Keep them on YouTube Kids until they're 18.", c:"YouTube Kids is designed for under-13s."},
-      {t:"There's nothing for teens, so just trust them.", c:"The teen supervised experience exists for exactly this age."}]}
+      {t:"There’s a teen supervised experience for ages 13 to 17, with parental controls, that you can set up together.", ok:true, c:"Right option for the age, and it keeps it a shared decision."},
+      {t:"Keep them on YouTube Kids until they’re 18.", c:"YouTube Kids is designed for under-13s."},
+      {t:"There’s nothing for teens, so just trust them.", c:"The teen supervised experience exists for exactly this age."}]}
   ];
   const S = R0(); S.k ??= 0; S.h ??= [];
-  shell(r, "You're the trainer. Parents ask questions in the chat. <strong>Tap the best answer.</strong>",
+  shell(r, "You’re the trainer. Parents ask questions in the chat. <strong>Tap the best answer.</strong>",
     `<div class="goal"></div><div class="chat" id="chat"></div><div class="replies" id="rep"></div>`);
   const chat = $("chat"), rep = $("rep");
   const add = (cls, html, who) => chat.insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${who ? `<div class="who">${who}</div>` : ""}${html}</div>`);
@@ -677,45 +677,45 @@ facilitate(r){
   const PH = ["Set the scene","Start","Listen","Partner","Wrap up"];
   const D = [
     {ph:0, prompt:"Open the activity. What do you say first?", o:[
-      {t:"“Picture this: on the way to soccer practice, your child says they're exhausted, and you know they were up late watching videos.”", ok:true,
-        after:[["J","Ha, that's literally my house on Tuesdays."],["Y","👍"]], rx:{J:"😂", Y:"👍"},
+      {t:"“Picture this: on the way to soccer practice, your child says they’re exhausted, and you know they were up late watching videos.”", ok:true,
+        after:[["J","Ha, that’s literally my house on Tuesdays."],["Y","👍"]], rx:{J:"😂", Y:"👍"},
         c:"An everyday moment makes it real. The deck suggests ordinary times like dinner or the drive to school."},
-      {t:"“Today let's review what the research says about screen time and sleep.”", rx:{M:"🥱", D:"🥱"}, after:[["sys","(the chat goes quiet)"]],
+      {t:"“Today let’s review what the research says about screen time and sleep.”", rx:{M:"🥱", D:"🥱"}, after:[["sys","(the chat goes quiet)"]],
         c:"That turns the activity into a lecture. Start from a familiar moment parents can picture."},
       {t:"“Be honest: who lets their kids keep phones in bed?”", rx:{M:"😬", J:"😬"}, after:[["sys","(two cameras turn off)"]],
         c:"It feels like a judgment, so parents get defensive. Set up a shared moment instead."}]},
     {ph:1, prompt:"Now ask the group the first question.", o:[
-      {t:"“In that moment, what's a question you could ask to start a conversation about tech ground rules?”", ok:true,
-        after:[["Y","“Do you feel like you're getting enough sleep?”"],["D","“When I stay up late on my phone I can't fall asleep. Does that happen to you?”"],["M","“Why were you up so late?!”"]],
-        c:"That's the deck's first question, word for word. Parents brainstorm openers, which is the skill they'll use at home."},
+      {t:"“In that moment, what’s a question you could ask to start a conversation about tech ground rules?”", ok:true,
+        after:[["Y","“Do you feel like you’re getting enough sleep?”"],["D","“When I stay up late on my phone I can’t fall asleep. Does that happen to you?”"],["M","“Why were you up so late?!”"]],
+        c:"That’s the deck’s first question, word for word. Parents brainstorm openers, which is the skill they’ll use at home."},
       {t:"“What rule should you set after that?”", rx:{J:"🤔"}, after:[["J","Uh, no phones after 9?"],["sys","(nobody else answers)"]],
         c:"This skips the conversation and jumps to rules. Start with how to open the conversation."},
       {t:"“Would you take the phone away? Yes or no?”", rx:{M:"🤷", D:"🤷"}, after:[["M","Yes?"],["D","No?"]],
         c:"A closed question ends the discussion fast. Ask an open question that invites ideas."}]},
     {ph:1, prompt:"Maria typed “Why were you up so late?!” How do you respond?", o:[
-      {t:"“Thanks, Maria, that's such a natural reaction. How might a child hear that question? Can anyone think of a way to ask it that helps them open up?”", ok:true,
-        after:[["M","Fair, they'd probably get defensive. 😅"],["Y","Maybe start with how they're feeling?"]], rx:{M:"😅"},
+      {t:"“Thanks, Maria, that’s such a natural reaction. How might a child hear that question? Can anyone think of a way to ask it that helps them open up?”", ok:true,
+        after:[["M","Fair, they’d probably get defensive. 😅"],["Y","Maybe start with how they’re feeling?"]], rx:{M:"😅"},
         c:"You thanked her, then turned it into learning for the whole group. Nobody gets shamed and everyone thinks harder."},
-      {t:"“That's the wrong approach, Maria.”", rx:{M:"😶"}, after:[["sys","(Maria stops typing)"]],
+      {t:"“That’s the wrong approach, Maria.”", rx:{M:"😶"}, after:[["sys","(Maria stops typing)"]],
         c:"Correcting someone publicly shuts them, and the group, down. Validate first, then invite the group to reframe."},
       {t:"(Skip it and go to the next question.)", after:[["M","…was mine wrong?"]], rx:{M:"🤔"},
-        c:"That's a missed teaching moment, and Maria is left wondering. Use it."}]},
+        c:"That’s a missed teaching moment, and Maria is left wondering. Use it."}]},
     {ph:2, prompt:"Time for the second question.", o:[
       {t:"“What do you think you might hear in response?”", ok:true,
-        after:[["J","“I can't get more sleep, I have so much homework!”"],["D","“I like watching videos at night. It's the studying that's keeping me up.”"]],
-        c:"The deck's second question. Rehearsing pushback helps parents stay calm when it happens for real."},
-      {t:"“Great, let's move on to setting up Family Link.”", rx:{Y:"🤔"}, after:[["Y","Wait, are we done with this?"]],
+        after:[["J","“I can’t get more sleep, I have so much homework!”"],["D","“I like watching videos at night. It’s the studying that’s keeping me up.”"]],
+        c:"The deck’s second question. Rehearsing pushback helps parents stay calm when it happens for real."},
+      {t:"“Great, let’s move on to setting up Family Link.”", rx:{Y:"🤔"}, after:[["Y","Wait, are we done with this?"]],
         c:"You skipped two of the three questions. The activity is designed to run all three."},
-      {t:"“Kids should just listen to us, right?”", rx:{D:"😬"}, after:[["D","Mine definitely doesn't. 😂"]],
+      {t:"“Kids should just listen to us, right?”", rx:{D:"😬"}, after:[["D","Mine definitely doesn’t. 😂"]],
         c:"This ends the discussion instead of preparing parents for real reactions."}]},
-    {ph:2, prompt:"Priya has her hand up but hasn't spoken. Several parents seem to have tried this at home.", hand:"Y", o:[
+    {ph:2, prompt:"Priya has her hand up but hasn’t spoken. Several parents seem to have tried this at home.", hand:"Y", o:[
       {t:"“Priya, I see your hand. Has a conversation like this worked, or not worked, in your home?”", ok:true,
         after:[["Y","We tried a no-phones-at-dinner rule. It only stuck when I followed it too."],["J","Same! The kids called me out immediately."]], rx:{Y:"🙋", J:"💯"},
-        c:"The deck invites the group to add personal perspective on what has or hasn't worked at home. Real stories are the most persuasive part."},
-      {t:"(Keep going. You're short on time.)", after:[["sys","(Priya lowers her hand)"]],
+        c:"The deck invites the group to add personal perspective on what has or hasn’t worked at home. Real stories are the most persuasive part."},
+      {t:"(Keep going. You’re short on time.)", after:[["sys","(Priya lowers her hand)"]],
         c:"A raised hand ignored is a voice lost. Personal stories are what make this activity land."},
-      {t:"“Let's keep personal stories out of it and stay on the slides.”", rx:{Y:"😕"}, after:[["sys","(Priya lowers her hand)"]],
-        c:"The deck encourages personal perspectives. They're what turn tips into habits."}]},
+      {t:"“Let’s keep personal stories out of it and stay on the slides.”", rx:{Y:"😕"}, after:[["sys","(Priya lowers her hand)"]],
+        c:"The deck encourages personal perspectives. They’re what turn tips into habits."}]},
     {ph:3, prompt:"Ask the third question.", o:[
       {t:"“What could you suggest to partner with your child on this?”", ok:true,
         after:[["D","Charge all our phones in the living room, mine too."],["M","No screens 30 minutes before bed. Try it for two weeks and see."]],
@@ -727,14 +727,14 @@ facilitate(r){
     {ph:4, prompt:"Wrap up the activity.", o:[
       {t:"“Notice how many of these ideas include us too. Most of us struggle with tech time, so keep ground rules about the whole family.”", ok:true,
         after:[["Y","👏"],["J","Guilty. 🙋"],["M","Trying the living-room charger this week!"]], rx:{Y:"👏", J:"🙋", M:"💡", D:"👍"},
-        c:"That's the closing message from the deck: tech habits are a family issue, adults included."},
+        c:"That’s the closing message from the deck: tech habits are a family issue, adults included."},
       {t:"“Great. Now make sure your kids follow these rules.”", rx:{D:"🤨"}, after:[["D","Just the kids?"]],
         c:"This undoes the point of the activity. Make it about the whole family."},
-      {t:"“We're out of time, moving on.”", after:[["sys","(the ideas are left hanging)"]],
+      {t:"“We’re out of time, moving on.”", after:[["sys","(the ideas are left hanging)"]],
         c:"Even 20 seconds to land the key message makes the activity stick."}]}
   ];
   const S = R0(); S.k ??= 0; S.h ??= []; S.e ??= 50;
-  shell(r, "You're the trainer. Four parents are in your virtual session. <strong>Choose what to say</strong> at each moment and watch how the group responds.",
+  shell(r, "You’re the trainer. Four parents are in your virtual session. <strong>Choose what to say</strong> at each moment and watch how the group responds.",
     `<div class="goal"></div><div class="phase" id="ph">${PH.map(p => `<span>${p}</span>`).join("")}</div>
     <div class="room">
       <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -823,7 +823,7 @@ agenda(r){
   qa(".sl").forEach(b => b.onclick = () => {
     const k = +b.dataset.k;
     if (!S.checked) { S.f = S.f.includes(k) ? S.f.filter(x => x !== k) : [...S.f, k]; save(); paint(); return; }
-    if (!SL[k].opt) { bump(b); note($("out"), "That's a core slide, so it stays in every session.", "warn"); return; }
+    if (!SL[k].opt) { bump(b); note($("out"), "That’s a core slide, so it stays in every session.", "warn"); return; }
     S.inc = S.inc.includes(k) ? S.inc.filter(x => x !== k) : [...S.inc, k]; save(); paint();
   });
   $("chk").onclick = () => {
@@ -842,7 +842,7 @@ ready(r){
   const LV = ["", "Not yet", "Shaky", "Okay", "Confident", "Could teach it"];
   const t = totals(), done = ROUNDS.slice(0, -1).filter((_, i) => st.r[i]?.done).length;
   const weak = ROUNDS.map((x, i) => ({x, i, s: st.r[i]})).filter(o => o.x.max && o.s?.done && o.s.pts < o.x.max);
-  shell(r, st.pre ? "Rate your confidence again and compare it with where you started. Then replay any round you'd like to strengthen and tick off your prep list." : "Rate your confidence, replay any round you'd like to strengthen, and tick off your prep list.",
+  shell(r, st.pre ? "Rate your confidence again and compare it with where you started. Then replay any round you’d like to strengthen and tick off your prep list." : "Rate your confidence, replay any round you’d like to strengthen, and tick off your prep list.",
     `<div class="scene" style="display:flex;flex-direction:column;gap:12px">
       <div class="row" style="display:flex;gap:24px;flex-wrap:wrap;align-items:baseline"><div><div class="eyebrow muted">Self-check score</div><b style="font-family:var(--display);font-size:40px">${t.p} / ${t.m}</b></div>
       <div class="muted">${done} of ${ROUNDS.length - 1} rounds completed</div></div>
@@ -870,14 +870,14 @@ ready(r){
     const score = Math.round((conf * 0.4 + prepP * 0.3 + prac * 0.3) * 100);
     $("rm").style.width = score + "%";
     const low = topics.filter(([k]) => S.c[k] <= 2).map(([, n]) => n);
-    $("rmt").textContent = score >= 80 ? "You're ready. Enjoy your session!" : low.length ? `Spend extra prep time on: ${low.join(", ")}.` : "Getting there. Finish your prep list and replay any rounds above.";
+    $("rmt").textContent = score >= 80 ? "You’re ready. Enjoy your session!" : low.length ? `Spend extra prep time on: ${low.join(", ")}.` : "Getting there. Finish your prep list and replay any rounds above.";
     if (S.p.length || Object.values(S.c).some(v => v !== 3)) { finish(); trackFinish({...S.c}); }
   };
   qa("input[type=range]").forEach(i => i.oninput = () => { S.c[i.dataset.k] = +i.value; save(); upd(); });
   qa(".checklist input").forEach(c => c.onchange = () => { const k = +c.dataset.k; S.p = c.checked ? [...new Set([...S.p, k])] : S.p.filter(x => x !== k); save(); upd(); });
   $("copy").onclick = async () => {
     const txt = `My Meet LEO prep plan\nSelf-check score: ${t.p}/${t.m}\n\nConfidence:\n${topics.map(([k, n]) => `- ${n}: ${S.c[k]}/5`).join("\n")}\n\nTo do:\n${prep.map((p, k) => `[${S.p.includes(k) ? "x" : " "}] ${p}`).join("\n")}`;
-    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied."; } catch { $("copied").textContent = "Copy isn't available here. Select the text and copy it manually."; }
+    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied."; } catch { $("copied").textContent = "Copy isn’t available here. Select the text and copy it manually."; }
   };
   $("reset").onclick = () => { st = fresh(); save(); go(-1); };
   upd();
@@ -891,7 +891,7 @@ function renderIntro(){
   const goals = [
     ["1","Explain SafeSearch defaults and Family Link features to parents accurately"],
     ["2","Recommend the YouTube experience that fits a child and family"],
-    ["3","Suggest an explore-together activity that matches a family's interests"],
+    ["3","Suggest an explore-together activity that matches a family’s interests"],
     ["4","Answer common parent questions with what the training covered"],
     ["5","Lead the three-question Family Conversations activity"],
     ["6","Plan a 15-minute parent session from core and optional slides"]
@@ -900,10 +900,10 @@ function renderIntro(){
     <div class="intro-hero">
       <div class="eyebrow muted">After the Meet LEO webinar</div>
       <h2>What stuck? A quick self-check before you share Meet LEO with families</h2>
-      <p class="lead">You've just finished the Meet LEO train-the-trainer webinar. In the coming weeks you'll bring it to the parents and caregivers you work with. This page helps you see what you remember and practice the moments that matter most when you're in front of families.</p>
-      <div class="note">This is not a test. There's no pass mark, and you can replay any round you've reached as often as you like. This is a portfolio copy of the tool and it collects no data. (The live version collects anonymous usage data for Digital4Good: rounds completed, self-check points and confidence ratings, never names or emails.)</div>
+      <p class="lead">You’ve just finished the Meet LEO train-the-trainer webinar. In the coming weeks you’ll bring it to the parents and caregivers you work with. This page helps you see what you remember and practice the moments that matter most when you’re in front of families.</p>
+      <div class="note">This is not a test. There’s no pass mark, and you can replay any round you’ve reached as often as you like. This is a portfolio copy of the tool and it collects no data. (The live version collects anonymous usage data for Digital4Good: rounds completed, self-check points and confidence ratings, never names or emails.)</div>
     </div>
-    <div><h3 style="margin-bottom:10px">After practicing, you'll be able to</h3>
+    <div><h3 style="margin-bottom:10px">After practicing, you’ll be able to</h3>
       <ul class="goals">${goals.map(([n, g]) => `<li><span class="n">${n}</span><span>${g}</span></li>`).join("")}</ul></div>
     <div class="howto">
       <div><b>8 short rounds</b>About 15 minutes in total. Finish a round to unlock the next. Stop and return anytime.</div>
@@ -915,7 +915,7 @@ function renderIntro(){
       <h3>Before you start: how confident do you feel right now?</h3>
       <p class="small">Move each slider to one of 5 levels: ${LV.slice(1).join(", ")}.</p>
       <div class="sliders">${topics.map(([k, n]) => `<div class="sld scaled"><label for="pre-${k}"><span>${n}</span><span id="pv-${k}">${LV[pre[k]]}</span></label><input type="range" min="1" max="5" id="pre-${k}" data-k="${k}" value="${pre[k]}" aria-valuetext="${LV[pre[k]]}"><div class="scale" aria-hidden="true">${LV.slice(1).map((l, x) => `<span data-v="${x + 1}" class="${x + 1 === pre[k] ? "on" : ""}">${l}</span>`).join("")}</div></div>`).join("")}</div>
-      <p class="small muted">You'll rate these again at the end to see how far you've come.</p>
+      <p class="small muted">You’ll rate these again at the end to see how far you’ve come.</p>
     </div>
     <div class="navrow"><span></span><button class="btn primary" id="startbtn">${st.pre ? "Continue practicing" : "Start round 1"}</button></div>`;
   qa("#stage input[type=range]").forEach(i => {
