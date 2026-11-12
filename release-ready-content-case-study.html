@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Release-Ready Learning Content Case Study · Yi Liu</title>
+<meta name="description" content="Case study: an AI-assisted workflow that keeps customer learning content current with every product release. Designed and built by Yi Liu.">
+<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<meta property="og:title" content="Release-Ready Learning Content Case Study · Yi Liu">
+<meta property="og:description" content="Case study: an AI-assisted workflow that keeps customer learning content current with every product release. Designed and built by Yi Liu.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/site.css?v=14">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="site" href="index.html"><svg aria-hidden="true" viewBox="4 6 58 52"><g>
+  <!-- fox, emoji-style -->
+  <path d="M13.5 29 L15.6 12.6 C15.8 11.4 16.8 11 17.7 11.8 L26.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M36.5 29 L34.4 12.6 C34.2 11.4 33.2 11 32.3 11.8 L23.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M16.6 24.5 L17.6 15.2 L22.8 20.3 Z" fill="#C8601A"/>
+  <path d="M33.4 24.5 L32.4 15.2 L27.2 20.3 Z" fill="#C8601A"/>
+  <path d="M25 18.2 C32.2 18.2 37 22.4 37.6 28.2 L41 33.6 C37 34.6 33.6 39.4 25 41 C16.4 39.4 13 34.6 9 33.6 L12.4 28.2 C13 22.4 17.8 18.2 25 18.2 Z" fill="#F28A26"/>
+  <path d="M9 33.6 C13.2 31.4 18.6 31.2 21.8 33 C23 35.2 23.9 36.2 25 36.2 C26.1 36.2 27 35.2 28.2 33 C31.4 31.2 36.8 31.4 41 33.6 C37 34.8 33.6 39.4 25 41 C16.4 39.4 13 34.8 9 33.6 Z" fill="#FFFFFF"/>
+  <ellipse cx="20.4" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/><ellipse cx="29.6" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/>
+  <circle cx="21" cy="27.5" r="0.65" fill="#FFFFFF"/><circle cx="30.2" cy="27.5" r="0.65" fill="#FFFFFF"/>
+  <path d="M23.1 35 C23.1 34.1 26.9 34.1 26.9 35 C26.9 36 25.8 37 25 37 C24.2 37 23.1 36 23.1 35 Z" fill="#1C2B44"/>
+  <!-- learning path: nodes rising to a star -->
+  <path d="M41.5 29 L46.5 22.5 L51.5 24.5 L56 16" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 2.6" fill="none"/>
+  <circle cx="41.5" cy="29" r="1.9" fill="#FFFFFF"/>
+  <circle cx="46.5" cy="22.5" r="1.9" fill="#FFFFFF"/>
+  <circle cx="51.5" cy="24.5" r="1.9" fill="#FFFFFF"/>
+  <path d="M56.5 9.6 L58 12.9 L61.5 13.3 L58.9 15.7 L59.6 19.2 L56.5 17.4 L53.4 19.2 L54.1 15.7 L51.5 13.3 L55 12.9 Z" fill="#FF9F2E"/>
+  <!-- book -->
+  <path d="M6 42 C14 39.5 23 39.5 32 43.5 C41 39.5 50 39.5 58 42 V55 C50 52.5 41 52.5 32 56.5 C23 52.5 14 52.5 6 55 Z" fill="#FFFFFF"/>
+  <path d="M32 43.5 V56.5" stroke="#3878BC" stroke-width="1.6"/>
+  <path d="M10.2 45.6 L11.7 47.1 L14.4 44" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 45.9 C20 45.3 23.5 45.5 27.5 46.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <path d="M10.2 49.6 L11.7 51.1 L14.4 48" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 49.9 C20 49.3 23.5 49.5 27.5 50.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <!-- tangerine sitting on the right page -->
+  <ellipse cx="46" cy="47.3" rx="6" ry="1.3" fill="#9FC1E6" opacity=".7"/>
+  <circle cx="46" cy="41.5" r="6.4" fill="#FF9F2E"/>
+  <circle cx="43.9" cy="39.4" r="1.6" fill="#FFC77A"/>
+  <path d="M46 35.3 C47.4 32.3 50.6 31.4 52.9 32.4 C51.5 35 48.7 35.9 46 35.3 Z" fill="#FFFFFF"/>
+  <path d="M46 35.5 L45.5 33.2" stroke="#1C4587" stroke-width="1.1" stroke-linecap="round"/>
+</g>
+</svg><span>Yi Liu</span></a>
+    <button class="search-btn" id="search-btn" aria-expanded="false" aria-controls="searchpanel" aria-label="Search this site"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html" aria-current="page">AI Content Systems</a><a href="curriculum-design-onboarding.html">Onboarding</a><a href="leo-trainer-practice.html">Train-the-Trainer</a></div></div>
+      <a href="approach.html">Approach</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="searchpanel" id="searchpanel" hidden>
+    <div class="wrap">
+      <label for="q" class="sr">Search this site</label>
+      <input id="q" type="search" placeholder="Search projects, skills, frameworks…" autocomplete="off">
+      <ul id="results" aria-live="polite"></ul>
+    </div>
+  </div>
+</header>
+<main>
+<div class="ptitle wrap">
+  <p style="margin:0 0 6px"><a href="release-ready-content.html" style="color:var(--blue);text-decoration:none">← AI Content Systems</a></p>
+  <h1>Release-Ready Learning Content</h1>
+  <p class="measure">Case study: an AI-assisted workflow that keeps help articles, Academy lessons and workshop materials current with every product release, with a human deciding what publishes.</p>
+  <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn primary" href="demos/release-ready-content.html#full">Try the demo</a><a class="btn" href="#ev-h">Jump to real results</a></div>
+</div>
+<div class="wrap"><hr class="rule"></div>
+<section class="wrap prose" aria-labelledby="ld-h">
+  <h2 id="ld-h" class="sec" style="margin-bottom:4px">Learning design behind the system</h2>
+  <p class="measure">The workflow is a tool, but the people who review its output need to learn a new skill: checking AI drafts. I designed the system and its reviewer training with the same frameworks I use for any learning project.</p>
+
+  <div class="two">
+    <h2>Business goal and action map</h2>
+    <div class="prose">
+      <p class="measure"><b>Goal (Action Mapping):</b> within 3 business days of each release, every affected customer-facing asset is updated, and no invented features reach customers.</p>
+      <div class="amap">
+        <div><span class="lbl">Business goal</span><p>Current content within 3 business days of every release</p></div>
+        <div><span class="lbl">What reviewers must do</span><ul><li>Trace each changed line to a release item</li><li>Strike claims the release doesn’t support</li><li>Route objectives, assessments and open questions to owners</li><li>Turn repeated edits into prompt rules</li></ul></div>
+        <div><span class="lbl">Practice in the demo</span><ul><li>Stage 1: trace records to source</li><li>Stage 3: check lines, then decide</li><li>Stage 4: edit becomes a rule</li><li>Stage 5: recall the rubric without hints</li></ul></div>
+        <div><span class="lbl">Minimum information</span><ul><li>7-point review rubric</li><li>Ownership list</li><li>Release notes with quoted source lines</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Gilbert’s Behavior Engineering Model</h2>
+    <div class="prose">
+      <p class="measure">Out-of-date content is mostly an environment problem. Training fixes one cell; the system and team processes cover the rest.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Information</td><td>Release changes never reach content teams</td><td>Intake turns release notes into change records; every flag comes with a reason</td><td>System</td></tr>
+          <tr><td>2</td><td>Resources</td><td>No way to find every affected asset</td><td>Tag and keyword scan over a shared content schema</td><td>System</td></tr>
+          <tr><td>3</td><td>Incentives</td><td>Updating content isn’t anyone’s measured job</td><td>Named asset owners and a 3-day update target in team goals</td><td>Process</td></tr>
+          <tr><td>4</td><td>Knowledge and skills</td><td>Reviewers haven’t learned to check AI output</td><td>Reviewer practice (this demo) and the review rubric</td><td>Training</td></tr>
+          <tr><td>5</td><td>Capacity</td><td>Big releases overload reviewers</td><td>Severity sorting, AI dismissals with reasons, a cap on drafts per reviewer</td><td>System and process</td></tr>
+          <tr><td>6</td><td>Motives</td><td>Teams distrust AI drafts or fear blame for errors</td><td>Line-level citations, a human decision on every publish, a shared review log</td><td>System and culture</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Objectives and evidence</h2>
+    <div class="prose">
+      <p class="measure">Planned backward: each objective has matching evidence in the demo before any content was written.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Objective (audience, behavior, condition, degree)</th><th>Evidence in the demo</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Given an AI-drafted update and the release notes it cites, a content reviewer will identify every claim the release does not support.</td><td>Stage 3: find the invented sharing claim in HC-104</td></tr>
+          <tr><td>2</td><td>A content reviewer will choose the correct publish decision for each draft, routing objectives, assessment items and open questions to their owners, for 4 of 4 drafts.</td><td>Stage 3: four drafts, first-try accuracy logged</td></tr>
+          <tr><td>3</td><td>Without automatic checks, a content reviewer will apply the review rubric from memory to a new release for 2 of 2 drafts.</td><td>Stage 5: release 4.3 check</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Adult learning and retrieval</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Why it matters, first</h3><p>The start screen opens with a real problem, outdated help that reached customers, and states the business goal before any task (Knowles: need to know).</p></div>
+      <div class="decision"><h3>Built on their role</h3><p>Learners choose content reviewer, content owner or product manager, and every stage shows a tip for that role (Knowles: experience and self-concept).</p></div>
+      <div class="decision"><h3>Learner-directed</h3><p>All stages open once you start, so experienced reviewers can jump straight to the review queue (Knowles: self-direction).</p></div>
+      <div class="decision"><h3>Recall without hints</h3><p>The release 4.3 check hides the automatic rubric results. Reviewers retrieve the rules from memory on a new case, which is what makes them stick (retrieval practice).</p></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Evaluation plan (Kirkpatrick)</h2>
+    <div class="prose">
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th><th>Planned target</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Reaction</td><td>Reviewer trust in AI drafts and ease of review</td><td>Three-question pulse in the review log after each release</td><td>4 of 5 or higher</td></tr>
+          <tr><td>2</td><td>Learning</td><td>First-try accuracy in stage 3 and the release 4.3 check</td><td>Demo data, per reviewer, before they review live drafts</td><td>2 of 2 on the recall check</td></tr>
+          <tr><td>3</td><td>Behavior</td><td>Days from release to updated content; drafts published without edits; invented claims caught before publish</td><td>Review log, every release</td><td>3 business days or fewer; every invented claim caught</td></tr>
+          <tr><td>4</td><td>Results</td><td>Support tickets tagged “outdated docs”; satisfaction ratings on help articles</td><td>Support system, quarterly</td><td>30% fewer tickets within two quarters</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Real runs so far are recorded in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap prose" style="padding-top:28px">
+    <div class="two">
+      <h2>The problem</h2>
+      <div class="prose">
+        <p class="measure">Every SaaS release quietly breaks learning content. A renamed tab makes a help article wrong, a quiz question points to a menu that no longer exists, and a workshop demo walks enterprise customers to the wrong screen. Teams usually find out when a customer does.</p>
+        <p class="measure">Asking AI to “rewrite the docs” makes it worse: drafts sound right and can invent features. I wanted a system that finds every affected asset, drafts only what the release supports, and makes it easy for a person to check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap prose" style="padding-top:0" aria-labelledby="wf-h">
+    <div class="two" style="grid-template-columns:minmax(0,1fr)">
+      <h2 id="wf-h">The workflow</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>#</th><th>Step</th><th>What happens</th><th>Who</th><th>Check built in</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Intake</td><td>Release notes become structured change records</td><td><span class="lvl apply">AI drafts</span></td><td>Every record quotes its exact source line</td></tr>
+            <tr><td>2</td><td>Impact scan</td><td>Every asset is matched to every change by feature tag and UI keyword</td><td><span class="lvl recall">Script</span></td><td>Deterministic and repeatable; over-flags on purpose</td></tr>
+            <tr><td>3</td><td>Impact check</td><td>Each flag is confirmed, dismissed or turned into a question</td><td><span class="lvl apply">AI drafts</span></td><td>“Update” requires a conflicting line; dismissals show a reason</td></tr>
+            <tr><td>4</td><td>Draft</td><td>Smallest correct edit, each changed line tagged with its release item</td><td><span class="lvl apply">AI drafts</span></td><td>Human-owned parts marked; unknowns become open questions</td></tr>
+            <tr><td>5</td><td>Review</td><td>Rubric checks run; a person approves, edits, routes or rejects</td><td><span class="lvl perform">Person</span></td><td>Traceability, scope, terms, accessibility, ownership</td></tr>
+            <tr><td>6</td><td>Learn</td><td>Review decisions become new rules in the skills</td><td><span class="lvl plan">Person</span></td><td>Versioned change log in each skill</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
+    <div class="sechead">
+      <h2 id="demo-h">Review release 4.2 yourself</h2>
+      <p class="muted measure">You play the learning designer: predict which flags don’t matter, check AI drafts line by line, and decide what publishes. The scan is the real script’s output; the AI steps are a sample run.</p>
+    </div>
+    <div class="demo">
+      <div class="bar2"><span>Release-Ready Learning Content · release 4.2</span><a href="demos/release-ready-content.html#full">Open full screen ↗</a></div>
+      <iframe src="demos/release-ready-content.html" title="Release-ready learning content workflow demo"></iframe>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="chk-h">
+    <h2 id="chk-h">How I check the AI’s output</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In a real run, the AI correctly dismissed the load-speed flag on HC-415 with a reason the owner can check. On HC-104 it found the outdated article title, which sits outside the body, while the scan caught a lowercase heading (“Share a timeline”) the AI missed. Each pass covered the other’s gap.</p></div>
+      <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes unsupported content easy to spot. In a real run, a v1.0 draft kept “at the top of the project” from the old article, a location the release never stated. The AI reviewer failed that line on traceability and scope.</p></div>
+      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn’t say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
+      <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
+      <div class="decision"><h3>Review decisions become rules</h3><p>That finding became rule 7 in the draft skill: never state what a change record doesn’t support. Re-running the same input with v1.1 removed the unsupported location from the step and turned it into a question, and open questions fell from 7 to 5.</p></div>
+      <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="sys-h">
+    <div class="two">
+      <h2 id="sys-h">The system underneath</h2>
+      <div class="prose">
+        <p class="measure">The workflow only works because content is structured. Every asset is an AI-ready content type with the same metadata, so agents can find it, check it and update it without guessing.</p>
+<pre class="code"><span class="c">// content/library.json · one asset</span>
+{
+  <span class="k">"id"</span>: "HC-104",
+  <span class="k">"type"</span>: "help_article",
+  <span class="k">"features"</span>: ["timeline"],
+  <span class="k">"owner"</span>: "Help Center",
+  <span class="k">"last_reviewed"</span>: "2026-06-02",
+  <span class="k">"customer_facing"</span>: true,
+  <span class="k">"body"</span>: ["## Open the Timeline view", "1. Open your project.", ...]
+}</pre>
+        <p class="measure">The design decisions I’d otherwise repeat by hand live in four reusable skills.</p>
+        <div class="files">
+          <a class="file" href="kit/skills/01-intake-classify.md"><b>01-intake-classify.md</b><span>Release notes to change records</span></a>
+          <a class="file" href="kit/skills/02-impact-check.md"><b>02-impact-check.md</b><span>Confirm, dismiss or question each flag</span></a>
+          <a class="file" href="kit/skills/03-draft-update.md"><b>03-draft-update.md</b><span>Minimal, traceable edits (v1.2)</span></a>
+          <a class="file" href="kit/skills/04-review-rubric.md"><b>04-review-rubric.md</b><span>7-point review rubric and decisions</span></a>
+          <a class="file" href="kit/flag_impacted.py"><b>flag_impacted.py</b><span>The impact scan script</span></a>
+          <a class="file" href="kit/README.md"><b>README.md</b><span>How the kit fits together</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap prose" aria-labelledby="ev-h">
+    <div class="two">
+      <h2 id="ev-h">Results from real runs</h2>
+      <div class="prose">
+        <p class="measure">On November 12, 2026, I ran each skill in a fresh Claude chat on the release 4.2 inputs and checked every output against the rubric. The interactive demo above uses sample drafts written to train reviewers; the results below are from the real runs.</p>
+        <div class="tablewrap"><table>
+          <thead><tr><th>#</th><th>Run</th><th>What happened</th><th>What I changed</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Intake (01 v1.0)</td><td>Quoted all 5 release lines exactly and split one line into two changes (CSV moved, PDF added), with a question for the product manager. Chose a common word (“Plan”) and a multi-word phrase as scan keywords, added an unsupported “sharing” tag, and typed the approvals change inconsistently.</td><td>01 v1.1: change-type definitions, keyword and tag rules, split rule</td></tr>
+            <tr><td>2</td><td>Impact check, HC-104 (02 v1.0)</td><td>Correct “update”. Found the outdated title; missed the lowercase heading the scan had caught.</td><td>02 v1.1: check title and metadata; match old names in any case and plural</td></tr>
+            <tr><td>3</td><td>Impact check, HC-415 (02 v1.0)</td><td>Correct “no update”, with a clear reason. The planted false positive was filtered.</td><td>None</td></tr>
+            <tr><td>4</td><td>Draft, HC-104 (03 v1.0)</td><td>No invented features, but kept an unsupported location in step 2 and listed 7 open questions without owners.</td><td>Added rule 7 (v1.1)</td></tr>
+            <tr><td>5</td><td>Draft, HC-104 (03 v1.1)</td><td>Removed the unsupported location and flagged it; open questions fell from 7 to 5.</td><td>03 v1.2: owner and blocking label on every question; no style-only questions</td></tr>
+            <tr><td>6</td><td>Review of the v1.0 draft (04)</td><td>Failed 5 of 7 checks, caught the unsupported line, recommended “route to owner” and assigned owners to every question. Pointed out that my prompt had left out the style guide.</td><td>04 v1.1: style guide is a required input</td></tr>
+          </tbody>
+        </table></div>
+        <ul class="measure" style="margin:0;padding-left:20px">
+          <li>Impact decisions correct: 2 of 2</li>
+          <li>Unsupported claims in drafts: 1 with v1.0, 0 with v1.1</li>
+          <li>Drafts published without a human decision: 0</li>
+          <li>Prompt gaps found and fixed: 4 skills updated</li>
+        </ul>
+        <p class="measure">The biggest lesson was not the one I expected. I planned for the model to invent features; in practice it was cautious, and the real risks were subtler: an old assumption carried into new text, and more open questions than a reviewer can handle. Both became rules. The full record is in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
+        <p class="measure">Next, I’d run the updated skills on a larger library, connect intake to a real release feed, and track time from release to updated content and the share of drafts published without edits.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="nextcase">
+      <a class="btn" href="release-ready-content.html">← AI Content Systems</a>
+      <a class="btn primary" href="curriculum-design-onboarding.html">Next: Curriculum Designer Onboarding</a>
+    </div>
+  </section>
+  <div class="collab">
+    <h2>Let’s Collaborate!</h2>
+    <div class="icons"><a class="icon" href="https://www.linkedin.com/in/louisely1003/" target="_blank" rel="noopener" aria-label="Yi Liu on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="9.5" width="3.2" height="10" fill="#fff"/><circle cx="6.1" cy="6.2" r="1.9" fill="#fff"/><path d="M10 9.5h3v1.5c.6-1 1.8-1.8 3.4-1.8 2.6 0 3.6 1.6 3.6 4.4v5.9h-3.2v-5.3c0-1.4-.4-2.3-1.6-2.3-1.3 0-2 .9-2 2.4v5.2H10z" fill="#fff"/></svg></a><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu. Kitebird Projects is a fictional product created for this portfolio.</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
+<script src="js/search.js?v=18" defer></script>
+</body>
+</html>
