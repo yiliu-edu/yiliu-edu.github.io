@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ads Seller Onboarding Sprint</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="From Hello to First Pitch: an AI-first onboarding sprint for new ads sellers. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@500;600&display=swap">
+<style>
+/* Layout: a seller's ramp workspace. Ramp tracker and proficiency on the left; one onboarding step at a time on the right. */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#1F1F1F; --muted:#5A5F66; --line:#DADCE0; --soft:#F3F6FA; --tint:#EAF1FB;
+  --navy:#1C4587; --blue:#2F62B5; --bar:#3878BC; --sky:#9EC5EE;
+  --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB; --amber:#8A5A00; --amber-soft:#FFF3D6;
+  --serif:"Bitter",Georgia,serif; --title:"Montserrat",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.6}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.top{background:linear-gradient(135deg,#3878BC,#2F62B5);color:#fff}
+.top .in{max-width:1200px;margin:0 auto;padding:18px 16px 18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.top .k{font-family:var(--title);font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.top h1{font-size:clamp(22px,3vw,30px);margin-top:4px}
+.top p{opacity:.88;font-size:14.5px;margin-top:4px;max-width:70ch}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:880px){.wrap{grid-template-columns:minmax(0,1fr)}}
+aside{position:sticky;top:14px;display:flex;flex-direction:column;gap:12px}
+@media (max-width:880px){aside{position:static}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.label{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.path{display:flex;flex-direction:column;gap:2px;margin-top:6px}
+@media (max-width:880px){.path{flex-direction:row;overflow-x:auto}}
+.pd{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:center;border:0;background:none;text-align:left;padding:7px 8px;border-radius:10px;cursor:pointer;color:var(--ink);white-space:nowrap}
+.pd:hover,.pd[aria-current="true"]{background:var(--tint)}
+.pd[aria-current="true"] .nm{font-weight:700;color:var(--navy)}
+.pd .dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11.5px;font-weight:700;color:var(--muted)}
+.pd .dot.ok{background:var(--good);border-color:var(--good);color:#fff}
+.pd .day{display:block;font-size:11px;color:var(--muted);line-height:1.1}
+.pd .nm{font-size:14px;line-height:1.25}
+.meter{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,#3878BC,#6FA8DC);border-radius:99px;transition:width .5s}
+.kpi{display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px solid var(--line)}
+.kpi:last-child{border-bottom:0}
+.kpi b{color:var(--navy);font-variant-numeric:tabular-nums}
+main{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px;min-height:520px}
+@media (max-width:560px){.panel{padding:16px}}
+.panel h2{font-size:clamp(22px,2.6vw,28px);color:var(--navy)}
+.lead{font-size:16.5px;max-width:70ch}
+.part{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.part h3{font-size:18px;color:var(--navy)}
+.btn{font-weight:700;border-radius:10px;padding:9px 16px;cursor:pointer;border:2px solid var(--bar);background:#fff;color:var(--bar)}
+.btn.primary{background:var(--bar);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:auto;flex-wrap:wrap}
+.note{border-radius:12px;padding:11px 14px;background:var(--good-soft);border-left:4px solid var(--good);max-width:780px;font-size:15px}
+.note.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+.note.info{background:var(--tint);border-left-color:var(--bar)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;cursor:pointer;color:var(--ink);font-size:15px}
+.opt:hover{border-color:var(--bar)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.bad{border-color:var(--warn);background:var(--warn-soft);opacity:.8}
+.opt:disabled{cursor:default}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:99px;padding:1px 9px}
+.tag.skip{background:var(--good-soft);color:var(--good)}
+.tag.learn{background:var(--amber-soft);color:var(--amber)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.cards{grid-template-columns:minmax(0,1fr)}}
+.mcard{border:1.5px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.mcard h4{margin:0;font-size:16px;color:var(--navy)}
+.mcard p{font-size:14.5px}
+.mcard.done{border-color:var(--good)}
+.pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.pick{grid-template-columns:minmax(0,1fr)}}
+.pickb{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 13px;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.pickb b{color:var(--navy)}
+.pickb span{font-size:13px;color:var(--muted)}
+.pickb[aria-pressed="true"]{border-color:var(--bar);box-shadow:0 0 0 2px var(--bar);background:var(--tint)}
+.aid{border:2px solid var(--navy);border-radius:14px;overflow:hidden}
+.aid .hd{background:var(--navy);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.aid dl{margin:0;padding:6px 14px 12px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:0 14px}
+@media (max-width:560px){.aid dl{grid-template-columns:minmax(0,1fr)}}
+.aid dt{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;padding-top:10px}
+.aid dd{margin:0;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.aid ul{margin:0;padding-left:18px}
+.call{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:14px}
+@media (max-width:760px){.call{grid-template-columns:minmax(0,1fr)}}
+.chat{background:var(--soft);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:9px;min-height:260px}
+.msg{max-width:82%;padding:9px 13px;border-radius:16px;font-size:15px;animation:rise .3s both}
+.msg .who{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.msg.them{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--bar);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.me .who{color:#E6EEF9}
+.msg.coach{align-self:center;max-width:96%;background:var(--good-soft);border-left:4px solid var(--good);border-radius:10px;font-size:14px}
+.msg.coach.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+.side{display:flex;flex-direction:column;gap:10px}
+.persona{border:1px solid var(--line);border-radius:14px;padding:12px;font-size:13.5px;display:flex;flex-direction:column;gap:6px}
+.av{width:44px;height:44px;border-radius:50%;background:#F2B07A;display:grid;place-items:center;font-weight:800;color:#5A2A08}
+.trust{font-size:13px}
+.stagechips{display:flex;gap:4px;flex-wrap:wrap}
+.stagechips span{font-size:11.5px;border-radius:99px;padding:1px 8px;border:1px solid var(--line);color:var(--muted)}
+.stagechips span.on{background:var(--bar);color:#fff;border-color:var(--bar)}
+.stagechips span.done{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.crm{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#1B2A41;color:#E3EAF3;border-radius:12px;padding:12px 14px;white-space:pre-wrap;line-height:1.6}
+.qnum{font-size:13px;color:var(--muted)}
+.score{font-size:34px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.ramp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.ramp{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ramp div{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.ramp b{display:block;color:var(--navy)}
+.ramp .met{border-color:var(--good);background:var(--good-soft)}
+.ramp .open{border-style:dashed}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{background:var(--bar);color:#fff;font-weight:600;font-size:13px}
+.foot{font-size:12.5px;color:var(--muted);max-width:1200px;margin:0 auto;padding:0 16px 30px}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.shake{animation:shake .35s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../ads-seller-onboarding-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div><div class="k">Sparrowline Ads · New seller onboarding</div><h1>From Hello to First Pitch</h1><p>A 25-minute onboarding sprint for new small-business ads sellers: learn the essentials, prep a call, practice with an AI client, and prove you’re ready.</p></div>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card">
+      <div class="label">Your ramp</div>
+      <nav class="path" id="path" aria-label="Onboarding steps"></nav>
+    </div>
+    <div class="card">
+      <div class="label">Readiness to pitch</div>
+      <div class="meter" aria-hidden="true"><i id="rd" style="width:0%"></i></div>
+      <div style="margin-top:8px" id="kpis"></div>
+    </div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">Sparrowline Ads, its products and its clients are fictional, created for this portfolio demo. The client role-play uses scripted branches written from an AI persona prompt so the demo runs anywhere. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+
+<script>
+/* ---------- content ---------- */
+const STEPS = [
+  {day:"Day 1", nm:"Start and pre-check"},
+  {day:"Day 1", nm:"Search ads essentials"},
+  {day:"Day 2", nm:"Prep a discovery call"},
+  {day:"Day 3", nm:"Practice with an AI client"},
+  {day:"Day 4", nm:"Scenario check"},
+  {day:"Day 5", nm:"Ramp review"}
+];
+const TOPICS = [
+  {id:"auction", t:"The ad auction",
+   body:"Every search runs a quick auction. Ad position depends on the bid and on ad quality and relevance, not on the bid alone. Advertisers pay per click, and the cost per click is often below their maximum bid.",
+   pre:{q:"A client says: “If I just bid the most, I’ll always be on top.” What’s accurate?", o:["Yes, the highest bid always wins the top spot","No, position also depends on ad quality and relevance","No, position is random each time"], a:1},
+   chk:{q:"Which two things decide where an ad shows?", o:["Bid and ad quality","Budget and company size","Bid and account age"], a:0, why:"Position comes from the bid together with quality and relevance. A strong ad can beat a higher bid."}},
+  {id:"match", t:"Keywords and match types",
+   body:"Keywords tell the platform which searches an ad can show for. Broad match reaches related searches, phrase match requires the meaning of the phrase, and exact match stays closest to the keyword. Negative keywords block searches you don’t want.",
+   pre:{q:"A bakery doesn’t want clicks from people searching “bakery jobs”. What helps most?", o:["Raise the bid","Add “jobs” as a negative keyword","Switch every keyword to broad match"], a:1},
+   chk:{q:"Which match type keeps an ad closest to the exact search?", o:["Broad match","Phrase match","Exact match"], a:2, why:"Exact match is the tightest. Broad reaches the most related searches, and phrase sits in between."}},
+  {id:"quality", t:"What makes a quality ad",
+   body:"Quality comes from three signals: how relevant the ad is to the search, how likely people are to click it, and how useful the landing page is. Better quality can lower costs and improve position.",
+   pre:{q:"A client’s ads link to their homepage, not the catering page. What’s the likely effect?", o:["No effect, any page works","Weaker landing page experience and lower quality","Ads stop showing completely"], a:1},
+   chk:{q:"Which is NOT one of the quality signals?", o:["Landing page experience","Expected click-through rate","Number of employees"], a:2, why:"Quality comes from ad relevance, expected click-through and landing page experience. Company size isn’t a factor."}},
+  {id:"measure", t:"Measuring results",
+   body:"Conversion tracking records what happens after a click: a call, a form, an order. Return on ad spend (ROAS) is revenue from ads divided by what was spent. Without tracking, a client can’t tell if ads worked.",
+   pre:{q:"A client spent $500 and got $2,000 in tracked catering orders. What is the ROAS?", o:["4:1 (400%)","2:1 (200%)","It can’t be calculated"], a:0},
+   chk:{q:"Why set up conversion tracking before launch?", o:["It’s required to show ads","So the client can see which clicks turned into calls or orders","It lowers the cost per click"], a:1, why:"Tracking connects spend to outcomes. It’s how you prove value at the first check-in."}}
+];
+const CLIENTS = {
+  bakery:{n:"Neighborhood bakery", d:"Two locations, wants more catering orders",
+    qs:["Which part of the business do you most want to grow in the next 3 months?","How do catering customers find you today?","What happens after someone calls or fills out a form?","What would make a test feel worth it to you?","Have you tried online ads before? What happened?"],
+    obj:["“I tried ads before and wasted money.”","“I don’t have time to manage this.”"],
+    start:"Search campaign on catering terms (phrase and exact match), call tracking on, small daily budget for a 2-week test",
+    metric:"Catering calls and form requests from ads, cost per request"},
+  dental:{n:"Family dental clinic", d:"New location, needs new patients",
+    qs:["Which services bring the most new patients?","How far will patients travel to you?","Can your front desk handle more calls this month?","What does a new patient bring in over a year?","Which insurance plans do you accept?"],
+    obj:["“Patients find us by word of mouth.”","“Ads feel too salesy for healthcare.”"],
+    start:"Search campaign on service + neighborhood terms, location targeting around the new office, call tracking on",
+    metric:"Booked appointments from ads, cost per new patient"},
+  shop:{n:"Online furniture shop", d:"Ships nationwide, high return rate",
+    qs:["Which products have the best margin?","What does a typical order bring in?","Is conversion tracking set up on checkout?","Which seasons are busiest?","What causes most returns?"],
+    obj:["“Marketplaces already bring us sales.”","“Our margins are too thin for ads.”"],
+    start:"Search campaign on best-margin product terms, purchase conversion tracking, ROAS target agreed up front",
+    metric:"Revenue from ads, ROAS against the agreed target"}
+};
+/* role-play: Rosa, bakery owner. Each turn: client line, options with trust change and coaching */
+const CALL = [
+  {stage:"Open", them:"Hi, this is Rosa. I’ve got about ten minutes before the afternoon rush. What’s this about?",
+   o:[{t:"Thanks for making time, Rosa. Before I share anything, could I ask what you most want to grow this year?", d:12, ok:true, rep:"Honestly? Catering. Office orders are where the money is.", c:"Starting with her goals earns the right to recommend later. Discovery before pitch."},
+      {t:"Great! Sparrowline Ads can put you at the top of search results. Our starter package is $300 a month.", d:-15, rep:"Okay… I’m not looking to buy anything today.", c:"Leading with a product and a price before you understand her business reads as a sales pitch."},
+      {t:"I noticed your reviews are amazing. You should really be advertising more.", d:-5, rep:"Thanks, I guess? We’re busy already.", c:"A compliment followed by “you should” assumes her needs. Ask first."}]},
+  {stage:"Discover", them:"Catering’s been slow since spring, though. Big orders just stopped coming in.",
+   o:[{t:"When catering orders do come in, how do those customers usually find you?", d:10, ok:true, rep:"Mostly people who already know us. Some search “catering near me”, I think.", c:"You uncovered the channel and a likely search behavior. That points to a search campaign."},
+      {t:"That’s why you need ads. Shall we set something up today?", d:-12, rep:"Slow down. I don’t even know what I’d be paying for.", c:"You skipped diagnosis. Without knowing how customers find her, any recommendation is a guess."},
+      {t:"What’s your total marketing budget for the year?", d:-3, rep:"Hmm, not really something I track that way.", c:"Budget matters, but asking it this early feels like qualifying her, not helping her."}]},
+  {stage:"Discover", them:"And when someone does find us online, they usually just call the shop.",
+   o:[{t:"What happens after they call? Who answers, and how do you track which calls become orders?", d:10, ok:true, rep:"My manager answers. We write orders on a pad. We don’t track where they came from.", c:"You found a measurement gap. Call tracking will be part of your recommendation."},
+      {t:"Calls are great. Ads will definitely bring you more of those.", d:-6, rep:"Maybe. That’s what the last company said too.", c:"A promise without evidence triggers her past bad experience."}]},
+  {stage:"Recommend", them:"So what would you actually suggest?",
+   o:[{t:"A small 2-week search test on catering searches like “office catering near me”, using phrase and exact match, with call tracking so we can see which calls came from ads.", d:14, ok:true, rep:"That’s… more specific than I expected. How much?", c:"Tailored to her goal (catering), her customers’ behavior (search) and her gap (no tracking). Small test lowers risk."},
+      {t:"Our premium plan with display, video and search across every product line.", d:-12, rep:"That sounds like a lot of money for a bakery.", c:"Too broad for her goal and budget. Match the recommendation to what you learned."},
+      {t:"Broad match on “bakery” so you reach as many people as possible.", d:-6, rep:"Would that bring in people looking for a cupcake? Those aren’t catering orders.", c:"Broad match on a generic term would spend on the wrong searches. She just caught it."}]},
+  {stage:"Concern", them:"Look, I tried ads two years ago and wasted $500. Why would this be different?",
+   o:[{t:"That’s fair, and I’d be cautious too. Can I ask what was measured last time? This time we’d agree on one success metric up front and check it together after two weeks.", d:14, ok:true, rep:"Nothing was measured, honestly. They just sent a report with clicks.", c:"Empathize, diagnose, then reduce risk with a clear measure. You turned the objection into a reason for tracking."},
+      {t:"I can offer a 20% discount if you sign today.", d:-10, rep:"A discount on something that didn’t work isn’t much of a deal.", c:"A discount doesn’t answer her real concern: she couldn’t see results."},
+      {t:"The last company probably didn’t know what they were doing.", d:-8, rep:"Maybe. But I’m the one who paid for it.", c:"Blaming someone else doesn’t address her risk. Focus on what will be different."}]},
+  {stage:"Next step", them:"Okay. What would the next step be?",
+   o:[{t:"Let’s set a goal of 10 catering calls in two weeks, set up call tracking together on Thursday, and review the numbers on a 15-minute call on the 28th.", d:12, ok:true, rep:"Thursday works. Ten calls would be a good month for us, never mind two weeks.", c:"Specific goal, date and owner. A clear next step is what turns a good conversation into pipeline."},
+      {t:"I’ll email you a brochure and you can call me if you’re interested.", d:-8, rep:"Sure, send it over.", c:"Leaving the next step to her usually ends the conversation. Agree on a date."}]}
+];
+const BANK = [
+  {q:"A client asks why their ad shows below a competitor who bids less. Your best answer?", o:["The competitor is paying for priority placement","Position depends on quality and relevance too, not just the bid","The platform rotates positions randomly"], a:1, why:"Ad quality and relevance work together with the bid."},
+  {q:"A florist gets lots of clicks from people searching “free flower clip art”. First fix?", o:["Add “free” and “clip art” as negative keywords","Raise the daily budget","Switch to broad match"], a:0, why:"Negative keywords stop spend on searches that won’t convert."},
+  {q:"A client wants to know if ads are working, but nothing is tracked. What do you propose before launch?", o:["Report clicks and impressions","Set up conversion tracking for calls and forms","Wait a month and see if sales rise"], a:1, why:"Conversion tracking ties spend to real outcomes."},
+  {q:"On a discovery call, the owner says “I don’t have time to manage ads.” Best response?", o:["Ask what a manageable check-in would look like for them","Say ads run themselves","Offer a discount"], a:0, why:"Explore the constraint, then design the plan around it."},
+  {q:"An online shop spent $1,000 and made $3,000 in tracked sales from ads. ROAS?", o:["3:1","1:3","2:1"], a:0, why:"ROAS = revenue ÷ spend = 3,000 ÷ 1,000."},
+  {q:"A dental clinic’s ads link to the homepage. Which quality signal suffers most?", o:["Expected click-through rate","Landing page experience","Ad relevance"], a:1, why:"Sending people to a general page instead of the relevant service hurts landing page experience."},
+  {q:"After a strong discovery call, what should you always leave with?", o:["A signed annual contract","A specific next step with a date","A promise to send a brochure"], a:1, why:"A dated next step keeps momentum and gives you a reason to follow up."},
+  {q:"A client with a tight budget wants to “reach everyone”. What do you recommend first?", o:["A focused test on the highest-intent searches","Broad match on generic terms","Display ads everywhere"], a:0, why:"High-intent searches use a small budget where it’s most likely to convert."}
+];
+const BAR = {checks:3, trust:70, assess:4};
+
+/* ---------- state ---------- */
+const KEY = "ads-onb-v1";
+const fresh = () => ({i:0, far:0, pre:{}, plan:{}, chk:{}, client:null, call:{k:0, trust:40, h:[], done:false, firstOk:0}, as:{items:null, ans:{}, attempts:0, best:null}});
+let st = fresh();
+try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && typeof x.i === "number") st = Object.assign(fresh(), x); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+const $ = id => document.getElementById(id);
+const qa = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
+function bump(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+
+const checksRight = () => TOPICS.filter(t => st.chk[t.id] === true).length;
+function readiness(){
+  let p = 0;
+  p += Math.min(checksRight(), 4) * 7;                       // 28
+  if (st.client) p += 12;                                    // 40
+  if (st.call.done) p += Math.round(st.call.trust * 0.3);    // up to 70
+  if (st.as.best != null) p += st.as.best * 6;              // up to 100
+  return Math.min(100, p);
+}
+function side(){
+  $("path").innerHTML = STEPS.map((s, i) => {
+    const done = i < st.far || (i === 5 && st.as.best != null);
+    return `<button class="pd" data-i="${i}" aria-current="${st.i === i}"><span class="dot ${done ? "ok" : ""}">${done ? "✓" : i + 1}</span><span><span class="day">${s.day}</span><span class="nm">${s.nm}</span></span></button>`;
+  }).join("");
+  qa(".pd").forEach(b => b.onclick = () => go(+b.dataset.i));
+  $("rd").style.width = readiness() + "%";
+  $("kpis").innerHTML = [
+    ["Essentials checks", `${checksRight()} / 4`],
+    ["Call prep", st.client ? "Done" : "–"],
+    ["Client trust", st.call.done ? st.call.trust : "–"],
+    ["Scenario check", st.as.best != null ? `${st.as.best} / 5` : "–"],
+    ["Readiness", readiness() + "%"]
+  ].map(([k, v]) => `<div class="kpi"><span>${k}</span><b>${v}</b></div>`).join("");
+}
+function go(i){ st.i = i; st.far = Math.max(st.far, i); save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+function nav(nextLabel){ return `<div class="navrow">${st.i > 0 ? `<button class="btn" id="back">Back</button>` : "<span></span>"}${nextLabel ? `<button class="btn primary" id="next">${nextLabel}</button>` : ""}</div>`; }
+function wireNav(){ if ($("back")) $("back").onclick = () => go(st.i - 1); if ($("next")) $("next").onclick = () => go(st.i + 1); }
+
+/* ---------- 0 start + pre-check ---------- */
+function s0(){
+  const answered = Object.keys(st.pre).length;
+  $("stage").innerHTML = `
+    <div class="label">Day 1 · Start</div>
+    <h2>Welcome to the sales team. Your first pitch is on Day 10.</h2>
+    <p class="lead">New sellers ramp faster when they skip what they already know. Answer four quick questions and your path will mark each topic as “skip” or “learn”. Then prep a real call, practice it with an AI client, and prove you’re ready.</p>
+    <div class="note info"><strong>By the end of this sprint, you will be able to:</strong> explain how search ads are ranked, measured and improved; run a discovery call that ends with a dated next step; and pass a 5-question scenario check at 4 of 5 or better.</div>
+    <div class="part"><h3>Pre-check (${answered} of 4)</h3>
+      ${TOPICS.map((t, i) => { const a = st.pre[t.id]; return `<div class="mcard ${a != null ? "done" : ""}"><span class="qnum">${i + 1}. ${esc(t.t)}</span><h4>${esc(t.pre.q)}</h4><div class="opts">${t.pre.o.map((o, j) => `<button class="opt ${a === j ? (j === t.pre.a ? "ok" : "bad") : ""} ${a != null && j === t.pre.a ? "ok" : ""}" data-t="${t.id}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<p style="font-size:14px">${a === t.pre.a ? '<span class="tag skip">You can skip this</span>' : '<span class="tag learn">Added to your path</span>'}</p>` : ""}</div>`; }).join("")}
+    </div>
+    ${nav(answered === 4 ? "Start my path" : "")}`;
+  qa(".opt[data-t]").forEach(b => b.onclick = () => { st.pre[b.dataset.t] = +b.dataset.j; save(); s0(); side(); });
+  wireNav();
+}
+
+/* ---------- 1 essentials ---------- */
+function s1(){
+  const known = t => st.pre[t.id] === t.pre.a;
+  $("stage").innerHTML = `
+    <div class="label">Day 1 · Search ads essentials</div>
+    <h2>Four ideas every seller explains on day one</h2>
+    <p class="lead">Read the cards marked “learn”, then answer each check from memory. Cards you got right in the pre-check are marked “skip”, but you can still review them.</p>
+    <div class="cards">${TOPICS.map(t => { const c = st.chk[t.id]; return `<div class="mcard ${c === true ? "done" : ""}">
+      <div class="row" style="justify-content:space-between"><h4>${esc(t.t)}</h4>${known(t) ? '<span class="tag skip">Skip</span>' : '<span class="tag learn">Learn</span>'}</div>
+      <p>${esc(t.body)}</p>
+      <p style="font-size:14px;font-weight:700">Check: ${esc(t.chk.q)}</p>
+      <div class="opts">${t.chk.o.map((o, j) => `<button class="opt ${c != null && j === t.chk.a ? "ok" : ""}" data-c="${t.id}" data-j="${j}" ${c === true ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+      <div id="fb-${t.id}">${c === true ? `<div class="note">${esc(t.chk.why)}</div>` : ""}</div></div>`; }).join("")}</div>
+    ${nav(checksRight() === 4 ? "Next: prep a call" : "")}`;
+  qa(".opt[data-c]").forEach(b => b.onclick = () => {
+    const t = TOPICS.find(x => x.id === b.dataset.c), j = +b.dataset.j;
+    if (j === t.chk.a) { if (st.chk[t.id] == null || st.chk[t.id] === "miss") st.chk[t.id] = st.chk[t.id] === "miss" ? "late" : true; if (st.chk[t.id] === "late") st.chk[t.id] = true; save(); s1(); side(); }
+    else { st.chk[t.id] = "miss"; save(); b.classList.add("bad"); bump(b); $("fb-" + t.id).innerHTML = `<div class="note warn">Not quite. Reread the card and try again.</div>`; side(); }
+  });
+  wireNav();
+}
+
+/* ---------- 2 call prep job aid ---------- */
+function s2(){
+  const c = st.client ? CLIENTS[st.client] : null;
+  $("stage").innerHTML = `
+    <div class="label">Day 2 · Workflow aid</div>
+    <h2>Prep a discovery call in two minutes</h2>
+    <p class="lead">Choose the type of client you’re calling. The planner gives you the questions, likely concerns, a sensible starting recommendation and the success metric to agree on. Keep it open during the call.</p>
+    <div class="pick">${Object.entries(CLIENTS).map(([k, v]) => `<button class="pickb" data-k="${k}" aria-pressed="${st.client === k}"><b>${esc(v.n)}</b><span>${esc(v.d)}</span></button>`).join("")}</div>
+    ${c ? `<div class="aid"><div class="hd"><strong>Call planner · ${esc(c.n)}</strong><span style="font-size:13px">Discover → Recommend → Address concerns → Agree next step</span></div>
+      <dl><dt>Ask first</dt><dd><ul>${c.qs.map(q => `<li>${esc(q)}</li>`).join("")}</ul></dd>
+      <dt>Likely concerns</dt><dd><ul>${c.obj.map(o => `<li>${esc(o)}</li>`).join("")}</ul></dd>
+      <dt>Starting point</dt><dd>${esc(c.start)}</dd>
+      <dt>Agree on</dt><dd>${esc(c.metric)}</dd>
+      <dt>Before you hang up</dt><dd>A dated next step and who does what</dd></dl></div>
+      <div class="row"><button class="btn" id="copy">Copy planner</button><span id="copied" style="font-size:13.5px;color:var(--muted)" role="status"></span></div>
+      ${st.client !== "bakery" ? `<div class="note info">Your practice call is with a bakery owner. Switch to “Neighborhood bakery” to prep for it.</div>` : ""}` : ""}
+    ${nav(st.client ? "Next: practice the call" : "")}`;
+  qa(".pickb").forEach(b => b.onclick = () => { st.client = b.dataset.k; save(); s2(); side(); });
+  if ($("copy")) $("copy").onclick = async () => {
+    const t = `Call planner: ${c.n}\n\nAsk first:\n${c.qs.map(q => "- " + q).join("\n")}\n\nLikely concerns:\n${c.obj.map(o => "- " + o).join("\n")}\n\nStarting point: ${c.start}\nAgree on: ${c.metric}\nBefore you hang up: a dated next step and who does what`;
+    try { await navigator.clipboard.writeText(t); $("copied").textContent = "Copied."; } catch { $("copied").textContent = "Copy isn’t available here. Select the planner text instead."; }
+  };
+  wireNav();
+}
+
+/* ---------- 3 AI client role-play ---------- */
+function s3(){
+  const C = st.call;
+  $("stage").innerHTML = `
+    <div class="label">Day 3 · Practice with an AI client</div>
+    <h2>Discovery call with Rosa, bakery owner</h2>
+    <p class="lead">Choose what you’d say. Rosa reacts to every choice, her trust changes, and a coach explains each move. Aim to leave with a dated next step and trust of ${BAR.trust} or more.</p>
+    <div class="call">
+      <div><div class="chat" id="chat"></div><div class="opts" id="replies" style="margin-top:10px"></div></div>
+      <div class="side">
+        <div class="persona"><div class="row"><span class="av" aria-hidden="true">R</span><div><b>Rosa Alvarez</b><br><span style="color:var(--muted)">Owner, two-location bakery</span></div></div>
+          <div>Goal she hasn’t said yet: more catering orders. Past experience: $500 on ads with no results.</div></div>
+        <div class="persona"><div class="label">Client trust</div><div class="meter"><i id="tm" style="width:${C.trust}%"></i></div><div class="trust" id="tv">${C.trust} / 100</div></div>
+        <div class="persona"><div class="label">Call stages</div><div class="stagechips" id="chips"></div></div>
+      </div>
+    </div>
+    <div id="after"></div>
+    ${nav(C.done ? "Next: scenario check" : "")}`;
+  const chat = $("chat");
+  const add = (cls, who, html) => chat.insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${who ? `<div class="who">${who}</div>` : ""}${html}</div>`);
+  const chips = () => { const names = ["Open","Discover","Recommend","Concern","Next step"]; const cur = C.k < CALL.length ? CALL[C.k].stage : null; $("chips").innerHTML = names.map(n => `<span class="${cur === n ? "on" : (CALL.findIndex(x => x.stage === n) < C.k && cur !== n ? "done" : "")}">${n}</span>`).join(""); };
+  const meter = () => { $("tm").style.width = C.trust + "%"; $("tv").textContent = `${C.trust} / 100`; };
+  for (let k = 0; k <= Math.min(C.k, CALL.length - 1); k++) {
+    add("them", "Rosa", esc(CALL[k].them));
+    C.h.filter(h => h[0] === k).forEach(([, j]) => { const o = CALL[k].o[j]; add("me", "You", esc(o.t)); add("them", "Rosa", esc(o.rep)); add(o.ok ? "coach" : "coach warn", "", `<strong>Coach:</strong> ${esc(o.c)}`); });
+  }
+  chips();
+  let busy = false;
+  const show = () => {
+    if (C.k >= CALL.length) { $("replies").innerHTML = ""; return; }
+    const tried = C.h.filter(h => h[0] === C.k).map(h => h[1]);
+    $("replies").innerHTML = CALL[C.k].o.map((o, j) => `<button class="opt" data-j="${j}" ${tried.includes(j) ? "disabled style=\"opacity:.45;text-decoration:line-through\"" : ""}>${esc(o.t)}</button>`).join("");
+    qa("#replies .opt").forEach(b => b.onclick = () => pick(+b.dataset.j));
+  };
+  const pick = async j => {
+    if (busy) return; busy = true;
+    const k = C.k, o = CALL[k].o[j];
+    const first = !C.h.some(h => h[0] === k);
+    C.h.push([k, j]); C.trust = Math.max(0, Math.min(100, C.trust + o.d));
+    if (o.ok && first) C.firstOk++;
+    $("replies").innerHTML = ""; add("me", "You", esc(o.t)); await wait(500);
+    add("them", "Rosa", esc(o.rep)); add(o.ok ? "coach" : "coach warn", "", `<strong>Coach:</strong> ${esc(o.c)}${o.ok ? "" : " Try a different reply."}`);
+    meter();
+    if (o.ok) { C.k++; if (C.k < CALL.length) { await wait(500); add("them", "Rosa", esc(CALL[C.k].them)); } else { C.done = true; } }
+    save(); chips(); side(); busy = false;
+    if (C.done) { s3(); return; }
+    show();
+  };
+  show();
+  if (C.done) {
+    const pass = C.trust >= BAR.trust;
+    const note = `Call: Rosa Alvarez, bakery owner (2 locations)\nGoal: grow catering orders; slow since spring\nCurrent channel: repeat customers; some search “catering near me”; orders taken by phone, not tracked\nConcern: spent $500 on ads 2 years ago with no measurement\nRecommendation: 2-week search test on catering terms, phrase + exact match, call tracking\nSuccess metric: 10 catering calls in 2 weeks\nNext step: set up call tracking together Thursday; 15-min review on the 28th`;
+    $("after").innerHTML = `<div class="note ${pass ? "" : "warn"}"><strong>Call complete.</strong> Trust ${C.trust} / 100 (bar: ${BAR.trust}). Best move on the first try in ${C.firstOk} of ${CALL.length} moments. ${pass ? "You’re ready to try this with a real client." : "Replay the call and aim for discovery before recommending."}</div>
+      <div class="part"><h3>Your CRM note, drafted from the call</h3><p style="font-size:14.5px">In the real workflow, AI drafts this note from the call and the seller checks it before saving. Review it: is anything missing or wrong?</p><div class="crm">${esc(note)}</div>
+      <div class="row"><button class="btn" id="copyn">Copy note</button><button class="btn" id="replay">Replay the call</button><span id="cn" style="font-size:13.5px;color:var(--muted)" role="status"></span></div></div>`;
+    $("copyn").onclick = async () => { try { await navigator.clipboard.writeText(note); $("cn").textContent = "Copied."; } catch { $("cn").textContent = "Copy isn’t available here."; } };
+    $("replay").onclick = () => { st.call = {k:0, trust:40, h:[], done:false, firstOk:0}; save(); s3(); side(); };
+  }
+  wireNav();
+}
+
+/* ---------- 4 scenario check ---------- */
+function draw(){ const idx = BANK.map((_, i) => i); for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; } return idx.slice(0, 5); }
+function s4(){
+  const A = st.as;
+  if (!A.items) { A.items = draw(); A.ans = {}; save(); }
+  const done = Object.keys(A.ans).length === 5;
+  const score = A.items.filter(i => A.ans[i] === BANK[i].a).length;
+  $("stage").innerHTML = `
+    <div class="label">Day 4 · Scenario check</div>
+    <h2>Five client moments, no hints</h2>
+    <p class="lead">Each question is a situation you’ll face in your first month. Pass at ${BAR.assess} of 5. A retry draws a different set from the question bank.</p>
+    ${A.items.map((i, n) => { const q = BANK[i], a = A.ans[i]; return `<div class="mcard ${a != null ? (a === q.a ? "done" : "") : ""}"><span class="qnum">Question ${n + 1} of 5</span><h4>${esc(q.q)}</h4><div class="opts">${q.o.map((o, j) => `<button class="opt ${a != null ? (j === q.a ? "ok" : (a === j ? "bad" : "")) : ""}" data-i="${i}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<div class="note ${a === q.a ? "" : "warn"}">${esc(q.why)}</div>` : ""}</div>`; }).join("")}
+    ${done ? `<div class="row"><span class="score">${score} / 5</span><span>${score >= BAR.assess ? "Passed. You met the proficiency bar." : `Not yet. You need ${BAR.assess} of 5.`}</span><button class="btn" id="retry">Retry with new questions</button></div>` : ""}
+    ${nav(done ? "Next: ramp review" : "")}`;
+  qa(".opt[data-i]").forEach(b => b.onclick = () => {
+    A.ans[b.dataset.i] = +b.dataset.j;
+    if (Object.keys(A.ans).length === 5) { A.attempts++; const sc = A.items.filter(i => A.ans[i] === BANK[i].a).length; A.best = Math.max(A.best ?? 0, sc); }
+    save(); s4(); side();
+  });
+  if ($("retry")) $("retry").onclick = () => { const prev = new Set(A.items); let nx = draw(), tries = 0; while (nx.filter(x => prev.has(x)).length > 2 && tries++ < 50) nx = draw(); A.items = nx; A.ans = {}; save(); s4(); };
+  wireNav();
+}
+
+/* ---------- 5 ramp review ---------- */
+function s5(){
+  const C = st.call, A = st.as;
+  const met = [checksRight() >= BAR.checks, !!st.client, C.done && C.trust >= BAR.trust, A.best != null && A.best >= BAR.assess];
+  const all = met.every(Boolean);
+  const weak = TOPICS.filter(t => st.chk[t.id] !== true || st.pre[t.id] !== t.pre.a).map(t => t.t);
+  $("stage").innerHTML = `
+    <div class="label">Day 5 · Ramp review</div>
+    <h2>${all ? "You’re ready for your first live pitch." : "Almost there. Here’s what’s left."}</h2>
+    <p class="lead">This is what your manager sees. Each milestone has a proficiency bar, so “ready” means the same thing for every new seller.</p>
+    <div class="ramp">
+      <div class="${met[0] ? "met" : ""}"><b>Essentials</b>${checksRight()} / 4 checks right (bar: ${BAR.checks})</div>
+      <div class="${met[1] ? "met" : ""}"><b>Call prep</b>${st.client ? "Planner used" : "Not started"}</div>
+      <div class="${met[2] ? "met" : ""}"><b>AI client call</b>${C.done ? `Trust ${C.trust} (bar: ${BAR.trust})` : "Not finished"}</div>
+      <div class="${met[3] ? "met" : ""}"><b>Scenario check</b>${A.best != null ? `Best ${A.best} / 5 (bar: ${BAR.assess})` : "Not taken"}</div>
+    </div>
+    <div class="ramp"><div class="open" style="grid-column:1/-1"><b>Day 10 · First live pitch</b>Shadowed by your manager, then a 15-minute debrief using the same call stages.</div></div>
+    <div class="part"><h3>Suggested focus for your manager 1:1</h3>
+      <p style="font-size:15px">${weak.length ? `Topics you missed in the pre-check or a check: ${esc(weak.join(", "))}.` : "You got every essentials topic right."} ${C.done && C.firstOk < CALL.length ? `In the call, the best move came on the first try in ${C.firstOk} of ${CALL.length} moments. Practice the stages you replayed.` : ""}</p></div>
+    <div class="part"><h3>How we’ll know onboarding works</h3>
+      <table><thead><tr><th>Level</th><th>Measure</th><th>When</th></tr></thead><tbody>
+        <tr><td>Reaction</td><td>New seller confidence and usefulness ratings</td><td>End of sprint</td></tr>
+        <tr><td>Learning</td><td>Checks, call trust and scenario score against the bars above</td><td>Days 1–4</td></tr>
+        <tr><td>Behavior</td><td>Manager rating of the first live pitch on the same call stages</td><td>Day 10</td></tr>
+        <tr><td>Results</td><td>Days to first qualified pitch and first closed deal</td><td>Days 10–60</td></tr>
+      </tbody></table></div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${nav("")}`;
+  $("reset").onclick = () => { st = fresh(); save(); render(); };
+  wireNav();
+}
+
+function render(){ side(); [s0, s1, s2, s3, s4, s5][st.i](); }
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>From Hello to First Pitch · Yi Liu</title>
+<meta name="description" content="Case study: an AI-first onboarding sprint for new ads sellers, with microlearning, a call planner, AI client role-play and a scenario check. Designed and built by Yi Liu.">
+<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<meta property="og:title" content="From Hello to First Pitch · Yi Liu">
+<meta property="og:description" content="Case study: an AI-first onboarding sprint for new ads sellers, with microlearning, a call planner, AI client role-play and a scenario check. Designed and built by Yi Liu.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/site.css?v=15">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="site" href="index.html"><svg aria-hidden="true" viewBox="4 6 58 52"><g>
+  <!-- fox, emoji-style -->
+  <path d="M13.5 29 L15.6 12.6 C15.8 11.4 16.8 11 17.7 11.8 L26.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M36.5 29 L34.4 12.6 C34.2 11.4 33.2 11 32.3 11.8 L23.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M16.6 24.5 L17.6 15.2 L22.8 20.3 Z" fill="#C8601A"/>
+  <path d="M33.4 24.5 L32.4 15.2 L27.2 20.3 Z" fill="#C8601A"/>
+  <path d="M25 18.2 C32.2 18.2 37 22.4 37.6 28.2 L41 33.6 C37 34.6 33.6 39.4 25 41 C16.4 39.4 13 34.6 9 33.6 L12.4 28.2 C13 22.4 17.8 18.2 25 18.2 Z" fill="#F28A26"/>
+  <path d="M9 33.6 C13.2 31.4 18.6 31.2 21.8 33 C23 35.2 23.9 36.2 25 36.2 C26.1 36.2 27 35.2 28.2 33 C31.4 31.2 36.8 31.4 41 33.6 C37 34.8 33.6 39.4 25 41 C16.4 39.4 13 34.8 9 33.6 Z" fill="#FFFFFF"/>
+  <ellipse cx="20.4" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/><ellipse cx="29.6" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/>
+  <circle cx="21" cy="27.5" r="0.65" fill="#FFFFFF"/><circle cx="30.2" cy="27.5" r="0.65" fill="#FFFFFF"/>
+  <path d="M23.1 35 C23.1 34.1 26.9 34.1 26.9 35 C26.9 36 25.8 37 25 37 C24.2 37 23.1 36 23.1 35 Z" fill="#1C2B44"/>
+  <!-- learning path: nodes rising to a star -->
+  <path d="M41.5 29 L46.5 22.5 L51.5 24.5 L56 16" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 2.6" fill="none"/>
+  <circle cx="41.5" cy="29" r="1.9" fill="#FFFFFF"/>
+  <circle cx="46.5" cy="22.5" r="1.9" fill="#FFFFFF"/>
+  <circle cx="51.5" cy="24.5" r="1.9" fill="#FFFFFF"/>
+  <path d="M56.5 9.6 L58 12.9 L61.5 13.3 L58.9 15.7 L59.6 19.2 L56.5 17.4 L53.4 19.2 L54.1 15.7 L51.5 13.3 L55 12.9 Z" fill="#FF9F2E"/>
+  <!-- book -->
+  <path d="M6 42 C14 39.5 23 39.5 32 43.5 C41 39.5 50 39.5 58 42 V55 C50 52.5 41 52.5 32 56.5 C23 52.5 14 52.5 6 55 Z" fill="#FFFFFF"/>
+  <path d="M32 43.5 V56.5" stroke="#3878BC" stroke-width="1.6"/>
+  <path d="M10.2 45.6 L11.7 47.1 L14.4 44" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 45.9 C20 45.3 23.5 45.5 27.5 46.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <path d="M10.2 49.6 L11.7 51.1 L14.4 48" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 49.9 C20 49.3 23.5 49.5 27.5 50.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <!-- tangerine sitting on the right page -->
+  <ellipse cx="46" cy="47.3" rx="6" ry="1.3" fill="#9FC1E6" opacity=".7"/>
+  <circle cx="46" cy="41.5" r="6.4" fill="#FF9F2E"/>
+  <circle cx="43.9" cy="39.4" r="1.6" fill="#FFC77A"/>
+  <path d="M46 35.3 C47.4 32.3 50.6 31.4 52.9 32.4 C51.5 35 48.7 35.9 46 35.3 Z" fill="#FFFFFF"/>
+  <path d="M46 35.5 L45.5 33.2" stroke="#1C4587" stroke-width="1.1" stroke-linecap="round"/>
+</g>
+</svg><span>Yi Liu</span></a>
+    <button class="search-btn" id="search-btn" aria-expanded="false" aria-controls="searchpanel" aria-label="Search this site"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="release-ready-content.html">AI Content Systems</a><a href="curriculum-design-onboarding.html">Onboarding</a><a href="leo-trainer-practice.html">Train-the-Trainer</a><a href="sales-enablement.html" aria-current="page">Sales Enablement</a></div></div>
+      <a href="approach.html">Approach</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="searchpanel" id="searchpanel" hidden>
+    <div class="wrap">
+      <label for="q" class="sr">Search this site</label>
+      <input id="q" type="search" placeholder="Search projects, skills, frameworks…" autocomplete="off">
+      <ul id="results" aria-live="polite"></ul>
+    </div>
+  </div>
+</header>
+<main>
+<div class="ptitle wrap">
+  <p style="margin:0 0 6px"><a href="sales-enablement.html" style="color:var(--blue);text-decoration:none">← Sales Enablement</a></p>
+  <h1>From Hello to First Pitch</h1>
+  <p class="measure">Case study: an AI-first onboarding sprint that takes new small-business ads sellers from day one to a confident first discovery call, with proficiency bars that show when they’re ready.</p>
+  <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn primary" href="demos/ads-seller-onboarding.html#full">Try the demo</a><a class="btn" href="#demo">Play it on this page</a></div>
+</div>
+<div class="wrap"><hr class="rule"></div>
+<section class="wrap prose" style="padding-top:0">
+  <div class="two">
+    <h2>The problem</h2>
+    <div class="prose">
+      <p class="measure">New ads sellers usually start with days of product slides. By the time they make their first call, they can list features but can’t run a conversation: they pitch before they understand the business, promise results they can’t measure, and end calls without a next step. Managers can’t tell who is ready until a real client is on the line.</p>
+      <p class="measure">I wanted onboarding that is short, personal and built around the job itself: learn only what a seller needs to explain on day one, practice the call before it matters, and use clear bars so “ready” means the same thing for every new hire.</p>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Business goal and action map</h2>
+    <div class="prose">
+      <p class="measure"><b>Goal (Action Mapping):</b> new sellers run their first qualified discovery call by day 10, and their first calls end with a dated next step.</p>
+      <div class="amap">
+        <div><span class="lbl">Business goal</span><p>First qualified pitch by day 10</p></div>
+        <div><span class="lbl">What sellers must do</span><ul><li>Ask about the client’s goal before recommending</li><li>Match a small, measurable campaign to that goal</li><li>Answer a concern without discounting</li><li>Leave with a dated next step</li></ul></div>
+        <div><span class="lbl">Practice in the demo</span><ul><li>Day 2: plan the call with the job aid</li><li>Day 3: AI client role-play with a coach</li><li>Day 4: five scenario decisions, no hints</li></ul></div>
+        <div><span class="lbl">Minimum information</span><ul><li>Four essentials cards</li><li>Call planner</li><li>Call stages</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Gilbert’s Behavior Engineering Model</h2>
+    <div class="prose">
+      <p class="measure">A slow ramp isn’t only a knowledge gap. Training covers one cell; the job aid, the bars and the manager routine cover the rest.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Information</td><td>New sellers don’t know what “ready” looks like</td><td>Published bars for each milestone and a ramp review their manager also sees</td><td>Process</td></tr>
+          <tr><td>2</td><td>Resources</td><td>Nothing to use during a live call</td><td>Call planner by client type: questions, likely concerns, a starting point, a success metric</td><td>Job aid</td></tr>
+          <tr><td>3</td><td>Incentives</td><td>Early calls are judged on closing, so sellers pitch too soon</td><td>First-call rating based on call stages and a dated next step</td><td>Process</td></tr>
+          <tr><td>4</td><td>Knowledge and skills</td><td>Ad concepts and discovery skills are new</td><td>Microlearning cards, AI role-play with coaching, scenario check</td><td>Training</td></tr>
+          <tr><td>5</td><td>Capacity</td><td>Too much content in week one</td><td>Pre-check marks topics to skip; four short cards instead of a product deck</td><td>Design</td></tr>
+          <tr><td>6</td><td>Motives</td><td>Fear of looking unprepared in front of a real client</td><td>Safe practice with an AI client, unlimited replays, feedback on every move</td><td>Design</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Objectives and evidence</h2>
+    <div class="prose">
+      <p class="measure">Planned backward: each objective has matching evidence in the sprint and a bar before any content was written.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Objective (audience, behavior, condition, degree)</th><th>Evidence in the demo</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Given a client question, a new seller will explain how search ads are ranked, targeted, judged for quality and measured, for at least 3 of 4 topics.</td><td>Day 1: essentials checks</td></tr>
+          <tr><td>2</td><td>In a simulated discovery call, a new seller will ask about the client’s goal before recommending, address a concern without discounting, and end with a dated next step, reaching client trust of 70 or more.</td><td>Day 3: AI client role-play</td></tr>
+          <tr><td>3</td><td>Without hints, a new seller will choose the best response in first-month client scenarios for at least 4 of 5 items drawn from an item bank.</td><td>Day 4: scenario check</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Design decisions</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Personalized from minute one</h3><p>A four-question pre-check marks each topic “skip” or “learn”, so experienced hires don’t sit through what they know (Knowles: experience and self-direction).</p></div>
+      <div class="decision"><h3>Microlearning with retrieval</h3><p>Each essentials card is one idea a seller explains on day one, followed by a question answered from memory. A wrong answer sends them back to the card, not to the answer.</p></div>
+      <div class="decision"><h3>A job aid for the real workflow</h3><p>The call planner is built to stay open during a live call. It changes by client type and can be copied into notes, so the training and the job use the same tool.</p></div>
+      <div class="decision"><h3>Practice before it matters</h3><p>The AI client reacts to every choice, trust rises or falls, and a coach names the move. Weak choices are part of the practice: the seller sees the consequence and tries again.</p></div>
+      <div class="decision"><h3>AI drafts, the seller checks</h3><p>After the call, a CRM note is drafted from the conversation. The seller is asked to check it before saving, the same habit they need with any AI tool at work.</p></div>
+      <div class="decision"><h3>Fair, repeatable assessment</h3><p>The scenario check draws 5 items from a bank of 8, so a retry tests the same objectives with different situations instead of the same questions.</p></div>
+    </div>
+  </div>
+</section>
+<section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
+  <div class="sechead">
+    <h2 id="demo-h">Try the sprint yourself</h2>
+    <p class="muted measure">You play a new seller: take the pre-check, learn the essentials, prep a call, talk to Rosa the bakery owner, and pass the scenario check. Progress is saved in your browser.</p>
+  </div>
+  <div class="demo">
+    <div class="bar2"><span>From Hello to First Pitch · ads seller onboarding</span><a href="demos/ads-seller-onboarding.html#full">Open full screen ↗</a></div>
+    <iframe src="demos/ads-seller-onboarding.html" title="Ads seller onboarding sprint demo"></iframe>
+  </div>
+</section>
+<section class="wrap prose" aria-labelledby="ai-h">
+  <div class="two">
+    <h2 id="ai-h">How I use AI to build it</h2>
+    <div class="prose">
+      <p class="measure">Generative AI speeds up the drafting; a person decides what new hires see. I wrote two reusable prompts for this project.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Scenario items</td><td>Drafts realistic client moments with three options and an explanation</td><td>Removes trivia, rewrites weak distractors, confirms every ad concept with a product expert</td></tr>
+          <tr><td>2</td><td>Client persona</td><td>Plays Rosa in a live role-play and adds a coach note after each seller message</td><td>Persona stays within her profile; coach notes teach one call stage each</td></tr>
+          <tr><td>3</td><td>Demo branches</td><td>Persona transcripts become the scripted choices in this demo</td><td>Each wrong option is a real new-seller mistake, with a reason</td></tr>
+          <tr><td>4</td><td>Call notes</td><td>Drafts a CRM note from the call</td><td>The seller checks it before saving</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="font-size:14px">The demo uses scripted branches so it runs anywhere without an API key. The persona prompt is ready for a live AI role-play.</p>
+      <div class="files">
+        <a class="file" href="kit/sales/client-persona-prompt.md"><b>client-persona-prompt.md</b><span>AI client and coach for live role-play</span></a>
+        <a class="file" href="kit/sales/scenario-drafting-prompt.md"><b>scenario-drafting-prompt.md</b><span>Drafting and reviewing the item bank</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Keeping content current</h2>
+    <div class="prose">
+      <p class="measure">Ad products change often, so every asset has an owner, a version and a review date. When a product changes, the owner checks every asset that mentions it, the same way my <a href="release-ready-content.html">release-ready content workflow</a> does.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Asset</th><th>Owner</th><th>Version</th><th>Review</th></tr></thead>
+        <tbody>
+          <tr><td>Essentials cards (4)</td><td>Learning designer, with a product expert</td><td>1.0</td><td>Every product change, and quarterly</td></tr>
+          <tr><td>Call planner (3 client types)</td><td>Sales enablement, with a sales manager</td><td>1.0</td><td>Quarterly</td></tr>
+          <tr><td>AI client persona and coach notes</td><td>Learning designer</td><td>1.0</td><td>After each cohort, using call results</td></tr>
+          <tr><td>Scenario item bank (8)</td><td>Learning designer, with a product expert</td><td>1.0</td><td>After each cohort, using item results</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="two">
+    <h2>Evaluation plan (Kirkpatrick)</h2>
+    <div class="prose">
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th><th>Planned target</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Reaction</td><td>Confidence before a first call; usefulness of the call planner</td><td>Two-question pulse at the end of the sprint</td><td>4 of 5 or higher</td></tr>
+          <tr><td>2</td><td>Learning</td><td>Essentials checks, call trust, scenario score</td><td>Demo data, days 1–4</td><td>All three bars met</td></tr>
+          <tr><td>3</td><td>Behavior</td><td>Manager rating of the first live call on the same call stages; calls ending with a dated next step</td><td>Shadowed call on day 10</td><td>Dated next step on most first calls</td></tr>
+          <tr><td>4</td><td>Results</td><td>Days to first qualified pitch; days to first closed deal</td><td>Sales system, days 10–60, compared with the previous cohort</td><td>Faster ramp than the previous cohort</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Item and call data from each cohort feed the next version: weak items are rewritten and coach notes are updated.</p>
+    </div>
+  </div>
+  <div class="nextcase">
+    <a class="btn" href="sales-enablement.html">← Sales Enablement</a>
+    <a class="btn primary" href="work.html">All projects</a>
+  </div>
+</section>
+  <div class="collab">
+    <h2>Let’s Collaborate!</h2>
+    <div class="icons"><a class="icon" href="https://www.linkedin.com/in/louisely1003/" target="_blank" rel="noopener" aria-label="Yi Liu on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="9.5" width="3.2" height="10" fill="#fff"/><circle cx="6.1" cy="6.2" r="1.9" fill="#fff"/><path d="M10 9.5h3v1.5c.6-1 1.8-1.8 3.4-1.8 2.6 0 3.6 1.6 3.6 4.4v5.9h-3.2v-5.3c0-1.4-.4-2.3-1.6-2.3-1.3 0-2 .9-2 2.4v5.2H10z" fill="#fff"/></svg></a><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu. Sparrowline Ads is a fictional ad platform created for this portfolio.</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
+<script src="js/search.js?v=19" defer></script>
+</body>
+</html>
