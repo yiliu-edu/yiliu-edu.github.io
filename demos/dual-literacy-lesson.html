@@ -128,15 +128,19 @@ function play(f){
   if (f.startsWith("zh-")) {
     if (!("speechSynthesis" in window)) return noVoice();
     try {
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(ZH_TEXT[f] || "");
-      u.lang = "zh-CN"; u.rate = 0.8; if (zhVoice) u.voice = zhVoice;
-      speechSynthesis.speak(u);
-      if (!zhVoice) setTimeout(() => { if (!speechSynthesis.speaking) noVoice(); }, 600);
+      if (!zhVoice) pickZh();
+      const u = window._zhU = new SpeechSynthesisUtterance(ZH_TEXT[f] || "");   // keep a reference: some browsers drop unreferenced utterances
+      u.lang = "zh-CN"; u.rate = 0.8; u.volume = 1; if (zhVoice) u.voice = zhVoice;
+      const busy = speechSynthesis.speaking || speechSynthesis.pending;
+      if (busy) { speechSynthesis.cancel(); setTimeout(() => speechSynthesis.speak(u), 80); }   // Chrome can drop a speak() right after cancel()
+      else speechSynthesis.speak(u);
+      if (speechSynthesis.paused) speechSynthesis.resume();
+      setTimeout(() => { if (!speechSynthesis.speaking && !speechSynthesis.pending && !u._started) noVoice(); }, 1500);
+      u.onstart = () => { u._started = true; const n = document.getElementById("novoice"); if (n) n.hidden = true; };
     } catch { noVoice(); }
     return;
   }
-  try { speechSynthesis.cancel(); } catch {}
+  try { if (speechSynthesis.speaking) speechSynthesis.cancel(); } catch {}
   try { AUD.src = "audio/dual/" + f + ".mp3"; AUD.play().catch(() => {}); } catch {}
 }
 function noVoice(){ const n = document.getElementById("novoice"); if (n) n.hidden = false; }
@@ -173,7 +177,7 @@ function s0(){
           ${showZh ? `<div class="line"><button class="say" data-say="zh-${p.id}" aria-label="用中文听">${SPK}</button><span class="zh">${p.zh.map(w => `<button class="w zh" data-w="zh-${w.replace(/[。]/g, "")}">${w}</button>`).join("")}</span></div><div class="py">${p.py}</div>` : ""}
         </div></div>
       <div class="pnav"><button class="btn" id="pp" ${s.pg === 0 ? "disabled" : ""}>‹ Back</button><button class="btn primary" id="np" ${s.pg === 3 ? "disabled" : ""}>Next ›</button></div>
-      <p id="novoice" class="qnum" hidden style="text-align:center;padding:0 14px 8px">This device has no Mandarin voice installed, so the Chinese audio can’t play here. Try a phone, a Mac, or Chrome.</p>
+      <p id="novoice" class="qnum" hidden style="text-align:center;padding:0 14px 8px">The Chinese audio didn’t start. Check that your sound is on, or try another browser (Chrome, Safari or Edge). It uses your device’s Mandarin voice.</p>
       <div class="dots">${PAGES.map((q, j) => `<button data-pg="${j}" aria-current="${j === s.pg}" class="${s.seen[q.id] ? "seen" : ""}" aria-label="Page ${j + 1}"></button>`).join("")}</div>
     </div>
     ${D.nav("Next: match the words")}`;
