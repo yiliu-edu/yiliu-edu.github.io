@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Right First Time · Label Inspection Training</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="Scenario-based quality training: learn the elements of a medical product label, inspect labels against the work order, decide release or hold, and document a deviation. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="demo-base.css?v=1">
+<style>
+.insp{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.insp{grid-template-columns:minmax(0,1fr)}}
+.wo{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--soft);font-size:14px}
+.wo h4{font:700 12px var(--sans);letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.wo dl{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:3px 8px}
+.wo dt{color:var(--muted);font-size:13px}
+.wo dd{margin:0;font:600 13.5px ui-monospace,Menlo,monospace}
+.label-card{border:2px solid #222;border-radius:6px;background:#fff;padding:12px 14px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;font-family:Arial,Helvetica,sans-serif;color:#111;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.fld{border:2px solid transparent;border-radius:6px;background:none;text-align:left;padding:4px 6px;color:#111;font-family:inherit;display:flex;gap:8px;align-items:center;min-height:38px}
+.fld:hover{border-color:var(--sky)}
+.fld[aria-pressed="true"]{border-color:var(--warn);background:var(--warn-soft)}
+.fld.miss{border-color:var(--warn);border-style:dashed}
+.fld.good{border-color:var(--good);background:var(--good-soft)}
+.fld .v{font-weight:700;font-size:15px}
+.fld.name{grid-column:1/-1;font-size:18px;font-weight:700}
+.fld.w2{grid-column:span 2}
+.fld.w3{grid-column:span 3}
+.fld.w6{grid-column:1/-1}
+.sym{flex:none;border:1.6px solid #111;border-radius:2px;padding:0 4px;font-size:11px;font-weight:700;line-height:18px}
+.udi{font:12px ui-monospace,Menlo,monospace;letter-spacing:.02em}
+.bars{height:28px;flex:1;background:repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 3px,#111 3px 4px,#fff 4px 7px,#111 7px 8px,#fff 8px 10px)}
+.dec{display:flex;gap:10px;flex-wrap:wrap}
+.dec button{flex:1;min-width:180px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px;font:700 15px var(--sans);color:var(--ink)}
+.dec button[aria-pressed="true"]{border-color:var(--bar);background:var(--tint);color:var(--navy)}
+.dec .hold[aria-pressed="true"]{border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.casenav{display:flex;gap:6px}
+.casenav button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:#fff;font:700 13px var(--sans);color:var(--muted)}
+.casenav button[aria-current="true"]{border-color:var(--bar);color:var(--navy)}
+.casenav button.ok{background:var(--good);border-color:var(--good);color:#fff}
+.learn{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.learn{grid-template-columns:minmax(0,1fr)}}
+.explain{border-left:4px solid var(--bar);background:var(--tint);border-radius:10px;padding:12px 14px;font-size:15px;min-height:120px}
+.explain b{display:block;color:var(--navy);font-family:var(--sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.seen{font-size:13px;color:var(--muted)}
+.record{font:13.5px/1.5 ui-monospace,Menlo,monospace}
+.scale{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;color:var(--ink)}
+.scale[aria-pressed="true"]{background:var(--bar);color:#fff;border-color:var(--bar)}
+.sched{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.sched{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sched div{border:1.5px solid var(--line);border-radius:12px;padding:10px;font-size:13.5px}
+.sched b{display:block;color:var(--navy);font-family:var(--sans);font-size:13px}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../right-first-time-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div class="k">Quality · Branch QA and labeling</div><h1>Right First Time</h1>
+  <p>Scenario-based training for label inspection: learn what every label element means, inspect real-looking labels against the work order, decide release or hold, and document what you found the way an auditor expects.</p>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card"><div class="label">Your training</div><nav class="path" id="path" aria-label="Steps"></nav></div>
+    <div class="card"><div class="label">Progress</div><div class="meter" style="margin-top:6px"><i id="prog" style="width:0"></i></div><div id="kpis" style="margin-top:8px"></div></div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">Northbrook Medical Supply, its products, labels and work orders are fictional, created for this portfolio demo. Content reflects general labeling and documentation principles; your site’s SOPs and approved label specifications always govern, and a Quality SME reviews content before use. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<script src="demo-base.js?v=1"></script>
+<script>
+const HOUR = `<svg width="18" height="20" viewBox="0 0 18 20" aria-hidden="true"><path d="M2 1h14M2 19h14M4 1c0 6 10 6 10 9s-10 3-10 9M14 1c0 6-10 6-10 9s10 3 10 9" fill="none" stroke="#111" stroke-width="1.6"/></svg>`;
+const FACT = `<svg width="22" height="18" viewBox="0 0 22 18" aria-hidden="true"><path d="M1 17V8l6 4V8l6 4V2h4v15z" fill="#111"/></svg>`;
+const ELEM = {
+  name:{n:"Product name and size", d:"Must match the work order exactly, including size or variant. A wrong size can mean the wrong product in a clinician’s hand."},
+  ref:{n:"REF: catalog number", d:"Identifies the exact product. Digits are easy to transpose, so read them in pairs against the work order."},
+  lot:{n:"LOT: lot or batch number", d:"Ties every unit to its production record. If it’s wrong, the product can’t be traced or recalled correctly."},
+  exp:{n:"Use-by date (hourglass symbol)", d:"Shown as YYYY-MM-DD. Check the day, not just the month and year."},
+  ster:{n:"Sterility", d:"For sterile products, the symbol names the method, such as STERILE EO (ethylene oxide). A missing symbol on a sterile product is a nonconformance."},
+  qty:{n:"Quantity", d:"Units per package. Must match the specification for that catalog number."},
+  udi:{n:"UDI barcode", d:"The Unique Device Identifier encodes the product (01), use-by date (17, as YYMMDD) and lot (10). Use it to cross-check the printed text."},
+  mfr:{n:"Manufacturer (factory symbol)", d:"Name and address of the legal manufacturer."}
+};
+const CASES = [
+  {wo:{wo:"WO 88213", name:"Sterile Gauze Pads, 4 in × 4 in", ref:"NM-4410", lot:"25K118", exp:"2029-10-31", ster:"STERILE EO", qty:"25", gtin:"00812345000123"}, err:{lot:"25K181"}, why:"The printed lot (25K181) has two digits swapped. The UDI still encodes 25K118, which is how a careful check catches it."},
+  {wo:{wo:"WO 88219", name:"Nitrile Exam Gloves, Medium", ref:"NM-2203-M", lot:"25J042", exp:"2030-09-30", ster:"NON-STERILE", qty:"100", gtin:"00812345000208"}, err:{}, why:"Every field matches the work order. Releasing a good lot quickly matters too: holding good product costs time and supply."},
+  {wo:{wo:"WO 88230", name:"Saline Flush Syringe, 10 mL", ref:"NM-7710", lot:"25L007", exp:"2027-11-30", ster:"STERILE", qty:"30", gtin:"00812345000314"}, err:{exp:"2027-11-03"}, why:"The use-by day is wrong: 03 instead of 30. The month and year match, which is why reading only month and year misses it."},
+  {wo:{wo:"WO 88241", name:"Foam Wound Dressing, 4 in × 4 in", ref:"NM-5532", lot:"25K090", exp:"2029-06-30", ster:"STERILE EO", qty:"10", gtin:"00812345000420"}, err:{ref:"NM-5523", ster:""}, why:"Two problems: the catalog number has swapped digits (5523 vs 5532), and the sterility symbol is missing on a sterile product."}
+];
+const FIELDS = ["name", "ref", "lot", "exp", "ster", "qty", "udi"];
+const ROLES = {qa:"Branch QA inspector", lab:"Labeling operator", wh:"Warehouse lead"};
+const RECORDS = [
+  {t:"Label wrong, fixed it.", ok:false, f:"Not attributable or specific: who, when, which lot, what was wrong, what happened to the product? An auditor can’t reconstruct this."},
+  {t:"2026-11-14 10:42 · J. Rivera, Branch QA · WO 88213: printed LOT 25K181 does not match work order and UDI lot 25K118. 120 units placed on QA hold, location H-2. Labeling supervisor notified. Photo attached.", ok:true, f:"Attributable, contemporaneous, specific and accurate, with the original evidence attached. Anyone can follow what happened."},
+  {t:"Lot looked off, probably a printer issue. Checked a few boxes, they seemed fine, so released.", ok:false, f:"A guess about the cause, a partial check and a release of suspect product. This becomes a bigger deviation than the label error itself."}
+];
+const CORR = [
+  {t:"Cover the wrong number with correction fluid and write the right one.", ok:false, f:"The original entry must stay readable. Obscuring it breaks the record."},
+  {t:"Draw a single line through it, write the correct value, and add your initials, the date and a short reason.", ok:true, f:"The original stays legible, and the correction is attributable and dated."},
+  {t:"Rewrite the page neatly and discard the original.", ok:false, f:"The original record must be kept. Rewriting and discarding is treated as falsifying records."}
+];
+const MICRO = {q:"Day 7 micro-case: the label reads LOT 26A305; the UDI ends in (10)26A350. What do you do?", o:["Release; the UDI is just a barcode","Hold the lot and document the mismatch","Reprint the barcode to match the label"], a:1, why:"Printed text and UDI must agree. A mismatch means the lot can’t be trusted until Quality investigates."};
+
+const D = makeDemo({
+  key:"rft-v1",
+  steps:[{sub:"Step 1", nm:"Why it matters"},{sub:"Step 2", nm:"Know the label"},{sub:"Step 3", nm:"Inspect four labels"},{sub:"Step 4", nm:"Document it right"},{sub:"Step 5", nm:"Make it stick"}],
+  fresh:() => ({i:0, role:null, conf0:null, seen:{}, cur:null, c:0, flags:{}, dec:{}, res:{}, firstOk:{}, rec:[], corr:[], micro:null, conf1:null}),
+  done:(i, s) => [
+    !!s.role && s.conf0 != null,
+    Object.keys(ELEM).every(k => s.seen[k]),
+    CASES.every((_, j) => s.res[j] === true),
+    s.rec.some(j => RECORDS[j].ok) && s.corr.some(j => CORR[j].ok),
+    s.micro === MICRO.a && s.conf1 != null][i],
+  kpis:s => [["Label elements", `${Object.keys(s.seen).length} / 8`], ["Labels inspected", `${CASES.filter((_, j) => s.res[j] === true).length} / 4`], ["Right first time", `${Object.values(s.firstOk).filter(Boolean).length} / 4`], ["Records", s.rec.some(j => RECORDS[j].ok) ? "Done" : "–"]],
+  render:[s0, s1, s2, s3, s4]
+});
+const S = () => D.st;
+const scale = (id, val) => `<div class="row" id="${id}">${[1,2,3,4,5].map(n => `<button class="scale" data-n="${n}" aria-pressed="${val === n}">${n}</button>`).join("")}</div>`;
+
+function udi(v){ const e = v.exp.replace(/-/g, "").slice(2); return `(01)${v.gtin}(17)${e}(10)${v.lot}`; }
+function labelHTML(c, mode){  // mode: learn | inspect
+  const v = mode === "inspect" ? Object.assign({}, c.wo, c.err) : c.wo, s = S(), j = s.c;
+  const cls = k => { if (mode !== "inspect") return s.cur === k ? "good" : ""; const r = s.res[j]; if (r == null) return ""; const isErr = k in (c.err || {}); const fl = !!(s.flags[j] || {})[k]; return isErr && !fl ? "miss" : isErr && fl ? "good" : ""; };
+  const pr = k => mode === "inspect" ? `aria-pressed="${!!(s.flags[j] || {})[k]}"` : `aria-pressed="false"`;
+  const btn = (k, inner, extra = "") => `<button class="fld ${extra} ${cls(k)}" data-f="${k}" ${pr(k)} aria-label="${ELEM[k].n}">${inner}</button>`;
+  return `<div class="label-card">
+    ${btn("name", `<span>${esc(v.name)}</span>`, "name")}
+    ${btn("ref", `<span class="sym">REF</span><span class="v">${esc(v.ref)}</span>`, "w3")}
+    ${btn("lot", `<span class="sym">LOT</span><span class="v">${esc(v.lot)}</span>`, "w3")}
+    ${btn("exp", `${HOUR}<span class="v">${esc(v.exp)}</span>`, "w3")}
+    ${btn("ster", v.ster ? (v.ster === "NON-STERILE" ? `<span class="sym" style="text-decoration:line-through">STERILE</span><span class="v" style="font-size:12px">NON-STERILE</span>` : `<span class="sym">${esc(v.ster)}</span>`) : `<span class="v" style="color:#999;font-weight:400;font-size:12px">(no symbol)</span>`, "w3")}
+    ${btn("qty", `<span class="v">${esc(v.qty)} units</span>`, "w2")}
+    ${btn("mfr", `${FACT}<span style="font-size:12px">Northbrook Medical Supply, Northbrook, IL</span>`, "w2")}
+    ${btn("udi", `<span class="bars" aria-hidden="true"></span><span class="udi">${esc(udi(c.wo))}</span>`, "w6")}
+  </div>`;
+}
+function s0(){
+  const s = S();
+  $("stage").innerHTML = `
+    <div class="label">Step 1 · Why it matters</div>
+    <h2>One swapped digit, 120 units on hold</h2>
+    <p class="lead">A label error is rarely dramatic. It’s a transposed lot number or a use-by day that’s off by a few digits. Caught at the branch, it’s a hold and a reprint. Missed, it can become a field correction or a recall, and a product that can’t be traced.</p>
+    <div class="note info"><strong>After this 15-minute training, you will be able to:</strong> identify every element on a product label; inspect a label against its work order and catch nonconformances; decide when to release and when to hold; and record a deviation so anyone can follow what happened.</div>
+    <div class="part"><h3>What’s your role?</h3><div class="grid3">${Object.entries(ROLES).map(([k, r]) => `<button class="pick" data-r="${k}" aria-pressed="${s.role === k}"><b>${r}</b></button>`).join("")}</div></div>
+    <div class="part"><h3>How confident are you catching label errors today?</h3>${scale("c0", s.conf0)}<p class="qnum">1 = not at all · 5 = very confident</p></div>
+    ${D.nav("Next: know the label")}`;
+  qa("[data-r]").forEach(b => b.onclick = () => { s.role = b.dataset.r; D.refresh(); });
+  qa("#c0 .scale").forEach(b => b.onclick = () => { s.conf0 = +b.dataset.n; D.refresh(); });
+}
+function s1(){
+  const s = S(), k = s.cur, n = Object.keys(s.seen).length;
+  $("stage").innerHTML = `
+    <div class="label">Step 2 · Know the label</div>
+    <h2>Eight elements, one approved label</h2>
+    <p class="lead">Select each part of this correct label to see what it means and what goes wrong with it. Explore all eight to move on.</p>
+    <div class="learn"><div>${labelHTML(CASES[0], "learn")}<p class="seen" style="margin-top:8px">${n} of 8 explored</p></div>
+      <div class="explain">${k ? `<b>${esc(ELEM[k].n)}</b>${esc(ELEM[k].d)}` : `<b>Select a part of the label</b>Start anywhere. The barcode is the one people skip most often.`}</div></div>
+    ${D.nav("Next: inspect four labels")}`;
+  qa(".fld").forEach(b => b.onclick = () => { s.cur = b.dataset.f; s.seen[b.dataset.f] = true; D.refresh(); });
+}
+function s2(){
+  const s = S(), j = s.c, c = CASES[j], r = s.res[j];
+  const fl = s.flags[j] || {}, dec = s.dec[j];
+  $("stage").innerHTML = `
+    <div class="label">Step 3 · Inspect four labels</div>
+    <div class="row" style="justify-content:space-between"><h2>Label ${j + 1} of ${CASES.length}</h2>
+      <div class="casenav">${CASES.map((_, m) => `<button data-c="${m}" aria-current="${m === j}" class="${s.res[m] === true ? "ok" : ""}" aria-label="Label ${m + 1}">${m + 1}</button>`).join("")}</div></div>
+    <p class="lead">Compare the label with the work order. Select every field that doesn’t match, then decide. Not every label has an error.</p>
+    <div class="insp">
+      <div class="wo"><h4>WORK ORDER · ${esc(c.wo.wo)}</h4><dl>
+        <dt>Product</dt><dd>${esc(c.wo.name)}</dd><dt>REF</dt><dd>${esc(c.wo.ref)}</dd><dt>LOT</dt><dd>${esc(c.wo.lot)}</dd><dt>Use-by</dt><dd>${esc(c.wo.exp)}</dd><dt>Sterility</dt><dd>${esc(c.wo.ster)}</dd><dt>Quantity</dt><dd>${esc(c.wo.qty)}</dd></dl></div>
+      <div>${labelHTML(c, "inspect")}</div>
+    </div>
+    <div class="dec"><button data-d="release" aria-pressed="${dec === "release"}" ${r === true ? "disabled" : ""}>Release</button><button class="hold" data-d="hold" aria-pressed="${dec === "hold"}" ${r === true ? "disabled" : ""}>Hold and escalate</button></div>
+    <div class="row"><button class="btn primary" id="sub" ${dec && r !== true ? "" : "disabled"}>Submit inspection</button>${r === true && j < CASES.length - 1 ? `<button class="btn" id="nx">Next label</button>` : ""}</div>
+    <div id="fb">${r != null ? fb(j) : ""}</div>
+    ${D.nav("Next: document it right")}`;
+  if (r !== true) qa(".fld").forEach(b => b.onclick = () => { if (b.dataset.f === "mfr") { bump(b); return; } const f = s.flags[j] = s.flags[j] || {}; f[b.dataset.f] = !f[b.dataset.f]; s.res[j] = null; D.refresh(); });
+  qa(".dec button").forEach(b => b.onclick = () => { s.dec[j] = b.dataset.d; s.res[j] = null; D.refresh(); });
+  qa(".casenav button").forEach(b => b.onclick = () => { s.c = +b.dataset.c; D.refresh(); });
+  $("sub").onclick = () => {
+    const errs = Object.keys(c.err), flagged = Object.keys(fl).filter(k => fl[k]);
+    const ok = errs.length === flagged.length && errs.every(k => fl[k]) && dec === (errs.length ? "hold" : "release");
+    if (s.firstOk[j] == null) s.firstOk[j] = ok;
+    s.res[j] = ok; D.refresh();
+  };
+  if ($("nx")) $("nx").onclick = () => { s.c = j + 1; D.refresh(); };
+}
+function fb(j){
+  const s = S(), c = CASES[j], fl = s.flags[j] || {}, errs = Object.keys(c.err);
+  const missed = errs.filter(k => !fl[k]), extra = Object.keys(fl).filter(k => fl[k] && !errs.includes(k)), decOk = s.dec[j] === (errs.length ? "hold" : "release");
+  if (s.res[j]) return `<div class="note">Correct. ${esc(c.why)}</div>`;
+  return `<div class="note warn">Not yet. ${missed.length ? `${missed.length} field${missed.length > 1 ? "s don’t" : " doesn’t"} match and ${missed.length > 1 ? "weren’t" : "wasn’t"} selected (dashed outline). ` : ""}${extra.length ? `${extra.map(k => ELEM[k].n.split(":")[0]).join(", ")} ${extra.length > 1 ? "match" : "matches"} the work order. ` : ""}${decOk ? "" : errs.length ? "A label with any mismatch is held, not released. " : "Nothing is wrong here, so this lot can be released. "}Adjust and submit again.</div>`;
+}
+function s3(){
+  const s = S();
+  const part = (arr, key, title, lead) => { const right = s[key].some(j => arr[j].ok), last = s[key].length ? arr[s[key][s[key].length - 1]] : null; return `<div class="part"><h3>${title}</h3><p style="font-size:15px">${lead}</p>
+    <div class="opts">${arr.map((o, j) => `<button class="opt ${key === "rec" ? "record" : ""} ${s[key].includes(j) ? (o.ok ? "ok" : "bad") : ""}" data-${key}="${j}" ${s[key].includes(j) || right ? "disabled" : ""}>${esc(o.t)}</button>`).join("")}</div>
+    ${last ? `<div class="note ${last.ok ? "" : "warn"}">${esc(last.f)}${last.ok ? "" : " Try another."}</div>` : ""}</div>`; };
+  $("stage").innerHTML = `
+    <div class="label">Step 4 · Document it right</div>
+    <h2>If it isn’t written down, it didn’t happen</h2>
+    <p class="lead">You held label 1. Now record it. Good records are attributable, legible, contemporaneous, original and accurate (often called ALCOA). An auditor reading your entry next year should understand exactly what happened.</p>
+    ${part(RECORDS, "rec", "Which deviation entry would you submit?", "Three colleagues wrote up the same hold.")}
+    ${part(CORR, "corr", "You wrote the wrong unit count in the paper log. How do you correct it?", "Paper logs are still used at many branches.")}
+    ${D.nav("Next: make it stick")}`;
+  qa("[data-rec]").forEach(b => b.onclick = () => { s.rec.push(+b.dataset.rec); D.refresh(); });
+  qa("[data-corr]").forEach(b => b.onclick = () => { s.corr.push(+b.dataset.corr); D.refresh(); });
+}
+function s4(){
+  const s = S(), first = Object.values(s.firstOk).filter(Boolean).length;
+  $("stage").innerHTML = `
+    <div class="label">Step 5 · Make it stick</div>
+    <h2>One session doesn’t build a habit</h2>
+    <p class="lead">Inspection is a skill that fades without practice. After this training, short micro-cases arrive on a schedule, and a check card stays at every inspection station. Try the Day 7 micro-case now.</p>
+    <div class="sched"><div><b>Day 0</b>This training</div><div><b>Day 2</b>One micro-case on your shift tablet</div><div><b>Day 7</b>Micro-case with a new error type</div><div><b>Day 30</b>Three mixed cases and a supervisor check</div></div>
+    <div class="box"><h4>${esc(MICRO.q)}</h4><div class="opts">${MICRO.o.map((o, j) => `<button class="opt ${s.micro === j ? (j === MICRO.a ? "ok" : "bad") : ""}" data-m="${j}" ${s.micro === MICRO.a ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+      ${s.micro != null ? `<div class="note ${s.micro === MICRO.a ? "" : "warn"}">${s.micro === MICRO.a ? esc(MICRO.why) : "Not quite. Should the printed text and the barcode ever disagree?"}</div>` : ""}</div>
+    <div class="part"><h3>Station check card</h3><div class="doc"><h4>Before you release, read in pairs</h4>1. Product name and size match the work order<br>2. REF digits, read in pairs<br>3. LOT digits, read in pairs, and matched to the UDI (10)<br>4. Use-by: year, month and day, matched to the UDI (17)<br>5. Sterility symbol present and correct for the product<br>6. Quantity<br><h4>Any mismatch</h4>Hold, segregate, record, notify. Don’t guess the cause.</div></div>
+    <div class="part"><h3>How confident are you catching label errors now?</h3>${scale("c1", s.conf1)}
+      ${s.conf1 != null ? `<p class="qnum">Confidence ${s.conf0 ?? "–"} → ${s.conf1}. Labels right on the first try: ${first} of ${CASES.length}.</p>` : ""}</div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${D.nav("")}`;
+  qa("[data-m]").forEach(b => b.onclick = () => { s.micro = +b.dataset.m; D.refresh(); });
+  qa("#c1 .scale").forEach(b => b.onclick = () => { s.conf1 = +b.dataset.n; D.refresh(); });
+  $("reset").onclick = () => D.reset();
+}
+D.render();
+</script>
+</body>
+</html>

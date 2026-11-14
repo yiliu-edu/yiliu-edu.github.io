@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI in Your Course · Faculty Decision Kit</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A self-paced consultation for faculty: set AI rules for each assignment, write a syllabus statement, respond to suspected AI use, and redesign one assignment. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="demo-base.css?v=1">
+<style>
+.levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+@media (max-width:700px){.levels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lv{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 9px;text-align:left;font-size:13px;line-height:1.3;color:var(--ink)}
+.lv b{display:block;font-family:var(--sans);font-size:12px;color:var(--navy);margin-bottom:2px}
+.lv[aria-pressed="true"]{border-color:var(--bar);box-shadow:0 0 0 2px var(--bar);background:var(--tint)}
+.lv .n{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--navy);color:#fff;font-size:10.5px;margin-right:4px}
+.asg{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.asg.done{border-color:var(--good)}
+.asg h4{font-size:16px;color:var(--navy)}
+.hint{font-size:13.5px;color:var(--muted)}
+.strat{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;color:var(--ink);font-size:14.5px}
+.strat .ck{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;color:#fff;margin-top:2px}
+.strat[aria-pressed="true"]{border-color:var(--bar);background:var(--tint)}
+.strat[aria-pressed="true"] .ck{background:var(--bar);border-color:var(--bar)}
+.gauge{display:grid;grid-template-columns:150px minmax(0,1fr) 60px;gap:10px;align-items:center;font-size:14px}
+.tool{border:1px dashed var(--sky);border-radius:12px;padding:12px 14px;font-size:14.5px;background:#FAFCFF}
+.tool ul{margin:4px 0 0;padding-left:18px}
+.scale{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;color:var(--ink)}
+.scale[aria-pressed="true"]{background:var(--bar);color:#fff;border-color:var(--bar)}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../ai-in-your-course-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div class="k">Academic Technology · Faculty consultation</div><h1>AI in Your Course</h1>
+  <p>A 20-minute self-paced consultation: decide how students may use generative AI in each assignment, write a clear syllabus statement, respond fairly when you suspect misuse, and redesign one assignment.</p>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card"><div class="label">Your consultation</div><nav class="path" id="path" aria-label="Steps"></nav></div>
+    <div class="card"><div class="label">Progress</div><div class="meter" style="margin-top:6px"><i id="prog" style="width:0"></i></div><div id="kpis" style="margin-top:8px"></div></div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">Lakeview University and its courses are fictional, created for this portfolio demo. Guidance on AI detectors and exam tools is general; follow your institution’s academic integrity policy. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<script src="demo-base.js?v=1"></script>
+<script>
+const COURSES = {
+  hum:{n:"First-year humanities seminar", d:"18 students, writing-intensive", a:[
+    {id:"resp", t:"Weekly reading response", g:"Build the habit of close, personal reading", s:0},
+    {id:"essay", t:"Close-reading essay", g:"Make and support an original interpretation", s:2},
+    {id:"prop", t:"Research proposal", g:"Find and frame a researchable question", s:1},
+    {id:"lead", t:"Leading a class discussion", g:"Ask questions that open up a text", s:1}]},
+  stem:{n:"Intro statistics", d:"120 students, problem sets and a project", a:[
+    {id:"ps", t:"Weekly problem sets", g:"Practice the core methods until they’re fluent", s:1},
+    {id:"proj", t:"Data analysis project", g:"Choose and justify methods for real data", s:3},
+    {id:"code", t:"Code notebook (R or Python)", g:"Write and explain working analysis code", s:2},
+    {id:"exam", t:"Midterm exam", g:"Show independent mastery of the methods", s:0}]},
+  prof:{n:"Public policy master’s course", d:"35 students, professional writing", a:[
+    {id:"memo", t:"Policy memo", g:"Write a clear recommendation for a decision maker", s:2},
+    {id:"lit", t:"Literature review", g:"Synthesize evidence and judge its quality", s:2},
+    {id:"case", t:"Group case presentation", g:"Analyze a case and defend choices live", s:3},
+    {id:"jour", t:"Reflection journal", g:"Connect course ideas to your own practice", s:0}]}
+};
+const LEVELS = [
+  {n:"No AI", d:"Complete without generative AI tools.", use:"Best when the skill itself is the goal and needs to become fluent."},
+  {n:"AI for ideas", d:"AI may help brainstorm or explain concepts; all submitted work is your own.", use:"Best when students should do the thinking and writing, but may need a starting point."},
+  {n:"AI for feedback", d:"AI may give feedback or suggest edits on your own draft; disclose how you used it.", use:"Best when revision is part of the learning and feedback is scarce."},
+  {n:"AI as collaborator", d:"AI may help draft or analyze; document your prompts, check its output and explain what you changed.", use:"Best when judging and improving AI output is a skill students need."}
+];
+const SCEN = [
+  {q:"An essay comes back from the AI detector at 87% “likely AI”. The student is a multilingual first-year. What do you do first?",
+   o:[{t:"Report it to the academic integrity office. A score that high is strong evidence.", ok:false, f:"A detector gives a probability, not proof. False positives happen, and studies have found that writing by non-native English speakers is flagged more often. Most institutions say a score should never be the only evidence."},
+      {t:"Treat the score as one signal and look at what else you have: drafts, version history, earlier writing.", ok:true, f:"Right. Start with the evidence of how the work was made. The score alone can’t tell you what happened."},
+      {t:"Lower the grade quietly and move on.", ok:false, f:"A penalty without a conversation or a process is unfair to the student and may break your institution’s policy."}]},
+  {q:"The document’s version history shows the essay was pasted in as two large blocks. What next?",
+   o:[{t:"Run it through two more detectors to be sure.", ok:false, f:"More detectors don’t add certainty. Each has its own error rate, and their disagreements are hard to interpret."},
+      {t:"Email the student that the detector caught them.", ok:false, f:"Leading with an accusation makes an honest explanation less likely. Pasting can also mean the student drafted elsewhere."},
+      {t:"Meet the student. Ask them to walk you through their argument and how they wrote it, without accusing them.", ok:true, f:"Right. A conversation about the work is the most informative evidence you can get, and it’s fair to the student."}]},
+  {q:"The student explains they drafted in a notes app and used AI to fix grammar, which they thought was allowed. Your syllabus didn’t say.",
+   o:[{t:"Accept it this time, clarify the rule for the whole class, and add a disclosure note to the assignment.", ok:true, f:"Right. An unclear policy creates honest mistakes. If you still have concerns, follow your institution’s process rather than deciding alone."},
+      {t:"Treat it as a violation. AI was used.", ok:false, f:"Students can’t follow a rule that wasn’t stated. This is why the per-assignment statement matters."},
+      {t:"Ban all AI for the rest of the term.", ok:false, f:"A blanket ban punishes the whole class for a policy gap and is hard to enforce. Clarify instead."}]}
+];
+const STRATS = [
+  {id:"chk", t:"Process checkpoints", d:"Proposal, draft and a short revision note before the final version.", v:2, g:1},
+  {id:"oral", t:"Five-minute oral check-in", d:"Students explain one choice in their work, in office hours or class.", v:2, g:2},
+  {id:"local", t:"Local or personal context", d:"Tie the task to class discussion, course data or students’ own experience.", v:1, g:0},
+  {id:"class", t:"Start in class", d:"First 20 minutes of drafting happen in class.", v:1, g:1},
+  {id:"crit", t:"AI critique task", d:"Students evaluate and improve an AI-generated answer.", v:2, g:1},
+  {id:"disc", t:"Disclosure note", d:"Two sentences on whether and how AI was used.", v:1, g:0}
+];
+
+const D = makeDemo({
+  key:"ai-course-v1",
+  steps:[{sub:"Step 1", nm:"Your course"},{sub:"Step 2", nm:"AI rules per assignment"},{sub:"Step 3", nm:"Syllabus statement"},{sub:"Step 4", nm:"When you suspect misuse"},{sub:"Step 5", nm:"Redesign one assignment"},{sub:"Step 6", nm:"Your consultation note"}],
+  fresh:() => ({i:0, course:null, lv:{}, accepted:false, sc:{k:0, tried:[], first:0}, asg:null, strats:[], rating:null}),
+  done:(i, s) => [
+    !!s.course,
+    !!s.course && COURSES[s.course].a.every(a => s.lv[a.id] != null),
+    s.accepted,
+    s.sc.k >= SCEN.length,
+    !!s.asg && s.strats.length >= 2,
+    s.rating != null][i],
+  kpis:s => [["Course", s.course ? COURSES[s.course].n.split(" ").slice(0, 2).join(" ") + "…" : "–"], ["Assignments set", s.course ? `${COURSES[s.course].a.filter(a => s.lv[a.id] != null).length} / 4` : "–"], ["Scenario", `${Math.min(s.sc.k, 3)} / 3`], ["Redesign", s.strats.length ? `${s.strats.length} strategies` : "–"]],
+  render:[s0, s1, s2, s3, s4, s5]
+});
+const S = () => D.st;
+const C = () => COURSES[S().course];
+
+function s0(){
+  $("stage").innerHTML = `
+    <div class="label">Step 1 · Your course</div>
+    <h2>Which course are we planning for?</h2>
+    <p class="lead">Students ask the same question in every class: “Can I use AI for this?” The honest answer depends on what each assignment is for. In the next 20 minutes you’ll leave with a syllabus statement, clear instructions for each assignment, and one redesigned assignment.</p>
+    <div class="note info"><strong>You’ll be able to:</strong> choose an AI-use level for each assignment based on its learning goal; publish a statement students can follow; respond to suspected misuse without relying on a detector score; and redesign an assignment so learning is visible.</div>
+    <div class="grid3">${Object.entries(COURSES).map(([k, c]) => `<button class="pick" data-k="${k}" aria-pressed="${S().course === k}"><b>${esc(c.n)}</b><span>${esc(c.d)}</span></button>`).join("")}</div>
+    ${D.nav("Next: set AI rules")}`;
+  qa(".pick").forEach(b => b.onclick = () => { if (S().course !== b.dataset.k) { S().lv = {}; S().asg = null; S().strats = []; S().accepted = false; } S().course = b.dataset.k; D.refresh(); });
+}
+function s1(){
+  const c = C();
+  $("stage").innerHTML = `
+    <div class="label">Step 2 · AI rules per assignment</div>
+    <h2>Match the AI level to what each assignment teaches</h2>
+    <p class="lead">Start from the learning goal, not the tool. A level that’s right for one assignment can undercut another. The note under each choice says when that level fits.</p>
+    <div class="levels" aria-hidden="true">${LEVELS.map((l, i) => `<div class="lv" style="cursor:default"><b><span class="n">${i}</span>${esc(l.n)}</b>${esc(l.d)}</div>`).join("")}</div>
+    ${c.a.map(a => { const v = S().lv[a.id]; return `<div class="asg ${v != null ? "done" : ""}"><div class="row" style="justify-content:space-between"><h4>${esc(a.t)}</h4>${v != null ? `<span class="tag good">Level ${v}</span>` : ""}</div>
+      <div class="hint">Learning goal: ${esc(a.g)}</div>
+      <div class="levels" role="group" aria-label="AI level for ${esc(a.t)}">${LEVELS.map((l, i) => `<button class="lv" data-a="${a.id}" data-v="${i}" aria-pressed="${v === i}"><b><span class="n">${i}</span>${esc(l.n)}</b></button>`).join("")}</div>
+      ${v != null ? `<div class="hint">${esc(LEVELS[v].use)}${v !== a.s ? ` Many instructors choose level ${a.s} here; yours is fine if it matches the goal.` : ""}</div>` : ""}</div>`; }).join("")}
+    ${D.nav("Next: write the statement")}`;
+  qa(".lv[data-a]").forEach(b => b.onclick = () => { S().lv[b.dataset.a] = +b.dataset.v; S().accepted = false; D.refresh(); });
+}
+function statement(){
+  const c = C();
+  return `Generative AI in ${c.n}
+
+In this course, whether you may use generative AI (such as ChatGPT, Claude or Gemini) depends on what each assignment is meant to help you learn.
+
+${c.a.map(a => `- ${a.t}: Level ${S().lv[a.id]}, ${LEVELS[S().lv[a.id]].n}. ${LEVELS[S().lv[a.id]].d}`).join("\n")}
+
+When AI is allowed, add a short note to your submission: which tool you used, what you asked it, and what you changed. Using AI as allowed and disclosing it will never lower your grade.
+
+If an assignment doesn’t say, or you’re unsure, ask me before you use AI. Using AI where it isn’t allowed is handled under the university’s academic integrity policy.`;
+}
+function s2(){
+  const st = statement();
+  const note = "AI use note (2–3 sentences)\nTool: \nWhat I asked it to do: \nWhat I kept, changed or rejected, and why: ";
+  $("stage").innerHTML = `
+    <div class="label">Step 3 · Syllabus statement</div>
+    <h2>Your statement, drafted from your choices</h2>
+    <p class="lead">A good statement tells students what’s allowed for each assignment, how to disclose, and what to do when they’re unsure. Read it as a student would. Change any level in Step 2 and the statement updates.</p>
+    <div class="out" id="stmt">${esc(st)}</div>
+    <div class="row"><button class="btn" id="cp1">Copy statement</button><span id="c1" class="qnum" role="status"></span></div>
+    <div class="part"><h3>Disclosure note for each Canvas assignment</h3><div class="out">${esc(note)}</div>
+      <div class="row"><button class="btn" id="cp2">Copy note</button><span id="c2" class="qnum" role="status"></span></div></div>
+    <div class="part"><h3>Where it goes in Canvas</h3><ul style="margin:0;padding-left:20px;font-size:15px"><li>Syllabus page: the full statement</li><li>Each assignment description: its level in one line, plus the disclosure note</li><li>Course announcement in week 1: a link to the statement and an invitation to ask questions</li></ul></div>
+    <div class="row"><button class="btn primary" id="ok" ${S().accepted ? "disabled" : ""}>${S().accepted ? "Statement saved" : "Use this statement"}</button></div>
+    ${D.nav("Next: suspected misuse")}`;
+  $("cp1").onclick = () => copyText(st, $("c1"));
+  $("cp2").onclick = () => copyText(note, $("c2"));
+  $("ok").onclick = () => { S().accepted = true; D.refresh(); };
+}
+function s3(){
+  const sc = S().sc, k = Math.min(sc.k, SCEN.length - 1), q = SCEN[k], over = sc.k >= SCEN.length;
+  const tried = sc.tried.filter(t => t[0] === k).map(t => t[1]);
+  const right = tried.find(j => q.o[j].ok) != null;
+  const last = tried.length ? q.o[tried[tried.length - 1]] : null;
+  $("stage").innerHTML = `
+    <div class="label">Step 4 · When you suspect misuse</div>
+    <h2>${over ? "You worked through the case." : `Moment ${k + 1} of ${SCEN.length}`}</h2>
+    <p class="lead">Detectors and exam tools can help, but they can’t decide for you. Work through one realistic case.</p>
+    ${over ? `<div class="note">Best choice on the first try in ${sc.first} of ${SCEN.length} moments. The pattern: treat tool output as one signal, talk with the student about the work, and fix unclear policy for everyone.</div>` : `
+    <div class="box"><h4>${esc(q.q)}</h4><div class="opts">${q.o.map((o, j) => `<button class="opt ${tried.includes(j) ? (o.ok ? "ok" : "bad") : ""}" data-j="${j}" ${tried.includes(j) || right ? "disabled" : ""}>${esc(o.t)}</button>`).join("")}</div>
+      ${last ? `<div class="note ${last.ok ? "" : "warn"}">${esc(last.f)}${last.ok ? "" : " Try another option."}</div>` : ""}
+      ${right ? `<div class="row"><button class="btn primary" id="cont">${k === SCEN.length - 1 ? "Finish the case" : "Next moment"}</button></div>` : ""}</div>`}
+    <div class="tool"><strong>What these tools can and can’t do</strong><ul>
+      <li>AI detectors estimate how likely text is to be machine-written. They can be wrong in both directions, and edited or translated text is harder to judge.</li>
+      <li>Lockdown browsers restrict the testing computer, not a phone on the desk. Webcam monitoring flags behavior for review; a person still decides.</li>
+      <li>Both raise privacy and accessibility questions. Plan accommodations before the exam, not after a flag.</li></ul></div>
+    ${D.nav("Next: redesign an assignment")}`;
+  qa(".opt[data-j]").forEach(b => b.onclick = () => { const j = +b.dataset.j; if (!sc.tried.some(t => t[0] === k) && q.o[j].ok) sc.first++; sc.tried.push([k, j]); D.refresh(); });
+  if ($("cont")) $("cont").onclick = () => { sc.k++; D.refresh(); };
+}
+function s4(){
+  const c = C(), a = S().asg ? c.a.find(x => x.id === S().asg) : null;
+  const on = STRATS.filter(s => S().strats.includes(s.id));
+  const vis = Math.min(10, 2 + on.reduce((n, s) => n + s.v, 0) * 1.2), time = on.reduce((n, s) => n + s.g, 0);
+  $("stage").innerHTML = `
+    <div class="label">Step 5 · Redesign one assignment</div>
+    <h2>Make the learning visible, not AI-proof</h2>
+    <p class="lead">No design makes AI use impossible. The goal is that you can see how students think. Pick the assignment you worry about most, then choose at least two strategies. Watch the trade-off with grading time.</p>
+    <div class="grid2">${c.a.map(x => `<button class="pick" data-a="${x.id}" aria-pressed="${S().asg === x.id}"><b>${esc(x.t)}</b><span>Level ${S().lv[x.id]} · ${esc(x.g)}</span></button>`).join("")}</div>
+    ${a ? `<div class="part"><h3>Strategies for: ${esc(a.t)}</h3>
+      <div class="grid2">${STRATS.map(s => `<button class="strat" data-s="${s.id}" aria-pressed="${S().strats.includes(s.id)}"><span class="ck">✓</span><span><b style="color:var(--navy)">${esc(s.t)}</b><br><span class="hint">${esc(s.d)}</span></span></button>`).join("")}</div>
+      <div class="gauge"><span>Learning is visible</span><div class="meter"><i style="width:${vis * 10}%"></i></div><b>${vis >= 7 ? "High" : vis >= 4.5 ? "Medium" : "Low"}</b></div>
+      <div class="gauge"><span>Extra grading time</span><div class="meter"><i style="width:${Math.min(100, time * 18)}%;background:linear-gradient(90deg,#F28A26,#FFB869)"></i></div><b>${time >= 4 ? "High" : time >= 2 ? "Some" : "Low"}</b></div>
+      ${time >= 4 ? `<div class="note amber">That’s a lot of extra grading for one assignment. Consider keeping the two strategies that show the most learning.</div>` : ""}</div>` : ""}
+    ${D.nav("Next: consultation note")}`;
+  qa(".pick[data-a]").forEach(b => b.onclick = () => { S().asg = b.dataset.a; S().strats = []; D.refresh(); });
+  qa(".strat").forEach(b => b.onclick = () => { const id = b.dataset.s, arr = S().strats; arr.includes(id) ? arr.splice(arr.indexOf(id), 1) : arr.push(id); D.refresh(); });
+}
+function s5(){
+  const c = C(), a = c.a.find(x => x.id === S().asg);
+  const note = `Faculty consultation note: ${c.n}
+AI levels: ${c.a.map(x => `${x.t} (L${S().lv[x.id]})`).join("; ")}
+Syllabus statement: drafted and ready for the Canvas syllabus page
+Suspected misuse: reviewed the evidence-first process (${S().sc.first} of ${SCEN.length} best choices on the first try)
+Redesign: ${a.t}, adding ${STRATS.filter(s => S().strats.includes(s.id)).map(s => s.t.toLowerCase()).join(" and ")}
+Follow-up from Academic Technology:
+- Add the AI level and disclosure question to each Canvas assignment
+- Optional 30-minute check-in after week 4 to review student questions
+- Invitation: “AI in Your Course” workshop with the teaching center`;
+  $("stage").innerHTML = `
+    <div class="label">Step 6 · Your consultation note</div>
+    <h2>Your plan in one place</h2>
+    <p class="lead">This is what you and the instructional technology team will follow up on. Copy it into your notes or send it with a request for a check-in.</p>
+    <div class="out">${esc(note)}</div>
+    <div class="row"><button class="btn" id="cp">Copy note</button><span id="cs" class="qnum" role="status"></span></div>
+    <div class="part"><h3>One quick question</h3><p style="font-size:15px">How useful was this consultation for planning your course?</p>
+      <div class="row">${[1,2,3,4,5].map(n => `<button class="scale" data-n="${n}" aria-pressed="${S().rating === n}">${n}</button>`).join("")}</div><p class="qnum">1 = not useful · 5 = very useful</p>
+      ${S().rating != null ? `<div class="note">Thank you. Ratings and the notes from consultations show the team which questions faculty bring most, and shape the next workshop.</div>` : ""}</div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${D.nav("")}`;
+  $("cp").onclick = () => copyText(note, $("cs"));
+  qa(".scale").forEach(b => b.onclick = () => { S().rating = +b.dataset.n; D.refresh(); });
+  $("reset").onclick = () => D.reset();
+}
+D.render();
+</script>
+</body>
+</html>

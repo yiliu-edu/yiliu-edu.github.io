@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Look Closely · Object-Based Inquiry for Teachers</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A museum professional learning module for teachers: practice See-Think-Wonder with a fossil, choose facilitation moves for a bilingual classroom, and plan a lesson with a loan kit. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="demo-base.css?v=1">
+<style>
+.objwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.objwrap{grid-template-columns:minmax(0,1fr)}}
+.stagebox{position:relative;border-radius:16px;overflow:hidden;background:radial-gradient(circle at 40% 35%,#D9CDB8,#B8A88E);aspect-ratio:4/3}
+.stagebox svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s}
+.stagebox.zoom svg{transform:scale(1.9) translateY(4%)}
+.stagebox .zb{position:absolute;right:10px;top:10px;z-index:2}
+.stagebox .lbl{position:absolute;left:10px;bottom:8px;font:600 12px var(--sans);color:#3A3226;background:rgba(255,255,255,.7);border-radius:6px;padding:2px 8px}
+.stmt{border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.stmt.ok{border-color:var(--good);background:var(--good-soft)}
+.stw{display:flex;gap:6px}
+.stw button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:3px 12px;font:700 12.5px var(--sans);color:var(--ink)}
+.stw button.bad{border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.stw button.ok{border-color:var(--good);background:var(--good);color:#fff}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cols>div{border-radius:12px;padding:8px 10px;font-size:13px;min-height:60px}
+.cols>div>div{margin-top:4px;line-height:1.35}
+.cols b{display:block;font:700 12px var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.c-see{background:#EAF1FB}.c-see b{color:var(--navy)}
+.c-think{background:#FFF3D6}.c-think b{color:var(--amber)}
+.c-wonder{background:#E3F3EA}.c-wonder b{color:var(--good)}
+.class{background:var(--soft);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.bub{max-width:84%;padding:9px 13px;border-radius:16px;font-size:15px;background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px;animation:rise .3s both}
+.bub .who{font:700 11px var(--sans);color:var(--muted);margin-bottom:2px}
+.bub.me{background:var(--bar);color:#fff;align-self:flex-end;border-radius:16px;border-bottom-right-radius:4px}
+.bub.me .who{color:#E6EEF9}
+.frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.frames{grid-template-columns:minmax(0,1fr)}}
+.frame{border:1.5px dashed var(--sky);border-radius:10px;padding:8px 10px;font-size:14px;background:#FAFCFF}
+.frame b{font:700 11px var(--sans);color:var(--blue);display:block;letter-spacing:.06em}
+.scale{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;color:var(--ink)}
+.scale[aria-pressed="true"]{background:var(--bar);color:#fff;border-color:var(--bar)}
+.lm{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.lm{grid-template-columns:minmax(0,1fr)}}
+.lm div{border-radius:12px;padding:10px;font-size:13.5px;background:var(--soft);border-top:4px solid var(--bar)}
+.lm b{display:block;font:700 12px var(--sans);color:var(--navy);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.lm ul{margin:0;padding-left:16px}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../object-inquiry-pd-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div class="k">Educator professional learning · Discovery Kits</div><h1>Look Closely</h1>
+  <p>A 30-minute module for teachers before they borrow a museum loan kit: practice See-Think-Wonder with a real fossil, choose facilitation moves for a bilingual classroom, and plan a lesson you can teach next week.</p>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card"><div class="label">Your module</div><nav class="path" id="path" aria-label="Steps"></nav></div>
+    <div class="card"><div class="label">Progress</div><div class="meter" style="margin-top:6px"><i id="prog" style="width:0"></i></div><div id="kpis" style="margin-top:8px"></div></div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">The Lakeshore Museum of Natural History, its Discovery Kits and Kit Ambassadors are fictional, created for this portfolio demo. The fossil is an illustration. Science standards cited are Next Generation Science Standards performance expectations. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<script src="demo-base.js?v=1"></script>
+<script>
+const FOSSIL = `<svg viewBox="0 0 400 300" role="img" aria-label="A trilobite fossil in grey stone: a rounded head, a body of many narrow segments, and a small tail, divided lengthwise into three lobes">
+  <ellipse cx="200" cy="155" rx="150" ry="118" fill="#C9BBA2" opacity=".55"/>
+  <g transform="translate(200 150)">
+    <path d="M-62 -78 C-60 -112 60 -112 62 -78 L66 -66 C40 -60 -40 -60 -66 -66 Z" fill="#6E6656" stroke="#4A4438" stroke-width="2"/>
+    <path d="M-20 -100 C-14 -110 14 -110 20 -100 L18 -66 L-18 -66 Z" fill="#7C7462" stroke="#4A4438" stroke-width="1.5"/>
+    <ellipse cx="-34" cy="-80" rx="7" ry="5" fill="#3E392F"/><ellipse cx="34" cy="-80" rx="7" ry="5" fill="#3E392F"/>
+    <path d="M-66 -66 L-78 -40" stroke="#4A4438" stroke-width="3" stroke-linecap="round"/><path d="M66 -66 L78 -40" stroke="#4A4438" stroke-width="3" stroke-linecap="round"/>
+    ${Array.from({length:11}, (_, i) => { const y = -62 + i * 10, w = 58 - i * 2.2; return `<path d="M${-w} ${y} Q0 ${y + 5} ${w} ${y} L${w} ${y + 8} Q0 ${y + 13} ${-w} ${y + 8} Z" fill="${i % 2 ? "#756D5C" : "#6A6252"}" stroke="#4A4438" stroke-width="1.2"/>`; }).join("")}
+    <path d="M-34 50 Q0 60 34 50 Q30 80 0 86 Q-30 80 -34 50 Z" fill="#6E6656" stroke="#4A4438" stroke-width="2"/>
+    <path d="M-17 -66 L-15 52" stroke="#4A4438" stroke-width="1.5" opacity=".7"/><path d="M17 -66 L15 52" stroke="#4A4438" stroke-width="1.5" opacity=".7"/>
+  </g>
+  <g transform="translate(300 268)"><rect width="80" height="5" fill="#3A3226"/><text x="40" y="-5" text-anchor="middle" font-family="Montserrat,Arial" font-size="12" fill="#3A3226">5 cm</text></g>
+</svg>`;
+const STMTS = [
+  {t:"It has three long sections running from head to tail.", a:"S"},
+  {t:"It might be an animal that lived in water.", a:"T"},
+  {t:"How old is it?", a:"W"},
+  {t:"The middle part has about eleven narrow segments.", a:"S"},
+  {t:"The segments probably helped it bend or roll up.", a:"T"},
+  {t:"What did it eat?", a:"W"},
+  {t:"It is about as long as a hand, using the scale bar.", a:"S"},
+  {t:"It could be related to crabs or insects.", a:"T"},
+  {t:"Why are there so many fossils like this?", a:"W"}
+];
+const STW = {S:"See", T:"Think", W:"Wonder"};
+const WHY = {S:"An observation anyone can check by looking.", T:"An idea that goes beyond what you can see. Ask: what makes you say that?", W:"A question the object raises. Wonders drive the investigation."};
+const MOMENTS = [
+  {them:[["Malik", "It’s a bug! A giant bug!"]],
+   o:[{t:"Not quite. It’s called a trilobite.", ok:false, f:"Correcting right away ends the thinking. Malik’s idea is an inference worth unpacking."},
+      {t:"What do you see that makes you say that?", ok:true, f:"You treated his idea as a theory and asked for evidence. Now the class looks closer at legs, segments and shape."},
+      {t:"Great guess! Okay, who else has an idea?", ok:false, f:"Friendly, but it skips the evidence. Ask what he sees first."}]},
+  {them:[["Sofía, a newcomer student", "¿Patas? (points at the edge)"]],
+   o:[{t:"Can you say that in English, please?", ok:false, f:"This shuts down a real observation. Students can think in any language."},
+      {t:"Point to the frame: “I see ___ / Veo ___.” Sofía, show your partner where you see the legs, and say it either way.", ok:true, f:"A bilingual sentence frame plus a partner lets her share the observation and build English at the same time."},
+      {t:"Let’s hear from someone else.", ok:false, f:"Moving on tells her the observation didn’t count. It did: she noticed the edges."}]},
+  {them:[["Ava", "It lived in the ocean!"], ["Jun", "No, it lived on land, like a beetle."]],
+   o:[{t:"Ava’s right. Trilobites lived in the ocean.", ok:false, f:"Accurate, but the class misses the chance to reason from evidence."},
+      {t:"Let’s vote: ocean or land?", ok:false, f:"A vote measures popularity, not evidence."},
+      {t:"What evidence would help us decide? Let’s look at the rock it was found in, and compare it with a living horseshoe crab from the kit.", ok:true, f:"You turned a disagreement into an investigation, using the kit’s companion objects."}]}
+];
+const BANDS = {
+  g3:{n:"Grade 3", std:"3-LS4-1: Analyze and interpret data from fossils to provide evidence of the organisms and the environments in which they lived long ago.", task:"Sort fossil cards by the environment they suggest (ocean, land) and explain one clue."},
+  g45:{n:"Grades 4–5", std:"4-ESS1-1: Identify evidence from patterns in rock formations and fossils in rock layers to support an explanation for changes in a landscape over time.", task:"Use the rock layer card to explain what this place was like when the trilobite lived."},
+  ms:{n:"Middle school", std:"MS-LS4-1: Analyze and interpret data for patterns in the fossil record that document the existence, diversity, extinction, and change of life forms throughout the history of life on Earth.", task:"Place the trilobite on the kit’s timeline and explain what its disappearance tells us."}
+};
+const FRAMES = {
+  en:{n:"English", f:["I see ___.", "I think ___ because ___.", "I wonder ___."]},
+  es:{n:"Spanish", f:["Veo ___.", "Creo que ___ porque ___.", "Me pregunto ___."]},
+  zh:{n:"Mandarin", f:["我看到___。", "我认为___，因为___。", "我想知道___。"]}
+};
+const FMT = {room:"In my classroom with the loan kit", virtual:"Virtual museum session with a museum educator"};
+
+const D = makeDemo({
+  key:"look-closely-v1",
+  steps:[{sub:"Step 1", nm:"Look closely yourself"},{sub:"Step 2", nm:"Facilitate the inquiry"},{sub:"Step 3", nm:"Plan your lesson"},{sub:"Step 4", nm:"Try it and share"},{sub:"Step 5", nm:"Program view"}],
+  fresh:() => ({i:0, conf0:null, sort:{}, sortFirst:{}, mo:{k:0, h:[], first:0}, band:null, lang:{en:true}, fmt:null, planned:false, date:null, share:null, conf1:null}),
+  done:(i, s) => [
+    s.conf0 != null && STMTS.every((x, j) => s.sort[j] === x.a),
+    s.mo.k >= MOMENTS.length,
+    s.planned,
+    s.date && s.share && s.conf1 != null,
+    s.date && s.share && s.conf1 != null][i],
+  kpis:s => [["Sorted", `${STMTS.filter((x, j) => s.sort[j] === x.a).length} / ${STMTS.length}`], ["First-try sorts", `${Object.values(s.sortFirst).filter(Boolean).length}`], ["Classroom moments", `${Math.min(s.mo.k, 3)} / 3`], ["Lesson plan", s.planned ? "Ready" : "–"]],
+  render:[s0, s1, s2, s3, s4]
+});
+const S = () => D.st;
+const scale = (id, val) => `<div class="row" id="${id}">${[1,2,3,4,5].map(n => `<button class="scale" data-n="${n}" aria-pressed="${val === n}">${n}</button>`).join("")}</div>`;
+
+function s0(){
+  const s = S();
+  const col = k => STMTS.filter((x, j) => s.sort[j] === x.a && x.a === k).map(x => `<div>${esc(x.t)}</div>`).join("");
+  $("stage").innerHTML = `
+    <div class="label">Step 1 · Look closely yourself</div>
+    <h2>Before students do it, you do it</h2>
+    <p class="lead">Object-based inquiry starts with slow looking. Separating what we see from what we think is harder than it sounds, for adults too. Sort each statement a teacher made about this fossil.</p>
+    <div class="part" style="border-top:0;padding-top:0"><h3>How confident are you leading an inquiry with a museum object?</h3>${scale("c0", s.conf0)}<p class="qnum">1 = not at all · 5 = very confident. You’ll answer again at the end.</p></div>
+    <div class="objwrap">
+      <div><div class="stagebox ${s.zoom ? "zoom" : ""}" id="obj">${FOSSIL}<button class="btn zb" id="zb">${s.zoom ? "Zoom out" : "Zoom in"}</button><span class="lbl">Discovery Kit F-3 · Trilobite (cast)</span></div>
+        <div class="cols" style="margin-top:10px"><div class="c-see"><b>See</b>${col("S")}</div><div class="c-think"><b>Think</b>${col("T")}</div><div class="c-wonder"><b>Wonder</b>${col("W")}</div></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">${STMTS.map((x, j) => { const a = s.sort[j], ok = a === x.a; return `<div class="stmt ${ok ? "ok" : ""}"><span>“${esc(x.t)}”</span>
+        <div class="stw">${Object.entries(STW).map(([k, l]) => `<button data-s="${j}" data-k="${k}" class="${a === k ? (ok ? "ok" : "bad") : ""}" ${ok ? "disabled" : ""}>${l}</button>`).join("")}</div>
+        ${a && !ok ? `<span class="qnum">Not quite. ${a === "S" ? "Can anyone check that just by looking?" : a === "T" ? "Is this an idea, or something you can see?" : "Is this a question?"}</span>` : ok ? `<span class="qnum">${WHY[x.a]}</span>` : ""}</div>`; }).join("")}</div>
+    </div>
+    ${D.nav("Next: facilitate the inquiry")}`;
+  $("zb").onclick = () => { s.zoom = !s.zoom; D.save(); $("obj").classList.toggle("zoom", s.zoom); $("zb").textContent = s.zoom ? "Zoom out" : "Zoom in"; };
+  qa("#c0 .scale").forEach(b => b.onclick = () => { s.conf0 = +b.dataset.n; D.refresh(); });
+  qa(".stw button").forEach(b => b.onclick = () => { const j = b.dataset.s; if (s.sortFirst[j] == null) s.sortFirst[j] = b.dataset.k === STMTS[j].a; s.sort[j] = b.dataset.k; D.refresh(); });
+}
+function s1(){
+  const s = S(), mo = s.mo, k = Math.min(mo.k, MOMENTS.length - 1), over = mo.k >= MOMENTS.length;
+  const tried = mo.h.filter(h => h[0] === k).map(h => h[1]), right = tried.some(j => MOMENTS[k].o[j].ok);
+  let html = "";
+  for (let m = 0; m <= k; m++) {
+    MOMENTS[m].them.forEach(([w, t]) => html += `<div class="bub"><div class="who">${esc(w)}</div>${esc(t)}</div>`);
+    mo.h.filter(h => h[0] === m).forEach(([, j]) => { const o = MOMENTS[m].o[j]; html += `<div class="bub me"><div class="who">You</div>${esc(o.t)}</div><div class="note ${o.ok ? "" : "warn"}" style="align-self:center">${esc(o.f)}${o.ok ? "" : " Try another move."}</div>`; });
+  }
+  $("stage").innerHTML = `
+    <div class="label">Step 2 · Facilitate the inquiry</div>
+    <h2>Third grade, a bilingual classroom, the fossil on every table</h2>
+    <p class="lead">Your job isn’t to give answers. It’s to keep students looking, reasoning from evidence, and talking, in whichever language they think in. Choose your move.</p>
+    <div class="class">${html}</div>
+    ${!over && !right ? `<div class="opts">${MOMENTS[k].o.map((o, j) => `<button class="opt" data-j="${j}" ${tried.includes(j) ? "disabled style=\"opacity:.45;text-decoration:line-through\"" : ""}>${esc(o.t)}</button>`).join("")}</div>` : ""}
+    ${!over && right ? `<div class="row"><button class="btn primary" id="cont">${k === MOMENTS.length - 1 ? "Finish" : "Next moment"}</button></div>` : ""}
+    ${over ? `<div class="note">Best move on the first try in ${mo.first} of ${MOMENTS.length} moments. The three moves to keep: ask for evidence, offer frames in students’ languages, and turn disagreements into investigations.</div>` : ""}
+    ${D.nav("Next: plan your lesson")}`;
+  qa("[data-j]").forEach(b => b.onclick = () => { const j = +b.dataset.j; if (!tried.length && MOMENTS[k].o[j].ok) mo.first++; mo.h.push([k, j]); D.refresh(); });
+  if ($("cont")) $("cont").onclick = () => { mo.k++; D.refresh(); };
+}
+function plan(){
+  const s = S(), b = BANDS[s.band], langs = Object.keys(FRAMES).filter(k => s.lang[k]);
+  return `Lesson: Look Closely at a Trilobite (45 minutes)
+Grade: ${b.n} · Format: ${FMT[s.fmt]}
+Standard (NGSS): ${b.std}
+
+1. Hook (5 min): Fossil hidden under a cloth. “What could be under here that is millions of years old?”
+2. Slow looking (10 min): Partners observe with hand lenses. Record on the See-Think-Wonder chart.
+   Frames: ${langs.map(k => `${FRAMES[k].n}: ${FRAMES[k].f.join(" / ")}`).join("\n           ")}
+3. Share and press for evidence (10 min): “What do you see that makes you say that?”
+4. Investigate (15 min): ${b.task}
+5. Wonder wall (5 min): Each student posts one question. Pick one to explore next lesson.
+
+Look for: students separating observations from ideas, and backing ideas with evidence.
+Kit contents used: trilobite cast, horseshoe crab shell, rock layer card, hand lenses, fossil cards.`;
+}
+function s2(){
+  const s = S(), ready = s.band && s.fmt && Object.values(s.lang).some(Boolean);
+  $("stage").innerHTML = `
+    <div class="label">Step 3 · Plan your lesson</div>
+    <h2>Build a lesson from the Fossils Discovery Kit</h2>
+    <p class="lead">Choose your grade, your students’ languages and the format. The plan, the standard and the sentence frames update to match.</p>
+    <div class="part" style="border-top:0;padding-top:0"><h3>Grade</h3><div class="grid3">${Object.entries(BANDS).map(([k, b]) => `<button class="pick" data-b="${k}" aria-pressed="${s.band === k}"><b>${b.n}</b><span>${esc(b.std.split(":")[0])}</span></button>`).join("")}</div></div>
+    <div class="part"><h3>Sentence frames for your students</h3><div class="grid3">${Object.entries(FRAMES).map(([k, f]) => `<button class="pick" data-l="${k}" aria-pressed="${!!s.lang[k]}"><b>${f.n}</b><span>${esc(f.f[0])}</span></button>`).join("")}</div></div>
+    <div class="part"><h3>Format</h3><div class="grid2">${Object.entries(FMT).map(([k, t]) => `<button class="pick" data-f="${k}" aria-pressed="${s.fmt === k}"><b>${k === "room" ? "Loan kit" : "Virtual session"}</b><span>${t}</span></button>`).join("")}</div></div>
+    ${ready ? `<div class="part"><h3>Your lesson plan</h3><div class="out">${esc(plan())}</div>
+      <div class="frames">${Object.keys(FRAMES).filter(k => s.lang[k]).map(k => `<div class="frame"><b>${FRAMES[k].n.toUpperCase()} FRAMES</b>${FRAMES[k].f.map(esc).join("<br>")}</div>`).join("")}</div>
+      <div class="row"><button class="btn" id="cp">Copy plan</button><button class="btn primary" id="ok" ${s.planned ? "disabled" : ""}>${s.planned ? "Plan saved" : "Save my plan"}</button><span id="cs" class="qnum" role="status"></span></div></div>` : ""}
+    ${D.nav("Next: try it and share")}`;
+  qa("[data-b]").forEach(b => b.onclick = () => { s.band = b.dataset.b; s.planned = false; D.refresh(); });
+  qa("[data-l]").forEach(b => b.onclick = () => { s.lang[b.dataset.l] = !s.lang[b.dataset.l]; s.planned = false; D.refresh(); });
+  qa("[data-f]").forEach(b => b.onclick = () => { s.fmt = b.dataset.f; s.planned = false; D.refresh(); });
+  if ($("cp")) $("cp").onclick = () => copyText(plan(), $("cs"));
+  if ($("ok")) $("ok").onclick = () => { s.planned = true; D.refresh(); };
+}
+function s3(){
+  const s = S();
+  const DATES = ["This week", "Next week", "Within a month"];
+  const SHARE = ["Post a photo of my class’s wonder wall in the Kit Ambassadors group", "Share how I adapted the lesson for my students", "Bring one student question to the next virtual meetup"];
+  $("stage").innerHTML = `
+    <div class="label">Step 4 · Try it and share</div>
+    <h2>Professional learning sticks when you try it soon</h2>
+    <p class="lead">Kit Ambassadors is the museum’s community of teachers who use the kits. A small commitment now makes it more likely the lesson happens, and gives other teachers ideas.</p>
+    <div class="part" style="border-top:0;padding-top:0"><h3>When will you teach it?</h3><div class="grid3">${DATES.map((d, j) => `<button class="pick" data-d="${j}" aria-pressed="${s.date === String(j)}"><b>${d}</b></button>`).join("")}</div></div>
+    <div class="part"><h3>What will you share back?</h3><div class="opts">${SHARE.map((t, j) => `<button class="opt ${s.share === String(j) ? "sel" : ""}" data-sh="${j}">${esc(t)}</button>`).join("")}</div></div>
+    <div class="part"><h3>How confident are you now leading an inquiry with a museum object?</h3>${scale("c1", s.conf1)}
+      ${s.conf1 != null ? `<p class="qnum">Confidence: ${s.conf0 ?? "–"} at the start → ${s.conf1} now</p>` : ""}</div>
+    ${s.date && s.share && s.conf1 != null ? `<div class="note">You’re set. In a real rollout, you’d get a reminder before your date with the kit pickup details, and a two-question check-in afterward.</div>` : ""}
+    ${D.nav("Next: program view")}`;
+  qa("[data-d]").forEach(b => b.onclick = () => { s.date = b.dataset.d; D.refresh(); });
+  qa("[data-sh]").forEach(b => b.onclick = () => { s.share = b.dataset.sh; D.refresh(); });
+  qa("#c1 .scale").forEach(b => b.onclick = () => { s.conf1 = +b.dataset.n; D.refresh(); });
+}
+function s4(){
+  $("stage").innerHTML = `
+    <div class="label">Step 5 · Program view</div>
+    <h2>Behind the module: how the program is run and measured</h2>
+    <p class="lead">This is the view for the museum’s learning team and funders: how the module fits the larger professional learning program, and what gets reported.</p>
+    <div class="lm">
+      <div><b>Inputs</b><ul><li>Discovery Kits</li><li>Museum educators</li><li>Grant funding</li><li>Partner schools</li></ul></div>
+      <div><b>Activities</b><ul><li>This 30-minute module</li><li>Virtual sessions</li><li>Kit Ambassadors meetups</li></ul></div>
+      <div><b>Outputs</b><ul><li>Teachers completing the module</li><li>Kits borrowed</li><li>Lessons taught</li></ul></div>
+      <div><b>Short-term outcomes</b><ul><li>Teacher confidence with object-based inquiry</li><li>Multilingual supports used</li></ul></div>
+      <div><b>Long-term outcomes</b><ul><li>Students reason from evidence</li><li>More classrooms use museum collections</li></ul></div>
+    </div>
+    <div class="part"><h3>What gets reported</h3><div class="tablewrap"><table><thead><tr><th>Measure</th><th>Source</th><th>When</th></tr></thead><tbody>
+      <tr><td>Confidence before and after (collected in this module)</td><td>Module data</td><td>Each teacher</td></tr>
+      <tr><td>First-try See-Think-Wonder sorts and facilitation choices</td><td>Module data</td><td>Each teacher</td></tr>
+      <tr><td>Lessons taught and languages supported</td><td>Two-question check-in after the planned date</td><td>2–4 weeks later</td></tr>
+      <tr><td>Kit loans and repeat borrowers; Kit Ambassadors participation</td><td>Loan system, community records</td><td>Each semester</td></tr>
+      <tr><td>Student evidence-based reasoning (sample of wonder walls and charts)</td><td>Teacher-shared artifacts, scored with a simple rubric</td><td>Yearly, for the grant report</td></tr></tbody></table></div></div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${D.nav("")}`;
+  $("reset").onclick = () => D.reset();
+}
+D.render();
+</script>
+</body>
+</html>

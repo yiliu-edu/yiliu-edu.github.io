@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>At the Pond · 池塘边 · Dual Literacy Lesson</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A first-grade Mandarin–English dual literacy digital lesson, shown from both sides: the student experience and the designer’s storyboard, metadata and bilingual QC. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&family=Noto+Sans+SC:wght@500;700&display=swap">
+<link rel="stylesheet" href="demo-base.css?v=1">
+<style>
+.zh{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+.kid{border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#F7FBFF}
+.kidbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.lang{display:flex;border:2px solid var(--bar);border-radius:99px;overflow:hidden}
+.lang button{border:0;background:#fff;color:var(--bar);font:700 14px var(--sans);padding:6px 14px}
+.lang button[aria-pressed="true"]{background:var(--bar);color:#fff}
+.page{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;padding:18px;align-items:center}
+@media (max-width:700px){.page{grid-template-columns:minmax(0,1fr)}}
+.pic{background:linear-gradient(#CFE6FA 0 45%,#7FC1E8 45% 100%);border-radius:16px;aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.pic svg{width:72%;height:72%}
+.sent{display:flex;flex-direction:column;gap:10px}
+.line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.say{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 3px 0 #C8601A}
+.say:active{transform:translateY(2px);box-shadow:0 1px 0 #C8601A}
+.w{border:0;background:none;padding:2px 4px;border-radius:8px;font-size:32px;font-weight:700;color:var(--ink);cursor:pointer}
+.w:hover,.w.on{background:#FFF0D6}
+.py{font:600 17px var(--sans);color:var(--blue);margin-left:54px}
+.dots{display:flex;gap:8px;justify-content:center;padding:0 0 14px}
+.dots button{width:14px;height:14px;border-radius:50%;border:0;background:var(--line);padding:0}
+.dots button[aria-current="true"]{background:var(--bar)}
+.dots button.seen{background:var(--sky)}
+.pnav{display:flex;justify-content:space-between;padding:0 18px 14px}
+.match{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:18px}
+@media (max-width:640px){.match{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{border:3px solid transparent;border-radius:16px;background:#fff;padding:8px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 3px 10px rgba(0,0,0,.06)}
+.tile svg{width:90px;height:70px}
+.tile[aria-pressed="true"]{border-color:var(--bar)}
+.tile.done{border-color:var(--good);opacity:.65}
+.word{border:3px solid var(--line);border-radius:14px;background:#fff;padding:12px;font-size:28px;font-weight:700;color:var(--ink)}
+.word .py2{display:block;font:600 14px var(--sans);color:var(--blue)}
+.word.done{border-color:var(--good);background:var(--good-soft)}
+.word.no{border-color:var(--warn);animation:shake .35s}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;padding:18px}
+@media (max-width:640px){.cmp{grid-template-columns:minmax(0,1fr)}}
+.cmp div{background:#fff;border-radius:14px;padding:14px;font-size:26px;font-weight:700;text-align:center}
+.cmp small{display:block;font:700 12px var(--sans);color:var(--muted);letter-spacing:.08em;margin-bottom:6px}
+.who{background:#E3F3EA;border-radius:6px;padding:0 4px}
+.act{background:#FFF0D6;border-radius:6px;padding:0 4px}
+.sb td,.sb th{font-size:13px}
+.sb td.zh{font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta span{font:600 12.5px var(--sans);background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:4px 9px}
+.meta b{color:var(--navy)}
+.qc{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.qc{grid-template-columns:minmax(0,1fr)}}
+.build{border:2px dashed #B9C2CE;border-radius:16px;padding:12px;background:#fff;position:relative}
+.build .ver{position:absolute;right:10px;top:-12px;background:#fff;font:700 11px var(--sans);color:var(--muted);padding:0 6px}
+.qi{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;font-size:14px;color:var(--ink);width:100%}
+.qi .bx{flex:none;width:18px;height:18px;border-radius:5px;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;color:#fff;margin-top:2px}
+.qi[aria-pressed="true"]{border-color:var(--warn);background:var(--warn-soft)}
+.qi[aria-pressed="true"] .bx{background:var(--warn);border-color:var(--warn)}
+.qi.miss{border-style:dashed;border-color:var(--warn)}
+.qi.right{border-color:var(--good);background:var(--good-soft)}
+.qi code{font-size:12.5px;background:var(--soft);border-radius:4px;padding:0 4px}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../dual-literacy-lesson-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div class="k">K–2 dual literacy · Mandarin and English</div><h1>At the Pond · <span class="zh">池塘边</span></h1>
+  <p>One digital lesson from both sides: first as a first grader, reading and listening in two languages; then as the instructional designer, with the storyboard, metadata and a bilingual quality check of a vendor build.</p>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card"><div class="label">Lesson and build</div><nav class="path" id="path" aria-label="Steps"></nav></div>
+    <div class="card"><div class="label">Progress</div><div class="meter" style="margin-top:6px"><i id="prog" style="width:0"></i></div><div id="kpis" style="margin-top:8px"></div></div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">This lesson is an original portfolio piece. Audio is AI-generated with Kokoro, an open-source text-to-speech model, and would be replaced by recorded native-speaker narration in production. The same storyboard and QC process applies to Spanish–English programs. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<script src="demo-base.js?v=1"></script>
+<script>
+const ANIM = {
+  frog:`<svg viewBox="0 0 120 90" role="img" aria-label="A green frog leaping"><ellipse cx="60" cy="58" rx="34" ry="22" fill="#4CAF50"/><circle cx="44" cy="34" r="12" fill="#4CAF50"/><circle cx="76" cy="34" r="12" fill="#4CAF50"/><circle cx="44" cy="33" r="6" fill="#fff"/><circle cx="76" cy="33" r="6" fill="#fff"/><circle cx="45" cy="34" r="3" fill="#1F1F1F"/><circle cx="77" cy="34" r="3" fill="#1F1F1F"/><path d="M48 62 Q60 70 72 62" stroke="#1E5E22" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M28 70 L12 84 M92 70 L108 84" stroke="#3B8C3F" stroke-width="7" stroke-linecap="round"/></svg>`,
+  duck:`<svg viewBox="0 0 120 90" role="img" aria-label="A yellow duck swimming"><ellipse cx="62" cy="60" rx="36" ry="18" fill="#FFD54F"/><circle cx="38" cy="36" r="15" fill="#FFD54F"/><path d="M22 38 L6 42 L22 46 Z" fill="#F28A26"/><circle cx="36" cy="32" r="3" fill="#1F1F1F"/><path d="M70 52 Q86 44 96 56" stroke="#E0B23A" stroke-width="4" fill="none"/><path d="M14 80 Q30 74 46 80 T78 80 T110 80" stroke="#fff" stroke-width="3" fill="none"/></svg>`,
+  fish:`<svg viewBox="0 0 120 90" role="img" aria-label="An orange fish hiding behind green water plants"><ellipse cx="58" cy="48" rx="30" ry="17" fill="#F28A26"/><path d="M86 48 L108 32 L108 64 Z" fill="#F28A26"/><circle cx="42" cy="44" r="3.5" fill="#1F1F1F"/><path d="M20 88 Q24 50 16 20 M30 88 Q36 56 30 30 M84 88 Q80 60 88 36" stroke="#2E7D32" stroke-width="7" fill="none" stroke-linecap="round"/></svg>`,
+  turtle:`<svg viewBox="0 0 120 90" role="img" aria-label="A turtle resting on a rock"><ellipse cx="62" cy="80" rx="48" ry="9" fill="#9E9E9E"/><ellipse cx="60" cy="58" rx="34" ry="20" fill="#6D8B3A"/><path d="M40 52 L60 42 L80 52 L72 66 L48 66 Z" fill="#8FAF4F" stroke="#4E6B23" stroke-width="2"/><ellipse cx="98" cy="60" rx="11" ry="9" fill="#A5C46A"/><circle cx="102" cy="57" r="2.5" fill="#1F1F1F"/><path d="M36 72 L30 78 M80 72 L86 78" stroke="#A5C46A" stroke-width="7" stroke-linecap="round"/></svg>`
+};
+const PAGES = [
+  {id:"p1", a:"frog", en:["The","frog","jumps."], zh:["青蛙","跳。"], py:"Qīngwā tiào."},
+  {id:"p2", a:"duck", en:["The","duck","swims."], zh:["鸭子","游泳。"], py:"Yāzi yóuyǒng."},
+  {id:"p3", a:"fish", en:["The","fish","hides."], zh:["小鱼","躲起来。"], py:"Xiǎo yú duǒ qǐlái."},
+  {id:"p4", a:"turtle", en:["The","turtle","rests."], zh:["乌龟","休息。"], py:"Wūguī xiūxi."}
+];
+const WORDS = {frog:{en:"frog", zh:"青蛙", py:"qīngwā"}, duck:{en:"duck", zh:"鸭子", py:"yāzi"}, fish:{en:"fish", zh:"鱼", py:"yú"}, turtle:{en:"turtle", zh:"乌龟", py:"wūguī"}};
+const QC = [
+  {t:"Pinyin under 青蛙 reads <code>Qìngwā</code>", err:true, sev:"High", fix:"Tone mark: should be Qīngwā (first tone)."},
+  {t:"Audio button on the 中文 page plays <code>en-frog.mp3</code>", err:true, sev:"High", fix:"Audio file mapping: should play zh-frog.mp3."},
+  {t:"Frog image alt text: “A green frog leaping”", err:false},
+  {t:"Duck image has no alt text", err:true, sev:"Medium", fix:"Add alt text in both language versions: “A yellow duck swimming” / “一只黄色的鸭子在游泳”."},
+  {t:"Feedback in 中文 mode shows only “Great job!”", err:true, sev:"Medium", fix:"Feedback must match the selected language: “真棒！” in 中文 mode."},
+  {t:"Speaker buttons are 44 × 44 px and reachable by keyboard", err:false},
+  {t:"Chinese text uses Simplified characters, as the program spec requires", err:false}
+];
+const AUD = new Audio();
+function play(f){ try { AUD.pause(); AUD.src = "audio/dual/" + f + ".mp3"; AUD.play().catch(() => {}); } catch {} }
+const SPK = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 8a5 5 0 0 1 0 8M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+
+const D = makeDemo({
+  key:"dual-pond-v1",
+  steps:[{sub:"Student · 1", nm:"Read and listen"},{sub:"Student · 2", nm:"Match the words"},{sub:"Student · 3", nm:"Compare the languages"},{sub:"Designer · 4", nm:"Storyboard and metadata"},{sub:"Designer · 5", nm:"QC the vendor build"}],
+  fresh:() => ({i:0, lang:"both", pg:0, seen:{}, heard:{}, mlang:"zh", sel:null, matched:{}, miss:0, cmp:null, cmpTries:0, sbSeen:false, flags:{}, qcDone:null}),
+  done:(i, s) => [
+    PAGES.every(p => s.seen[p.id]) && Object.keys(s.heard).length >= 2,
+    Object.keys(s.matched).length === 4,
+    s.cmp === 0,
+    s.sbSeen,
+    s.qcDone === true][i],
+  kpis:s => [["Pages read", `${Object.keys(s.seen).length} / 4`], ["Audio played", Object.keys(s.heard).length], ["Words matched", `${Object.keys(s.matched).length} / 4`], ["QC issues found", s.qcDone ? "4 / 4" : "–"]],
+  render:[s0, s1, s2, s3, s4]
+});
+const S = () => D.st;
+
+function s0(){
+  const s = S(), p = PAGES[s.pg]; s.seen[p.id] = true; D.save();
+  const showEn = s.lang !== "zh", showZh = s.lang !== "en";
+  $("stage").innerHTML = `
+    <div class="label">Student view · Read and listen</div>
+    <h2>A four-page book, in two languages</h2>
+    <p class="lead">Switch languages, tap the speaker to hear the sentence, or tap a single word. Read all four pages and listen to at least two.</p>
+    <div class="kid">
+      <div class="kidbar"><b style="font-family:var(--sans);color:var(--navy)">At the Pond · <span class="zh">池塘边</span></b>
+        <div class="lang" role="group" aria-label="Language">${[["en","English"],["both","Both"],["zh","中文"]].map(([k, l]) => `<button data-l="${k}" aria-pressed="${s.lang === k}" class="${k === "zh" ? "zh" : ""}">${l}</button>`).join("")}</div></div>
+      <div class="page"><div class="pic">${ANIM[p.a]}</div>
+        <div class="sent">
+          ${showEn ? `<div class="line"><button class="say" data-say="en-${p.id}" aria-label="Listen in English">${SPK}</button>${p.en.map(w => `<button class="w" data-w="en-${w.replace(/\W/g, "").toLowerCase()}">${w}</button>`).join(" ")}</div>` : ""}
+          ${showZh ? `<div class="line"><button class="say" data-say="zh-${p.id}" aria-label="用中文听">${SPK}</button><span class="zh">${p.zh.map(w => `<button class="w zh" data-w="zh-${w.replace(/[。]/g, "")}">${w}</button>`).join("")}</span></div><div class="py">${p.py}</div>` : ""}
+        </div></div>
+      <div class="pnav"><button class="btn" id="pp" ${s.pg === 0 ? "disabled" : ""}>‹ Back</button><button class="btn primary" id="np" ${s.pg === 3 ? "disabled" : ""}>Next ›</button></div>
+      <div class="dots">${PAGES.map((q, j) => `<button data-pg="${j}" aria-current="${j === s.pg}" class="${s.seen[q.id] ? "seen" : ""}" aria-label="Page ${j + 1}"></button>`).join("")}</div>
+    </div>
+    ${D.nav("Next: match the words")}`;
+  const map = {"en-the":null, "en-frog":"en-frog", "en-duck":"en-duck", "en-fish":"en-fish", "en-turtle":"en-turtle", "zh-青蛙":"zh-frog", "zh-鸭子":"zh-duck", "zh-小鱼":"zh-fish", "zh-乌龟":"zh-turtle"};
+  qa("[data-say]").forEach(b => b.onclick = () => { play(b.dataset.say); s.heard[b.dataset.say] = true; D.save(); D.side(); D.refresh(); });
+  qa(".w").forEach(b => b.onclick = () => { const f = map[b.dataset.w]; if (f) { play(f); b.classList.add("on"); setTimeout(() => b.classList.remove("on"), 700); } else { play(b.dataset.w.startsWith("en") ? "en-" + PAGES[s.pg].id : "zh-" + PAGES[s.pg].id); } });
+  qa("[data-l]").forEach(b => b.onclick = () => { s.lang = b.dataset.l; D.refresh(); });
+  qa("[data-pg]").forEach(b => b.onclick = () => { s.pg = +b.dataset.pg; D.refresh(); });
+  $("pp").onclick = () => { s.pg--; D.refresh(); };
+  $("np").onclick = () => { s.pg++; D.refresh(); };
+}
+function s1(){
+  const s = S(), L = s.mlang, order = ["turtle", "frog", "fish", "duck"];
+  const done = Object.keys(s.matched).length === 4;
+  $("stage").innerHTML = `
+    <div class="label">Student view · Match the words</div>
+    <h2>Tap an animal, then tap its word</h2>
+    <p class="lead">Practice in either language. Each word plays when you match it. A wrong tap shakes, so students can try again without a penalty screen.</p>
+    <div class="kid">
+      <div class="kidbar"><b style="font-family:var(--sans);color:var(--navy)">Match · <span class="zh">配对</span></b>
+        <div class="lang" role="group" aria-label="Language">${[["en","English"],["zh","中文"]].map(([k, l]) => `<button data-ml="${k}" aria-pressed="${L === k}" class="${k === "zh" ? "zh" : ""}">${l}</button>`).join("")}</div></div>
+      <div class="match">${Object.keys(WORDS).map(a => `<button class="tile ${s.matched[a] ? "done" : ""}" data-a="${a}" aria-pressed="${s.sel === a}" ${s.matched[a] ? "disabled" : ""}>${ANIM[a]}</button>`).join("")}</div>
+      <div class="match" style="padding-top:0">${order.map(a => `<button class="word ${L === "zh" ? "zh" : ""} ${s.matched[a] ? "done" : ""}" data-m="${a}" ${s.matched[a] ? "disabled" : ""}>${L === "zh" ? WORDS[a].zh + `<span class="py2">${WORDS[a].py}</span>` : WORDS[a].en}</button>`).join("")}</div>
+      ${done ? `<p style="text-align:center;padding:0 0 16px;font:700 20px var(--sans);color:var(--good)">${L === "zh" ? "<span class=\"zh\">真棒！</span> Great job!" : "Great job! <span class=\"zh\">真棒！</span>"}</p>` : ""}
+    </div>
+    ${D.nav("Next: compare the languages")}`;
+  qa("[data-ml]").forEach(b => b.onclick = () => { s.mlang = b.dataset.ml; D.refresh(); });
+  qa(".tile").forEach(b => b.onclick = () => { s.sel = b.dataset.a; D.refresh(); });
+  qa("[data-m]").forEach(b => b.onclick = () => {
+    if (!s.sel) { bump(b); return; }
+    if (b.dataset.m === s.sel) { s.matched[s.sel] = L; play(`${L}-${s.sel}`); s.sel = null; D.refresh(); }
+    else { s.miss++; D.save(); b.classList.remove("no"); void b.offsetWidth; b.classList.add("no"); }
+  });
+}
+function s2(){
+  const s = S();
+  const O = ["swims: English adds -s for one duck; the Chinese verb 游泳 stays the same", "The duck: Chinese drops “the” and English keeps it", "Both words stay the same in both languages"];
+  $("stage").innerHTML = `
+    <div class="label">Student view · Compare the languages</div>
+    <h2>Building a bridge between languages</h2>
+    <p class="lead">Dual literacy programs make cross-language connections explicit. Here, students notice that both sentences put the animal first and the action second, and that only English changes the action word.</p>
+    <div class="kid">
+      <div class="cmp"><div><small>ENGLISH</small><span class="who">The duck</span> <span class="act">swims</span>.</div><div class="zh"><small style="font-family:var(--sans)">中文</small><span class="who">鸭子</span><span class="act">游泳</span>。</div></div>
+      <div style="padding:0 18px 6px;font-size:15px">Green = who. Orange = what they do. Same order in both languages.</div>
+      <div style="padding:10px 18px 18px"><b>Which word changes in English but not in Chinese?</b>
+        <div class="opts" style="margin-top:8px">${O.map((o, j) => `<button class="opt ${s.cmp === j ? (j === 0 ? "ok" : "bad") : ""}" data-c="${j}" ${s.cmp === 0 ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+        ${s.cmp != null ? `<div class="note ${s.cmp === 0 ? "" : "warn"}" style="margin-top:10px">${s.cmp === 0 ? "Right. “The duck swims” but “The ducks swim.” In Chinese, 鸭子游泳 works for one duck or many. This is CCSS L.1.1c, taught through a contrast students can hear." : "Look at the orange word. Would it change if there were two ducks?"}</div>` : ""}</div>
+    </div>
+    ${D.nav("Next: designer view")}`;
+  qa("[data-c]").forEach(b => b.onclick = () => { s.cmp = +b.dataset.c; s.cmpTries++; D.refresh(); });
+}
+function s3(){
+  const s = S(); s.sbSeen = true; D.save(); D.side();
+  $("stage").innerHTML = `
+    <div class="label">Designer view · Storyboard and metadata</div>
+    <h2>What the vendor builds from</h2>
+    <p class="lead">Every screen is specified in both languages before anything is built: text, audio file names, interaction, alt text and feedback. This is the storyboard for the lesson you just used, plus its metadata tags.</p>
+    <div class="tablewrap"><table class="sb"><thead><tr><th>Screen</th><th>On-screen EN</th><th>On-screen ZH</th><th>Audio</th><th>Interaction</th><th>Alt text (EN / ZH)</th></tr></thead><tbody>
+      ${PAGES.map((p, j) => `<tr><td>B${j + 1}</td><td>${p.en.join(" ")}</td><td class="zh">${p.zh.join("")}<br><span style="font-size:12px;color:var(--blue)">${p.py}</span></td><td><code>en-${p.id}.mp3</code><br><code>zh-${p.id}.mp3</code></td><td>Tap sentence or word to hear; language toggle</td><td>${esc(ANIM[p.a].match(/aria-label="([^"]+)"/)[1])}</td></tr>`).join("")}
+      <tr><td>M1</td><td>Match: frog, duck, fish, turtle</td><td class="zh">配对：青蛙、鸭子、鱼、乌龟</td><td><code>{lang}-{animal}.mp3</code></td><td>Tap picture, tap word; shake on miss, word audio on match</td><td>Same as B1–B4</td></tr>
+      <tr><td>C1</td><td>The duck swims.</td><td class="zh">鸭子游泳。</td><td>—</td><td>Color-coded who/action; one multiple-choice item</td><td>Color is paired with labels “who” and “action” for students who can’t see color</td></tr>
+      <tr><td>FB</td><td>Great job!</td><td class="zh">真棒！</td><td>—</td><td>Feedback in the selected language first, then the other</td><td>—</td></tr></tbody></table></div>
+    <div class="part"><h3>Metadata</h3><div class="meta">
+      <span><b>Grade</b> 1</span><span><b>Program</b> Dual Literacy, Mandarin–English</span><span><b>Standard</b> CCSS L.1.1c (singular and plural verbs)</span><span><b>Skill</b> cross-language connection</span><span><b>Vocabulary</b> animals, action verbs</span><span><b>Language target</b> Novice Mid</span><span><b>Modality</b> listening, reading</span><span><b>Asset IDs</b> POND-B1…B4, M1, C1</span><span><b>Accessibility</b> keyboard, alt text EN/ZH, 44 px targets</span></div></div>
+    <div class="part"><h3>Concept map</h3><div class="doc">Animals at the pond → <b>who</b> (nouns: frog, duck, fish, turtle / 青蛙, 鸭子, 鱼, 乌龟) + <b>what they do</b> (verbs: jumps, swims, hides, rests / 跳, 游泳, 躲起来, 休息) → <b>sentence pattern</b> who + action (same in both) → <b>contrast</b> English verb agreement (-s) vs. unchanged Chinese verbs</div></div>
+    ${D.nav("Next: QC the vendor build")}`;
+}
+function s4(){
+  const s = S(), errs = QC.filter(q => q.err).length, d = s.qcDone;
+  $("stage").innerHTML = `
+    <div class="label">Designer view · QC the vendor build</div>
+    <h2>Build v0.3 of screen B1 came back from the vendor</h2>
+    <p class="lead">Check the build against the storyboard and the program spec, in both languages. Flag every item that’s wrong. Some items are correct.</p>
+    <div class="qc">
+      <div class="build"><span class="ver">VENDOR BUILD v0.3 · B1</span>
+        <div class="page" style="padding:6px"><div class="pic" style="aspect-ratio:4/3">${ANIM.frog}</div>
+          <div class="sent"><div class="line"><button class="say" onclick="play('en-frog')" aria-label="Plays the wrong file">${SPK}</button><span class="zh"><span class="w zh" style="cursor:default">青蛙</span><span class="w zh" style="cursor:default">跳。</span></span></div><div class="py">Qìngwā tiào.</div>
+          <div class="note" style="font:700 15px var(--sans)">Great job!</div></div></div></div>
+      <div class="opts">${QC.map((q, j) => { const f = !!s.flags[j], cls = d == null ? "" : q.err && !f ? "miss" : !q.err && f ? "" : q.err ? "right" : ""; return `<button class="qi ${cls}" data-q="${j}" aria-pressed="${f}" ${d === true ? "disabled" : ""}><span class="bx">!</span><span>${q.t}${d != null && q.err ? `<br><span class="qnum">${q.sev} · ${esc(q.fix)}</span>` : ""}${d != null && !q.err && f ? `<br><span class="qnum">This matches the spec.</span>` : ""}</span></button>`; }).join("")}
+        <div class="row"><button class="btn primary" id="sub" ${d === true ? "disabled" : ""}>Submit QC log</button></div></div>
+    </div>
+    ${d != null ? `<div class="note ${d ? "" : "warn"}">${d ? `All ${errs} issues logged. In production they go into the QC tracker with severity, screen ID and the storyboard line they break, and the vendor fixes them for build v0.4.` : "Not yet. Dashed items are issues you missed; correct items are marked. Adjust your flags and submit again."}</div>` : ""}
+    ${d ? `<div class="part"><h3>QC tracker entry</h3><div class="tablewrap"><table><thead><tr><th>ID</th><th>Screen</th><th>Issue</th><th>Severity</th><th>Status</th></tr></thead><tbody>${QC.filter(q => q.err).map((q, j) => `<tr><td>QC-${101 + j}</td><td>B1</td><td>${esc(q.fix)}</td><td>${q.sev}</td><td>Returned to vendor</td></tr>`).join("")}</tbody></table></div></div>` : ""}
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${D.nav("")}`;
+  qa("[data-q]").forEach(b => b.onclick = () => { s.flags[b.dataset.q] = !s.flags[b.dataset.q]; s.qcDone = null; D.refresh(); });
+  $("sub").onclick = () => { s.qcDone = QC.every((q, j) => q.err === !!s.flags[j]); D.refresh(); };
+  $("reset").onclick = () => D.reset();
+}
+D.render();
+</script>
+</body>
+</html>

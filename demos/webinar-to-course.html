@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Webinar to Course · Modernizing Legacy Content</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="Turning a 62-minute legacy webinar into a learner-centered digital course: content triage, quality audit, microlesson, scenario, job aid, LMS readiness and xAPI tracking. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="demo-base.css?v=1">
+<style>
+.legacy{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;border:1.5px solid var(--line);border-radius:14px;padding:14px;background:#FBFBFB}
+@media (max-width:640px){.legacy{grid-template-columns:minmax(0,1fr)}}
+.thumb{aspect-ratio:16/9;border-radius:10px;background:linear-gradient(135deg,#5A6B80,#2E3A4A);display:grid;place-items:center;color:#fff;font:700 13px var(--sans);text-align:center;padding:10px;position:relative}
+.thumb small{position:absolute;right:8px;bottom:6px;background:rgba(0,0,0,.6);border-radius:4px;padding:0 5px;font-weight:600}
+.stat{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px}
+.stat b{display:block;font:800 22px var(--sans);color:var(--navy)}
+.stat .bad b{color:var(--warn)}
+.chunk{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.chunk .ts{font:600 12px var(--sans);color:var(--muted)}
+.chunk q{font-style:italic;quotes:"“" "”"}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;font:600 13px var(--sans);color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--bar);border-color:var(--bar);color:#fff}
+.rub td:nth-child(n+2){text-align:center;white-space:nowrap}
+.rub button{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:3px 9px;font:600 12px var(--sans);color:var(--ink)}
+.rub button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+/* Rise-style lesson */
+.riseL{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.riseL .hero{background:linear-gradient(135deg,#1C4587,#3878BC);color:#fff;padding:22px 24px}
+.riseL .hero span{font:700 12px var(--sans);letter-spacing:.1em;opacity:.8}
+.riseL .hero h3{font-size:24px;margin-top:4px}
+.riseL .blk{padding:18px 24px;border-top:1px solid var(--line)}
+.acc{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:8px}
+.acc button{width:100%;text-align:left;background:#fff;border:0;padding:11px 14px;font:600 14.5px var(--sans);color:var(--navy);display:flex;justify-content:space-between}
+.acc div{padding:0 14px 12px;font-size:15px}
+.flips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+@media (max-width:640px){.flips{grid-template-columns:minmax(0,1fr)}}
+.flip{perspective:800px;height:130px;border:0;background:none;padding:0}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:12px;display:grid;place-items:center;padding:12px;backface-visibility:hidden;text-align:center}
+.flip .f{background:var(--tint);color:var(--navy);font:700 17px var(--sans);border:1.5px solid var(--sky)}
+.flip .b{background:var(--navy);color:#fff;font-size:14px;line-height:1.4;transform:rotateY(180deg)}
+.chat{background:var(--soft);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:84%;padding:9px 13px;border-radius:16px;font-size:15px;animation:rise .3s both}
+.msg .who{font:700 11px var(--sans);color:var(--muted);margin-bottom:2px}
+.msg.them{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--bar);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.me .who{color:#E6EEF9}
+.chk{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;font-size:14.5px;color:var(--ink)}
+.chk .bx{flex:none;width:18px;height:18px;border-radius:5px;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;color:#fff;margin-top:3px}
+.chk[aria-pressed="true"]{border-color:var(--good);background:var(--good-soft)}
+.chk[aria-pressed="true"] .bx{background:var(--good);border-color:var(--good)}
+.jobaid{border:2px solid var(--navy);border-radius:14px;overflow:hidden}
+.jobaid .hd{background:var(--navy);color:#fff;padding:10px 14px;font:700 14px var(--sans)}
+.jobaid ol{margin:0;padding:12px 14px 12px 34px;font-size:14.5px}
+.bars{display:grid;grid-template-columns:180px minmax(0,1fr);gap:8px 12px;align-items:center;font-size:14px}
+.bars .pair{display:flex;flex-direction:column;gap:3px}
+.bars i{display:block;height:12px;border-radius:99px}
+.bars .old{background:#B9C2CE}
+.bars .new{background:linear-gradient(90deg,#3878BC,#6FA8DC)}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../webinar-to-course-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<header class="top"><div class="in">
+  <div class="k">Course modernization · Designer workspace</div><h1>Webinar to Course</h1>
+  <p>Follow one legacy webinar through modernization: triage the content, audit it against quality standards, build a microlesson and a scenario, prepare it for the LMS, and plan how to measure the difference.</p>
+</div></header>
+<div class="wrap">
+  <aside>
+    <div class="card"><div class="label">Modernization path</div><nav class="path" id="path" aria-label="Steps"></nav></div>
+    <div class="card"><div class="label">Progress</div><div class="meter" style="margin-top:6px"><i id="prog" style="width:0"></i></div><div id="kpis" style="margin-top:8px"></div></div>
+  </aside>
+  <main><section class="panel" id="stage" aria-live="polite"></section></main>
+</div>
+<p class="foot">Lakeshore Realty Learning, its webinar, its data and Priya are fictional, created for this portfolio demo. The pricing guidance is general and not legal or financial advice. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<script src="demo-base.js?v=1"></script>
+<script>
+const CHUNKS = [
+  {ts:"02:10–09:40", t:"Welcome, housekeeping, a long story about how the presenter got into real estate in 1998.", a:"cut", why:"Warm, but it delays the content. Keep one sentence of credibility in the course intro."},
+  {ts:"09:40–18:00", t:"How to choose comparable sales: same neighborhood, similar size and age, sold in the last 3–6 months.", a:"keep", why:"Core concept every agent needs. Becomes a short lesson with an interaction."},
+  {ts:"18:00–24:30", t:"A walkthrough of a pricing screen in software the association stopped supporting in 2021.", a:"cut", why:"Outdated. A current tool walkthrough belongs in a separate, easily updated job aid."},
+  {ts:"24:30–36:00", t:"A story about a seller who insisted on a price $60K above the comps and what happened over four months.", a:"practice", why:"A real conversation with stakes. It becomes the branching scenario."},
+  {ts:"36:00–47:00", t:"Adjusting comps for differences: a renovated kitchen, an extra bedroom, a busy street.", a:"keep", why:"Core skill, but abstract on slides. It needs worked examples and a quick check."},
+  {ts:"47:00–62:00", t:"Q&A. Most questions are about what to say when sellers push back on the price.", a:"practice", why:"Learner questions show where they struggle. They shape the scenario’s choices and the job aid."}
+];
+const TAGS = {keep:"Keep and tighten", cut:"Cut or move", practice:"Turn into practice"};
+const RUBRIC = [
+  {c:"Measurable objectives stated up front", r:0},
+  {c:"Practice that mirrors the job", r:0},
+  {c:"Assessment that checks the skill, not recall", r:0},
+  {c:"Accurate and current content", r:1},
+  {c:"Accessible: accurate captions, transcript, contrast, keyboard", r:1},
+  {c:"Chunked for busy learners (under 10 minutes per piece)", r:0}
+];
+const RLAB = ["Missing", "Partly", "Meets"];
+const SCEN = [
+  {them:"My neighbor’s house sold for $640,000 last spring. So we should list at $650,000, right?",
+   o:[{t:"Let’s list at $650,000 and adjust later if we need to.", ok:false, rep:"Great, that’s what I was hoping.", c:"Agreeing to an unsupported price to win the listing sets up a harder conversation later."},
+      {t:"That sale is a good place to start. Tell me what you know about their house, and let’s compare it with the three most recent sales near you.", ok:true, rep:"Well… theirs had a finished basement. And a bigger lot, I think.", c:"You took her evidence seriously and moved to a comparison she can see."},
+      {t:"The data says $595,000. That’s the number.", ok:false, rep:"So you’re just going to ignore what my neighbor got?", c:"Accurate, but dismissive. She hasn’t seen how you got there."}]},
+  {them:"But we put $40,000 into the kitchen two years ago. That has to count for something.",
+   o:[{t:"Kitchens don’t really add value.", ok:false, rep:"That can’t be right.", c:"Inaccurate and deflating. Updates can add value; the question is how much buyers pay for them here."},
+      {t:"Then let’s add the $40,000 to the price.", ok:false, rep:"Perfect.", c:"What a seller spent isn’t what buyers will pay. Use sales evidence, not cost."},
+      {t:"It does. Here are two recent nearby sales with renovated kitchens, and what buyers paid compared with similar homes without them.", ok:true, rep:"Oh. So it’s more like fifteen or twenty thousand?", c:"You showed how the market values the update, with evidence she can check."}]},
+  {them:"What if we just try $650,000 for a few weeks and see what happens?",
+   o:[{t:"If you really want to, we can.", ok:false, rep:"Great.", c:"You gave up the evidence without explaining the risk."},
+      {t:"Then I can’t take the listing.", ok:false, rep:"Wow. Okay.", c:"Too abrupt. There’s room for a plan you both agree on."},
+      {t:"I understand. Homes priced well above recent sales here have tended to sit longer and sell after reductions. I’d suggest $605,000, and we review showings and feedback together after 14 days.", ok:true, rep:"Okay. Fourteen days, and we look at it together. That I can live with.", c:"You named the trade-off with local evidence and offered a dated review. She keeps control of the decision."}]}
+];
+const READY = ["Captions edited for accuracy and a full transcript attached", "Alt text on every image and chart; decorative images marked", "Text contrast meets WCAG 2.1 AA; everything works by keyboard", "Published as SCORM 2004 and tested in the LMS sandbox", "xAPI statements send scenario choices to the learning record store", "Metadata complete: owner, version 2.0, review date, keywords", "SME sign-off recorded"];
+
+const D = makeDemo({
+  key:"w2c-v1",
+  steps:[{sub:"Step 1", nm:"Triage the webinar"},{sub:"Step 2", nm:"Audit against standards"},{sub:"Step 3", nm:"Build a microlesson"},{sub:"Step 4", nm:"Scenario: the pricing talk"},{sub:"Step 5", nm:"Job aid and LMS readiness"},{sub:"Step 6", nm:"Measure the difference"}],
+  fresh:() => ({i:0, tags:{}, rub:{}, acc:{}, flips:{}, kc:null, kcTries:0, sc:{k:0, h:[], first:0}, ready:{}, published:false, log:[]}),
+  done:(i, s) => [
+    CHUNKS.every((_, j) => s.tags[j]),
+    RUBRIC.every((_, j) => s.rub[j] != null),
+    s.kc === 1,
+    s.sc.k >= SCEN.length,
+    s.published,
+    s.published][i],
+  kpis:s => [["Chunks triaged", `${Object.keys(s.tags).length} / ${CHUNKS.length}`], ["Rubric rated", `${Object.keys(s.rub).length} / ${RUBRIC.length}`], ["Scenario", `${Math.min(s.sc.k, 3)} / 3`], ["xAPI statements", s.log.length]],
+  render:[s0, s1, s2, s3, s4, s5]
+});
+const S = () => D.st;
+function xapi(verb, obj, result){ S().log.push({verb, obj, result}); }
+
+function s0(){
+  const s = S(), n = Object.keys(s.tags).length;
+  const match = CHUNKS.filter((c, j) => s.tags[j] === c.a).length;
+  $("stage").innerHTML = `
+    <div class="label">Step 1 · Triage the webinar</div>
+    <h2>A 62-minute recording nobody finishes</h2>
+    <div class="legacy"><div class="thumb">Pricing Conversations with Sellers<small>1:02:14</small></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div><b>Recorded webinar, 2019</b> · 48 slides · auto-generated captions · no objectives, practice or assessment</div>
+      <div class="stat"><div class="bad"><b>14 min</b>average watch time</div><div class="bad"><b>22%</b>watch to the end</div><div><b>3,180</b>views last year</div><div class="bad"><b>2.9 / 5</b>learner rating</div></div>
+      <div class="qnum">Top learner comment: “Good info but I needed it in 10 minutes before a listing appointment.”</div></div></div>
+    <p class="lead">Before redesigning anything, decide what each part of the recording is worth. Tag each chunk of the transcript. Your tags are compared with the design team’s, and either way you see why.</p>
+    ${CHUNKS.map((c, j) => { const t = s.tags[j]; return `<div class="chunk"><span class="ts">${c.ts}</span><q>${esc(c.t)}</q>
+      <div class="seg" role="group">${Object.entries(TAGS).map(([k, l]) => `<button data-c="${j}" data-t="${k}" aria-pressed="${t === k}">${l}</button>`).join("")}</div>
+      ${t ? `<div class="note ${t === c.a ? "" : "amber"}">${t === c.a ? "Same as the design team." : `The team chose “${TAGS[c.a]}”.`} ${esc(c.why)}</div>` : ""}</div>`; }).join("")}
+    ${n === CHUNKS.length ? `<div class="note info">You matched the team on ${match} of ${CHUNKS.length}. Result: about 18 of 62 minutes is core content, and two stories become practice.</div>` : ""}
+    ${D.nav("Next: audit")}`;
+  qa(".seg button").forEach(b => b.onclick = () => { s.tags[b.dataset.c] = b.dataset.t; D.refresh(); });
+}
+function s1(){
+  const s = S(), n = Object.keys(s.rub).length;
+  const total = RUBRIC.reduce((a, r, j) => a + (s.rub[j] ?? 0), 0);
+  const rec = total <= 4 ? ["Rebuild", "warn", "Keep the expertise, rebuild the experience: objectives, practice, assessment and accessibility are all missing or partial."] : total <= 8 ? ["Refresh", "amber", "Update the weak areas and keep the structure."] : ["Keep", "good", "Minor edits only."];
+  $("stage").innerHTML = `
+    <div class="label">Step 2 · Audit against standards</div>
+    <h2>Rate the webinar against the content standards</h2>
+    <p class="lead">Every asset in the catalog, including content from outside partners, is rated on the same six standards. The total decides whether it’s kept, refreshed, rebuilt or retired.</p>
+    <div class="tablewrap"><table class="rub"><thead><tr><th>Standard</th><th>Your rating</th><th>Team</th></tr></thead><tbody>
+      ${RUBRIC.map((r, j) => `<tr><td>${esc(r.c)}</td><td><div class="seg" style="justify-content:center">${RLAB.map((l, v) => `<button data-r="${j}" data-v="${v}" aria-pressed="${s.rub[j] === v}">${l}</button>`).join("")}</div></td><td>${s.rub[j] != null ? `<span class="tag ${r.r === 0 ? "warn" : "amber"}">${RLAB[r.r]}</span>` : "–"}</td></tr>`).join("")}
+    </tbody></table></div>
+    ${n === RUBRIC.length ? `<div class="note ${rec[1] === "good" ? "" : rec[1]}"><strong>Recommendation: ${rec[0]}</strong> (your total ${total} of 12). ${rec[2]}</div>` : ""}
+    ${D.nav("Next: build a microlesson")}`;
+  qa(".rub button").forEach(b => b.onclick = () => { s.rub[b.dataset.r] = +b.dataset.v; D.refresh(); });
+}
+function s2(){
+  const s = S();
+  const ACC = [["Same neighborhood", "Buyers compare homes they could actually choose between. Stay inside the same school area or subdivision when you can."], ["Similar size, age and features", "Within about 20% of the square footage, similar age and bedroom count. Adjust for the differences you can’t avoid."], ["Sold recently", "Usually the last 3–6 months. In a fast-changing market, the most recent sales matter most."]];
+  const FL = [["List price", "What the seller asks. A starting point, not the value."], ["Market value", "What a typical buyer would likely pay now, based on recent comparable sales."], ["Days on market", "How long homes take to sell. Overpriced homes often sit longer."]];
+  const KC = {q:"Your seller’s home has 2,000 sq ft and 3 bedrooms. Which sale is the best comparable?", o:["A 3,400 sq ft home on the same street, sold last month","A 2,100 sq ft, 3-bedroom home nearby, sold 8 weeks ago","A 2,000 sq ft, 3-bedroom home across town, sold 2 years ago"], a:1, why:"Close in size, features, location and time. The others differ too much on size, or on location and date."};
+  $("stage").innerHTML = `
+    <div class="label">Step 3 · Build a microlesson</div>
+    <h2>Minutes 9 to 18, rebuilt as a 6-minute lesson</h2>
+    <p class="lead">This is the “choosing comparables” chunk as a Rise-style microlesson: short text, an accordion, flip cards and a knowledge check. Try it as a learner would.</p>
+    <div class="riseL">
+      <div class="hero"><span>LESSON 1 OF 4 · 6 MIN</span><h3>Choosing comparable sales</h3><p style="opacity:.9;margin-top:6px;font-size:15px">By the end, you’ll pick three comparable sales a seller will find convincing.</p></div>
+      <div class="blk"><p>Sellers trust a price they can see the evidence for. That evidence is a small set of recent sales that buyers would also consider. Three tests decide if a sale belongs in your set.</p>
+        ${ACC.map(([h, b], j) => `<div class="acc"><button data-acc="${j}" aria-expanded="${!!s.acc[j]}"><span>${j + 1}. ${h}</span><span>${s.acc[j] ? "−" : "+"}</span></button>${s.acc[j] ? `<div>${b}</div>` : ""}</div>`).join("")}</div>
+      <div class="blk"><b style="color:var(--navy)">Three terms sellers mix up</b> <span class="qnum">Tap to flip</span>
+        <div class="flips">${FL.map(([f, b], j) => `<button class="flip" data-f="${j}" aria-pressed="${!!s.flips[j]}" aria-label="${f}: ${s.flips[j] ? b : "tap to show definition"}"><div class="in"><div class="f">${f}</div><div class="b">${b}</div></div></button>`).join("")}</div></div>
+      <div class="blk"><b style="color:var(--navy)">Knowledge check</b><p style="margin:6px 0 10px">${KC.q}</p>
+        <div class="opts">${KC.o.map((o, j) => `<button class="opt ${s.kc === j ? (j === KC.a ? "ok" : "bad") : ""}" data-k="${j}" ${s.kc === KC.a ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+        ${s.kc != null ? `<div class="note ${s.kc === KC.a ? "" : "warn"}" style="margin-top:10px">${s.kc === KC.a ? KC.why : "Not quite. Check all three tests: location, similarity and date."}</div>` : ""}</div>
+    </div>
+    ${D.nav("Next: the scenario")}`;
+  qa("[data-acc]").forEach(b => b.onclick = () => { s.acc[b.dataset.acc] = !s.acc[b.dataset.acc]; if (s.acc[b.dataset.acc]) xapi("experienced", `lesson-1/accordion-${+b.dataset.acc + 1}`); D.refresh(); });
+  qa("[data-f]").forEach(b => b.onclick = () => { s.flips[b.dataset.f] = !s.flips[b.dataset.f]; D.save(); b.setAttribute("aria-pressed", !!s.flips[b.dataset.f]); });
+  qa("[data-k]").forEach(b => b.onclick = () => { s.kc = +b.dataset.k; s.kcTries++; xapi("answered", "lesson-1/knowledge-check", {success: s.kc === KC.a, attempt: s.kcTries}); D.refresh(); });
+}
+function s3(){
+  const s = S(), sc = s.sc, k = Math.min(sc.k, SCEN.length - 1), over = sc.k >= SCEN.length;
+  const tried = sc.h.filter(h => h[0] === k).map(h => h[1]), right = tried.some(j => SCEN[k].o[j].ok);
+  let html = "";
+  for (let m = 0; m <= k; m++) {
+    html += `<div class="msg them"><div class="who">Priya, seller</div>${esc(SCEN[m].them)}</div>`;
+    sc.h.filter(h => h[0] === m).forEach(([, j]) => { const o = SCEN[m].o[j]; html += `<div class="msg me"><div class="who">You</div>${esc(o.t)}</div><div class="msg them"><div class="who">Priya</div>${esc(o.rep)}</div><div class="note ${o.ok ? "" : "warn"}" style="align-self:center">${esc(o.c)}${o.ok ? "" : " Try another reply."}</div>`; });
+  }
+  $("stage").innerHTML = `
+    <div class="label">Step 4 · Scenario: the pricing talk</div>
+    <h2>The 24-minute story, as a decision you make</h2>
+    <p class="lead">In the webinar, learners heard about a seller who wanted $60,000 more than the comparables. Here, you’re in the conversation. Your CMA suggests $585,000–$605,000.</p>
+    <div class="chat">${html}</div>
+    ${!over && !right ? `<div class="opts">${SCEN[k].o.map((o, j) => `<button class="opt" data-j="${j}" ${tried.includes(j) ? "disabled style=\"opacity:.45;text-decoration:line-through\"" : ""}>${esc(o.t)}</button>`).join("")}</div>` : ""}
+    ${!over && right ? `<div class="row"><button class="btn primary" id="cont">${k === SCEN.length - 1 ? "Finish the conversation" : "Continue"}</button></div>` : ""}
+    ${over ? `<div class="note">Conversation complete. Best reply on the first try in ${sc.first} of ${SCEN.length} moments. In the course, these choices also feed the learner analytics in Step 6.</div>` : ""}
+    ${D.nav("Next: job aid and LMS")}`;
+  qa("[data-j]").forEach(b => b.onclick = () => { const j = +b.dataset.j, o = SCEN[k].o[j]; if (!tried.length && o.ok) sc.first++; sc.h.push([k, j]); xapi("answered", `scenario/moment-${k + 1}`, {success: !!o.ok, response: "option " + "ABC"[j]}); D.refresh(); });
+  if ($("cont")) $("cont").onclick = () => { sc.k++; if (sc.k >= SCEN.length) xapi("completed", "scenario", {success: true}); D.refresh(); };
+}
+function stmt(l){ return {actor:{name:"Learner 1042", account:{homePage:"https://lms.example.org", name:"1042"}}, verb:{id:"http://adlnet.gov/expapi/verbs/" + l.verb, display:{"en-US":l.verb}}, object:{id:"https://learning.example.org/pricing-conversations/" + l.obj}, ...(l.result ? {result:l.result} : {})}; }
+function s4(){
+  const s = S(), all = READY.every((_, j) => s.ready[j]);
+  $("stage").innerHTML = `
+    <div class="label">Step 5 · Job aid and LMS readiness</div>
+    <h2>Support on the job, then a clean launch</h2>
+    <p class="lead">The Q&A showed agents wanted help right before an appointment. The job aid answers that. Then the course goes through the same readiness checklist every asset in the catalog must pass.</p>
+    <div class="jobaid"><div class="hd">Before the pricing conversation · one-page job aid</div><ol>
+      <li>Pick three comparable sales: same area, similar home, sold in the last 3–6 months.</li>
+      <li>Note the differences that matter (size, updates, location) and how recent sales priced them.</li>
+      <li>Ask what the seller already knows: neighbor sales, online estimates, what they spent.</li>
+      <li>Show the range, not one number. Let the seller see the evidence.</li>
+      <li>If they want to price higher, name the trade-off and agree on a review date.</li></ol></div>
+    <div class="part"><h3>LMS readiness checklist</h3><div class="opts">${READY.map((r, j) => `<button class="chk" data-r="${j}" aria-pressed="${!!s.ready[j]}"><span class="bx">✓</span><span>${esc(r)}</span></button>`).join("")}</div>
+      <div class="row"><button class="btn primary" id="pub" ${all && !s.published ? "" : "disabled"}>${s.published ? "Published to the LMS (simulated)" : "Publish to the LMS"}</button>${all ? "" : `<span class="qnum">Check every item to publish.</span>`}</div></div>
+    <div class="part"><h3>xAPI statements from your session</h3><p style="font-size:14.5px">Each choice you made sent a statement like these. They show which scenario choices learners struggle with, not just who finished.</p>
+      <div class="out" style="max-height:260px">${s.log.length ? esc(s.log.slice(-3).map(l => JSON.stringify(stmt(l), null, 2)).join(",\n")) : "No statements yet."}</div><span class="qnum">Showing the last 3 of ${s.log.length}.</span></div>
+    ${D.nav("Next: measure the difference")}`;
+  qa("[data-r]").forEach(b => b.onclick = () => { s.ready[b.dataset.r] = !s.ready[b.dataset.r]; D.refresh(); });
+  $("pub").onclick = () => { s.published = true; xapi("completed", "course", {completion: true}); D.refresh(); };
+}
+function s5(){
+  const M = [["Average time spent", 14, 62, 31, 34, "min of"], ["Finish the course", 22, 100, 75, 100, "%"], ["Learner rating", 2.9, 5, 4.3, 5, "/ 5"]];
+  $("stage").innerHTML = `
+    <div class="label">Step 6 · Measure the difference</div>
+    <h2>What success would look like</h2>
+    <p class="lead">Baselines come from the legacy webinar’s analytics. Targets are planning targets for launch, not results. The xAPI data adds what completion can’t show: which decisions learners get wrong.</p>
+    <div class="bars">${M.map(([n, a, amax, b, bmax, u]) => `<span>${n}</span><div class="pair"><i class="old" style="width:${Math.round(100 * a / amax)}%" title="Webinar: ${a}"></i><i class="new" style="width:${Math.round(100 * b / bmax)}%" title="Target: ${b}"></i><span class="qnum">Webinar ${a}${u === "%" ? "%" : u === "/ 5" ? " / 5" : " of 62 min"} · Target ${b}${u === "%" ? "%" : u === "/ 5" ? " / 5" : " of 34 min"}</span></div>`).join("")}</div>
+    <div class="part"><h3>Evaluation plan</h3><div class="tablewrap"><table><thead><tr><th>Level</th><th>Measure</th><th>Source</th></tr></thead><tbody>
+      <tr><td>Reaction</td><td>Rating and “ready for my next listing appointment” (1–5)</td><td>End-of-course survey</td></tr>
+      <tr><td>Learning</td><td>Knowledge checks and first-try scenario choices</td><td>xAPI in the learning record store</td></tr>
+      <tr><td>Behavior</td><td>Agents who report using the job aid before an appointment</td><td>30-day follow-up pulse</td></tr>
+      <tr><td>Results</td><td>Listing price reductions and days on market for course takers vs. others (where brokerages share data)</td><td>Partner brokerage data, 6 months</td></tr></tbody></table></div></div>
+    <div class="part"><h3>Content governance</h3><p style="font-size:15px">Owner: learning designer with a pricing SME. Version 2.0. Review every 12 months or when market data, forms or tools change. Scenario choices that more than 40% of learners miss are reviewed first.</p></div>
+    <div class="row"><button class="btn" id="reset">Start over</button></div>
+    ${D.nav("")}`;
+  $("reset").onclick = () => D.reset();
+}
+D.render();
+</script>
+</body>
+</html>
