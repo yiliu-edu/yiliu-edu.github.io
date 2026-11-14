@@ -56,6 +56,11 @@ Trust is kept between 0 and 100 with two extra triggers: set Trust to 0 when the
 - Show layer CRM_Note when the user clicks View CRM note
 - Reset results and jump to slide 1 when the user clicks Replay
 
+## Audio
+- Import Rosa’s clips (`demos/audio/rosa/m0.mp3` … `m5-o2.mp3`): each moment’s line on the base layer, each reply on its feedback layer
+- Reply buttons appear when the line ends: set their entrance on the timeline after the audio, or show them with a trigger when the media completes
+- Add closed captions from the script for every clip; the player’s captions button turns them on
+
 ## Accessibility
 - Alt text on Rosa and the scene; decorative shapes hidden from screen readers
 - Focus order set on every slide and layer (callout, replies, then buttons)

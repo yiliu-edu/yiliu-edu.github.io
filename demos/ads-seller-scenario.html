@@ -67,10 +67,10 @@ button{font:inherit;cursor:pointer}
 @keyframes right{from{opacity:0;transform:translateX(120px)}to{opacity:1;transform:none}}
 @keyframes zoom{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 
-.bubble{background:#fff;border:2px solid var(--navy);border-radius:18px;padding:14px 18px;font-size:19px;line-height:1.4;box-shadow:0 6px 18px rgba(28,69,135,.15)}
+.bubble{background:#fff;border:2px solid var(--navy);border-radius:18px;padding:12px 18px;font-size:18px;line-height:1.4;box-shadow:0 6px 18px rgba(28,69,135,.15)}
 .bubble::after{content:"";position:absolute;right:-16px;top:34px;border:9px solid transparent;border-left:14px solid var(--navy)}
 .bubble .who{display:block;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
-.choice{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 14px;font-size:15.5px;line-height:1.35;color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.06);transition:border-color .15s,transform .15s,background .15s}
+.choice{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:9px 14px;font-size:15px;line-height:1.33;color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.06);transition:border-color .15s,transform .15s,background .15s}
 .choice .k{flex:none;width:26px;height:26px;border-radius:50%;background:var(--tint);color:var(--navy);display:grid;place-items:center;font:700 13px var(--sans)}
 .choice:hover:not(:disabled){border-color:var(--bar);transform:translateX(4px)}           /* state: hover */
 .choice:active:not(:disabled){background:var(--tint)}                                     /* state: down */
@@ -110,6 +110,9 @@ button{font:inherit;cursor:pointer}
 .rosa[data-state="neutral"] .s-neutral,.rosa[data-state="happy"] .s-happy,.rosa[data-state="skeptical"] .s-skeptical{display:inline}
 .rosa[data-state="happy"] .cheek{opacity:.55}
 .rosa .cheek{opacity:0;transition:opacity .3s}
+.rosa .mouth{transform-box:fill-box;transform-origin:center}
+.rosa.talk .mouth{animation:talk .16s ease-in-out infinite alternate}
+@keyframes talk{to{transform:scaleY(.45) scaleX(.92)}}
 .rosa.react{animation:react .4s ease}
 @keyframes react{40%{transform:translateY(-8px)}}
 .panelcard{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(28,69,135,.18);padding:22px 26px}
@@ -132,7 +135,7 @@ button{font:inherit;cursor:pointer}
   <div class="ptop">
     <button class="tbtn" id="mtog" aria-expanded="true" aria-controls="menu">Menu</button>
     <h1>Discovery Call with Rosa</h1>
-    <button class="tbtn" id="voice" aria-pressed="false" title="Read Rosa’s lines aloud with your browser’s voice">Voice</button>
+    <button class="tbtn" id="voice" aria-pressed="true" title="Turn Rosa’s voice on or off">Sound on</button>
     <button class="tbtn" id="rtog" aria-expanded="false">Resources</button>
   </div>
   <nav class="menu" id="menu" aria-label="Slides"><div class="mh">Scenario</div><div id="mlist"></div></nav>
@@ -150,34 +153,162 @@ button{font:inherit;cursor:pointer}
     <button class="cbtn solid" id="next">NEXT ›</button>
   </div>
 </div>
-<p class="foot">A branching scenario built in HTML on the same model as an Articulate Storyline 360 project: slides, a feedback layer, character states, a trust variable and triggers. The <a href="../kit/sales/storyline-build-guide.md">build guide</a> maps every part to Storyline. Rosa, her bakery and Sparrowline Ads are fictional. Designed and developed by Yi Liu, 2026.</p>
+<p class="foot">A branching scenario built in HTML on the same model as an Articulate Storyline 360 project: slides, a feedback layer, character states, a trust variable and triggers. The <a href="../kit/sales/storyline-build-guide.md">build guide</a> maps every part to Storyline. Rosa, her bakery and Sparrowline Ads are fictional; Rosa’s voice is AI-generated with Kokoro, an open-source text-to-speech model. Designed and developed by Yi Liu, 2026.</p>
 <span class="sr" id="say" aria-live="assertive"></span>
 
 <script>
 /* ---------- content (same branches as the onboarding sprint) ---------- */
 const CALL = [
-  {stage:"Open", them:"Hi, this is Rosa. I’ve got about ten minutes before the afternoon rush. What’s this about?",
-   o:[{t:"Thanks for making time, Rosa. Before I share anything, could I ask what you most want to grow this year?", d:12, ok:true, rep:"Honestly? Catering. Office orders are where the money is.", c:"Starting with her goals earns the right to recommend later. Discovery before pitch."},
-      {t:"Great! Sparrowline Ads can put you at the top of search results. Our starter package is $300 a month.", d:-15, rep:"Okay… I’m not looking to buy anything today.", c:"Leading with a product and a price before you understand her business reads as a sales pitch."},
-      {t:"I noticed your reviews are amazing. You should really be advertising more.", d:-5, rep:"Thanks, I guess? We’re busy already.", c:"A compliment followed by “you should” assumes her needs. Ask first."}]},
-  {stage:"Discover", them:"Catering’s been slow since spring, though. Big orders just stopped coming in.",
-   o:[{t:"When catering orders do come in, how do those customers usually find you?", d:10, ok:true, rep:"Mostly people who already know us. Some search “catering near me”, I think.", c:"You uncovered the channel and a likely search behavior. That points to a search campaign."},
-      {t:"That’s why you need ads. Shall we set something up today?", d:-12, rep:"Slow down. I don’t even know what I’d be paying for.", c:"You skipped diagnosis. Without knowing how customers find her, any recommendation is a guess."},
-      {t:"What’s your total marketing budget for the year?", d:-3, rep:"Hmm, not really something I track that way.", c:"Budget matters, but asking it this early feels like qualifying her, not helping her."}]},
-  {stage:"Discover", them:"And when someone does find us online, they usually just call the shop.",
-   o:[{t:"What happens after they call? Who answers, and how do you track which calls become orders?", d:10, ok:true, rep:"My manager answers. We write orders on a pad. We don’t track where they came from.", c:"You found a measurement gap. Call tracking will be part of your recommendation."},
-      {t:"Calls are great. Ads will definitely bring you more of those.", d:-6, rep:"Maybe. That’s what the last company said too.", c:"A promise without evidence triggers her past bad experience."}]},
-  {stage:"Recommend", them:"So what would you actually suggest?",
-   o:[{t:"A small 2-week search test on catering searches like “office catering near me”, using phrase and exact match, with call tracking so we can see which calls came from ads.", d:14, ok:true, rep:"That’s… more specific than I expected. How much?", c:"Tailored to her goal, her customers’ behavior and her tracking gap. A small test lowers her risk."},
-      {t:"Our premium plan with display, video and search across every product line.", d:-12, rep:"That sounds like a lot of money for a bakery.", c:"Too broad for her goal and budget. Match the recommendation to what you learned."},
-      {t:"Broad match on “bakery” so you reach as many people as possible.", d:-6, rep:"Would that bring in people looking for a cupcake? Those aren’t catering orders.", c:"Broad match on a generic term would spend on the wrong searches. She just caught it."}]},
-  {stage:"Concern", them:"Look, I tried ads two years ago and wasted $500. Why would this be different?",
-   o:[{t:"That’s fair, and I’d be cautious too. Can I ask what was measured last time? This time we’d agree on one success metric up front and check it together after two weeks.", d:14, ok:true, rep:"Nothing was measured, honestly. They just sent a report with clicks.", c:"Empathize, diagnose, then reduce risk with a clear measure. Her objection became a reason for tracking."},
-      {t:"I can offer a 20% discount if you sign today.", d:-10, rep:"A discount on something that didn’t work isn’t much of a deal.", c:"A discount doesn’t answer her real concern: she couldn’t see results."},
-      {t:"The last company probably didn’t know what they were doing.", d:-8, rep:"Maybe. But I’m the one who paid for it.", c:"Blaming someone else doesn’t address her risk. Focus on what will be different."}]},
-  {stage:"Next step", them:"Okay. What would the next step be?",
-   o:[{t:"Let’s set a goal of 10 catering calls in two weeks, set up call tracking together on Thursday, and review the numbers on a 15-minute call on the 28th.", d:12, ok:true, rep:"Thursday works. Ten calls would be a good month for us, never mind two weeks.", c:"Specific goal, date and owner. A clear next step turns a good conversation into pipeline."},
-      {t:"I’ll email you a brochure and you can call me if you’re interested.", d:-8, rep:"Sure, send it over.", c:"Leaving the next step to her usually ends the conversation. Agree on a date."}]}
+ {
+  "stage": "Open",
+  "them": "Hi, this is Rosa… sorry, it’s loud in here. I’ve got maybe ten minutes before the lunch pickup rush. What’s this about?",
+  "o": [
+   {
+    "t": "No problem, I’ll keep it short. We’re running a promotion for new advertisers this month: your first $200 in clicks is matched. Want me to walk you through it?",
+    "d": -10,
+    "rep": "Hmm. I get these calls every week. I’m not really looking to buy anything right now.",
+    "c": "A promotion is a pitch before she knows why she’d need it. On a short call, lead with her business."
+   },
+   {
+    "t": "Thanks for squeezing me in, Rosa. I work with a lot of local food businesses. Before I say anything about ads, what part of the business would you most like to grow this year?",
+    "d": 12,
+    "ok": true,
+    "rep": "Oh. Um… honestly? Catering. Office orders. One big order is worth a whole Saturday at the counter.",
+    "c": "An open question about her goals, before any product. That earns the right to recommend later."
+   },
+   {
+    "t": "Thanks for taking the call! I was looking at your reviews, and you have a really loyal following. Have you thought about running ads to reach more people like them?",
+    "d": -4,
+    "rep": "I mean… sure, I’ve thought about it. I’m just not sure it’s worth it for a bakery.",
+    "c": "Friendly and researched, but it’s a yes-or-no question that steers toward ads. An open question gets her talking about her goals."
+   }
+  ]
+ },
+ {
+  "stage": "Discover",
+  "them": "But catering’s been really slow since the spring. The big office orders just kind of… stopped.",
+  "o": [
+   {
+    "t": "Sounds like a lot of offices went hybrid. Search ads are a great way to get back in front of them. Want me to put together a quick plan?",
+    "d": -8,
+    "rep": "Maybe? I don’t know if that’s the reason. Let’s not get ahead of ourselves.",
+    "c": "You may be right about hybrid work, but you guessed and jumped to a plan. Ask first."
+   },
+   {
+    "t": "Got it. Roughly what do you spend on marketing each month right now?",
+    "d": -3,
+    "rep": "Uh… it changes. Not a lot. Some flyers, the website.",
+    "c": "Budget will matter later. Asked now, it sounds like you’re sizing her up, not understanding the problem."
+   },
+   {
+    "t": "When those orders were coming in, how did new catering customers usually find you?",
+    "d": 10,
+    "ok": true,
+    "rep": "Mostly word of mouth, honestly. Though my manager says some people found us by searching “catering near me”.",
+    "c": "You found the channel and a search behavior. That points to a search campaign."
+   }
+  ]
+ },
+ {
+  "stage": "Discover",
+  "them": "And when someone does find us online, they usually just call the shop.",
+  "o": [
+   {
+    "t": "And what happens after they call? Who picks up, and is there any way to tell which orders started online?",
+    "d": 10,
+    "ok": true,
+    "rep": "My manager answers. She writes it on the order pad. We don’t really track where people heard about us.",
+    "c": "You found a measurement gap. Call tracking will be part of your recommendation."
+   },
+   {
+    "t": "Perfect, calls are the easiest thing to get more of. Ads can add a click-to-call button right on your listing.",
+    "d": -6,
+    "rep": "Maybe. That’s kind of what the last company said, too.",
+    "c": "True, but it’s a feature pitch. You still don’t know whether she can tell which calls came from online."
+   },
+   {
+    "t": "Do you get many calls that turn out to be the wrong kind of order?",
+    "d": -2,
+    "rep": "Sometimes? People call about birthday cakes, mostly. That’s fine, though.",
+    "c": "A fair question, but it skips what matters for measuring results: whether she knows where orders come from."
+   }
+  ]
+ },
+ {
+  "stage": "Recommend",
+  "them": "Okay. So what would you actually suggest for us?",
+  "o": [
+   {
+    "t": "Most bakeries your size do best with a package covering search, maps and social, so you’re visible everywhere. It’s about $600 a month.",
+    "d": -10,
+    "rep": "Six hundred a month? That’s… a lot for us.",
+    "c": "“Everywhere” spreads a small budget thin and doesn’t match her one goal."
+   },
+   {
+    "t": "I’d start small: a two-week test on searches like “office catering near me”, with call tracking so you can see exactly which calls came from the ads.",
+    "d": 14,
+    "ok": true,
+    "rep": "Okay, that’s more specific than I expected. What would something like that cost?",
+    "c": "Tailored to her goal, her customers’ searches and her tracking gap. A small test lowers her risk."
+   },
+   {
+    "t": "I’d target the word “bakery” across your whole neighborhood, so you show up for anyone looking for baked goods.",
+    "d": -6,
+    "rep": "Wouldn’t that just get me people looking for one cupcake? That’s not catering.",
+    "c": "Broad and generic. She’d pay for cupcake searches when she wants catering orders."
+   }
+  ]
+ },
+ {
+  "stage": "Concern",
+  "them": "Look, I’ll be honest. I tried ads two years ago, spent like five hundred dollars, and got nothing. Why would this be any different?",
+  "o": [
+   {
+    "t": "If you start this month, I can get you a 20% credit on your first month, so there’s less risk this time.",
+    "d": -8,
+    "rep": "A discount on something that didn’t work isn’t really a deal.",
+    "c": "A credit lowers the price, not her real risk: she still couldn’t tell if it worked."
+   },
+   {
+    "t": "Ads work much better now than two years ago. The targeting has gotten a lot smarter.",
+    "d": -6,
+    "rep": "That’s pretty much what they said last time.",
+    "c": "A general promise without evidence. She’s heard it before."
+   },
+   {
+    "t": "That’s fair, and I’d be skeptical too. What did they show you to tell you whether it was working? This time I’d want us to agree on one number up front and look at it together after two weeks.",
+    "d": 14,
+    "ok": true,
+    "rep": "Honestly? Nothing. They sent me a report full of clicks. I didn’t know what any of it meant.",
+    "c": "Empathize, ask, then reduce risk with a clear measure. Her objection became a reason for tracking."
+   }
+  ]
+ },
+ {
+  "stage": "Next step",
+  "them": "Okay. I’m not saying yes yet. But what would happen next?",
+  "o": [
+   {
+    "t": "How about this: we aim for ten catering calls in two weeks. I’ll set up call tracking with you on Thursday, and we’ll look at the numbers together on the 28th. Fifteen minutes.",
+    "d": 12,
+    "ok": true,
+    "rep": "Thursday works. And ten calls? That’d be a good month for us, never mind two weeks.",
+    "c": "A specific goal, a date and who does what. A clear next step turns a good conversation into pipeline."
+   },
+   {
+    "t": "I’ll send you a proposal by email, and you can let me know when you’ve had a chance to look it over.",
+    "d": -8,
+    "rep": "Sure, send it over.",
+    "c": "Polite, but it leaves the next move to her. Busy owners rarely reply. Agree on a date."
+   },
+   {
+    "t": "Great! I can send the contract over now and we can get you live by Monday.",
+    "d": -10,
+    "rep": "Whoa. I said I’m not saying yes yet.",
+    "c": "She just told you she isn’t ready. Pushing to close loses the trust you built."
+   }
+  ]
+ }
 ];
 const SLIDES = [{nm:"Welcome"},{nm:"Meet Rosa"}, ...CALL.map((c, i) => ({nm:`${i + 1}. ${c.stage}`})), {nm:"Results"}];
 const BAR = 70;
@@ -194,7 +325,7 @@ function fit(){ const w = $("sw").clientWidth, s = w / 960; $("stage").style.tra
 addEventListener("resize", fit); try { new ResizeObserver(fit).observe(document.getElementById("sw")); } catch {}
 
 /* ---------- timeline ---------- */
-let timers = [], raf = 0;
+let timers = [], raf = 0, RT = 0;
 function timeline(len, cues){
   timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf);
   const t0 = performance.now(), L = RM ? 1 : len;
@@ -204,11 +335,20 @@ function timeline(len, cues){
 }
 const show = (el, cls) => { if (!el) return; el.classList.remove("hide"); el.classList.add(cls || "in-fade"); };
 
-/* ---------- voice (optional browser speech) ---------- */
-let voiceOn = false;
-function speak(t){ if (!voiceOn || !("speechSynthesis" in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t.replace(/[“”]/g, "")); u.rate = 1; speechSynthesis.speak(u); } catch {} }
-$("voice").onclick = () => { voiceOn = !voiceOn; $("voice").setAttribute("aria-pressed", voiceOn); if (!voiceOn) try { speechSynthesis.cancel(); } catch {} };
-
+/* ---------- Rosa's voice: pre-generated neural TTS clips; plays after the learner's first click ---------- */
+const AUD = new Audio(); AUD.preload = "auto";
+let soundOn = true, onTalk = () => {};
+function say(clip){
+  if (!soundOn) return Promise.resolve();
+  return new Promise(res => {
+    let done = false; const end = () => { if (done) return; done = true; onTalk(false); res(); };
+    AUD.onended = end; AUD.onerror = end; AUD.src = "audio/rosa/" + clip + ".mp3";
+    onTalk(true); AUD.play().catch(end);
+  });
+}
+function hush(){ try { AUD.pause(); } catch {} onTalk(false); }
+onTalk = on => { const r = document.getElementById("rosa"); if (r) r.classList.toggle("talk", on); };
+$("voice").onclick = () => { soundOn = !soundOn; $("voice").setAttribute("aria-pressed", soundOn); $("voice").textContent = soundOn ? "Sound on" : "Sound off"; if (!soundOn) hush(); };
 /* ---------- art ---------- */
 const BG = `<svg class="obj" style="inset:0" width="960" height="540" viewBox="0 0 960 540" aria-hidden="true">
   <rect width="960" height="540" fill="#F3F6FA"/>
@@ -236,9 +376,9 @@ const ROSA = `<svg class="rosa" id="rosa" data-state="neutral" viewBox="0 0 300 
   <g class="eyes"><ellipse cx="124" cy="168" rx="7" ry="9" fill="#1C2B44"/><ellipse cx="176" cy="168" rx="7" ry="9" fill="#1C2B44"/><circle cx="126" cy="165" r="2.2" fill="#fff"/><circle cx="178" cy="165" r="2.2" fill="#fff"/></g>
   <ellipse class="cheek" cx="108" cy="196" rx="12" ry="7" fill="#F28A26"/><ellipse class="cheek" cx="192" cy="196" rx="12" ry="7" fill="#F28A26"/>
   <path d="M146 180 Q150 192 156 186" stroke="#B9805C" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <g class="st s-neutral"><path d="M110 146 L138 144" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M162 144 L190 146" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M134 210 Q150 216 166 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g>
-  <g class="st s-happy"><path d="M110 144 Q124 134 138 142" stroke="#4A2E1F" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M162 142 Q176 134 190 144" stroke="#4A2E1F" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M128 204 Q150 230 172 204 Z" fill="#8A3B2A"/><path d="M134 206 Q150 214 166 206" stroke="#fff" stroke-width="4" fill="none"/></g>
-  <g class="st s-skeptical"><path d="M110 140 L138 148" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M162 138 L190 132" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M134 214 Q148 206 168 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+  <g class="st s-neutral"><path d="M110 146 L138 144" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M162 144 L190 146" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><g class="mouth"><path d="M134 210 Q150 216 166 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g></g>
+  <g class="st s-happy"><path d="M110 144 Q124 134 138 142" stroke="#4A2E1F" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M162 142 Q176 134 190 144" stroke="#4A2E1F" stroke-width="5" fill="none" stroke-linecap="round"/><g class="mouth"><path d="M128 204 Q150 230 172 204 Z" fill="#8A3B2A"/><path d="M134 206 Q150 214 166 206" stroke="#fff" stroke-width="4" fill="none"/></g></g>
+  <g class="st s-skeptical"><path d="M110 140 L138 148" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><path d="M162 138 L190 132" stroke="#4A2E1F" stroke-width="5" stroke-linecap="round"/><g class="mouth"><path d="M134 214 Q148 206 168 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g></g>
 </g></svg>`;
 function trustHTML(){ return `<div class="trust" id="trust">CLIENT TRUST <span id="tv" style="float:right">${v.trust}</span><div class="bar"><i id="tb" style="width:${v.trust}%"></i></div><div style="font-weight:500;color:#5A5F66;margin-top:4px">Goal: ${BAR} or more</div></div>`; }
 function setRosa(state){ const r = $("rosa"); if (!r) return; r.dataset.state = state; r.classList.remove("react"); void r.offsetWidth; r.classList.add("react"); }
@@ -253,10 +393,10 @@ function chrome(){
   const isQ = v.slide >= 2 && v.slide < SLIDES.length - 1;
   $("next").disabled = v.slide === SLIDES.length - 1 || (isQ && !v.solved[v.slide - 2]) || v.slide === 0;
 }
-function go(i){ try { speechSynthesis.cancel(); } catch {} v.slide = i; v.far = Math.max(v.far, i); render(); }
+function go(i){ hush(); v.slide = i; v.far = Math.max(v.far, i); render(); }
 $("prev").onclick = () => go(v.slide - 1);
 $("next").onclick = () => go(v.slide + 1);
-$("replay").onclick = () => render();
+$("replay").onclick = () => { hush(); render(); };
 $("mtog").onclick = () => { const p = $("player"), narrow = innerWidth <= 820; if (narrow) p.classList.toggle("showmenu"); else p.classList.toggle("nomenu"); $("mtog").setAttribute("aria-expanded", narrow ? p.classList.contains("showmenu") : !p.classList.contains("nomenu")); setTimeout(fit, 0); };
 $("rtog").onclick = () => { const r = $("res"); r.hidden = !r.hidden; $("rtog").setAttribute("aria-expanded", !r.hidden); };
 
@@ -266,7 +406,7 @@ function sTitle(){
     <svg class="obj" style="inset:0" width="960" height="540" aria-hidden="true"><circle cx="820" cy="80" r="160" fill="#fff" opacity=".06"/><circle cx="120" cy="500" r="120" fill="#fff" opacity=".06"/><path d="M70 420 L210 360 L350 390 L520 300" stroke="#fff" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" fill="none" opacity=".6"/><circle cx="520" cy="300" r="10" fill="#F28A26"/></svg>
     <div class="obj hide" id="k" style="left:70px;top:100px;font:700 14px var(--sans);letter-spacing:.14em;color:#9EC5EE">SPARROWLINE ADS · NEW SELLER PRACTICE</div>
     <div class="obj hide" id="t" style="left:70px;top:130px;width:520px;font:800 54px/1.05 var(--serif);color:#fff">Discovery Call with Rosa</div>
-    <div class="obj hide" id="s" style="left:70px;top:260px;width:470px;font:20px/1.45 var(--serif);color:#E6EEF9">Six moments. Three choices each. Earn her trust and leave with a dated next step.</div>
+    <div class="obj hide" id="s" style="left:70px;top:260px;width:470px;font:20px/1.45 var(--serif);color:#E6EEF9">Six moments. Three choices each. Earn her trust and leave with a dated next step.<span style="display:block;margin-top:14px;font:600 14px var(--sans);color:#9EC5EE">Rosa speaks, so turn your sound on.</span></div>
     <button class="obj big hide" id="start" style="left:70px;top:400px">Start the call ›</button>
     <div style="position:absolute;right:-10px;bottom:-40px;transform:scale(.95);transform-origin:bottom right" class="hide" id="rw">${ROSA}</div>
   </div>`;
@@ -298,8 +438,11 @@ function sQ(k){
     </div>
     ${trustHTML()}<div id="lay"></div></div>`;
   setRosa(k === 4 ? "skeptical" : "neutral");
+  $("ch").style.top = ($("b").offsetTop + $("b").offsetHeight + 14) + "px";
   const bs = [...$("ch").children];
-  timeline(1400 + bs.length * 250, [[200, () => { show($("b"), "in-zoom"); speak(q.them); }], ...bs.map((b, j) => [900 + j * 250, () => show(b, "in-left")])]);
+  const token = ++RT;
+  const reveal = () => { if (token !== RT) return; bs.forEach((b, j) => setTimeout(() => token === RT && show(b, "in-left"), RM ? 0 : j * 250)); };
+  timeline(1400 + bs.length * 250, [[200, () => { show($("b"), "in-zoom"); if (solved) return; const again = v.tried[k].length > 0; Promise.all([again ? null : say("m" + k), new Promise(r => setTimeout(r, RM ? 0 : 700))]).then(reveal); }]]);
   bs.forEach(b => b.onclick = () => choose(k, +b.dataset.j));
   if (solved) { const j = q.o.findIndex(o => o.ok); layer(k, j, false); }
 }
@@ -315,7 +458,7 @@ function choose(k, j){
 function layer(k, j, animate, delta){
   const o = CALL[k].o[j], last = k === CALL.length - 1;
   setRosa(o.ok ? "happy" : "skeptical");
-  $("bt").textContent = o.rep; speak(o.rep);
+  $("bt").textContent = o.rep; if (animate) say(`m${k}-o${j}`);
   $("ch").classList.add("hide");
   $("lay").innerHTML = `<div class="layer" role="dialog" aria-label="Feedback">
       <div class="you"><b>You said</b>${esc(o.t)}</div>

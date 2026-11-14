@@ -164,7 +164,7 @@ th{background:var(--bar);color:#fff;font-weight:600;font-size:13px}
   </aside>
   <main><section class="panel" id="stage" aria-live="polite"></section></main>
 </div>
-<p class="foot">Sparrowline Ads, its products and its clients are fictional, created for this portfolio demo. The client role-play uses scripted branches written from an AI persona prompt so the demo runs anywhere. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
+<p class="foot">Sparrowline Ads, its products and its clients are fictional, created for this portfolio demo. The client role-play uses scripted branches written from an AI persona prompt so the demo runs anywhere; Rosa’s voice is AI-generated with Kokoro, an open-source text-to-speech model. Designed and developed by Yi Liu, 2026. Progress is saved only in this browser.</p>
 
 <script>
 /* ---------- content ---------- */
@@ -213,28 +213,156 @@ const CLIENTS = {
 };
 /* role-play: Rosa, bakery owner. Each turn: client line, options with trust change and coaching */
 const CALL = [
-  {stage:"Open", them:"Hi, this is Rosa. I’ve got about ten minutes before the afternoon rush. What’s this about?",
-   o:[{t:"Thanks for making time, Rosa. Before I share anything, could I ask what you most want to grow this year?", d:12, ok:true, rep:"Honestly? Catering. Office orders are where the money is.", c:"Starting with her goals earns the right to recommend later. Discovery before pitch."},
-      {t:"Great! Sparrowline Ads can put you at the top of search results. Our starter package is $300 a month.", d:-15, rep:"Okay… I’m not looking to buy anything today.", c:"Leading with a product and a price before you understand her business reads as a sales pitch."},
-      {t:"I noticed your reviews are amazing. You should really be advertising more.", d:-5, rep:"Thanks, I guess? We’re busy already.", c:"A compliment followed by “you should” assumes her needs. Ask first."}]},
-  {stage:"Discover", them:"Catering’s been slow since spring, though. Big orders just stopped coming in.",
-   o:[{t:"When catering orders do come in, how do those customers usually find you?", d:10, ok:true, rep:"Mostly people who already know us. Some search “catering near me”, I think.", c:"You uncovered the channel and a likely search behavior. That points to a search campaign."},
-      {t:"That’s why you need ads. Shall we set something up today?", d:-12, rep:"Slow down. I don’t even know what I’d be paying for.", c:"You skipped diagnosis. Without knowing how customers find her, any recommendation is a guess."},
-      {t:"What’s your total marketing budget for the year?", d:-3, rep:"Hmm, not really something I track that way.", c:"Budget matters, but asking it this early feels like qualifying her, not helping her."}]},
-  {stage:"Discover", them:"And when someone does find us online, they usually just call the shop.",
-   o:[{t:"What happens after they call? Who answers, and how do you track which calls become orders?", d:10, ok:true, rep:"My manager answers. We write orders on a pad. We don’t track where they came from.", c:"You found a measurement gap. Call tracking will be part of your recommendation."},
-      {t:"Calls are great. Ads will definitely bring you more of those.", d:-6, rep:"Maybe. That’s what the last company said too.", c:"A promise without evidence triggers her past bad experience."}]},
-  {stage:"Recommend", them:"So what would you actually suggest?",
-   o:[{t:"A small 2-week search test on catering searches like “office catering near me”, using phrase and exact match, with call tracking so we can see which calls came from ads.", d:14, ok:true, rep:"That’s… more specific than I expected. How much?", c:"Tailored to her goal (catering), her customers’ behavior (search) and her gap (no tracking). Small test lowers risk."},
-      {t:"Our premium plan with display, video and search across every product line.", d:-12, rep:"That sounds like a lot of money for a bakery.", c:"Too broad for her goal and budget. Match the recommendation to what you learned."},
-      {t:"Broad match on “bakery” so you reach as many people as possible.", d:-6, rep:"Would that bring in people looking for a cupcake? Those aren’t catering orders.", c:"Broad match on a generic term would spend on the wrong searches. She just caught it."}]},
-  {stage:"Concern", them:"Look, I tried ads two years ago and wasted $500. Why would this be different?",
-   o:[{t:"That’s fair, and I’d be cautious too. Can I ask what was measured last time? This time we’d agree on one success metric up front and check it together after two weeks.", d:14, ok:true, rep:"Nothing was measured, honestly. They just sent a report with clicks.", c:"Empathize, diagnose, then reduce risk with a clear measure. You turned the objection into a reason for tracking."},
-      {t:"I can offer a 20% discount if you sign today.", d:-10, rep:"A discount on something that didn’t work isn’t much of a deal.", c:"A discount doesn’t answer her real concern: she couldn’t see results."},
-      {t:"The last company probably didn’t know what they were doing.", d:-8, rep:"Maybe. But I’m the one who paid for it.", c:"Blaming someone else doesn’t address her risk. Focus on what will be different."}]},
-  {stage:"Next step", them:"Okay. What would the next step be?",
-   o:[{t:"Let’s set a goal of 10 catering calls in two weeks, set up call tracking together on Thursday, and review the numbers on a 15-minute call on the 28th.", d:12, ok:true, rep:"Thursday works. Ten calls would be a good month for us, never mind two weeks.", c:"Specific goal, date and owner. A clear next step is what turns a good conversation into pipeline."},
-      {t:"I’ll email you a brochure and you can call me if you’re interested.", d:-8, rep:"Sure, send it over.", c:"Leaving the next step to her usually ends the conversation. Agree on a date."}]}
+ {
+  "stage": "Open",
+  "them": "Hi, this is Rosa… sorry, it’s loud in here. I’ve got maybe ten minutes before the lunch pickup rush. What’s this about?",
+  "o": [
+   {
+    "t": "No problem, I’ll keep it short. We’re running a promotion for new advertisers this month: your first $200 in clicks is matched. Want me to walk you through it?",
+    "d": -10,
+    "rep": "Hmm. I get these calls every week. I’m not really looking to buy anything right now.",
+    "c": "A promotion is a pitch before she knows why she’d need it. On a short call, lead with her business."
+   },
+   {
+    "t": "Thanks for squeezing me in, Rosa. I work with a lot of local food businesses. Before I say anything about ads, what part of the business would you most like to grow this year?",
+    "d": 12,
+    "ok": true,
+    "rep": "Oh. Um… honestly? Catering. Office orders. One big order is worth a whole Saturday at the counter.",
+    "c": "An open question about her goals, before any product. That earns the right to recommend later."
+   },
+   {
+    "t": "Thanks for taking the call! I was looking at your reviews, and you have a really loyal following. Have you thought about running ads to reach more people like them?",
+    "d": -4,
+    "rep": "I mean… sure, I’ve thought about it. I’m just not sure it’s worth it for a bakery.",
+    "c": "Friendly and researched, but it’s a yes-or-no question that steers toward ads. An open question gets her talking about her goals."
+   }
+  ]
+ },
+ {
+  "stage": "Discover",
+  "them": "But catering’s been really slow since the spring. The big office orders just kind of… stopped.",
+  "o": [
+   {
+    "t": "Sounds like a lot of offices went hybrid. Search ads are a great way to get back in front of them. Want me to put together a quick plan?",
+    "d": -8,
+    "rep": "Maybe? I don’t know if that’s the reason. Let’s not get ahead of ourselves.",
+    "c": "You may be right about hybrid work, but you guessed and jumped to a plan. Ask first."
+   },
+   {
+    "t": "Got it. Roughly what do you spend on marketing each month right now?",
+    "d": -3,
+    "rep": "Uh… it changes. Not a lot. Some flyers, the website.",
+    "c": "Budget will matter later. Asked now, it sounds like you’re sizing her up, not understanding the problem."
+   },
+   {
+    "t": "When those orders were coming in, how did new catering customers usually find you?",
+    "d": 10,
+    "ok": true,
+    "rep": "Mostly word of mouth, honestly. Though my manager says some people found us by searching “catering near me”.",
+    "c": "You found the channel and a search behavior. That points to a search campaign."
+   }
+  ]
+ },
+ {
+  "stage": "Discover",
+  "them": "And when someone does find us online, they usually just call the shop.",
+  "o": [
+   {
+    "t": "And what happens after they call? Who picks up, and is there any way to tell which orders started online?",
+    "d": 10,
+    "ok": true,
+    "rep": "My manager answers. She writes it on the order pad. We don’t really track where people heard about us.",
+    "c": "You found a measurement gap. Call tracking will be part of your recommendation."
+   },
+   {
+    "t": "Perfect, calls are the easiest thing to get more of. Ads can add a click-to-call button right on your listing.",
+    "d": -6,
+    "rep": "Maybe. That’s kind of what the last company said, too.",
+    "c": "True, but it’s a feature pitch. You still don’t know whether she can tell which calls came from online."
+   },
+   {
+    "t": "Do you get many calls that turn out to be the wrong kind of order?",
+    "d": -2,
+    "rep": "Sometimes? People call about birthday cakes, mostly. That’s fine, though.",
+    "c": "A fair question, but it skips what matters for measuring results: whether she knows where orders come from."
+   }
+  ]
+ },
+ {
+  "stage": "Recommend",
+  "them": "Okay. So what would you actually suggest for us?",
+  "o": [
+   {
+    "t": "Most bakeries your size do best with a package covering search, maps and social, so you’re visible everywhere. It’s about $600 a month.",
+    "d": -10,
+    "rep": "Six hundred a month? That’s… a lot for us.",
+    "c": "“Everywhere” spreads a small budget thin and doesn’t match her one goal."
+   },
+   {
+    "t": "I’d start small: a two-week test on searches like “office catering near me”, with call tracking so you can see exactly which calls came from the ads.",
+    "d": 14,
+    "ok": true,
+    "rep": "Okay, that’s more specific than I expected. What would something like that cost?",
+    "c": "Tailored to her goal, her customers’ searches and her tracking gap. A small test lowers her risk."
+   },
+   {
+    "t": "I’d target the word “bakery” across your whole neighborhood, so you show up for anyone looking for baked goods.",
+    "d": -6,
+    "rep": "Wouldn’t that just get me people looking for one cupcake? That’s not catering.",
+    "c": "Broad and generic. She’d pay for cupcake searches when she wants catering orders."
+   }
+  ]
+ },
+ {
+  "stage": "Concern",
+  "them": "Look, I’ll be honest. I tried ads two years ago, spent like five hundred dollars, and got nothing. Why would this be any different?",
+  "o": [
+   {
+    "t": "If you start this month, I can get you a 20% credit on your first month, so there’s less risk this time.",
+    "d": -8,
+    "rep": "A discount on something that didn’t work isn’t really a deal.",
+    "c": "A credit lowers the price, not her real risk: she still couldn’t tell if it worked."
+   },
+   {
+    "t": "Ads work much better now than two years ago. The targeting has gotten a lot smarter.",
+    "d": -6,
+    "rep": "That’s pretty much what they said last time.",
+    "c": "A general promise without evidence. She’s heard it before."
+   },
+   {
+    "t": "That’s fair, and I’d be skeptical too. What did they show you to tell you whether it was working? This time I’d want us to agree on one number up front and look at it together after two weeks.",
+    "d": 14,
+    "ok": true,
+    "rep": "Honestly? Nothing. They sent me a report full of clicks. I didn’t know what any of it meant.",
+    "c": "Empathize, ask, then reduce risk with a clear measure. Her objection became a reason for tracking."
+   }
+  ]
+ },
+ {
+  "stage": "Next step",
+  "them": "Okay. I’m not saying yes yet. But what would happen next?",
+  "o": [
+   {
+    "t": "How about this: we aim for ten catering calls in two weeks. I’ll set up call tracking with you on Thursday, and we’ll look at the numbers together on the 28th. Fifteen minutes.",
+    "d": 12,
+    "ok": true,
+    "rep": "Thursday works. And ten calls? That’d be a good month for us, never mind two weeks.",
+    "c": "A specific goal, a date and who does what. A clear next step turns a good conversation into pipeline."
+   },
+   {
+    "t": "I’ll send you a proposal by email, and you can let me know when you’ve had a chance to look it over.",
+    "d": -8,
+    "rep": "Sure, send it over.",
+    "c": "Polite, but it leaves the next move to her. Busy owners rarely reply. Agree on a date."
+   },
+   {
+    "t": "Great! I can send the contract over now and we can get you live by Monday.",
+    "d": -10,
+    "rep": "Whoa. I said I’m not saying yes yet.",
+    "c": "She just told you she isn’t ready. Pushing to close loses the trust you built."
+   }
+  ]
+ }
 ];
 const BANK = [
   {q:"A client asks why their ad shows below a competitor who bids less. Your best answer?", o:["The competitor is paying for priority placement","Position depends on quality and relevance too, not just the bid","The platform rotates positions randomly"], a:1, why:"Ad quality and relevance work together with the bid."},
@@ -307,7 +435,7 @@ function side(){
     ["Readiness", readiness() + "%"]
   ].map(([k, v]) => `<div class="kpi"><span>${k}</span><b>${v}</b></div>`).join("");
 }
-function go(i){ if (!unlocked(i)) return; st.i = i; save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+function go(i){ if (!unlocked(i)) return; if (typeof hush === "function") hush(); st.i = i; save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
 function nav(nextLabel){
   const right = !nextLabel ? "" : stepDone(st.i) ? `<button class="btn primary" id="next">${nextLabel}</button>` : `<span class="lockmsg">${LOCK} Finish this step to unlock the next one</span>`;
   return `<div class="navrow">${st.i > 0 ? `<button class="btn" id="back">Back</button>` : "<span></span>"}${right}</div>`;
@@ -387,6 +515,18 @@ function s2(){
   wireNav();
 }
 
+/* ---------- Rosa's voice: pre-generated neural TTS clips; plays after the learner's first click ---------- */
+const AUD = new Audio(); AUD.preload = "auto";
+let soundOn = true, onTalk = () => {};
+function say(clip){
+  if (!soundOn) return Promise.resolve();
+  return new Promise(res => {
+    let done = false; const end = () => { if (done) return; done = true; onTalk(false); res(); };
+    AUD.onended = end; AUD.onerror = end; AUD.src = "audio/rosa/" + clip + ".mp3";
+    onTalk(true); AUD.play().catch(end);
+  });
+}
+function hush(){ try { AUD.pause(); } catch {} onTalk(false); }
 /* ---------- 3 AI client role-play + note check ---------- */
 const DRAFT = `Call: Rosa Alvarez, bakery owner (2 locations)\nGoal: grow catering orders; slow since spring\nCurrent channel: repeat customers; some search “catering near me”; orders taken by phone, not tracked\nConcern: spent $500 on ads 2 years ago with no measurement\nRecommendation: 2-week search test on catering terms, phrase + exact match, call tracking\nNext step: set up call tracking together Thursday; 15-min review on the 28th`;
 const FIXED = DRAFT.replace("\nNext step:", "\nSuccess metric: 10 catering calls in 2 weeks\nNext step:");
@@ -407,6 +547,7 @@ function s3(){
           <div>Agreed to a 10-minute call. Has run online ads before.</div></div>
         <div class="persona"><div class="label">Client trust</div><div class="meter"><i id="tm" style="width:${C.trust}%"></i></div><div class="trust" id="tv">${C.trust} / 100</div></div>
         <div class="persona"><div class="label">Call stages</div><div class="stagechips" id="chips"></div></div>
+        <button class="btn" id="snd" aria-pressed="${soundOn}" style="font-size:13.5px">${soundOn ? "Rosa’s voice: on" : "Rosa’s voice: off"}</button>
       </div>
     </div>
     <div id="after"></div>
@@ -420,7 +561,9 @@ function s3(){
     C.h.filter(h => h[0] === k).forEach(([, j]) => { const o = CALL[k].o[j]; add("me", "You", esc(o.t)); add("them", "Rosa", esc(o.rep)); add(o.ok ? "coach" : "coach warn", "", `<strong>Coach:</strong> ${esc(o.c)}`); });
   }
   chips();
+  $("snd").onclick = () => { soundOn = !soundOn; if (!soundOn) hush(); $("snd").setAttribute("aria-pressed", soundOn); $("snd").textContent = soundOn ? "Rosa’s voice: on" : "Rosa’s voice: off"; };
   let busy = false;
+  if (!C.h.length && C.k === 0 && !C.done) say("m0");
   const show = () => {
     if (C.k >= CALL.length) { $("replies").innerHTML = ""; return; }
     const tried = C.h.filter(h => h[0] === C.k).map(h => h[1]);
@@ -433,10 +576,10 @@ function s3(){
     const first = !C.h.some(h => h[0] === k);
     C.h.push([k, j]); C.trust = Math.max(0, Math.min(100, C.trust + o.d));
     if (o.ok && first) C.firstOk++;
-    $("replies").innerHTML = ""; add("me", "You", esc(o.t)); await wait(500);
+    hush(); $("replies").innerHTML = ""; add("me", "You", esc(o.t)); await wait(500);
     add("them", "Rosa", esc(o.rep)); add(o.ok ? "coach" : "coach warn", "", `<strong>Coach:</strong> ${esc(o.c)}${o.ok ? "" : " Try a different reply."}`);
-    meter();
-    if (o.ok) { C.k++; if (C.k < CALL.length) { await wait(500); add("them", "Rosa", esc(CALL[C.k].them)); } else { C.done = true; } }
+    meter(); await say(`m${k}-o${j}`);
+    if (o.ok) { C.k++; if (C.k < CALL.length) { await wait(400); add("them", "Rosa", esc(CALL[C.k].them)); say("m" + C.k); } else { C.done = true; } }
     save(); chips(); side(); busy = false;
     if (C.done) { s3(); return; }
     show();
