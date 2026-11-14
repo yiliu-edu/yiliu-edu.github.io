@@ -117,7 +117,16 @@ main{min-width:0}
 .crm{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#1B2A41;color:#E3EAF3;border-radius:12px;padding:12px 14px;white-space:pre-wrap;line-height:1.6}
 .qnum{font-size:13px;color:var(--muted)}
 .score{font-size:34px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
-.ramp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pd:disabled{cursor:not-allowed;opacity:.55}
+.pd:disabled:hover{background:none}
+.lockmsg{display:inline-flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted)}
+.scale{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;cursor:pointer;color:var(--ink)}
+.scale:hover{border-color:var(--bar)}
+.scale[aria-pressed="true"]{background:var(--bar);color:#fff;border-color:var(--bar)}
+.oncall{font-size:13.5px!important;color:var(--blue);font-style:italic}
+.hiddencard{border:1.5px dashed var(--line);border-radius:10px;padding:10px 12px;color:var(--muted);font-size:14px!important;text-align:center}
+details summary{cursor:pointer;color:var(--blue);font-size:14px}
+.ramp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (max-width:700px){.ramp{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .ramp div{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px}
 .ramp b{display:block;color:var(--navy)}
@@ -240,8 +249,9 @@ const BANK = [
 const BAR = {checks:3, trust:70, assess:4};
 
 /* ---------- state ---------- */
-const KEY = "ads-onb-v1";
-const fresh = () => ({i:0, far:0, pre:{}, plan:{}, chk:{}, client:null, call:{k:0, trust:40, h:[], done:false, firstOk:0}, as:{items:null, ans:{}, attempts:0, best:null}});
+const ONCALL = {auction:"“Why is my competitor above me when I bid more?”", match:"“Why am I paying for clicks from job seekers?”", quality:"“What can I improve without raising my budget?”", measure:"“How will I know the ads worked?”"};
+const KEY = "ads-onb-v2";
+const fresh = () => ({i:0, pre:{}, conf:{pre:null, post:null}, useful:null, chk:{}, test:{}, client:null, call:{k:0, trust:40, h:[], done:false, firstOk:0}, note:null, as:{items:null, ans:{}, attempts:0, best:null}, recall:{items:null, ans:{}}});
 let st = fresh();
 try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && typeof x.i === "number") st = Object.assign(fresh(), x); } catch {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
@@ -251,34 +261,59 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
 function bump(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+const LOCK = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
-const checksRight = () => TOPICS.filter(t => st.chk[t.id] === true).length;
+/* ---------- progress rules: each step unlocks when the one before it is done ---------- */
+const known = t => st.pre[t.id] === t.pre.a;                     // tested out in the pre-check
+const topicDone = t => known(t) || st.chk[t.id] === "first" || st.chk[t.id] === "late";
+const firstTry = () => TOPICS.filter(t => known(t) || st.chk[t.id] === "first").length;
+const NOTE_OK = 0;
+function stepDone(i){
+  switch (i) {
+    case 0: return Object.keys(st.pre).length === 4 && st.conf.pre != null;
+    case 1: return TOPICS.every(topicDone);
+    case 2: return !!st.client;
+    case 3: return st.call.done && st.note === NOTE_OK;
+    case 4: return st.as.best != null;
+    case 5: return !!st.recall.items && Object.keys(st.recall.ans).length === st.recall.items.length && st.conf.post != null && st.useful != null;
+  }
+  return false;
+}
+const unlocked = i => { for (let j = 0; j < i; j++) if (!stepDone(j)) return false; return true; };
+while (st.i > 0 && !unlocked(st.i)) st.i--;
+
 function readiness(){
-  let p = 0;
-  p += Math.min(checksRight(), 4) * 7;                       // 28
-  if (st.client) p += 12;                                    // 40
-  if (st.call.done) p += Math.round(st.call.trust * 0.3);    // up to 70
-  if (st.as.best != null) p += st.as.best * 6;              // up to 100
+  let p = firstTry() * 5;                                    // 20
+  if (st.client) p += 10;                                    // 30
+  if (st.call.done) p += Math.round(st.call.trust * 0.25);   // 55
+  if (st.note === NOTE_OK) p += 10;                          // 65
+  if (st.as.best != null) p += st.as.best * 5;               // 90
+  if (stepDone(5)) p += 10;                                  // 100
   return Math.min(100, p);
 }
 function side(){
   $("path").innerHTML = STEPS.map((s, i) => {
-    const done = i < st.far || (i === 5 && st.as.best != null);
-    return `<button class="pd" data-i="${i}" aria-current="${st.i === i}"><span class="dot ${done ? "ok" : ""}">${done ? "✓" : i + 1}</span><span><span class="day">${s.day}</span><span class="nm">${s.nm}</span></span></button>`;
+    const done = stepDone(i), open = unlocked(i);
+    return `<button class="pd" data-i="${i}" aria-current="${st.i === i}" ${open ? "" : `disabled aria-disabled="true" title="Finish the step before to unlock this one"`}><span class="dot ${done ? "ok" : ""}">${done ? "✓" : open ? i + 1 : LOCK}</span><span><span class="day">${s.day}${open ? "" : " · Locked"}</span><span class="nm">${s.nm}</span></span></button>`;
   }).join("");
   qa(".pd").forEach(b => b.onclick = () => go(+b.dataset.i));
   $("rd").style.width = readiness() + "%";
   $("kpis").innerHTML = [
-    ["Essentials checks", `${checksRight()} / 4`],
+    ["Essentials, first try", `${firstTry()} / 4`],
     ["Call prep", st.client ? "Done" : "–"],
     ["Client trust", st.call.done ? st.call.trust : "–"],
+    ["CRM note check", st.note === NOTE_OK ? "Done" : "–"],
     ["Scenario check", st.as.best != null ? `${st.as.best} / 5` : "–"],
     ["Readiness", readiness() + "%"]
   ].map(([k, v]) => `<div class="kpi"><span>${k}</span><b>${v}</b></div>`).join("");
 }
-function go(i){ st.i = i; st.far = Math.max(st.far, i); save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
-function nav(nextLabel){ return `<div class="navrow">${st.i > 0 ? `<button class="btn" id="back">Back</button>` : "<span></span>"}${nextLabel ? `<button class="btn primary" id="next">${nextLabel}</button>` : ""}</div>`; }
+function go(i){ if (!unlocked(i)) return; st.i = i; save(); render(); window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }
+function nav(nextLabel){
+  const right = !nextLabel ? "" : stepDone(st.i) ? `<button class="btn primary" id="next">${nextLabel}</button>` : `<span class="lockmsg">${LOCK} Finish this step to unlock the next one</span>`;
+  return `<div class="navrow">${st.i > 0 ? `<button class="btn" id="back">Back</button>` : "<span></span>"}${right}</div>`;
+}
 function wireNav(){ if ($("back")) $("back").onclick = () => go(st.i - 1); if ($("next")) $("next").onclick = () => go(st.i + 1); }
+const scale = (id, val) => `<div class="row" id="${id}" role="group">${[1,2,3,4,5].map(n => `<button class="scale" data-n="${n}" aria-pressed="${val === n}">${n}</button>`).join("")}</div>`;
 
 /* ---------- 0 start + pre-check ---------- */
 function s0(){
@@ -286,34 +321,43 @@ function s0(){
   $("stage").innerHTML = `
     <div class="label">Day 1 · Start</div>
     <h2>Welcome to the sales team. Your first pitch is on Day 10.</h2>
-    <p class="lead">New sellers ramp faster when they skip what they already know. Answer four quick questions and your path will mark each topic as “skip” or “learn”. Then prep a real call, practice it with an AI client, and prove you’re ready.</p>
-    <div class="note info"><strong>By the end of this sprint, you will be able to:</strong> explain how search ads are ranked, measured and improved; run a discovery call that ends with a dated next step; and pass a 5-question scenario check at 4 of 5 or better.</div>
+    <p class="lead">New sellers ramp faster when they skip what they already know. Answer four quick questions: any topic you get right is tested out, so you won’t need to study it. Each step unlocks when the one before it is done.</p>
+    <div class="note info"><strong>By the end of this sprint, you will be able to:</strong> answer common client questions about how search ads are ranked, targeted and measured; run a discovery call that ends with a dated next step; check an AI-drafted call note before saving it; and pass a 5-question scenario check at 4 of 5 or better.</div>
+    <div class="part"><h3>Before you start</h3><p style="font-size:15px">How confident are you to run a discovery call with a small business owner today?</p>${scale("confpre", st.conf.pre)}<p class="qnum">1 = not at all · 5 = very confident. You’ll answer again at the end.</p></div>
     <div class="part"><h3>Pre-check (${answered} of 4)</h3>
-      ${TOPICS.map((t, i) => { const a = st.pre[t.id]; return `<div class="mcard ${a != null ? "done" : ""}"><span class="qnum">${i + 1}. ${esc(t.t)}</span><h4>${esc(t.pre.q)}</h4><div class="opts">${t.pre.o.map((o, j) => `<button class="opt ${a === j ? (j === t.pre.a ? "ok" : "bad") : ""} ${a != null && j === t.pre.a ? "ok" : ""}" data-t="${t.id}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<p style="font-size:14px">${a === t.pre.a ? '<span class="tag skip">You can skip this</span>' : '<span class="tag learn">Added to your path</span>'}</p>` : ""}</div>`; }).join("")}
+      ${TOPICS.map((t, i) => { const a = st.pre[t.id]; return `<div class="mcard ${a != null ? "done" : ""}"><span class="qnum">${i + 1}. ${esc(t.t)}</span><h4>${esc(t.pre.q)}</h4><div class="opts">${t.pre.o.map((o, j) => `<button class="opt ${a === j ? (j === t.pre.a ? "ok" : "bad") : ""} ${a != null && j === t.pre.a ? "ok" : ""}" data-t="${t.id}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<p style="font-size:14px">${a === t.pre.a ? '<span class="tag skip">Tested out</span>' : '<span class="tag learn">Added to your path</span>'}</p>` : ""}</div>`; }).join("")}
     </div>
-    ${nav(answered === 4 ? "Start my path" : "")}`;
+    ${nav("Start my path")}`;
   qa(".opt[data-t]").forEach(b => b.onclick = () => { st.pre[b.dataset.t] = +b.dataset.j; save(); s0(); side(); });
+  qa("#confpre .scale").forEach(b => b.onclick = () => { st.conf.pre = +b.dataset.n; save(); s0(); side(); });
   wireNav();
 }
 
-/* ---------- 1 essentials ---------- */
+/* ---------- 1 essentials: read, then answer with the card hidden ---------- */
+function card(t){
+  const c = st.chk[t.id], done = topicDone(t), testing = st.test[t.id] && !done;
+  const head = `<div class="row" style="justify-content:space-between"><h4>${esc(t.t)}</h4>${known(t) ? '<span class="tag skip">Tested out</span>' : done ? '<span class="tag skip">Done</span>' : '<span class="tag learn">Learn</span>'}</div><p class="oncall">On a call: ${ONCALL[t.id]}</p>`;
+  if (known(t)) return `<div class="mcard done">${head}<details><summary>Review the card</summary><p>${esc(t.body)}</p></details></div>`;
+  if (done) return `<div class="mcard done">${head}<p>${esc(t.body)}</p><div class="note">${esc(t.chk.why)}</div></div>`;
+  if (!testing) return `<div class="mcard">${head}<p>${esc(t.body)}</p><div class="row"><button class="btn" data-test="${t.id}">Test me</button>${c === "miss" ? '<span class="qnum">Reread, then try again.</span>' : ""}</div></div>`;
+  return `<div class="mcard">${head}<p class="hiddencard">Card hidden. Answer from memory.</p><p style="font-size:14px;font-weight:700">${esc(t.chk.q)}</p><div class="opts">${t.chk.o.map((o, j) => `<button class="opt" data-c="${t.id}" data-j="${j}">${esc(o)}</button>`).join("")}</div><div id="fb-${t.id}"></div></div>`;
+}
 function s1(){
-  const known = t => st.pre[t.id] === t.pre.a;
   $("stage").innerHTML = `
     <div class="label">Day 1 · Search ads essentials</div>
     <h2>Four ideas every seller explains on day one</h2>
-    <p class="lead">Read the cards marked “learn”, then answer each check from memory. Cards you got right in the pre-check are marked “skip”, but you can still review them.</p>
-    <div class="cards">${TOPICS.map(t => { const c = st.chk[t.id]; return `<div class="mcard ${c === true ? "done" : ""}">
-      <div class="row" style="justify-content:space-between"><h4>${esc(t.t)}</h4>${known(t) ? '<span class="tag skip">Skip</span>' : '<span class="tag learn">Learn</span>'}</div>
-      <p>${esc(t.body)}</p>
-      <p style="font-size:14px;font-weight:700">Check: ${esc(t.chk.q)}</p>
-      <div class="opts">${t.chk.o.map((o, j) => `<button class="opt ${c != null && j === t.chk.a ? "ok" : ""}" data-c="${t.id}" data-j="${j}" ${c === true ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
-      <div id="fb-${t.id}">${c === true ? `<div class="note">${esc(t.chk.why)}</div>` : ""}</div></div>`; }).join("")}</div>
-    ${nav(checksRight() === 4 ? "Next: prep a call" : "")}`;
+    <p class="lead">Topics you got right in the pre-check are tested out. For the others, read the card, then press “Test me”: the card hides and you answer from memory, the way you will on a call.</p>
+    <div class="cards">${TOPICS.map(card).join("")}</div>
+    ${nav("Next: prep a call")}`;
+  qa("[data-test]").forEach(b => b.onclick = () => { st.test[b.dataset.test] = true; save(); s1(); });
   qa(".opt[data-c]").forEach(b => b.onclick = () => {
     const t = TOPICS.find(x => x.id === b.dataset.c), j = +b.dataset.j;
-    if (j === t.chk.a) { if (st.chk[t.id] == null || st.chk[t.id] === "miss") st.chk[t.id] = st.chk[t.id] === "miss" ? "late" : true; if (st.chk[t.id] === "late") st.chk[t.id] = true; save(); s1(); side(); }
-    else { st.chk[t.id] = "miss"; save(); b.classList.add("bad"); bump(b); $("fb-" + t.id).innerHTML = `<div class="note warn">Not quite. Reread the card and try again.</div>`; side(); }
+    if (j === t.chk.a) { st.chk[t.id] = st.chk[t.id] === "miss" ? "late" : "first"; save(); s1(); side(); return; }
+    st.chk[t.id] = "miss"; save(); b.classList.add("bad"); bump(b);
+    qa(`.opt[data-c="${t.id}"]`).forEach(x => x.disabled = true);
+    $("fb-" + t.id).innerHTML = `<div class="note warn">Not quite. <button class="btn" id="re-${t.id}" style="margin-left:6px;padding:4px 12px">Reopen the card</button></div>`;
+    $("re-" + t.id).onclick = () => { st.test[t.id] = false; save(); s1(); };
+    side();
   });
   wireNav();
 }
@@ -334,7 +378,7 @@ function s2(){
       <dt>Before you hang up</dt><dd>A dated next step and who does what</dd></dl></div>
       <div class="row"><button class="btn" id="copy">Copy planner</button><span id="copied" style="font-size:13.5px;color:var(--muted)" role="status"></span></div>
       ${st.client !== "bakery" ? `<div class="note info">Your practice call is with a bakery owner. Switch to “Neighborhood bakery” to prep for it.</div>` : ""}` : ""}
-    ${nav(st.client ? "Next: practice the call" : "")}`;
+    ${nav("Next: practice the call")}`;
   qa(".pickb").forEach(b => b.onclick = () => { st.client = b.dataset.k; save(); s2(); side(); });
   if ($("copy")) $("copy").onclick = async () => {
     const t = `Call planner: ${c.n}\n\nAsk first:\n${c.qs.map(q => "- " + q).join("\n")}\n\nLikely concerns:\n${c.obj.map(o => "- " + o).join("\n")}\n\nStarting point: ${c.start}\nAgree on: ${c.metric}\nBefore you hang up: a dated next step and who does what`;
@@ -343,24 +387,30 @@ function s2(){
   wireNav();
 }
 
-/* ---------- 3 AI client role-play ---------- */
+/* ---------- 3 AI client role-play + note check ---------- */
+const DRAFT = `Call: Rosa Alvarez, bakery owner (2 locations)\nGoal: grow catering orders; slow since spring\nCurrent channel: repeat customers; some search “catering near me”; orders taken by phone, not tracked\nConcern: spent $500 on ads 2 years ago with no measurement\nRecommendation: 2-week search test on catering terms, phrase + exact match, call tracking\nNext step: set up call tracking together Thursday; 15-min review on the 28th`;
+const FIXED = DRAFT.replace("\nNext step:", "\nSuccess metric: 10 catering calls in 2 weeks\nNext step:");
+const NOTE_OPTS = [
+  {t:"The success metric you agreed on: 10 catering calls in 2 weeks", fb:"Right. The metric is what you and Rosa will review on the 28th, so it belongs in the note. It’s added above."},
+  {t:"Rosa’s home address", fb:"A home address doesn’t belong in a CRM note, and Rosa never shared it. Look for something you agreed on during the call."},
+  {t:"Nothing. It’s ready to save.", fb:"Look again. One thing you and Rosa agreed on isn’t in the note."}];
 function s3(){
   const C = st.call;
   $("stage").innerHTML = `
     <div class="label">Day 3 · Practice with an AI client</div>
     <h2>Discovery call with Rosa, bakery owner</h2>
-    <p class="lead">Choose what you’d say. Rosa reacts to every choice, her trust changes, and a coach explains each move. Aim to leave with a dated next step and trust of ${BAR.trust} or more.</p>
+    <p class="lead">Choose what you’d say. Rosa reacts to every choice, her trust changes, and a coach explains each move. Aim to leave with a dated next step and trust of ${BAR.trust} or more, then check the call note AI drafts for you.</p>
     <div class="call">
       <div><div class="chat" id="chat"></div><div class="opts" id="replies" style="margin-top:10px"></div></div>
       <div class="side">
         <div class="persona"><div class="row"><span class="av" aria-hidden="true">R</span><div><b>Rosa Alvarez</b><br><span style="color:var(--muted)">Owner, two-location bakery</span></div></div>
-          <div>Goal she hasn’t said yet: more catering orders. Past experience: $500 on ads with no results.</div></div>
+          <div>Agreed to a 10-minute call. Has run online ads before.</div></div>
         <div class="persona"><div class="label">Client trust</div><div class="meter"><i id="tm" style="width:${C.trust}%"></i></div><div class="trust" id="tv">${C.trust} / 100</div></div>
         <div class="persona"><div class="label">Call stages</div><div class="stagechips" id="chips"></div></div>
       </div>
     </div>
     <div id="after"></div>
-    ${nav(C.done ? "Next: scenario check" : "")}`;
+    ${nav("Next: scenario check")}`;
   const chat = $("chat");
   const add = (cls, who, html) => chat.insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${who ? `<div class="who">${who}</div>` : ""}${html}</div>`);
   const chips = () => { const names = ["Open","Discover","Recommend","Concern","Next step"]; const cur = C.k < CALL.length ? CALL[C.k].stage : null; $("chips").innerHTML = names.map(n => `<span class="${cur === n ? "on" : (CALL.findIndex(x => x.stage === n) < C.k && cur !== n ? "done" : "")}">${n}</span>`).join(""); };
@@ -393,13 +443,20 @@ function s3(){
   };
   show();
   if (C.done) {
-    const pass = C.trust >= BAR.trust;
-    const note = `Call: Rosa Alvarez, bakery owner (2 locations)\nGoal: grow catering orders; slow since spring\nCurrent channel: repeat customers; some search “catering near me”; orders taken by phone, not tracked\nConcern: spent $500 on ads 2 years ago with no measurement\nRecommendation: 2-week search test on catering terms, phrase + exact match, call tracking\nSuccess metric: 10 catering calls in 2 weeks\nNext step: set up call tracking together Thursday; 15-min review on the 28th`;
-    $("after").innerHTML = `<div class="note ${pass ? "" : "warn"}"><strong>Call complete.</strong> Trust ${C.trust} / 100 (bar: ${BAR.trust}). Best move on the first try in ${C.firstOk} of ${CALL.length} moments. ${pass ? "You’re ready to try this with a real client." : "Replay the call and aim for discovery before recommending."}</div>
-      <div class="part"><h3>Your CRM note, drafted from the call</h3><p style="font-size:14.5px">In the real workflow, AI drafts this note from the call and the seller checks it before saving. Review it: is anything missing or wrong?</p><div class="crm">${esc(note)}</div>
-      <div class="row"><button class="btn" id="copyn">Copy note</button><button class="btn" id="replay">Replay the call</button><span id="cn" style="font-size:13.5px;color:var(--muted)" role="status"></span></div></div>`;
-    $("copyn").onclick = async () => { try { await navigator.clipboard.writeText(note); $("cn").textContent = "Copied."; } catch { $("cn").textContent = "Copy isn’t available here."; } };
-    $("replay").onclick = () => { st.call = {k:0, trust:40, h:[], done:false, firstOk:0}; save(); s3(); side(); };
+    const pass = C.trust >= BAR.trust, ok = st.note === NOTE_OK;
+    $("after").innerHTML = `<div class="note ${pass ? "" : "warn"}"><strong>Call complete.</strong> Trust ${C.trust} / 100 (bar: ${BAR.trust}). Best move on the first try in ${C.firstOk} of ${CALL.length} moments. ${pass ? "" : "Consider replaying the call and asking before recommending."}</div>
+      <div class="part"><h3>Check the AI-drafted CRM note</h3><p style="font-size:15px">AI drafted this note from your call. Before you save it, what’s missing?</p>
+      <div class="crm">${esc(ok ? FIXED : DRAFT)}</div>
+      <div class="opts">${NOTE_OPTS.map((o, j) => `<button class="opt ${ok && j === NOTE_OK ? "ok" : ""}" data-n="${j}" ${ok ? "disabled" : ""}>${esc(o.t)}</button>`).join("")}</div>
+      <div id="nfb">${ok ? `<div class="note">${esc(NOTE_OPTS[0].fb)}</div>` : ""}</div>
+      <div class="row">${ok ? '<button class="btn" id="copyn">Copy note</button>' : ""}<button class="btn" id="replay">Replay the call</button><span id="cn" style="font-size:13.5px;color:var(--muted)" role="status"></span></div></div>`;
+    qa("[data-n]").forEach(b => b.onclick = () => {
+      const j = +b.dataset.n;
+      if (j === NOTE_OK) { st.note = NOTE_OK; save(); s3(); side(); return; }
+      b.classList.add("bad"); b.disabled = true; bump(b); $("nfb").innerHTML = `<div class="note warn">${esc(NOTE_OPTS[j].fb)}</div>`;
+    });
+    if ($("copyn")) $("copyn").onclick = async () => { try { await navigator.clipboard.writeText(FIXED); $("cn").textContent = "Copied."; } catch { $("cn").textContent = "Copy isn’t available here."; } };
+    $("replay").onclick = () => { st.call = {k:0, trust:40, h:[], done:false, firstOk:0}; st.note = null; save(); s3(); side(); };
   }
   wireNav();
 }
@@ -417,7 +474,7 @@ function s4(){
     <p class="lead">Each question is a situation you’ll face in your first month. Pass at ${BAR.assess} of 5. A retry draws a different set from the question bank.</p>
     ${A.items.map((i, n) => { const q = BANK[i], a = A.ans[i]; return `<div class="mcard ${a != null ? (a === q.a ? "done" : "") : ""}"><span class="qnum">Question ${n + 1} of 5</span><h4>${esc(q.q)}</h4><div class="opts">${q.o.map((o, j) => `<button class="opt ${a != null ? (j === q.a ? "ok" : (a === j ? "bad" : "")) : ""}" data-i="${i}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<div class="note ${a === q.a ? "" : "warn"}">${esc(q.why)}</div>` : ""}</div>`; }).join("")}
     ${done ? `<div class="row"><span class="score">${score} / 5</span><span>${score >= BAR.assess ? "Passed. You met the proficiency bar." : `Not yet. You need ${BAR.assess} of 5.`}</span><button class="btn" id="retry">Retry with new questions</button></div>` : ""}
-    ${nav(done ? "Next: ramp review" : "")}`;
+    ${nav("Next: ramp review")}`;
   qa(".opt[data-i]").forEach(b => b.onclick = () => {
     A.ans[b.dataset.i] = +b.dataset.j;
     if (Object.keys(A.ans).length === 5) { A.attempts++; const sc = A.items.filter(i => A.ans[i] === BANK[i].a).length; A.best = Math.max(A.best ?? 0, sc); }
@@ -427,35 +484,53 @@ function s4(){
   wireNav();
 }
 
-/* ---------- 5 ramp review ---------- */
+/* ---------- 5 ramp review: spaced recall, reflection, milestones ---------- */
 function s5(){
-  const C = st.call, A = st.as;
-  const met = [checksRight() >= BAR.checks, !!st.client, C.done && C.trust >= BAR.trust, A.best != null && A.best >= BAR.assess];
+  const C = st.call, A = st.as, R = st.recall;
+  if (!R.items) {
+    const weak = TOPICS.filter(t => !(known(t) || st.chk[t.id] === "first")).map(t => t.id);
+    const rest = TOPICS.map(t => t.id).filter(id => !weak.includes(id)).sort(() => Math.random() - .5);
+    R.items = [...weak, ...rest].slice(0, 2); R.ans = {}; save();
+  }
+  const recallRight = R.items.filter(id => R.ans[id] === TOPICS.find(t => t.id === id).chk.a).length;
+  const recallDone = Object.keys(R.ans).length === R.items.length;
+  const met = [firstTry() >= BAR.checks, !!st.client, C.done && C.trust >= BAR.trust, st.note === NOTE_OK, A.best != null && A.best >= BAR.assess, recallDone && recallRight === R.items.length];
   const all = met.every(Boolean);
-  const weak = TOPICS.filter(t => st.chk[t.id] !== true || st.pre[t.id] !== t.pre.a).map(t => t.t);
+  const weakNames = TOPICS.filter(t => !(known(t) || st.chk[t.id] === "first")).map(t => t.t);
   $("stage").innerHTML = `
     <div class="label">Day 5 · Ramp review</div>
-    <h2>${all ? "You’re ready for your first live pitch." : "Almost there. Here’s what’s left."}</h2>
-    <p class="lead">This is what your manager sees. Each milestone has a proficiency bar, so “ready” means the same thing for every new seller.</p>
-    <div class="ramp">
-      <div class="${met[0] ? "met" : ""}"><b>Essentials</b>${checksRight()} / 4 checks right (bar: ${BAR.checks})</div>
+    <h2>${all ? "You’re ready for your first live pitch." : "Almost there. Here’s where you stand."}</h2>
+    <p class="lead">Finish the recall and the two ratings below. Your manager sees the same milestones, so “ready” means the same thing for every new seller.</p>
+    <div class="part"><h3>Day 7 · Spaced recall</h3><p style="font-size:15px">In a real rollout these arrive two days later, with no cards to look at. Topics you found hardest come first.</p>
+      ${R.items.map((id, n) => { const t = TOPICS.find(x => x.id === id), a = R.ans[id]; return `<div class="mcard ${a != null && a === t.chk.a ? "done" : ""}"><span class="qnum">Recall ${n + 1} of ${R.items.length} · ${esc(t.t)}</span><h4>${esc(t.chk.q)}</h4><div class="opts">${t.chk.o.map((o, j) => `<button class="opt ${a != null ? (j === t.chk.a ? "ok" : (a === j ? "bad" : "")) : ""}" data-r="${id}" data-j="${j}" ${a != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>${a != null ? `<div class="note ${a === t.chk.a ? "" : "warn"}">${esc(t.chk.why)}</div>` : ""}</div>`; }).join("")}</div>
+    <div class="part"><h3>Two quick ratings</h3>
+      <p style="font-size:15px">How confident are you now to run a discovery call with a small business owner?</p>${scale("confpost", st.conf.post)}
+      ${st.conf.post != null ? `<p class="qnum">Confidence: ${st.conf.pre ?? "–"} at the start → ${st.conf.post} now</p>` : ""}
+      <p style="font-size:15px;margin-top:8px">How useful was the call planner for preparing your call?</p>${scale("useful", st.useful)}<p class="qnum">1 = not useful · 5 = very useful</p></div>
+    <div class="part"><h3>Milestones</h3><div class="ramp">
+      <div class="${met[0] ? "met" : ""}"><b>Essentials</b>${firstTry()} / 4 right on the first try (bar: ${BAR.checks})</div>
       <div class="${met[1] ? "met" : ""}"><b>Call prep</b>${st.client ? "Planner used" : "Not started"}</div>
       <div class="${met[2] ? "met" : ""}"><b>AI client call</b>${C.done ? `Trust ${C.trust} (bar: ${BAR.trust})` : "Not finished"}</div>
-      <div class="${met[3] ? "met" : ""}"><b>Scenario check</b>${A.best != null ? `Best ${A.best} / 5 (bar: ${BAR.assess})` : "Not taken"}</div>
+      <div class="${met[3] ? "met" : ""}"><b>CRM note check</b>${st.note === NOTE_OK ? "Missing detail found" : "Not done"}</div>
+      <div class="${met[4] ? "met" : ""}"><b>Scenario check</b>${A.best != null ? `Best ${A.best} / 5 (bar: ${BAR.assess})` : "Not taken"}</div>
+      <div class="${met[5] ? "met" : ""}"><b>Spaced recall</b>${recallDone ? `${recallRight} / ${R.items.length}` : "Not finished"}</div>
     </div>
-    <div class="ramp"><div class="open" style="grid-column:1/-1"><b>Day 10 · First live pitch</b>Shadowed by your manager, then a 15-minute debrief using the same call stages.</div></div>
+    <div class="ramp" style="margin-top:10px"><div class="open" style="grid-column:1/-1"><b>Day 10 · First live pitch</b>Shadowed by your manager, rated with the first-call rubric on the same call stages, then a 15-minute debrief.</div></div></div>
     <div class="part"><h3>Suggested focus for your manager 1:1</h3>
-      <p style="font-size:15px">${weak.length ? `Topics you missed in the pre-check or a check: ${esc(weak.join(", "))}.` : "You got every essentials topic right."} ${C.done && C.firstOk < CALL.length ? `In the call, the best move came on the first try in ${C.firstOk} of ${CALL.length} moments. Practice the stages you replayed.` : ""}</p></div>
+      <p style="font-size:15px">${weakNames.length ? `Topics that took more than one try: ${esc(weakNames.join(", "))}.` : "Every essentials topic was right on the first try."} ${C.done && C.firstOk < CALL.length ? `In the call, the best move came on the first try in ${C.firstOk} of ${CALL.length} moments. Practice the stages you replayed.` : ""}</p></div>
     <div class="part"><h3>How we’ll know onboarding works</h3>
       <table><thead><tr><th>Level</th><th>Measure</th><th>When</th></tr></thead><tbody>
-        <tr><td>Reaction</td><td>New seller confidence and usefulness ratings</td><td>End of sprint</td></tr>
-        <tr><td>Learning</td><td>Checks, call trust and scenario score against the bars above</td><td>Days 1–4</td></tr>
-        <tr><td>Behavior</td><td>Manager rating of the first live pitch on the same call stages</td><td>Day 10</td></tr>
-        <tr><td>Results</td><td>Days to first qualified pitch and first closed deal</td><td>Days 10–60</td></tr>
+        <tr><td>Reaction</td><td>Confidence before and after; usefulness of the call planner (both on this page)</td><td>Day 1 and Day 5</td></tr>
+        <tr><td>Learning</td><td>First-try essentials, call trust, note check, scenario score, spaced recall against the bars above</td><td>Days 1–7</td></tr>
+        <tr><td>Behavior</td><td>Manager rating of the first live pitch with the first-call rubric</td><td>Day 10</td></tr>
+        <tr><td>Results</td><td>Days to first qualified pitch and first closed deal, compared with the previous cohort</td><td>Days 10–60</td></tr>
       </tbody></table></div>
     <div class="row"><button class="btn" id="reset">Start over</button></div>
     ${nav("")}`;
-  $("reset").onclick = () => { st = fresh(); save(); render(); };
+  qa("[data-r]").forEach(b => b.onclick = () => { R.ans[b.dataset.r] = +b.dataset.j; save(); s5(); side(); });
+  qa("#confpost .scale").forEach(b => b.onclick = () => { st.conf.post = +b.dataset.n; save(); s5(); side(); });
+  qa("#useful .scale").forEach(b => b.onclick = () => { st.useful = +b.dataset.n; save(); s5(); side(); });
+  $("reset").onclick = () => { st = fresh(); save(); render(); window.scrollTo({top:0}); };
   wireNav();
 }
 
