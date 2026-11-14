@@ -75,7 +75,7 @@
   <p style="margin:0 0 6px"><a href="workplace-learning.html" style="color:var(--blue);text-decoration:none">← Workplace Learning</a></p>
   <h1>Right First Time</h1>
   <p class="measure">Case study: scenario-based label inspection training for a quality department, from needs analysis to spaced reinforcement, built so the skill transfers to the inspection station.</p>
-  <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn primary" href="demos/label-inspection.html#full">Try the demo</a><a class="btn" href="#demo">Play it on this page</a></div>
+  <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn primary" href="demos/label-inspection.html#full">Try the demo</a><a class="btn" href="#demo">Play it on this page</a><a class="btn" href="#course">SCORM course</a></div>
 </div>
 <div class="wrap"><hr class="rule"></div>
 <section class="wrap prose" style="padding-top:0">
@@ -140,6 +140,29 @@
     <iframe src="demos/label-inspection.html" title="Right First Time · label inspection demo"></iframe>
   </div>
 </section>
+<section class="wrap" id="course" aria-labelledby="course-h" style="padding-top:8px">
+  <div class="sechead">
+    <h2 id="course-h">The course, published for an LMS</h2>
+    <p class="muted measure">The same training as a slide-based course on the Storyline 360 model: a player with a menu and seekbar, numbered hotspots on the label, Release and Hold buttons with selected states, feedback layers, score variables and a results slide. It runs as a SCORM 2004 package in any compliant LMS.</p>
+  </div>
+  <div class="demo">
+    <div class="bar2"><span>Right First Time · SCORM 2004 course</span><a href="demos/right-first-time-sl.html#full">Open full screen ↗</a></div>
+    <iframe src="demos/right-first-time-sl.html" title="Right First Time · SCORM 2004 course" style="height:660px"></iframe>
+  </div>
+</section>
+<section class="wrap prose" aria-labelledby="lms-h">
+  <div class="two">
+    <h2 id="lms-h">LMS-ready: SCORM 2004</h2>
+    <div class="prose">
+      <div class="tablewrap"><table><thead><tr><th style="width:32%">What the LMS receives</th><th>Details</th></tr></thead><tbody><tr><td>Completion</td><td>Completed when the learner reaches the results slide</td></tr><tr><td>Success</td><td>Passed at 80% or higher, otherwise failed</td></tr><tr><td>Score</td><td>Raw score out of 5 and scaled score: four labels and one record, first try only</td></tr><tr><td>Interactions</td><td>One record per label and for the deviation record, with the learner’s flags, decision and result</td></tr><tr><td>Resume</td><td>Bookmark and saved progress, so learners return to the slide where they stopped</td></tr></tbody></table></div>
+      <div class="files">
+<a class="file" href="kit/lms/right-first-time-scorm2004.zip"><b>right-first-time-scorm2004.zip</b><span>SCORM 2004 4th Edition package</span></a>
+<a class="file" href="kit/lms/scorm-cloud-guide.md"><b>scorm-cloud-guide.md</b><span>How the package is tested in SCORM Cloud</span></a>
+<a class="file" href="kit/lms/README.md"><b>README.md</b><span>Package status and test notes</span></a>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="wrap prose" aria-labelledby="ai-h">
   <div class="two">
     <h2 id="ai-h">How I use AI to build it</h2>
@@ -191,6 +214,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=27" defer></script>
+<script src="js/search.js?v=28" defer></script>
 </body>
 </html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing Conversation with Priya · Branching Scenario</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A Storyline-style branching scenario: practice a pricing conversation with Priya, a homeowner who wants a higher list price. Built in HTML on Storyline 360's slide, layer, state and variable model by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<style>
+:root{
+  --navy:#1C4587; --blue:#2F62B5; --bar:#3878BC; --sky:#9EC5EE; --tint:#EAF1FB; --line:#DADCE0; --ink:#1F1F1F; --muted:#5A5F66;
+  --orange:#F28A26; --good:#1E7A55; --good-soft:#E3F3EA; --warn:#B4461A; --warn-soft:#FCE6DB;
+  --serif:"Bitter",Georgia,serif; --sans:"Montserrat",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#E9EDF3;color:var(--ink);font-family:var(--serif)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* ---------- player chrome (modeled on a slide-based authoring player) ---------- */
+.player{max-width:1240px;margin:18px auto;background:#fff;border-radius:10px;box-shadow:0 10px 40px rgba(28,69,135,.18);overflow:hidden;display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-rows:auto 1fr auto}
+.player.nomenu{grid-template-columns:0 minmax(0,1fr)}
+.ptop{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--navy);color:#fff}
+.ptop h1{font:600 15px var(--sans);margin:0;flex:1;letter-spacing:.02em}
+.tbtn{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:6px;padding:5px 11px;font:600 12.5px var(--sans)}
+.tbtn[aria-pressed="true"],.tbtn[aria-expanded="true"]{background:#fff;color:var(--navy)}
+.menu{grid-column:1;grid-row:2;background:#F5F7FA;border-right:1px solid var(--line);overflow:auto;padding:12px 0;min-width:0}
+.player.nomenu .menu{display:none}
+.menu .mh{font:700 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 16px 8px}
+.menu button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:8px 16px;font:500 13px var(--sans);color:var(--ink)}
+.menu button[disabled]{color:#A3A8AF;cursor:not-allowed}
+.menu button[aria-current="true"]{background:var(--tint);color:var(--navy);font-weight:700;box-shadow:inset 3px 0 var(--bar)}
+.menu .n{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:10.5px;flex:none}
+.menu .n.ok{background:var(--good);border-color:var(--good);color:#fff}
+.stagewrap{grid-column:2;position:relative;background:#111;min-width:0}
+.pbot{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff;border-top:1px solid var(--line)}
+.seek{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.seek i{display:block;height:100%;width:0;background:var(--orange)}
+.cbtn{border:1.5px solid var(--bar);background:#fff;color:var(--bar);border-radius:6px;padding:6px 14px;font:700 12.5px var(--sans);letter-spacing:.04em}
+.cbtn.solid{background:var(--bar);color:#fff}
+.cbtn:disabled{opacity:.35;cursor:not-allowed}
+.icon{width:34px;height:30px;padding:0;display:grid;place-items:center}
+.res{position:absolute;right:14px;top:44px;z-index:30;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:12px 14px;width:290px;font:13px var(--sans)}
+.res a{display:block;color:var(--blue);padding:5px 0}
+@media (max-width:820px){.player{grid-template-columns:0 minmax(0,1fr);margin:0;border-radius:0}.menu{display:none}.player.showmenu .menu{display:block;position:absolute;z-index:40;top:44px;left:0;width:240px;bottom:52px;box-shadow:8px 0 20px rgba(0,0,0,.2)}}
+
+/* ---------- stage: fixed 960x540 canvas, scaled to fit ---------- */
+#stage{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;animation:sIn .5s ease both}
+@keyframes sIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+.obj{position:absolute}
+.hide{opacity:0;pointer-events:none}
+.in-fade{animation:fade .45s ease both}
+.in-up{animation:up .45s ease both}
+.in-left{animation:left .5s ease both}
+.in-right{animation:right .6s cubic-bezier(.2,.8,.2,1) both}
+.in-zoom{animation:zoom .45s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes left{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes right{from{opacity:0;transform:translateX(120px)}to{opacity:1;transform:none}}
+@keyframes zoom{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+
+.bubble{background:#fff;border:2px solid var(--navy);border-radius:18px;padding:12px 18px;font-size:18px;line-height:1.4;box-shadow:0 6px 18px rgba(28,69,135,.15)}
+.bubble::after{content:"";position:absolute;right:-16px;top:34px;border:9px solid transparent;border-left:14px solid var(--navy)}
+.bubble .who{display:block;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+.choice{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:9px 14px;font-size:15px;line-height:1.33;color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.06);transition:border-color .15s,transform .15s,background .15s}
+.choice .k{flex:none;width:26px;height:26px;border-radius:50%;background:var(--tint);color:var(--navy);display:grid;place-items:center;font:700 13px var(--sans)}
+.choice:hover:not(:disabled){border-color:var(--bar);transform:translateX(4px)}           /* state: hover */
+.choice:active:not(:disabled){background:var(--tint)}                                     /* state: down */
+.choice.visited{opacity:.5;text-decoration:line-through;cursor:not-allowed}              /* state: visited */
+.choice.visited .k{background:var(--warn-soft);color:var(--warn)}
+.trust{position:absolute;right:22px;bottom:14px;z-index:4;width:220px;background:rgba(255,255,255,.95);border-radius:12px;padding:9px 12px;box-shadow:0 4px 14px rgba(0,0,0,.1);font:600 12px var(--sans);color:var(--navy)}
+.trust .bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:5px}
+.trust .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),#FFB869);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.trust .bar i.up{background:linear-gradient(90deg,#1E7A55,#4DB585)}
+.chip{position:absolute;left:24px;top:18px;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy);border-radius:99px;padding:5px 12px}
+.delta{position:absolute;right:256px;bottom:30px;color:#fff!important;text-shadow:0 2px 6px rgba(0,0,0,.35);z-index:4;font:800 26px var(--sans);animation:pop 1.2s ease both}
+@keyframes pop{0%{opacity:0;transform:translateY(10px) scale(.7)}25%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+
+/* feedback layer */
+.layer{position:absolute;left:24px;top:62px;width:560px;background:rgba(255,255,255,.97);border-radius:16px;box-shadow:0 14px 40px rgba(28,69,135,.25);padding:18px 20px;display:flex;flex-direction:column;gap:12px;animation:up .35s ease both;z-index:5}
+.layer .you{font-size:15px;color:var(--muted)}
+.layer .you b{color:var(--navy);font-family:var(--sans);font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block}
+.layer .reply{font-size:18px;line-height:1.4;border-left:4px solid var(--navy);padding-left:12px}
+.layer .coach{border-radius:10px;padding:10px 13px;font-size:15px;line-height:1.4;background:var(--good-soft);border-left:4px solid var(--good)}
+.layer .coach.bad{background:var(--warn-soft);border-left-color:var(--warn)}
+.layer .coach b{font-family:var(--sans);font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+.layer .go{align-self:flex-end}
+.big{font:700 16px var(--sans);border:0;border-radius:10px;padding:12px 26px;background:var(--orange);color:#fff;box-shadow:0 6px 0 #C8601A;transition:transform .1s,box-shadow .1s}
+.big:hover{transform:translateY(-2px);box-shadow:0 8px 0 #C8601A}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #C8601A}
+.big.blue{background:var(--bar);box-shadow:0 6px 0 var(--navy)}
+.pulse{animation:zoom .45s cubic-bezier(.2,1.4,.4,1) both,pl 1.8s 1s ease-in-out infinite}
+@keyframes pl{50%{box-shadow:0 6px 0 #C8601A,0 0 0 10px rgba(242,138,38,.25)}}
+
+/* character: Priya with expression states */
+.rosa{position:absolute;right:70px;bottom:0;width:300px;height:420px}
+.rosa .bob{animation:bob 3.2s ease-in-out infinite;transform-origin:150px 420px}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.rosa .eyes{animation:blink 4.5s infinite;transform-origin:150px 168px}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.rosa .st{display:none}
+.rosa[data-state="neutral"] .s-neutral,.rosa[data-state="happy"] .s-happy,.rosa[data-state="skeptical"] .s-skeptical{display:inline}
+.rosa[data-state="happy"] .cheek{opacity:.55}
+.rosa .cheek{opacity:0;transition:opacity .3s}
+.rosa .mouth{transform-box:fill-box;transform-origin:center}
+.rosa.talk .mouth{animation:talk .16s ease-in-out infinite alternate}
+@keyframes talk{to{transform:scaleY(.45) scaleX(.92)}}
+.rosa.react{animation:react .4s ease}
+@keyframes react{40%{transform:translateY(-8px)}}
+.panelcard{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(28,69,135,.18);padding:22px 26px}
+.stars{display:flex;gap:10px}
+.stars span{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:800 14px var(--sans);color:#fff;background:var(--line)}
+.stars span.ok{background:var(--good)}
+.stars span.retry{background:var(--orange)}
+.crm{font:13px/1.6 ui-monospace,Menlo,monospace;background:#1B2A41;color:#E3EAF3;border-radius:10px;padding:12px 14px;white-space:pre-wrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.foot{max-width:1240px;margin:0 auto 26px;font:12.5px/1.5 var(--sans);color:var(--muted);padding:0 14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../webinar-to-course-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<div class="player" id="player">
+  <div class="ptop">
+    <button class="tbtn" id="mtog" aria-expanded="true" aria-controls="menu">Menu</button>
+    <h1>Pricing Conversation with Priya</h1>
+    <button class="tbtn" id="voice" aria-pressed="true" title="Turn Priya’s voice on or off">Sound on</button>
+    <button class="tbtn" id="rtog" aria-expanded="false">Resources</button>
+  </div>
+  <nav class="menu" id="menu" aria-label="Slides"><div class="mh">Scenario</div><div id="mlist"></div></nav>
+  <div class="stagewrap" id="sw"><div id="stage" role="region" aria-label="Scenario slide" aria-live="polite"></div>
+    <div class="res" id="res" hidden><b style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Resources</b>
+      <a href="../kit/modernization/content-standards.md" target="_blank" rel="noopener">Content standards</a>
+      <a href="../kit/modernization/xapi-tracking-plan.md" target="_blank" rel="noopener">xAPI tracking plan</a>
+      <a href="webinar-to-course.html" target="_blank" rel="noopener">Full modernization workspace</a></div>
+  </div>
+  <div class="pbot">
+    <button class="cbtn icon" id="replay" aria-label="Replay slide" title="Replay slide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v5h5"/></svg></button>
+    <div class="seek" aria-hidden="true"><i id="seek"></i></div>
+    <span id="cnt" style="font:600 12px var(--sans);color:var(--muted);min-width:46px;text-align:right"></span>
+    <button class="cbtn" id="prev">‹ PREV</button>
+    <button class="cbtn solid" id="next">NEXT ›</button>
+  </div>
+</div>
+<p class="foot">A branching scenario built in HTML on the same model as an Articulate Storyline 360 project: slides, a feedback layer, character states, a trust variable and triggers. The Storyline build guide in the sales onboarding project shows how each part maps to Storyline. Priya and Lakeshore Realty Learning are fictional, and the pricing guidance is general; Priya’s voice is AI-generated with Kokoro, an open-source text-to-speech model. Designed and developed by Yi Liu, 2026.</p>
+<span class="sr" id="say" aria-live="assertive"></span>
+
+<script>
+/* ---------- content (same branches as the onboarding sprint) ---------- */
+const CALL = [
+ {
+  "stage": "Price",
+  "them": "My neighbor’s house sold for $640,000 last spring. So we should list at $650,000, right?",
+  "o": [
+   {
+    "t": "Let’s list at $650,000 and adjust later if we need to.",
+    "d": -8,
+    "rep": "Great, that’s what I was hoping to hear.",
+    "c": "Agreeing to an unsupported price to win the listing sets up a harder conversation later."
+   },
+   {
+    "t": "That sale is a good place to start. Tell me what you know about their house, and let’s compare it with the three most recent sales near you.",
+    "d": 12,
+    "ok": true,
+    "rep": "Well… theirs had a finished basement. And a bigger lot, I think.",
+    "c": "You took her evidence seriously and moved to a comparison she can see."
+   },
+   {
+    "t": "The data says $595,000. That’s the number.",
+    "d": -10,
+    "rep": "So you’re just going to ignore what my neighbor got?",
+    "c": "Accurate, but it shuts her out. She hasn’t seen how you got there."
+   }
+  ]
+ },
+ {
+  "stage": "Evidence",
+  "them": "But we put $40,000 into the kitchen two years ago. That has to count for something.",
+  "o": [
+   {
+    "t": "Kitchens don’t really add value.",
+    "d": -10,
+    "rep": "That can’t be right.",
+    "c": "Inaccurate, and it deflates her. Updates can add value; the question is how much buyers pay for them here."
+   },
+   {
+    "t": "Then let’s add the $40,000 to the price.",
+    "d": -6,
+    "rep": "Perfect.",
+    "c": "Buyers pay what the market supports, whatever the seller spent. Use sales evidence."
+   },
+   {
+    "t": "It does. Here are two recent nearby sales with renovated kitchens, and what buyers paid compared with similar homes without them.",
+    "d": 14,
+    "ok": true,
+    "rep": "Oh. So it’s more like fifteen or twenty thousand?",
+    "c": "You showed how the market values the update, with evidence she can check."
+   }
+  ]
+ },
+ {
+  "stage": "Plan",
+  "them": "What if we just try $650,000 for a few weeks and see what happens?",
+  "o": [
+   {
+    "t": "I understand. Homes priced well above recent sales here have tended to sit longer and sell after reductions. I’d suggest $605,000, and we review showings and feedback together after 14 days.",
+    "d": 12,
+    "ok": true,
+    "rep": "Okay. Fourteen days, and we look at it together. That I can live with.",
+    "c": "You named the trade-off with local evidence and offered a dated review. She keeps control of the decision."
+   },
+   {
+    "t": "If you really want to, we can.",
+    "d": -6,
+    "rep": "Great.",
+    "c": "You gave up the evidence without explaining the risk."
+   },
+   {
+    "t": "Then I can’t take the listing.",
+    "d": -12,
+    "rep": "Wow. Okay.",
+    "c": "Too abrupt. You and Priya still have room to agree on a plan."
+   }
+  ]
+ }
+];
+const SLIDES = [{nm:"Welcome"},{nm:"Meet Priya"}, ...CALL.map((c, i) => ({nm:`${i + 1}. ${c.stage}`})), {nm:"Results"}];
+const BAR = 70;
+
+/* ---------- variables (Storyline: Trust, FirstTry, Tried) ---------- */
+let v; const reset = () => v = {slide:0, far:0, trust:40, firstTry:Array(CALL.length).fill(null), tried:CALL.map(() => []), solved:Array(CALL.length).fill(false)};
+reset();
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- scaling ---------- */
+function fit(){ const w = $("sw").clientWidth, s = w / 960; $("stage").style.transform = `scale(${s})`; $("sw").style.height = (540 * s) + "px"; }
+addEventListener("resize", fit); try { new ResizeObserver(fit).observe(document.getElementById("sw")); } catch {}
+
+/* ---------- timeline ---------- */
+let timers = [], raf = 0, RT = 0;
+function timeline(len, cues){
+  timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf);
+  const t0 = performance.now(), L = RM ? 1 : len;
+  const tick = () => { const p = Math.min(1, (performance.now() - t0) / L); $("seek").style.width = (p * 100) + "%"; if (p < 1) raf = requestAnimationFrame(tick); };
+  tick();
+  cues.forEach(([ms, fn]) => timers.push(setTimeout(fn, RM ? 0 : ms)));
+}
+const show = (el, cls) => { if (!el) return; el.classList.remove("hide"); el.classList.add(cls || "in-fade"); };
+
+/* ---------- Priya’s voice: pre-generated neural TTS clips; plays after the learner's first click ---------- */
+const AUD = new Audio(); AUD.preload = "auto";
+let soundOn = true, onTalk = () => {};
+function say(clip){
+  if (!soundOn) return Promise.resolve();
+  return new Promise(res => {
+    let done = false; const end = () => { if (done) return; done = true; onTalk(false); res(); };
+    AUD.onended = end; AUD.onerror = end; AUD.src = "audio/priya/" + clip + ".mp3";
+    onTalk(true); AUD.play().catch(end);
+  });
+}
+function hush(){ try { AUD.pause(); } catch {} onTalk(false); }
+onTalk = on => { const r = document.getElementById("rosa"); if (r) r.classList.toggle("talk", on); };
+$("voice").onclick = () => { soundOn = !soundOn; $("voice").setAttribute("aria-pressed", soundOn); $("voice").textContent = soundOn ? "Sound on" : "Sound off"; if (!soundOn) hush(); };
+/* ---------- art ---------- */
+const BG = `<svg class="obj" style="inset:0" width="960" height="540" viewBox="0 0 960 540" aria-hidden="true">
+  <rect width="960" height="540" fill="#F6F1EA"/>
+  <rect x="0" y="0" width="960" height="70" fill="#EDE5DA"/>
+  <g transform="translate(612 30)"><rect width="300" height="150" rx="10" fill="#fff" stroke="#DADCE0" stroke-width="2"/><text x="16" y="28" font-family="Montserrat,Arial" font-weight="700" font-size="13" fill="#2F62B5" letter-spacing="1.5">CMA · RECENT SALES NEARBY</text>
+   <g font-family="Montserrat,Arial" font-size="13" fill="#1F1F1F"><text x="16" y="58">12 Elm St · 3 bd</text><text x="284" y="58" text-anchor="end" font-weight="700">$598,000</text><text x="16" y="84">40 Oak Ave · 3 bd</text><text x="284" y="84" text-anchor="end" font-weight="700">$589,000</text><text x="16" y="110">7 Birch Ct · 3 bd, new kitchen</text><text x="284" y="110" text-anchor="end" font-weight="700">$607,000</text></g>
+   <rect x="16" y="122" width="268" height="18" rx="9" fill="#EAF1FB"/><text x="150" y="135" text-anchor="middle" font-family="Montserrat,Arial" font-weight="700" font-size="12" fill="#1C4587">Suggested range $585K–$605K</text></g>
+  <g transform="translate(640 210)"><rect width="250" height="150" rx="6" fill="#9EC5EE" opacity=".5"/><path d="M0 75 H250 M125 0 V150" stroke="#fff" stroke-width="6"/></g>
+</svg>`;
+const COUNTER = `<svg class="obj" style="left:0;top:430px" width="960" height="110" viewBox="0 0 960 110" aria-hidden="true">
+  <rect y="0" width="960" height="14" fill="#B8865B"/><rect y="14" width="960" height="96" fill="#9C6E47"/>
+  <g transform="translate(660 -30)"><rect width="150" height="34" rx="4" fill="#fff" stroke="#DADCE0" stroke-width="2" transform="rotate(-4)"/><text x="75" y="22" text-anchor="middle" font-family="Montserrat,Arial" font-weight="700" font-size="12" fill="#1C4587" transform="rotate(-4)">CMA · Shah home</text></g>
+</svg>`;
+const ROSA = `<svg class="rosa" id="rosa" data-state="neutral" viewBox="0 0 300 420" aria-label="Priya, the homeowner" role="img"><g class="bob">
+  <path d="M40 420 C44 320 90 280 150 280 C210 280 256 320 260 420 Z" fill="#F28A26"/>
+  <path d="M118 292 Q150 330 182 292" stroke="#FFFFFF" stroke-width="4" fill="none"/><circle cx="150" cy="320" r="6" fill="#9EC5EE"/>
+  <rect x="132" y="236" width="36" height="50" rx="12" fill="#B87D58"/>
+  <path d="M76 160 C66 92 108 70 150 70 C192 70 234 92 224 160 L236 300 C200 312 100 312 64 300 Z" fill="#1F1A17"/>
+  <ellipse cx="150" cy="165" rx="66" ry="76" fill="#C98E66"/>
+  <path d="M84 160 C80 100 112 82 150 82 C192 82 222 104 216 160 C206 128 184 112 150 112 C118 112 94 128 84 160 Z" fill="#1F1A17"/>
+  <ellipse cx="86" cy="172" rx="9" ry="14" fill="#BF845E"/><ellipse cx="214" cy="172" rx="9" ry="14" fill="#BF845E"/>
+  <circle cx="86" cy="190" r="4" fill="#F28A26"/><circle cx="214" cy="190" r="4" fill="#F28A26"/>
+  <g class="eyes"><ellipse cx="124" cy="168" rx="7" ry="9" fill="#1C2B44"/><ellipse cx="176" cy="168" rx="7" ry="9" fill="#1C2B44"/><circle cx="126" cy="165" r="2.2" fill="#fff"/><circle cx="178" cy="165" r="2.2" fill="#fff"/></g>
+  <ellipse class="cheek" cx="108" cy="196" rx="12" ry="7" fill="#F28A26"/><ellipse class="cheek" cx="192" cy="196" rx="12" ry="7" fill="#F28A26"/>
+  <path d="M146 180 Q150 192 156 186" stroke="#B9805C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <g class="st s-neutral"><path d="M110 146 L138 144" stroke="#1F1A17" stroke-width="5" stroke-linecap="round"/><path d="M162 144 L190 146" stroke="#1F1A17" stroke-width="5" stroke-linecap="round"/><g class="mouth"><path d="M134 210 Q150 216 166 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g></g>
+  <g class="st s-happy"><path d="M110 144 Q124 134 138 142" stroke="#1F1A17" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M162 142 Q176 134 190 144" stroke="#1F1A17" stroke-width="5" fill="none" stroke-linecap="round"/><g class="mouth"><path d="M128 204 Q150 230 172 204 Z" fill="#8A3B2A"/><path d="M134 206 Q150 214 166 206" stroke="#fff" stroke-width="4" fill="none"/></g></g>
+  <g class="st s-skeptical"><path d="M110 140 L138 148" stroke="#1F1A17" stroke-width="5" stroke-linecap="round"/><path d="M162 138 L190 132" stroke="#1F1A17" stroke-width="5" stroke-linecap="round"/><g class="mouth"><path d="M134 214 Q148 206 168 210" stroke="#8A3B2A" stroke-width="4" fill="none" stroke-linecap="round"/></g></g>
+</g></svg>`;
+function trustHTML(){ return `<div class="trust" id="trust">SELLER TRUST <span id="tv" style="float:right">${v.trust}</span><div class="bar"><i id="tb" style="width:${v.trust}%"></i></div><div style="font-weight:500;color:#5A5F66;margin-top:4px">Goal: ${BAR} or more</div></div>`; }
+function setRosa(state){ const r = $("rosa"); if (!r) return; r.dataset.state = state; r.classList.remove("react"); void r.offsetWidth; r.classList.add("react"); }
+
+/* ---------- menu + chrome ---------- */
+function chrome(){
+  const solvedAll = n => n < 2 ? v.far > n : v.solved[n - 2];
+  $("mlist").innerHTML = SLIDES.map((s, i) => `<button data-i="${i}" ${i > v.far ? "disabled" : ""} aria-current="${v.slide === i}"><span class="n ${i !== v.slide && i < SLIDES.length - 1 && solvedAll(i) ? "ok" : ""}">${i !== v.slide && i < SLIDES.length - 1 && solvedAll(i) ? "✓" : i + 1}</span>${esc(s.nm)}</button>`).join("");
+  $("mlist").querySelectorAll("button").forEach(b => b.onclick = () => go(+b.dataset.i));
+  $("cnt").textContent = `${v.slide + 1} / ${SLIDES.length}`;
+  $("prev").disabled = v.slide === 0;
+  const isQ = v.slide >= 2 && v.slide < SLIDES.length - 1;
+  $("next").disabled = v.slide === SLIDES.length - 1 || (isQ && !v.solved[v.slide - 2]) || v.slide === 0;
+}
+function go(i){ hush(); v.slide = i; v.far = Math.max(v.far, i); render(); }
+$("prev").onclick = () => go(v.slide - 1);
+$("next").onclick = () => go(v.slide + 1);
+$("replay").onclick = () => { hush(); render(); };
+$("mtog").onclick = () => { const p = $("player"), narrow = innerWidth <= 820; if (narrow) p.classList.toggle("showmenu"); else p.classList.toggle("nomenu"); $("mtog").setAttribute("aria-expanded", narrow ? p.classList.contains("showmenu") : !p.classList.contains("nomenu")); setTimeout(fit, 0); };
+$("rtog").onclick = () => { const r = $("res"); r.hidden = !r.hidden; $("rtog").setAttribute("aria-expanded", !r.hidden); };
+
+/* ---------- slides ---------- */
+function sTitle(){
+  $("stage").innerHTML = `<div class="slide" style="background:linear-gradient(135deg,#1C4587,#3878BC)">
+    <svg class="obj" style="inset:0" width="960" height="540" aria-hidden="true"><circle cx="820" cy="80" r="160" fill="#fff" opacity=".06"/><circle cx="120" cy="500" r="120" fill="#fff" opacity=".06"/><path d="M70 420 L210 360 L350 390 L520 300" stroke="#fff" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" fill="none" opacity=".6"/><circle cx="520" cy="300" r="10" fill="#F28A26"/></svg>
+    <div class="obj hide" id="k" style="left:70px;top:100px;font:700 14px var(--sans);letter-spacing:.14em;color:#9EC5EE">LAKESHORE REALTY LEARNING · AGENT PRACTICE</div>
+    <div class="obj hide" id="t" style="left:70px;top:130px;width:520px;font:800 50px/1.05 var(--serif);color:#fff">Pricing Conversation with Priya</div>
+    <div class="obj hide" id="s" style="left:70px;top:260px;width:470px;font:20px/1.45 var(--serif);color:#E6EEF9">Three moments. Three choices each. Help Priya choose a price she believes in, and agree on a review date.<span style="display:block;margin-top:14px;font:600 14px var(--sans);color:#9EC5EE">Priya speaks, so turn your sound on.</span></div>
+    <button class="obj big hide" id="start" style="left:70px;top:400px">Start the call ›</button>
+    <div style="position:absolute;right:-10px;bottom:-40px;transform:scale(.95);transform-origin:bottom right" class="hide" id="rw">${ROSA}</div>
+  </div>`;
+  timeline(2200, [[150, () => show($("k"), "in-fade")], [350, () => show($("t"), "in-left")], [800, () => show($("s"), "in-up")], [1000, () => show($("rw"), "in-right")], [1600, () => { show($("start"), "pulse"); $("start").focus({preventScroll:true}); }]]);
+  $("start").onclick = () => go(1);
+}
+function sIntro(){
+  $("stage").innerHTML = `<div class="slide">${BG}<div class="hide" id="rw">${ROSA}</div>${COUNTER}
+    <div class="obj panelcard hide" id="card" style="left:40px;top:96px;width:520px">
+      <div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--blue)">YOUR CALL</div>
+      <h2 style="margin:6px 0 10px;font:800 28px var(--serif);color:var(--navy)">Priya Shah, selling her family home</h2>
+      <p style="margin:0 0 12px;font-size:17px;line-height:1.5">She wants to list at $650,000 because of a neighbor’s sale. Your comparative market analysis (CMA) suggests $585,000–$605,000.</p>
+      <ul style="margin:0;padding-left:20px;font-size:16px;line-height:1.6" id="goals">
+        <li class="hide">Take her evidence seriously</li><li class="hide">Show how buyers value her updates</li><li class="hide">Agree on a price and a review date</li></ul>
+    </div>
+    <div class="obj hide" id="tip" style="left:40px;top:430px;width:520px;font:600 14px var(--sans);color:#fff;background:var(--orange);border-radius:10px;padding:10px 14px;z-index:3">Watch her face and the trust meter. Every choice changes both.</div>
+    ${trustHTML()}</div>`;
+  $("trust").classList.add("hide");
+  const li = [...$("goals").children];
+  timeline(3400, [[100, () => show($("rw"), "in-right")], [500, () => show($("card"), "in-left")], [1100, () => show(li[0], "in-up")], [1500, () => show(li[1], "in-up")], [1900, () => show(li[2], "in-up")], [2500, () => show($("trust"), "in-zoom")], [3000, () => { show($("tip"), "in-up"); $("next").disabled = false; }]]);
+}
+function sQ(k){
+  const q = CALL[k], solved = v.solved[k];
+  $("stage").innerHTML = `<div class="slide">${BG}<div id="rw">${ROSA}</div>${COUNTER}
+    <div class="chip">Moment ${k + 1} of ${CALL.length} · ${esc(q.stage)}</div>
+    <div class="obj bubble hide" id="b" style="left:40px;top:62px;width:540px"><span class="who">Priya</span><span id="bt">${esc(q.them)}</span></div>
+    <div class="obj" id="ch" style="left:40px;top:${q.them.length > 70 ? 196 : 172}px;width:540px;display:flex;flex-direction:column;gap:9px">
+      ${q.o.map((o, j) => `<button class="choice hide ${v.tried[k].includes(j) && !(solved && o.ok) ? "visited" : ""}" data-j="${j}" ${v.tried[k].includes(j) || solved ? "disabled" : ""}><span class="k">${"ABC"[j]}</span><span>${esc(o.t)}</span></button>`).join("")}
+    </div>
+    ${trustHTML()}<div id="lay"></div></div>`;
+  setRosa("neutral");
+  $("ch").style.top = ($("b").offsetTop + $("b").offsetHeight + 14) + "px";
+  const bs = [...$("ch").children];
+  const token = ++RT;
+  const reveal = () => { if (token !== RT) return; bs.forEach((b, j) => setTimeout(() => token === RT && show(b, "in-left"), RM ? 0 : j * 250)); };
+  timeline(1400 + bs.length * 250, [[200, () => { show($("b"), "in-zoom"); if (solved) return; const again = v.tried[k].length > 0; Promise.all([again ? null : say("m" + k), new Promise(r => setTimeout(r, RM ? 0 : 700))]).then(reveal); }]]);
+  bs.forEach(b => b.onclick = () => choose(k, +b.dataset.j));
+  if (solved) { const j = q.o.findIndex(o => o.ok); layer(k, j, false); }
+}
+function choose(k, j){
+  const o = CALL[k].o[j];
+  if (v.firstTry[k] === null) v.firstTry[k] = !!o.ok;
+  v.tried[k].push(j);
+  const before = v.trust; v.trust = Math.max(0, Math.min(100, v.trust + o.d));
+  if (o.ok) v.solved[k] = true;
+  layer(k, j, true, v.trust - before);
+  chrome();
+}
+function layer(k, j, animate, delta){
+  const o = CALL[k].o[j], last = k === CALL.length - 1;
+  setRosa(o.ok ? "happy" : "skeptical");
+  $("bt").textContent = o.rep; if (animate) say(`m${k}-o${j}`);
+  $("ch").classList.add("hide");
+  $("lay").innerHTML = `<div class="layer" role="dialog" aria-label="Feedback">
+      <div class="you"><b>You said</b>${esc(o.t)}</div>
+      <div class="coach ${o.ok ? "" : "bad"}"><b>${o.ok ? "Coach · strong move" : "Coach · try another way"}</b>${esc(o.c)}</div>
+      <div class="go">${o.ok ? `<button class="big blue" id="cont">${last ? "See your results ›" : "Continue ›"}</button>` : `<button class="big" id="again">Try again</button>`}</div></div>
+    ${animate && delta ? `<div class="delta" style="color:${delta > 0 ? "var(--good)" : "var(--warn)"}">${delta > 0 ? "+" : ""}${delta}</div>` : ""}`;
+  $("b").style.cssText += ";left:24px;top:auto;bottom:24px;width:560px;z-index:6;opacity:1"; // Priya’s reply sits below the layer
+  $("b").classList.remove("hide");
+  requestAnimationFrame(() => { $("tv").textContent = v.trust; const tb = $("tb"); tb.style.width = v.trust + "%"; tb.classList.toggle("up", !!o.ok); });
+  $("say").textContent = `Priya: ${o.rep}. Coach: ${o.c}`;
+  if ($("cont")) { $("cont").onclick = () => go(v.slide + 1); $("cont").focus({preventScroll:true}); }
+  if ($("again")) { $("again").onclick = () => sQ(k); $("again").focus({preventScroll:true}); }
+}
+function sResults(){
+  const first = v.firstTry.filter(x => x === true).length, pass = v.trust >= BAR;
+  const note = `Listing appointment: Priya Shah, 3-bed family home
+Seller expectation: $650,000, based on a neighbor’s sale last spring (finished basement, larger lot)
+Updates: kitchen renovation two years ago ($40,000)
+CMA range: $585,000–$605,000
+Agreed list price: $605,000
+Next step: review showings and feedback together after 14 days`;
+  $("stage").innerHTML = `<div class="slide" style="background:linear-gradient(135deg,#F3F6FA,#EAF1FB)">
+    <div style="position:absolute;right:-20px;bottom:-60px;transform:scale(.9);transform-origin:bottom right">${ROSA}</div>
+    <div class="obj panelcard hide" id="card" style="left:40px;top:40px;width:600px">
+      <div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--blue)">CONVERSATION RESULTS</div>
+      <div style="display:flex;align-items:baseline;gap:14px;margin:6px 0"><span id="score" style="font:800 64px var(--sans);color:var(--navy)">0</span><span style="font:600 16px var(--sans);color:var(--muted)">seller trust (goal ${BAR})</span></div>
+      <p style="margin:0 0 14px;font-size:18px" id="msg" class="hide">${pass ? "Priya agreed to list at $605,000 with a 14-day review. You’re ready for a real listing appointment." : "Priya is still set on $650,000. Replay and lead with her evidence before your numbers."}</p>
+      <div style="font:700 12px var(--sans);letter-spacing:.08em;color:var(--muted);margin-bottom:6px">STRONG MOVE ON THE FIRST TRY: ${first} OF ${CALL.length}</div>
+      <div class="stars">${v.firstTry.map((x, i) => `<span class="hide ${x ? "ok" : "retry"}" title="${esc(CALL[i].stage)}">${i + 1}</span>`).join("")}</div>
+      <div style="display:flex;gap:12px;margin-top:20px"><button class="big blue hide" id="note">View listing note</button><button class="big hide" id="again">Replay the call</button></div>
+    </div><div id="lay"></div></div>`;
+  setRosa(pass ? "happy" : "skeptical");
+  const st = [...document.querySelectorAll(".stars span")];
+  timeline(2600, [[100, () => show($("card"), "in-up")], [400, () => { const t0 = performance.now(), go2 = () => { const p = Math.min(1, RM ? 1 : (performance.now() - t0) / 900); $("score").textContent = Math.round(v.trust * p); if (p < 1) requestAnimationFrame(go2); }; go2(); }], [1300, () => show($("msg"), "in-fade")], ...st.map((s, i) => [1500 + i * 120, () => show(s, "in-zoom")]), [2300, () => { show($("note"), "in-up"); show($("again"), "in-up"); }]]);
+  $("say").textContent = `Conversation complete. Trust ${v.trust}. ${pass ? "Goal met." : "Goal not met."}`;
+  $("note").onclick = () => { $("lay").innerHTML = `<div class="layer" style="left:40px;width:600px;top:40px;bottom:40px" role="dialog" aria-label="Listing note"><div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--blue)">AI-DRAFTED LISTING NOTE · CHECK BEFORE SAVING</div><div class="crm">${esc(note)}</div><p style="margin:0;font-size:15px">Is anything missing? Check the note before saving: does it record the review date you both agreed on? (It does: 14 days.)</p><div class="go"><button class="big blue" id="close">Close</button></div></div>`; $("close").onclick = () => $("lay").innerHTML = ""; $("close").focus(); };
+  $("again").onclick = () => { reset(); go(0); };
+}
+function render(){ chrome(); $("res").hidden = true; $("rtog").setAttribute("aria-expanded", "false");
+  const i = v.slide; if (i === 0) sTitle(); else if (i === 1) sIntro(); else if (i === SLIDES.length - 1) sResults(); else sQ(i - 2);
+  chrome(); if (i === 1) $("next").disabled = true; fit(); }
+render(); fit();
+</script>
+</body>
+</html>

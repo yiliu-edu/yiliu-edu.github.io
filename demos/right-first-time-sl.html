@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Right First Time · Label Inspection (SCORM course)</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A slide-based label inspection course built on the Storyline 360 model and published as a SCORM 2004 package. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="sl-player.css?v=1">
+<style>
+.wo{position:absolute;left:28px;top:96px;width:300px;background:#fff;border-radius:14px;box-shadow:0 8px 24px rgba(28,69,135,.14);padding:16px 18px;font:14px var(--sans)}
+.wo h4{margin:0 0 8px;font:700 12px var(--sans);letter-spacing:.1em;color:var(--muted)}
+.wo dl{margin:0;display:grid;grid-template-columns:82px 1fr;gap:5px 8px}
+.wo dt{color:var(--muted);font-size:12.5px}
+.wo dd{margin:0;font:700 13px ui-monospace,Menlo,monospace;color:var(--ink)}
+.clip{position:absolute;left:150px;top:84px;width:60px;height:22px;border-radius:6px;background:#9EA7B3}
+.lab{position:absolute;left:352px;top:92px;width:580px;background:#fff;border:2.5px solid #222;border-radius:8px;padding:14px 16px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;font-family:Arial,Helvetica,sans-serif;color:#111;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.fld{position:relative;border:2.5px solid transparent;border-radius:7px;background:none;text-align:left;padding:5px 8px;color:#111;font-family:inherit;display:flex;gap:8px;align-items:center;min-height:42px;font-size:15px;cursor:pointer;transition:border-color .15s,background .15s}
+.fld:hover{border-color:var(--sky)}
+.fld[aria-pressed="true"]{border-color:var(--warn);background:var(--warn-soft)}
+.fld.seen{border-color:var(--good);background:var(--good-soft)}
+.fld.miss{border-color:var(--warn);border-style:dashed}
+.fld .v{font-weight:700;font-size:16px}
+.fld.name{grid-column:1/-1;font-size:19px;font-weight:700}
+.fld.w2{grid-column:span 2}.fld.w3{grid-column:span 3}.fld.w6{grid-column:1/-1}
+.sym{flex:none;border:1.6px solid #111;border-radius:2px;padding:0 4px;font-size:11px;font-weight:700;line-height:18px}
+.udi{font:12px ui-monospace,Menlo,monospace}
+.bars{height:30px;flex:1;background:repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 3px,#111 3px 4px,#fff 4px 7px,#111 7px 8px,#fff 8px 10px)}
+.mk{position:absolute;right:-9px;top:-11px;width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;font:700 11px var(--sans);display:grid;place-items:center;box-shadow:0 0 0 3px #fff;animation:pl2 1.6s ease-in-out infinite}
+.fld.seen .mk{background:var(--good);animation:none}
+@keyframes pl2{50%{box-shadow:0 0 0 3px #fff,0 0 0 8px rgba(242,138,38,.3)}}
+.dec{position:absolute;left:352px;top:430px;width:580px;display:flex;gap:12px}
+.dec button{flex:1;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:12px;font:700 16px var(--sans);color:var(--ink)}
+.dec button[aria-pressed="true"]{border-color:var(--bar);background:var(--tint);color:var(--navy)}
+.dec #sub{color:#fff}
+.dec .hold[aria-pressed="true"]{border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.panel{position:absolute;background:#fff;border-radius:16px;box-shadow:0 14px 40px rgba(28,69,135,.22);padding:18px 20px;animation:up .3s ease both;z-index:5}
+.panel h3{margin:0 0 6px;font:700 13px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.panel p{margin:0;font-size:17px;line-height:1.45}
+.fb{border-radius:10px;padding:12px 14px;font-size:16px;line-height:1.45;background:var(--good-soft);border-left:5px solid var(--good)}
+.fb.bad{background:var(--warn-soft);border-left-color:var(--warn)}
+.fb b{display:block;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.title-l{position:absolute;left:70px;top:150px;width:520px;color:#fff}
+.flow{position:absolute;left:40px;top:150px;width:880px;height:300px}
+.node{position:absolute;width:200px;padding:14px;border-radius:14px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.08);font-size:15px;line-height:1.4}
+.node b{display:block;font:700 13px var(--sans);color:var(--navy);margin-bottom:4px}
+.node.good{border-top:5px solid var(--good)}.node.bad{border-top:5px solid var(--warn)}
+.rec{display:block;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font:14px/1.45 ui-monospace,Menlo,monospace;color:var(--ink);margin-bottom:9px}
+.rec:hover:not(:disabled){border-color:var(--bar)}
+.rec.ok{border-color:var(--good);background:var(--good-soft)}.rec.bad{border-color:var(--warn);background:var(--warn-soft);opacity:.75}
+.dots{display:flex;gap:10px}
+.dots span{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:800 15px var(--sans);color:#fff;background:var(--line)}
+.dots .ok{background:var(--good)}.dots .no{background:var(--orange)}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../right-first-time-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<div class="player" id="player">
+  <div class="ptop">
+    <button class="tbtn" id="mtog" aria-expanded="true" aria-controls="menu">Menu</button>
+    <h1>Right First Time · Label Inspection</h1>
+    <span id="lms" style="font:600 11.5px var(--sans);opacity:.85"></span>
+    <button class="tbtn" id="rtog" aria-expanded="false">Resources</button>
+  </div>
+  <nav class="menu" id="menu" aria-label="Slides"><div class="mh">Course</div><div id="mlist"></div></nav>
+  <div class="stagewrap" id="sw"><div id="stage" role="region" aria-label="Course slide" aria-live="polite"></div>
+    <div class="res" id="res" hidden><b style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Resources</b>
+      <a href="../kit/quality/station-check-card.md" target="_blank" rel="noopener">Station check card</a>
+      <a href="../kit/lms/right-first-time-scorm2004.zip">SCORM 2004 package (.zip)</a>
+      <a href="label-inspection.html" target="_blank" rel="noopener">Full training (all steps)</a></div>
+  </div>
+  <div class="pbot">
+    <button class="cbtn icon" id="replay" aria-label="Replay slide" title="Replay slide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v5h5"/></svg></button>
+    <div class="seek" aria-hidden="true"><i id="seek"></i></div>
+    <span id="cnt" style="font:600 12px var(--sans);color:var(--muted);min-width:46px;text-align:right"></span>
+    <button class="cbtn" id="prev">‹ PREV</button>
+    <button class="cbtn solid" id="next">NEXT ›</button>
+  </div>
+</div>
+<p class="foot">A slide-based course built in HTML on the same model as an Articulate Storyline 360 project (slides, layers, states, variables and triggers) and published as a SCORM 2004 package that reports completion, score and each inspection to an LMS. Northbrook Medical Supply and its labels are fictional; your site’s SOPs and approved label specifications govern. Designed and developed by Yi Liu, 2026.</p>
+<span class="sr" id="say" aria-live="assertive"></span>
+<script src="sl-scorm.js?v=1"></script>
+<script src="sl-player.js?v=1"></script>
+<script>
+const HOUR = `<svg width="18" height="20" viewBox="0 0 18 20" aria-hidden="true"><path d="M2 1h14M2 19h14M4 1c0 6 10 6 10 9s-10 3-10 9M14 1c0 6-10 6-10 9s10 3 10 9" fill="none" stroke="#111" stroke-width="1.6"/></svg>`;
+const FACT = `<svg width="22" height="18" viewBox="0 0 22 18" aria-hidden="true"><path d="M1 17V8l6 4V8l6 4V2h4v15z" fill="#111"/></svg>`;
+const ELEM = {
+  name:["Product name and size", "Must match the work order exactly, including size or variant."],
+  ref:["REF · catalog number", "Identifies the exact product. Read the digits in pairs against the work order."],
+  lot:["LOT · lot number", "Ties every unit to its production record. A wrong lot breaks traceability."],
+  exp:["Use-by date (hourglass)", "YYYY-MM-DD. Check the day as well as the month and year."],
+  ster:["Sterility symbol", "Names the sterilization method, such as STERILE EO. A sterile product needs the symbol."],
+  qty:["Quantity", "Units per package, matched to the specification."],
+  mfr:["Manufacturer (factory)", "Name and address of the legal manufacturer."],
+  udi:["UDI barcode", "Encodes the product (01), use-by date (17, YYMMDD) and lot (10). Use it to cross-check the printed text."]
+};
+const CASES = [
+  {wo:{wo:"WO 88213", name:"Sterile Gauze Pads, 4 in × 4 in", ref:"NM-4410", lot:"25K118", exp:"2029-10-31", ster:"STERILE EO", qty:"25", gtin:"00812345000123"}, err:{lot:"25K181"}, why:"Two lot digits are swapped (25K181). The UDI still encodes 25K118, which is how a careful check catches it."},
+  {wo:{wo:"WO 88219", name:"Nitrile Exam Gloves, Medium", ref:"NM-2203-M", lot:"25J042", exp:"2030-09-30", ster:"NON-STERILE", qty:"100", gtin:"00812345000208"}, err:{}, why:"Every field matches the work order, so this lot can ship. Holding good product costs time and supply too."},
+  {wo:{wo:"WO 88230", name:"Saline Flush Syringe, 10 mL", ref:"NM-7710", lot:"25L007", exp:"2027-11-30", ster:"STERILE", qty:"30", gtin:"00812345000314"}, err:{exp:"2027-11-03"}, why:"The use-by day reads 03 where the work order says 30. Month and year match, so a quick glance misses it."},
+  {wo:{wo:"WO 88241", name:"Foam Wound Dressing, 4 in × 4 in", ref:"NM-5532", lot:"25K090", exp:"2029-06-30", ster:"STERILE EO", qty:"10", gtin:"00812345000420"}, err:{ref:"NM-5523", ster:""}, why:"Two problems: the catalog number has swapped digits (5523), and the sterility symbol is missing from a sterile product."}
+];
+const RECS = [
+  {t:"Label wrong, fixed it.", ok:false, f:"An auditor can’t tell who did what, when, to which lot, or what happened to the product."},
+  {t:"2026-11-14 10:42 · J. Rivera, Branch QA · WO 88213: printed LOT 25K181 does not match work order and UDI lot 25K118. 120 units on QA hold, location H-2. Labeling supervisor notified. Photo attached.", ok:true, f:"Attributable, contemporaneous, specific and accurate, with the original evidence attached."},
+  {t:"Lot looked off, probably a printer issue. Checked a few boxes, they seemed fine, so released.", ok:false, f:"A guess about the cause, a partial check and a release of suspect product."}
+];
+const KEY = "rft-sl-v1";
+const fresh = () => ({seen:{}, flags:[{}, {}, {}, {}], dec:[null, null, null, null], res:[null, null, null, null], first:[null, null, null, null], rec:[], recFirst:null, cur:null});
+let S = fresh();
+/* ---------- SCORM: resume from the LMS bookmark if there is one ---------- */
+const LMS = SCORM.init();
+$("lms").textContent = LMS ? "Connected to LMS · progress is tracked" : "";
+let resume = 0;
+if (LMS) { const r = SCORM.resume(); if (r.data) S = Object.assign(fresh(), r.data); if (r.slide) resume = r.slide; }
+else { try { const x = JSON.parse(sessionStorage.getItem(KEY)); if (x) S = Object.assign(fresh(), x); } catch {} }
+const save = () => { if (LMS) SCORM.bookmark(SL.slide, S); else try { sessionStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+
+function udi(v){ return `(01)${v.gtin}(17)${v.exp.replace(/-/g, "").slice(2)}(10)${v.lot}`; }
+function label(c, mode, j){
+  const v = mode === "inspect" ? Object.assign({}, c.wo, c.err) : c.wo, n = Object.keys(ELEM);
+  const cls = k => {
+    if (mode === "learn") return S.seen[k] ? "seen" : "";
+    const r = S.res[j]; if (r == null) return ""; const isErr = k in c.err, fl = !!S.flags[j][k];
+    return isErr && !fl ? "miss" : isErr && fl ? "seen" : "";
+  };
+  const b = (k, inner, w) => `<button class="fld ${w} ${cls(k)}" data-f="${k}" aria-pressed="${mode === "inspect" && !!S.flags[j][k]}" aria-label="${ELEM[k][0]}">${inner}${mode === "learn" ? `<span class="mk" aria-hidden="true">${n.indexOf(k) + 1}</span>` : ""}</button>`;
+  return `<div class="lab" id="lab">
+    ${b("name", `<span>${esc(v.name)}</span>`, "name")}
+    ${b("ref", `<span class="sym">REF</span><span class="v">${esc(v.ref)}</span>`, "w3")}
+    ${b("lot", `<span class="sym">LOT</span><span class="v">${esc(v.lot)}</span>`, "w3")}
+    ${b("exp", `${HOUR}<span class="v">${esc(v.exp)}</span>`, "w3")}
+    ${b("ster", v.ster ? (v.ster === "NON-STERILE" ? `<span class="sym" style="text-decoration:line-through">STERILE</span><span class="v" style="font-size:12px">NON-STERILE</span>` : `<span class="sym">${esc(v.ster)}</span>`) : `<span style="color:#999;font-size:12px">(no symbol)</span>`, "w3")}
+    ${b("qty", `<span class="v">${esc(v.qty)} units</span>`, "w2")}
+    ${b("mfr", `${FACT}<span style="font-size:12px">Northbrook Medical Supply, Northbrook, IL</span>`, "w2")}
+    ${b("udi", `<span class="bars" aria-hidden="true"></span><span class="udi">${esc(udi(c.wo))}</span>`, "w6")}
+  </div>`;
+}
+const head = (chip, title) => `<div class="chip">${chip}</div><div class="obj" style="left:28px;top:50px;font:800 25px var(--serif);color:var(--navy)">${title}</div>`;
+const BG = `<div class="obj" style="inset:0;background:linear-gradient(#F3F6FA,#E9EFF7)"></div>`;
+
+/* ---------- slides ---------- */
+const slides = [
+ {nm:"Welcome", free:false,
+  html:() => `<div class="obj" style="inset:0;background:linear-gradient(135deg,#1C4587,#3878BC)"></div>
+    <svg class="obj" style="right:40px;top:110px" width="380" height="320" viewBox="0 0 380 320" aria-hidden="true"><rect x="40" y="40" width="300" height="230" rx="14" fill="#fff" opacity=".12"/><rect x="70" y="70" width="240" height="170" rx="10" fill="#fff"/><rect x="90" y="92" width="150" height="14" rx="4" fill="#1C4587"/><rect x="90" y="122" width="90" height="10" rx="3" fill="#9EC5EE"/><rect x="200" y="122" width="90" height="10" rx="3" fill="#F28A26"/><rect x="90" y="146" width="90" height="10" rx="3" fill="#9EC5EE"/><rect x="200" y="146" width="60" height="10" rx="3" fill="#9EC5EE"/><g fill="#1C4587">${Array.from({length:30}, (_, i) => `<rect x="${90 + i * 7}" y="180" width="${i % 3 ? 2 : 4}" height="34"/>`).join("")}</g><circle cx="300" cy="230" r="38" fill="#1E7A55"/><path d="M282 230l12 12 24-26" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="title-l"><div class="hide" id="k" style="font:700 13px var(--sans);letter-spacing:.14em;color:#9EC5EE">QUALITY · BRANCH QA AND LABELING</div>
+      <div class="hide" id="t" style="font:800 52px/1.05 var(--serif);margin-top:8px">Right First Time</div>
+      <div class="hide" id="s" style="font:19px/1.45 var(--serif);color:#E6EEF9;margin-top:14px">Catch label errors before product leaves the branch. About 12 minutes.</div>
+      <button class="big hide" id="go" style="margin-top:28px">Start ›</button></div>`,
+  run(){ SL.timeline(1800, [[100, () => SL.show($("k"))], [300, () => SL.show($("t"), "in-left")], [700, () => SL.show($("s"), "in-up")], [1200, () => { SL.show($("go"), "pulse"); $("go").focus({preventScroll:true}); }]]); $("go").onclick = () => SL.go(1); }},
+ {nm:"Why it matters",
+  html:() => `${BG}${head("Why it matters", "One swapped digit, two possible endings")}
+    <div class="flow">
+      <div class="node hide" id="n0" style="left:0;top:90px"><b>Label printed</b>LOT 25K181 instead of 25K118</div>
+      <svg class="obj hide" id="ar" style="left:200px;top:40px" width="160" height="220" aria-hidden="true"><path d="M10 110 C70 110 80 40 150 40" stroke="#1E7A55" stroke-width="4" fill="none" marker-end="url(#a1)"/><path d="M10 110 C70 110 80 180 150 180" stroke="#B4461A" stroke-width="4" fill="none" stroke-dasharray="8 6" marker-end="url(#a2)"/><defs><marker id="a1" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1E7A55"/></marker><marker id="a2" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#B4461A"/></marker></defs></svg>
+      <div class="node good hide" id="n1" style="left:360px;top:0"><b>Caught at the branch</b>Hold, reprint, release. A few hours and one deviation record.</div>
+      <div class="node bad hide" id="n2" style="left:360px;top:150px"><b>Missed at the branch</b>Product ships. Tracing it at customer sites can take weeks, and it may need a field correction.</div>
+      <div class="node hide" id="n3" style="left:620px;top:70px;width:250px;background:var(--navy);color:#fff"><b style="color:#9EC5EE">Your goal</b>Catch every mismatch at the branch, and release good product without delay.</div>
+    </div>`,
+  run(){ SL.timeline(4200, [[200, () => SL.show($("n0"), "in-left")], [900, () => SL.show($("ar"))], [1500, () => SL.show($("n1"), "in-up")], [2300, () => SL.show($("n2"), "in-up")], [3300, () => { SL.show($("n3"), "in-zoom"); SL.unlockNext(); }]]); }},
+ {nm:"Know the label", gate:true,
+  html:() => `${BG}${head("Know the label", "Select each numbered part of the label")}
+    <div class="wo" style="top:110px"><h4>EXPLORED</h4><div id="cnt8" style="font:800 34px var(--sans);color:var(--navy)">${Object.keys(S.seen).length} / 8</div><p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Every inspection checks these eight parts. Next unlocks when you’ve explored all of them.</p></div>
+    ${label(CASES[0], "learn")}`,
+  run(){
+    const upd = () => { $("cnt8").textContent = `${Object.keys(S.seen).length} / 8`; if (Object.keys(S.seen).length === 8) SL.unlockNext(); };
+    document.querySelectorAll(".fld").forEach(b => b.onclick = () => {
+      const k = b.dataset.f; S.seen[k] = true; b.classList.add("seen"); save(); upd();
+      SL.layer(`<div class="panel" style="left:352px;top:400px;width:580px"><h3>${esc(ELEM[k][0])}</h3><p>${esc(ELEM[k][1])}</p></div>`);
+    });
+    upd(); SL.timeline(600, []);
+  }},
+ ...CASES.map((c, j) => ({nm:`Inspect label ${j + 1}`, gate:true,
+  html:() => `${BG}${head(`Inspect · label ${j + 1} of 4`, "Flag every field that doesn’t match, then decide")}
+    <div class="wo"><h4>WORK ORDER · ${esc(c.wo.wo)}</h4><dl><dt>Product</dt><dd>${esc(c.wo.name)}</dd><dt>REF</dt><dd>${esc(c.wo.ref)}</dd><dt>LOT</dt><dd>${esc(c.wo.lot)}</dd><dt>Use-by</dt><dd>${esc(c.wo.exp)}</dd><dt>Sterility</dt><dd>${esc(c.wo.ster)}</dd><dt>Quantity</dt><dd>${esc(c.wo.qty)}</dd></dl></div>
+    ${label(c, "inspect", j)}
+    <div class="dec"><button data-d="release" aria-pressed="${S.dec[j] === "release"}">Release</button><button class="hold" data-d="hold" aria-pressed="${S.dec[j] === "hold"}">Hold and escalate</button><button class="big blue" id="sub" style="flex:0 0 auto;padding:12px 22px" ${S.dec[j] ? "" : "disabled"}>Submit</button></div>`,
+  run(){
+    if (S.res[j] === true) { SL.unlockNext(); fb(j, c); }
+    document.querySelectorAll(".fld").forEach(b => b.onclick = () => { if (S.res[j] === true) return; if (b.dataset.f === "mfr" || b.dataset.f === "udi") { b.classList.remove("in-zoom"); void b.offsetWidth; b.classList.add("in-zoom"); return; } S.flags[j][b.dataset.f] = !S.flags[j][b.dataset.f]; b.setAttribute("aria-pressed", S.flags[j][b.dataset.f]); S.res[j] = null; SL.layer(""); save(); });
+    document.querySelectorAll(".dec [data-d]").forEach(b => b.onclick = () => { if (S.res[j] === true) return; S.dec[j] = b.dataset.d; S.res[j] = null; save(); document.querySelectorAll(".dec [data-d]").forEach(x => x.setAttribute("aria-pressed", x === b)); $("sub").disabled = false; SL.layer(""); });
+    $("sub").onclick = () => {
+      const errs = Object.keys(c.err), fl = Object.keys(S.flags[j]).filter(k => S.flags[j][k]);
+      const ok = errs.length === fl.length && errs.every(k => S.flags[j][k]) && S.dec[j] === (errs.length ? "hold" : "release");
+      if (S.first[j] == null) S.first[j] = ok;
+      S.res[j] = ok; save();
+      SCORM.interaction(`label-${j + 1}`, "other", `${fl.join("+") || "none"}|${S.dec[j]}`, ok);
+      SL.render();
+    };
+    SL.timeline(800, []);
+  }})),
+ {nm:"Document the hold", gate:true,
+  html:() => `${BG}${head("Document the hold", "You held label 1. Which record would you submit?")}
+    <div class="obj" style="left:28px;top:104px;width:904px">${RECS.map((r, j) => `<button class="rec ${S.rec.includes(j) ? (r.ok ? "ok" : "bad") : ""}" data-r="${j}" ${S.rec.includes(j) || S.rec.some(x => RECS[x].ok) ? "disabled" : ""}>${esc(r.t)}</button>`).join("")}</div>`,
+  run(){
+    const last = S.rec.length ? RECS[S.rec[S.rec.length - 1]] : null;
+    if (last) SL.layer(`<div class="panel" style="left:28px;top:392px;width:904px"><div class="fb ${last.ok ? "" : "bad"}"><b>${last.ok ? "Audit-ready" : "Try another record"}</b>${esc(last.f)}</div></div>`);
+    if (S.rec.some(x => RECS[x].ok)) SL.unlockNext();
+    document.querySelectorAll(".rec").forEach(b => b.onclick = () => { const j = +b.dataset.r; if (S.recFirst == null) S.recFirst = RECS[j].ok; S.rec.push(j); save(); SCORM.interaction("deviation-record", "other", "record-" + "ABC"[j], RECS[j].ok); SL.render(); });
+    SL.timeline(600, []);
+  }},
+ {nm:"Results", gate:true,
+  html:() => { const sc = score(); return `<div class="obj" style="inset:0;background:linear-gradient(135deg,#F3F6FA,#EAF1FB)"></div>
+    <div class="obj" style="left:60px;top:46px;width:840px;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(28,69,135,.16);padding:28px 32px">
+      <div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--blue)">RESULTS · RIGHT FIRST TIME</div>
+      <div style="display:flex;align-items:baseline;gap:16px;margin:8px 0"><span id="pct" style="font:800 68px var(--sans);color:${sc.pass ? "var(--good)" : "var(--warn)"}">0%</span><span style="font:600 17px var(--sans);color:var(--muted)">right on the first try · pass mark 80%</span></div>
+      <p style="margin:0 0 16px;font-size:18px">${sc.pass ? "Passed. You met the 80% mark for catching mismatches and documenting a hold." : "Not yet. Review the labels marked in orange and try again."}</p>
+      <div class="dots">${S.first.map((x, j) => `<span class="${x ? "ok" : "no"}" title="Label ${j + 1}">L${j + 1}</span>`).join("")}<span class="${S.recFirst ? "ok" : "no"}" title="Record">R</span></div>
+      <p style="margin:18px 0 0;font:600 14px var(--sans);color:var(--muted)">${LMS ? "Your score, completion and each answer were sent to the LMS." : "In an LMS, this score, completion and each answer are reported through SCORM 2004."} Micro-cases follow on days 2, 7 and 30.</p>
+      <div style="margin-top:18px;display:flex;gap:12px"><button class="big" id="again">Retake the course</button></div>
+    </div>`; },
+  run(){
+    const sc = score(); let t0 = performance.now();
+    const tick = () => { const p = Math.min(1, RM ? 1 : (performance.now() - t0) / 900); $("pct").textContent = Math.round(sc.pct * p) + "%"; if (p < 1) requestAnimationFrame(tick); }; tick();
+    SCORM.finish(sc.raw, 5, 0.8);
+    $("again").onclick = () => { S = fresh(); save(); SL.V.far = 0; SL.go(0); };
+    SL.timeline(1000, []);
+  }}
+];
+function score(){ const raw = S.first.filter(Boolean).length + (S.recFirst ? 1 : 0); return {raw, pct: Math.round(raw / 5 * 100), pass: raw / 5 >= 0.8}; }
+function fb(j, c){ SL.layer(`<div class="panel" style="left:28px;top:356px;width:300px"><div class="fb"><b>Correct</b>${esc(c.why)}</div></div>`); }
+function fbBad(j, c){
+  const errs = Object.keys(c.err), fl = S.flags[j], missed = errs.filter(k => !fl[k]), extra = Object.keys(fl).filter(k => fl[k] && !errs.includes(k));
+  const decOk = S.dec[j] === (errs.length ? "hold" : "release");
+  return `${missed.length ? `${missed.length} mismatched field${missed.length > 1 ? "s are" : " is"} outlined with dashes. ` : ""}${extra.length ? `${extra.map(k => ELEM[k][0].split(" ·")[0]).join(", ")} ${extra.length > 1 ? "match" : "matches"} the work order. ` : ""}${decOk ? "" : errs.length ? "Hold any label with a mismatch. " : "Every field matches, so this lot can ship. "}Adjust and submit again.`;
+}
+/* show feedback for wrong submissions after render */
+const _render = SL.render;
+SL.start({slides, resume,
+  done: i => i < 2 ? SL.V.far > i : i === 2 ? Object.keys(S.seen).length === 8 : i <= 6 ? S.res[i - 3] === true : i === 7 ? S.rec.some(x => RECS[x].ok) : false,
+  onSlide: () => { save(); const j = SL.slide - 3; if (j >= 0 && j < 4 && S.res[j] === false) SL.layer(`<div class="panel" style="left:28px;top:356px;width:300px"><div class="fb bad"><b>Not yet</b>${esc(fbBad(j, CASES[j]))}</div></div>`); }
+});
+/* re-show wrong-answer feedback after a Submit (render is called directly there) */
+new MutationObserver(() => { const j = SL.slide - 3; if (j >= 0 && j < 4 && S.res[j] === false && !$("lay").innerHTML) SL.layer(`<div class="panel" style="left:28px;top:356px;width:300px"><div class="fb bad"><b>Not yet</b>${esc(fbBad(j, CASES[j]))}</div></div>`); }).observe($("stage"), {childList:true});
+</script>
+</body>
+</html>
