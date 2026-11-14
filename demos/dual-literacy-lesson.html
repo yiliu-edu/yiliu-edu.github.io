@@ -114,30 +114,45 @@ const QC = [
 const AUD = new Audio();
 /* English: pre-generated clips. Mandarin: the device’s built-in Mandarin voice (tones are reliable; a neural model misread 蛙 and 龟 in review). */
 const ZH_TEXT = {"zh-p1":"青蛙跳。", "zh-p2":"鸭子游泳。", "zh-p3":"小鱼躲起来。", "zh-p4":"乌龟休息。", "zh-frog":"青蛙", "zh-duck":"鸭子", "zh-fish":"鱼", "zh-turtle":"乌龟"};
-let zhVoice = null;
+let zhVoice = null, zhVoices = [];
+const IS_CHROME = /Chrome\//.test(navigator.userAgent) && !/Edg\//.test(navigator.userAgent);
 function pickZh(){
   try {
-    const vs = speechSynthesis.getVoices().filter(v => /^zh[-_](CN|Hans)/i.test(v.lang) || /^cmn/i.test(v.lang));
-    const pref = [/Tingting|婷婷/i, /Xiaoxiao|晓晓/i, /Google.*(普通话|Mandarin)/i, /Huihui|慧慧/i, /Yaoyao|瑶瑶/i];
-    zhVoice = pref.map(r => vs.find(v => r.test(v.name))).find(Boolean) || vs[0] || null;
+    zhVoices = speechSynthesis.getVoices().filter(v => /^zh[-_](CN|Hans)/i.test(v.lang) || /^cmn/i.test(v.lang));
+    let saved = null; try { saved = localStorage.getItem("dual-zh-voice"); } catch {}
+    const pref = IS_CHROME ? [/Google/i, /Tingting|婷婷/i, /Xiaoxiao|晓晓/i, /Huihui|慧慧/i] : [/Tingting|婷婷/i, /Xiaoxiao|晓晓/i, /Google/i, /Huihui|慧慧/i, /Yaoyao|瑶瑶/i];
+    zhVoice = zhVoices.find(v => v.name === saved) || pref.map(r => zhVoices.find(v => r.test(v.name))).find(Boolean) || zhVoices[0] || null;
+    const sel = document.getElementById("zhv"); if (sel) fillSel(sel);
   } catch { zhVoice = null; }
 }
+function fillSel(sel){
+  sel.innerHTML = zhVoices.map(v => `<option value="${esc(v.name)}" ${zhVoice && v.name === zhVoice.name ? "selected" : ""}>${esc(v.name)}</option>`).join("");
+  sel.parentElement.hidden = zhVoices.length < 2;
+}
 if ("speechSynthesis" in window) { pickZh(); speechSynthesis.onvoiceschanged = pickZh; }
+function speakZh(text, tries){
+  const u = window._zhU = new SpeechSynthesisUtterance(text);   // keep a reference: some browsers drop unreferenced utterances
+  u.lang = "zh-CN"; u.rate = 0.8; u.volume = 1; if (zhVoice) u.voice = zhVoice;
+  let t0 = 0;
+  u.onstart = () => { t0 = performance.now(); u._started = true; const n = document.getElementById("novoice"); if (n) n.hidden = true; };
+  u.onend = () => { if (t0 && performance.now() - t0 < 250 && tries < 1) retry(text, tries); };   // ended instantly: the voice made no sound
+  u.onerror = () => { if (tries < 1) retry(text, tries); else noVoice(); };
+  const busy = speechSynthesis.speaking || speechSynthesis.pending;
+  if (busy) { speechSynthesis.cancel(); setTimeout(() => speechSynthesis.speak(u), 80); }   // Chrome can drop a speak() right after cancel()
+  else speechSynthesis.speak(u);
+  if (speechSynthesis.paused) speechSynthesis.resume();
+  setTimeout(() => { if (!u._started) { if (tries < 1) retry(text, tries); else noVoice(); } }, 1500);
+}
+function retry(text, tries){   // try the next Mandarin voice once
+  const i = zhVoices.indexOf(zhVoice), next = zhVoices.find((v, j) => j !== i && (/Google/i.test(v.name) || /Tingting/i.test(v.name))) || zhVoices[(i + 1) % Math.max(1, zhVoices.length)];
+  if (next && next !== zhVoice) { zhVoice = next; const sel = document.getElementById("zhv"); if (sel) fillSel(sel); }
+  speakZh(text, tries + 1);
+}
 function play(f){
   try { AUD.pause(); } catch {}
   if (f.startsWith("zh-")) {
     if (!("speechSynthesis" in window)) return noVoice();
-    try {
-      if (!zhVoice) pickZh();
-      const u = window._zhU = new SpeechSynthesisUtterance(ZH_TEXT[f] || "");   // keep a reference: some browsers drop unreferenced utterances
-      u.lang = "zh-CN"; u.rate = 0.8; u.volume = 1; if (zhVoice) u.voice = zhVoice;
-      const busy = speechSynthesis.speaking || speechSynthesis.pending;
-      if (busy) { speechSynthesis.cancel(); setTimeout(() => speechSynthesis.speak(u), 80); }   // Chrome can drop a speak() right after cancel()
-      else speechSynthesis.speak(u);
-      if (speechSynthesis.paused) speechSynthesis.resume();
-      setTimeout(() => { if (!speechSynthesis.speaking && !speechSynthesis.pending && !u._started) noVoice(); }, 1500);
-      u.onstart = () => { u._started = true; const n = document.getElementById("novoice"); if (n) n.hidden = true; };
-    } catch { noVoice(); }
+    try { if (!zhVoice) pickZh(); speakZh(ZH_TEXT[f] || "", 0); } catch { noVoice(); }
     return;
   }
   try { if (speechSynthesis.speaking) speechSynthesis.cancel(); } catch {}
@@ -177,11 +192,13 @@ function s0(){
           ${showZh ? `<div class="line"><button class="say" data-say="zh-${p.id}" aria-label="用中文听">${SPK}</button><span class="zh">${p.zh.map(w => `<button class="w zh" data-w="zh-${w.replace(/[。]/g, "")}">${w}</button>`).join("")}</span></div><div class="py">${p.py}</div>` : ""}
         </div></div>
       <div class="pnav"><button class="btn" id="pp" ${s.pg === 0 ? "disabled" : ""}>‹ Back</button><button class="btn primary" id="np" ${s.pg === 3 ? "disabled" : ""}>Next ›</button></div>
+      <p class="qnum" hidden style="text-align:center;padding:0 14px 6px"><label>Chinese voice <select id="zhv" style="font:inherit;font-size:13px"></select></label> <span>If you hear nothing, try another voice.</span></p>
       <p id="novoice" class="qnum" hidden style="text-align:center;padding:0 14px 8px">The Chinese audio didn’t start. Check that your sound is on, or try another browser (Chrome, Safari or Edge). It uses your device’s Mandarin voice.</p>
       <div class="dots">${PAGES.map((q, j) => `<button data-pg="${j}" aria-current="${j === s.pg}" class="${s.seen[q.id] ? "seen" : ""}" aria-label="Page ${j + 1}"></button>`).join("")}</div>
     </div>
     ${D.nav("Next: match the words")}`;
   const map = {"en-the":null, "en-frog":"en-frog", "en-duck":"en-duck", "en-fish":"en-fish", "en-turtle":"en-turtle", "zh-青蛙":"zh-frog", "zh-鸭子":"zh-duck", "zh-小鱼":"zh-fish", "zh-乌龟":"zh-turtle"};
+  if ($("zhv")) { fillSel($("zhv")); $("zhv").onchange = e => { zhVoice = zhVoices.find(v => v.name === e.target.value) || zhVoice; try { localStorage.setItem("dual-zh-voice", zhVoice.name); } catch {} play("zh-" + PAGES[s.pg].id); }; }
   qa("[data-say]").forEach(b => b.onclick = () => { play(b.dataset.say); s.heard[b.dataset.say] = true; D.save(); D.side(); D.refresh(); });
   qa(".w").forEach(b => b.onclick = () => { const f = map[b.dataset.w]; if (f) { play(f); b.classList.add("on"); setTimeout(() => b.classList.remove("on"), 700); } else { play(b.dataset.w.startsWith("en") ? "en-" + PAGES[s.pg].id : "zh-" + PAGES[s.pg].id); } });
   qa("[data-l]").forEach(b => b.onclick = () => { s.lang = b.dataset.l; D.refresh(); });
