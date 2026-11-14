@@ -108,7 +108,7 @@ const MOMENTS = [
       {t:"Let’s hear from someone else.", ok:false, f:"Moving on tells her the observation didn’t count. It did: she noticed the edges."}]},
   {them:[["Ava", "It lived in the ocean!"], ["Jun", "No, it lived on land, like a beetle."]],
    o:[{t:"Ava’s right. Trilobites lived in the ocean.", ok:false, f:"Accurate, but the class misses the chance to reason from evidence."},
-      {t:"Let’s vote: ocean or land?", ok:false, f:"A vote measures popularity, not evidence."},
+      {t:"Let’s vote: ocean or land?", ok:false, f:"A vote measures popularity. Evidence should settle the question."},
       {t:"What evidence would help us decide? Let’s look at the rock it was found in, and compare it with a living horseshoe crab from the kit.", ok:true, f:"You turned a disagreement into an investigation, using the kit’s companion objects."}]}
 ];
 const BANDS = {
@@ -125,7 +125,7 @@ const FMT = {room:"In my classroom with the loan kit", virtual:"Virtual museum s
 
 const D = makeDemo({
   key:"look-closely-v1",
-  steps:[{sub:"Step 1", nm:"Look closely yourself"},{sub:"Step 2", nm:"Facilitate the inquiry"},{sub:"Step 3", nm:"Plan your lesson"},{sub:"Step 4", nm:"Try it and share"},{sub:"Step 5", nm:"Program view"}],
+  steps:[{sub:"Step 1", nm:"Look closely yourself"},{sub:"Step 2", nm:"Facilitate the inquiry"},{sub:"Step 3", nm:"Plan your lesson"},{sub:"Step 4", nm:"Teach it and share back"},{sub:"Step 5", nm:"Program view"}],
   fresh:() => ({i:0, conf0:null, sort:{}, sortFirst:{}, mo:{k:0, h:[], first:0}, band:null, lang:{en:true}, fmt:null, planned:false, date:null, share:null, conf1:null}),
   done:(i, s) => [
     s.conf0 != null && STMTS.every((x, j) => s.sort[j] === x.a),
@@ -170,7 +170,7 @@ function s1(){
   $("stage").innerHTML = `
     <div class="label">Step 2 · Facilitate the inquiry</div>
     <h2>Third grade, a bilingual classroom, the fossil on every table</h2>
-    <p class="lead">Your job isn’t to give answers. It’s to keep students looking, reasoning from evidence, and talking, in whichever language they think in. Choose your move.</p>
+    <p class="lead">Your job is to keep students looking, reasoning from evidence, and talking, in whichever language they think in. Choose your move.</p>
     <div class="class">${html}</div>
     ${!over && !right ? `<div class="opts">${MOMENTS[k].o.map((o, j) => `<button class="opt" data-j="${j}" ${tried.includes(j) ? "disabled style=\"opacity:.45;text-decoration:line-through\"" : ""}>${esc(o.t)}</button>`).join("")}</div>` : ""}
     ${!over && right ? `<div class="row"><button class="btn primary" id="cont">${k === MOMENTS.length - 1 ? "Finish" : "Next moment"}</button></div>` : ""}
@@ -207,7 +207,7 @@ function s2(){
     ${ready ? `<div class="part"><h3>Your lesson plan</h3><div class="out">${esc(plan())}</div>
       <div class="frames">${Object.keys(FRAMES).filter(k => s.lang[k]).map(k => `<div class="frame"><b>${FRAMES[k].n.toUpperCase()} FRAMES</b>${FRAMES[k].f.map(esc).join("<br>")}</div>`).join("")}</div>
       <div class="row"><button class="btn" id="cp">Copy plan</button><button class="btn primary" id="ok" ${s.planned ? "disabled" : ""}>${s.planned ? "Plan saved" : "Save my plan"}</button><span id="cs" class="qnum" role="status"></span></div></div>` : ""}
-    ${D.nav("Next: try it and share")}`;
+    ${D.nav("Next: teach it and share back")}`;
   qa("[data-b]").forEach(b => b.onclick = () => { s.band = b.dataset.b; s.planned = false; D.refresh(); });
   qa("[data-l]").forEach(b => b.onclick = () => { s.lang[b.dataset.l] = !s.lang[b.dataset.l]; s.planned = false; D.refresh(); });
   qa("[data-f]").forEach(b => b.onclick = () => { s.fmt = b.dataset.f; s.planned = false; D.refresh(); });
@@ -219,7 +219,7 @@ function s3(){
   const DATES = ["This week", "Next week", "Within a month"];
   const SHARE = ["Post a photo of my class’s wonder wall in the Kit Ambassadors group", "Share how I adapted the lesson for my students", "Bring one student question to the next virtual meetup"];
   $("stage").innerHTML = `
-    <div class="label">Step 4 · Try it and share</div>
+    <div class="label">Step 4 · Teach it and share back</div>
     <h2>Professional learning sticks when you try it soon</h2>
     <p class="lead">Kit Ambassadors is the museum’s community of teachers who use the kits. A small commitment now makes it more likely the lesson happens, and gives other teachers ideas.</p>
     <div class="part" style="border-top:0;padding-top:0"><h3>When will you teach it?</h3><div class="grid3">${DATES.map((d, j) => `<button class="pick" data-d="${j}" aria-pressed="${s.date === String(j)}"><b>${d}</b></button>`).join("")}</div></div>

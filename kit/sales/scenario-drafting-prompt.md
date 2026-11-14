@@ -16,7 +16,7 @@ Write 10 multiple-choice questions. Each one:
 Return a table: objective, scenario, options, best answer, explanation.
 
 ## Review steps before an item enters the bank
-- Remove items that test trivia instead of a client decision.
+- Remove items that test trivia; keep items that test a client decision.
 - Rewrite distractors that are obviously wrong, so each one is a real new-seller mistake.
 - Check every ad concept against the essentials cards, and with a product SME.
 - Keep each objective covered at least once, so a random draw of 5 still samples the sprint (the demo bank has 8 items).

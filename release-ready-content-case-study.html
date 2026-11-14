@@ -89,7 +89,7 @@
       <div class="amap">
         <div><span class="lbl">Business goal</span><p>Current content within 3 business days of every release</p></div>
         <div><span class="lbl">What reviewers must do</span><ul><li>Trace each changed line to a release item</li><li>Strike claims the release doesn’t support</li><li>Route objectives, assessments and open questions to owners</li><li>Turn repeated edits into prompt rules</li></ul></div>
-        <div><span class="lbl">Practice in the demo</span><ul><li>Stage 1: trace records to source</li><li>Stage 3: check lines, then decide</li><li>Stage 4: edit becomes a rule</li><li>Stage 5: recall the rubric without hints</li></ul></div>
+        <div><span class="lbl">Practice in the demo</span><ul><li>Stage 1: trace records to source</li><li>Stage 3: check each line, then make a decision</li><li>Stage 4: edit becomes a rule</li><li>Stage 5: recall the rubric without hints</li></ul></div>
         <div><span class="lbl">Minimum information</span><ul><li>7-point review rubric</li><li>Ownership list</li><li>Release notes with quoted source lines</li></ul></div>
       </div>
     </div>
@@ -104,7 +104,7 @@
         <tbody>
           <tr><td>1</td><td>Information</td><td>Release changes never reach content teams</td><td>Intake turns release notes into change records; every flag comes with a reason</td><td>System</td></tr>
           <tr><td>2</td><td>Resources</td><td>No way to find every affected asset</td><td>Tag and keyword scan over a shared content schema</td><td>System</td></tr>
-          <tr><td>3</td><td>Incentives</td><td>Updating content isn’t anyone’s measured job</td><td>Named asset owners and a 3-day update target in team goals</td><td>Process</td></tr>
+          <tr><td>3</td><td>Incentives</td><td>No one is measured on updating content</td><td>Named asset owners and a 3-day update target in team goals</td><td>Process</td></tr>
           <tr><td>4</td><td>Knowledge and skills</td><td>Reviewers haven’t learned to check AI output</td><td>Reviewer practice (this demo) and the review rubric</td><td>Training</td></tr>
           <tr><td>5</td><td>Capacity</td><td>Big releases overload reviewers</td><td>Severity sorting, AI dismissals with reasons, a cap on drafts per reviewer</td><td>System and process</td></tr>
           <tr><td>6</td><td>Motives</td><td>Teams distrust AI drafts or fear blame for errors</td><td>Line-level citations, a human decision on every publish, a shared review log</td><td>System and culture</td></tr>
@@ -150,7 +150,7 @@
           <tr><td>4</td><td>Results</td><td>Support tickets tagged “outdated docs”; satisfaction ratings on help articles</td><td>Support system, quarterly</td><td>30% fewer tickets within two quarters</td></tr>
         </tbody>
       </table></div>
-      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Real runs so far are recorded in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
+      <p class="muted" style="font-size:14px">These targets describe a plan for a real rollout; the project has no outcome data yet. Real runs so far are recorded in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
     </div>
   </div>
 </section>
@@ -187,7 +187,7 @@
   <section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
     <div class="sechead">
       <h2 id="demo-h">Review release 4.2 yourself</h2>
-      <p class="muted measure">You play the learning designer: predict which flags don’t matter, check AI drafts line by line, and decide what publishes. The scan is the real script’s output; the AI steps are a sample run.</p>
+      <p class="muted measure">You play the learning designer: predict which flags need no update, check AI drafts line by line, and decide what publishes. The scan is the real script’s output; the AI steps are a sample run.</p>
     </div>
     <div class="demo">
       <div class="bar2"><span>Release-Ready Learning Content · release 4.2</span><a href="demos/release-ready-content.html#full">Open full screen ↗</a></div>
@@ -200,10 +200,10 @@
     <div class="decisions">
       <div class="decision"><h3>Two passes, two kinds of error</h3><p>The script catches everything with a tag or keyword match, so nothing is missed. The AI then filters false positives. In a real run, the AI correctly dismissed the load-speed flag on HC-415 with a reason the owner can check. On HC-104 it found the outdated article title, which sits outside the body, while the scan caught a lowercase heading (“Share a timeline”) the AI missed. Each pass covered the other’s gap.</p></div>
       <div class="decision"><h3>Every changed line must trace to a source</h3><p>Drafts tag each changed line with a release item, and the intake step quotes the exact release line. That makes unsupported content easy to spot. In a real run, a v1.0 draft kept “at the top of the project” from the old article, a location the release never stated. The AI reviewer failed that line on traceability and scope.</p></div>
-      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release doesn’t say enough, the AI writes a question for Product instead of guessing. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
+      <div class="decision"><h3>“Unsure” is an allowed answer</h3><p>When the release leaves a detail unclear, the AI writes a question for Product. Publishing a broken keyboard shortcut is worse than waiting a day.</p></div>
       <div class="decision"><h3>Some parts always belong to a person</h3><p>Learning objectives, assessment and certification items, pricing and legal text are marked HUMAN DECIDES. The AI can propose wording; the Academy or legal owner decides.</p></div>
       <div class="decision"><h3>Review decisions become rules</h3><p>That finding became rule 7 in the draft skill: never state what a change record doesn’t support. Re-running the same input with v1.1 removed the unsupported location from the step and turned it into a question, and open questions fell from 7 to 5.</p></div>
-      <div class="decision"><h3>Accessibility is checked, not assumed</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
+      <div class="decision"><h3>Check accessibility on every draft</h3><p>When a UI name changes, the alt text must change too, and the draft adds a question if the screenshot needs re-capturing. Heading order, link text and color-only meaning are on the rubric.</p></div>
     </div>
   </section>
 
@@ -257,7 +257,7 @@
           <li>Drafts published without a human decision: 0</li>
           <li>Prompt gaps found and fixed: 4 skills updated</li>
         </ul>
-        <p class="measure">The biggest lesson was not the one I expected. I planned for the model to invent features; in practice it was cautious, and the real risks were subtler: an old assumption carried into new text, and more open questions than a reviewer can handle. Both became rules. The full record is in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
+        <p class="measure">The biggest lesson surprised me. I planned for the model to invent features; in practice it was cautious, and the real risks were subtler: an old assumption carried into new text, and more open questions than a reviewer can handle. Both became rules. The full record is in the <a href="kit/run-log-2026-11-12.md">run log</a>.</p>
         <p class="measure">Next, I’d run the updated skills on a larger library, connect intake to a real release feed, and track time from release to updated content and the share of drafts published without edits.</p>
       </div>
     </div>
@@ -280,6 +280,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=25" defer></script>
+<script src="js/search.js?v=26" defer></script>
 </body>
 </html>

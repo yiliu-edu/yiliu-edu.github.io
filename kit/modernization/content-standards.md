@@ -5,7 +5,7 @@ One set of standards for every asset in the catalog, whether built in-house, by 
 ## The six standards
 | # | Standard | Meets | Partly | Missing |
 |---|---|---|---|---|
-| 1 | Measurable objectives stated up front | 2–4 objectives with an observable behavior, linked to practice | Topics listed, not behaviors | None |
+| 1 | Measurable objectives stated up front | 2–4 objectives with an observable behavior, linked to practice | Topics listed without behaviors | None |
 | 2 | Practice that mirrors the job | Decisions in realistic situations with feedback | Recall questions only | None |
 | 3 | Assessment that checks the skill | Scenario or performance items aligned to each objective | Some items aligned | None, or recall only |
 | 4 | Accurate and current | SME sign-off within 12 months; no retired tools or forms | Minor dated references | Retired tools, forms or rules |

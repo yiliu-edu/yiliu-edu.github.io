@@ -83,7 +83,7 @@
     <h2>The problem</h2>
     <div class="prose">
       <p class="measure">The catalog is full of recorded webinars: expert content, long runtimes, and analytics that show most learners leave in the first quarter. Learners say the information is good but arrives in the wrong shape: an hour long, with no practice, when they need ten minutes before an appointment.</p>
-      <p class="measure">Rebuilding everything isn’t realistic, and partners keep adding content in the same old shape. The team needed a way to decide what to rebuild, a pattern for rebuilding it, and standards that apply to every asset, including partner courses.</p>
+      <p class="measure">The team can’t rebuild the whole catalog, and partners keep adding content in the same old shape. The team needed a way to decide what to rebuild, a pattern for rebuilding it, and standards that apply to every asset, including partner courses.</p>
     </div>
   </div>
   <div class="two">
@@ -101,7 +101,7 @@
   <div class="two">
     <h2>Gilbert’s Behavior Engineering Model</h2>
     <div class="prose">
-      <p class="measure">Low completion isn’t only a content problem. Format, standards and data matter as much.</p>
+      <p class="measure">Low completion has causes beyond content: format, standards and data matter as much.</p>
       <div class="tablewrap"><table>
         <thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead>
         <tbody><tr><td>1</td><td>Information</td><td>Teams can’t see which parts of courses learners struggle with</td><td>xAPI statements on practice decisions, reviewed quarterly</td><td>Data</td></tr><tr><td>2</td><td>Resources</td><td>No support at the moment of need</td><td>One-page job aid for right before the appointment</td><td>Job aid</td></tr><tr><td>3</td><td>Incentives</td><td>Partners are paid for hours of content, not quality</td><td>Partner acceptance criteria tied to the six standards</td><td>Policy</td></tr><tr><td>4</td><td>Knowledge and skills</td><td>Agents know pricing facts but not how to have the conversation</td><td>Scenario with a seller who wants $45,000 more</td><td>Training</td></tr><tr><td>5</td><td>Capacity</td><td>No time for a 62-minute recording</td><td>Lessons under 10 minutes</td><td>Design</td></tr><tr><td>6</td><td>Motives</td><td>Course feels like a lecture, not help</td><td>Opening built around the appointment learners have next week</td><td>Design</td></tr></tbody>
@@ -125,8 +125,8 @@
       <div class="decision"><h3>One rubric for every asset</h3><p>The same six standards score legacy courses and partner submissions, so quality means the same thing everywhere.</p></div>
       <div class="decision"><h3>Stories become decisions</h3><p>The presenter’s story about an overpriced listing becomes a scenario where learners make the choices.</p></div>
       <div class="decision"><h3>Support at the moment of need</h3><p>The Q&A showed agents wanted help right before appointments, so the job aid matters as much as the course.</p></div>
-      <div class="decision"><h3>Accessible by default</h3><p>Edited captions, transcript, alt text, contrast and keyboard access are on the readiness checklist, not an afterthought.</p></div>
-      <div class="decision"><h3>Data on decisions, not just completion</h3><p>xAPI records each scenario choice, so revisions target the moments learners miss.</p></div>
+      <div class="decision"><h3>Accessible by default</h3><p>Edited captions, transcript, alt text, contrast and keyboard access are all items on the readiness checklist.</p></div>
+      <div class="decision"><h3>Track each decision</h3><p>xAPI records each scenario choice, so revisions target the moments learners miss.</p></div>
     </div>
   </div>
 </section>
@@ -146,7 +146,7 @@
     <div class="prose">
       <p class="measure">AI speeds up triage and drafting; the designer and a subject matter expert decide what stays.</p>
       <div class="tablewrap"><table>
-        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks</th></tr></thead>
+        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks the output</th></tr></thead>
         <tbody><tr><td>1</td><td>Transcript triage</td><td>Summarized the transcript into timed chunks</td><td>Listened to each chunk before tagging; kept the presenter’s expertise</td></tr><tr><td>2</td><td>Scenario drafting</td><td>Drafted seller lines and plausible agent replies</td><td>SME checks pricing guidance; every weak reply is something agents actually say</td></tr><tr><td>3</td><td>Alt text and captions</td><td>Drafted alt text and cleaned auto-captions</td><td>Checked against the visuals and the recording</td></tr></tbody>
       </table></div>
       <div class="files">
@@ -162,7 +162,7 @@
         <thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th></tr></thead>
         <tbody><tr><td>1</td><td>Reaction</td><td>Rating and “ready for my next listing appointment”</td><td>End-of-course survey</td></tr><tr><td>2</td><td>Learning</td><td>Knowledge checks and first-try scenario choices</td><td>xAPI, ongoing</td></tr><tr><td>3</td><td>Behavior</td><td>Agents using the job aid before appointments</td><td>30-day pulse</td></tr><tr><td>4</td><td>Results</td><td>Listing price reductions and days on market where brokerages share data</td><td>6 months</td></tr></tbody>
       </table></div>
-      <p class="muted" style="font-size:14px">Targets and measures are plans for a real rollout, not results. This is a concept project built for a fictional organization.</p>
+      <p class="muted" style="font-size:14px">Targets and measures describe a plan for a real rollout. This is a concept project built for a fictional organization, so it has no outcome data yet.</p>
     </div>
   </div>
   <div class="two">
@@ -171,7 +171,7 @@
       <p class="measure">How the design holds up against each framework I use, and what I’d still test with real learners.</p>
       <div class="tablewrap"><table>
         <thead><tr><th>Framework</th><th>How it shows up</th><th>What I’d test next</th></tr></thead>
-        <tbody><tr><td>Gilbert’s BEM</td><td>Standards and data fix the environment, not just the course</td><td>Whether partners accept the criteria</td></tr><tr><td>Action Mapping</td><td>Content cut to what supports the pricing conversation</td><td>Whether 18 minutes of core content is enough for new agents</td></tr><tr><td>Backward design and ABCD</td><td>Each objective has a matching practice and check</td><td>Item difficulty with real learners</td></tr><tr><td>Knowles</td><td>Built around the learner’s next appointment</td><td>Whether experienced agents want to test out</td></tr><tr><td>Retrieval practice</td><td>Knowledge check and scenario require recall</td><td>A spaced follow-up case at 30 days</td></tr><tr><td>Kirkpatrick</td><td>Levels 1–4 planned; xAPI adds decision-level data</td><td>Access to brokerage outcome data</td></tr></tbody>
+        <tbody><tr><td>Gilbert’s BEM</td><td>Standards and data improve the environment around the course</td><td>Whether partners accept the criteria</td></tr><tr><td>Action Mapping</td><td>Content cut to what supports the pricing conversation</td><td>Whether 18 minutes of core content is enough for new agents</td></tr><tr><td>Backward design and ABCD</td><td>Each objective has a matching practice and check</td><td>Item difficulty with real learners</td></tr><tr><td>Knowles</td><td>Built around the learner’s next appointment</td><td>Whether experienced agents want to test out</td></tr><tr><td>Retrieval practice</td><td>Knowledge check and scenario require recall</td><td>A spaced follow-up case at 30 days</td></tr><tr><td>Kirkpatrick</td><td>Levels 1–4 planned; xAPI adds decision-level data</td><td>Access to brokerage outcome data</td></tr></tbody>
       </table></div>
     </div>
   </div>
@@ -191,6 +191,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=25" defer></script>
+<script src="js/search.js?v=26" defer></script>
 </body>
 </html>

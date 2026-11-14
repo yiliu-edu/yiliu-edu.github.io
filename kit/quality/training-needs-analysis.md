@@ -15,7 +15,7 @@ Quality leadership asked for “labeling training” after an increase in label-
 | Resources | Work order and label were on different screens; no check card | Station check card; work order printed beside the label | No |
 | Incentives | Speed was tracked, catches weren’t | Recognize catches in shift huddles; track right-first-time | No |
 | Knowledge | Few inspectors used the UDI to cross-check lot and date | Scenario practice: inspect labels against work orders, with UDI cross-checks | Yes |
-| Capacity | Inspection at the end of long shifts | Rotate inspection duty; micro-cases instead of long refreshers | Partly |
+| Capacity | Inspection at the end of long shifts | Rotate inspection duty; one-minute micro-cases in place of long refreshers | Partly |
 | Motives | Holding product felt like slowing the branch down | Show the cost of a missed error vs. a hold in the opening story | Partly |
 
 ## Recommendation

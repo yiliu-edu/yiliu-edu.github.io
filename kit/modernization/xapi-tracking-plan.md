@@ -18,4 +18,4 @@ Verb IRIs use the ADL vocabulary, for example `http://adlnet.gov/expapi/verbs/an
 3. Where do learners stop? (Last statement before a session ends)
 
 ## Privacy
-Learner IDs are the LMS account numbers, not names. Reports to partners are aggregated.
+Learner IDs are the LMS account numbers, so reports show no names. Reports to partners are aggregated.

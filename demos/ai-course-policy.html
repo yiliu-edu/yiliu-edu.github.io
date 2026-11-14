@@ -79,7 +79,7 @@ const LEVELS = [
 ];
 const SCEN = [
   {q:"An essay comes back from the AI detector at 87% “likely AI”. The student is a multilingual first-year. What do you do first?",
-   o:[{t:"Report it to the academic integrity office. A score that high is strong evidence.", ok:false, f:"A detector gives a probability, not proof. False positives happen, and studies have found that writing by non-native English speakers is flagged more often. Most institutions say a score should never be the only evidence."},
+   o:[{t:"Report it to the academic integrity office. A score that high is strong evidence.", ok:false, f:"A detector gives a probability. It can’t prove anything on its own. False positives happen, and studies have found that writing by non-native English speakers is flagged more often. Most institutions say a score should never be the only evidence."},
       {t:"Treat the score as one signal and look at what else you have: drafts, version history, earlier writing.", ok:true, f:"Right. Start with the evidence of how the work was made. The score alone can’t tell you what happened."},
       {t:"Lower the grade quietly and move on.", ok:false, f:"A penalty without a conversation or a process is unfair to the student and may break your institution’s policy."}]},
   {q:"The document’s version history shows the essay was pasted in as two large blocks. What next?",
@@ -87,7 +87,7 @@ const SCEN = [
       {t:"Email the student that the detector caught them.", ok:false, f:"Leading with an accusation makes an honest explanation less likely. Pasting can also mean the student drafted elsewhere."},
       {t:"Meet the student. Ask them to walk you through their argument and how they wrote it, without accusing them.", ok:true, f:"Right. A conversation about the work is the most informative evidence you can get, and it’s fair to the student."}]},
   {q:"The student explains they drafted in a notes app and used AI to fix grammar, which they thought was allowed. Your syllabus didn’t say.",
-   o:[{t:"Accept it this time, clarify the rule for the whole class, and add a disclosure note to the assignment.", ok:true, f:"Right. An unclear policy creates honest mistakes. If you still have concerns, follow your institution’s process rather than deciding alone."},
+   o:[{t:"Accept it this time, clarify the rule for the whole class, and add a disclosure note to the assignment.", ok:true, f:"Right. An unclear policy creates honest mistakes. If you still have concerns, follow your institution’s process and involve the people it names."},
       {t:"Treat it as a violation. AI was used.", ok:false, f:"Students can’t follow a rule that wasn’t stated. This is why the per-assignment statement matters."},
       {t:"Ban all AI for the rest of the term.", ok:false, f:"A blanket ban punishes the whole class for a policy gap and is hard to enforce. Clarify instead."}]}
 ];
@@ -132,7 +132,7 @@ function s1(){
   $("stage").innerHTML = `
     <div class="label">Step 2 · AI rules per assignment</div>
     <h2>Match the AI level to what each assignment teaches</h2>
-    <p class="lead">Start from the learning goal, not the tool. A level that’s right for one assignment can undercut another. The note under each choice says when that level fits.</p>
+    <p class="lead">Start from the learning goal of each assignment. A level that’s right for one assignment can undercut another. The note under each choice says when that level fits.</p>
     <div class="levels" aria-hidden="true">${LEVELS.map((l, i) => `<div class="lv" style="cursor:default"><b><span class="n">${i}</span>${esc(l.n)}</b>${esc(l.d)}</div>`).join("")}</div>
     ${c.a.map(a => { const v = S().lv[a.id]; return `<div class="asg ${v != null ? "done" : ""}"><div class="row" style="justify-content:space-between"><h4>${esc(a.t)}</h4>${v != null ? `<span class="tag good">Level ${v}</span>` : ""}</div>
       <div class="hint">Learning goal: ${esc(a.g)}</div>
@@ -186,8 +186,8 @@ function s3(){
       ${right ? `<div class="row"><button class="btn primary" id="cont">${k === SCEN.length - 1 ? "Finish the case" : "Next moment"}</button></div>` : ""}</div>`}
     <div class="tool"><strong>What these tools can and can’t do</strong><ul>
       <li>AI detectors estimate how likely text is to be machine-written. They can be wrong in both directions, and edited or translated text is harder to judge.</li>
-      <li>Lockdown browsers restrict the testing computer, not a phone on the desk. Webcam monitoring flags behavior for review; a person still decides.</li>
-      <li>Both raise privacy and accessibility questions. Plan accommodations before the exam, not after a flag.</li></ul></div>
+      <li>Lockdown browsers restrict the testing computer; a phone on the desk stays free to use. Webcam monitoring flags behavior for review; a person still decides.</li>
+      <li>Both raise privacy and accessibility questions. Plan accommodations before the exam.</li></ul></div>
     ${D.nav("Next: redesign an assignment")}`;
   qa(".opt[data-j]").forEach(b => b.onclick = () => { const j = +b.dataset.j; if (!sc.tried.some(t => t[0] === k) && q.o[j].ok) sc.first++; sc.tried.push([k, j]); D.refresh(); });
   if ($("cont")) $("cont").onclick = () => { sc.k++; D.refresh(); };
@@ -198,7 +198,7 @@ function s4(){
   const vis = Math.min(10, 2 + on.reduce((n, s) => n + s.v, 0) * 1.2), time = on.reduce((n, s) => n + s.g, 0);
   $("stage").innerHTML = `
     <div class="label">Step 5 · Redesign one assignment</div>
-    <h2>Make the learning visible, not AI-proof</h2>
+    <h2>Make the learning visible</h2>
     <p class="lead">No design makes AI use impossible. The goal is that you can see how students think. Pick the assignment you worry about most, then choose at least two strategies. Watch the trade-off with grading time.</p>
     <div class="grid2">${c.a.map(x => `<button class="pick" data-a="${x.id}" aria-pressed="${S().asg === x.id}"><b>${esc(x.t)}</b><span>Level ${S().lv[x.id]} · ${esc(x.g)}</span></button>`).join("")}</div>
     ${a ? `<div class="part"><h3>Strategies for: ${esc(a.t)}</h3>

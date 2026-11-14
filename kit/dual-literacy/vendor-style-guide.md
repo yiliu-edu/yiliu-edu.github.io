@@ -3,12 +3,12 @@
 For vendors and freelancers building screens from approved storyboards. The same structure is used for Spanish–English programs, with the language-specific rules swapped.
 
 ## Before you build
-- Build only from the approved storyboard version named in the work order. Questions go to the designer in the tracker, not by email.
+- Build only from the approved storyboard version named in the work order. Send questions to the designer in the tracker.
 - Every screen ID in the build matches the storyboard (POND-B1, M1, C1…).
 
 ## Text
 - Chinese: Simplified characters; full-width punctuation (。，！？); no spaces between characters except between interactive word buttons.
-- Pinyin: tone marks, not numbers (qīngwā, not qing1wa1); sentence-initial capital; checked against the storyboard, word by word.
+- Pinyin: tone marks in place of tone numbers (write qīngwā for qing1wa1); sentence-initial capital; checked against the storyboard, word by word.
 - English: sentence case; straight-forward K–2 vocabulary from the program word list.
 
 ## Audio

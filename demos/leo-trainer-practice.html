@@ -441,7 +441,7 @@ const RND = {
 recommend(r){
   const ACT = {
     ar:{tg:"Search AR", n:"An animal in your living room", how:"In the Google app, search “about [animal]” and tap View in 3D."},
-    lens:{tg:"Lens", n:"Homework help", how:"Snap the problem in the Google app with the homework filter. It guides step by step instead of just giving the answer."},
+    lens:{tg:"Lens", n:"Homework help", how:"Snap the problem in the Google app with the homework filter. It guides students step by step toward the answer."},
     tr:{tg:"Lens Translate", n:"Translate walk", how:"Walk the neighborhood and translate signs together with Lens."},
     maps:{tg:"Maps", n:"Famous building tour", how:"Pick a landmark and explore it in Maps immersive view."},
     arts:{tg:"Arts & Culture", n:"Virtual field trip", how:"Use the Google Arts & Culture app to visit museums and historic places together."},
@@ -633,8 +633,8 @@ parentqa(r){
       {t:"Only if your child also has a Gmail address they made themselves.", c:"Parents set up a supervised child account. The child doesn’t need to create one alone."}]},
     {q:"Can my daughter trust what AI Overviews tells her?", o:[
       {t:"AI can make mistakes. AI Overviews include links to sources, and under-18s see a reminder to double-check important info. Check sources together.", ok:true, c:"Balanced and accurate: it names the safeguards and keeps the parent involved."},
-      {t:"Yes, it’s built on Google’s systems, so it’s always correct.", c:"Grounded doesn’t mean always right. The deck stresses that AI can still make mistakes."},
-      {t:"No. It’s best to block AI completely.", c:"The deck encourages exploring responsibly and talking about AI, not avoiding it."}]},
+      {t:"Yes, it’s built on Google’s systems, so it’s always correct.", c:"Even grounded AI can be wrong. The deck stresses that AI can still make mistakes."},
+      {t:"No. It’s best to block AI completely.", c:"The deck encourages families to explore AI responsibly and talk about it together."}]},
     {q:"My 15-year-old says YouTube Kids is for babies. What now?", o:[
       {t:"There’s a teen supervised experience for ages 13 to 17, with parental controls, that you can set up together.", ok:true, c:"Right option for the age, and it keeps it a shared decision."},
       {t:"Keep them on YouTube Kids until they’re 18.", c:"YouTube Kids is designed for under-13s."},
@@ -707,7 +707,7 @@ facilitate(r){
       {t:"“Great, let’s move on to setting up Family Link.”", rx:{Y:"🤔"}, after:[["Y","Wait, are we done with this?"]],
         c:"You skipped two of the three questions. The activity is designed to run all three."},
       {t:"“Kids should just listen to us, right?”", rx:{D:"😬"}, after:[["D","Mine definitely doesn’t. 😂"]],
-        c:"This ends the discussion instead of preparing parents for real reactions."}]},
+        c:"This ends the discussion before parents can prepare for real reactions."}]},
     {ph:2, prompt:"Priya has her hand up but hasn’t spoken. Several parents seem to have tried this at home.", hand:"Y", o:[
       {t:"“Priya, I see your hand. Has a conversation like this worked, or not worked, in your home?”", ok:true,
         after:[["Y","We tried a no-phones-at-dinner rule. It only stuck when I followed it too."],["J","Same! The kids called me out immediately."]], rx:{Y:"🙋", J:"💯"},
@@ -799,7 +799,7 @@ agenda(r){
   ];
   const S = R0(); S.f ??= []; S.inc ??= [];
   shell(r, S.checked ? "Now build <strong>your</strong> session: tap optional slides to include or skip them. Core slides always stay in."
-      : "The parent session runs about 15 minutes, with optional slides if you have more time. <strong>Tap every slide you think the deck marks as optional</strong>, then check.",
+      : "The parent session runs about 15 minutes, with optional slides if you have more time. <strong>Tap every slide you think the deck marks as optional</strong>, then check your choices.",
     `<div class="goal"></div>
     <div class="strip">${SL.map((s, k) => `<button class="sl" data-k="${k}"><span class="tg muted">Slide</span>${esc(s.t)}</button>`).join("")}</div>
     <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn primary" id="chk" ${S.checked ? "hidden" : ""}>Check my picks</button><span class="muted small" id="cnt"></span></div>
@@ -901,7 +901,7 @@ function renderIntro(){
       <div class="eyebrow muted">After the Meet LEO webinar</div>
       <h2>What stuck? A quick self-check before you share Meet LEO with families</h2>
       <p class="lead">You’ve just finished the Meet LEO train-the-trainer webinar. In the coming weeks you’ll bring it to the parents and caregivers you work with. This page helps you see what you remember and practice the moments that matter most when you’re in front of families.</p>
-      <div class="note">This is not a test. There’s no pass mark, and you can replay any round you’ve reached as often as you like. This is a portfolio copy of the tool and it collects no data. (The live version collects anonymous usage data for Digital4Good: rounds completed, self-check points and confidence ratings, never names or emails.)</div>
+      <div class="note">This is practice. There’s no pass mark, and you can replay any round you’ve reached as often as you like. This is a portfolio copy of the tool and it collects no data. (The live version collects anonymous usage data for Digital4Good: rounds completed, self-check points and confidence ratings, with no names or emails.)</div>
     </div>
     <div><h3 style="margin-bottom:10px">After practicing, you’ll be able to</h3>
       <ul class="goals">${goals.map(([n, g]) => `<li><span class="n">${n}</span><span>${g}</span></li>`).join("")}</ul></div>

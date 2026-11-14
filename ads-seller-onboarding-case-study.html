@@ -101,7 +101,7 @@
   <div class="two">
     <h2>Gilbert’s Behavior Engineering Model</h2>
     <div class="prose">
-      <p class="measure">A slow ramp isn’t only a knowledge gap. Training covers one cell; the job aid, the bars and the manager routine cover the rest.</p>
+      <p class="measure">A slow ramp has causes beyond missing knowledge. Training covers one cell; the job aid, the bars and the manager routine cover the rest.</p>
       <div class="tablewrap"><table>
         <thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead>
         <tbody>
@@ -109,7 +109,7 @@
           <tr><td>2</td><td>Resources</td><td>Nothing to use during a live call</td><td>Call planner by client type: questions, likely concerns, a starting point, a success metric</td><td>Job aid</td></tr>
           <tr><td>3</td><td>Incentives</td><td>Early calls are judged on closing, so sellers pitch too soon</td><td>First-call rating on the call stages and a dated next step (<a href="kit/sales/first-call-rubric.md">first-call rubric</a>)</td><td>Process</td></tr>
           <tr><td>4</td><td>Knowledge and skills</td><td>Ad concepts and discovery skills are new</td><td>Microlearning cards, AI role-play with coaching, scenario check</td><td>Training</td></tr>
-          <tr><td>5</td><td>Capacity</td><td>Too much content in week one</td><td>Pre-check marks topics to skip; four short cards instead of a product deck</td><td>Design</td></tr>
+          <tr><td>5</td><td>Capacity</td><td>Too much content in week one</td><td>Pre-check marks topics to skip; four short cards replace the product deck</td><td>Design</td></tr>
           <tr><td>6</td><td>Motives</td><td>Fear of looking unprepared in front of a real client</td><td>Safe practice with an AI client, unlimited replays, feedback on every move</td><td>Design</td></tr>
         </tbody>
       </table></div>
@@ -133,12 +133,12 @@
   <div class="two">
     <h2>Design decisions</h2>
     <div class="decisions">
-      <div class="decision"><h3>Test out, don’t sit through</h3><p>A four-question pre-check marks each topic “tested out” or “learn”. Tested-out topics count as done, so experienced hires spend their time on what they don’t know yet (Knowles: experience and self-direction).</p></div>
-      <div class="decision"><h3>Retrieval, not rereading</h3><p>Each card ends with “Test me”: the card hides and the seller answers from memory. A wrong answer sends them back to the card, not to the answer.</p></div>
+      <div class="decision"><h3>Test out of known topics</h3><p>A four-question pre-check marks each topic “tested out” or “learn”. Tested-out topics count as done, so experienced hires spend their time on new material (Knowles: experience and self-direction).</p></div>
+      <div class="decision"><h3>Answer from memory</h3><p>Each card ends with “Test me”: the card hides and the seller answers from memory. A wrong answer sends them back to reread the card.</p></div>
       <div class="decision"><h3>Earn the next step</h3><p>Each day unlocks when the one before it is done, so nobody reaches the client call without the essentials or the call plan. Locked steps say what’s needed to open them.</p></div>
-      <div class="decision"><h3>Practice before it matters</h3><p>The AI client reacts to every choice, trust rises or falls, and a coach names the move. Weak choices are part of the practice: the seller sees the consequence and tries again.</p></div>
-      <div class="decision"><h3>AI drafts, the seller checks</h3><p>After the call, AI drafts the CRM note but leaves out the success metric. The seller has to find it before saving, the same habit they need with any AI tool at work.</p></div>
-      <div class="decision"><h3>Spaced and fair</h3><p>The scenario check draws 5 items from a bank of 8, so a retry tests the same objectives with new situations. A Day 7 recall brings back the topics the seller found hardest.</p></div>
+      <div class="decision"><h3>Practice the call before the real one</h3><p>The AI client reacts to every choice, trust rises or falls, and a coach names the move. Weak choices are part of the practice: the seller sees the consequence and tries again.</p></div>
+      <div class="decision"><h3>AI drafts the note; the seller checks it</h3><p>After the call, AI drafts the CRM note but leaves out the success metric. The seller has to find it before saving, the same habit they need with any AI tool at work.</p></div>
+      <div class="decision"><h3>Space and vary the checks</h3><p>The scenario check draws 5 items from a bank of 8, so a retry tests the same objectives with new situations. A Day 7 recall brings back the topics the seller found hardest.</p></div>
     </div>
   </div>
 </section>
@@ -168,7 +168,7 @@
     <div class="prose">
       <p class="measure">Generative AI speeds up the drafting; a person decides what new hires see. I wrote two reusable prompts for this project.</p>
       <div class="tablewrap"><table>
-        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks</th></tr></thead>
+        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks the output</th></tr></thead>
         <tbody>
           <tr><td>1</td><td>Scenario items</td><td>Drafts realistic client moments with three options and an explanation</td><td>Removes trivia, rewrites weak distractors, confirms every ad concept with a product expert</td></tr>
           <tr><td>2</td><td>Client persona</td><td>Plays Rosa in a live role-play and adds a coach note after each seller message</td><td>Persona stays within her profile; coach notes teach one call stage each</td></tr>
@@ -213,7 +213,7 @@
           <tr><td>4</td><td>Results</td><td>Days to first qualified pitch; days to first closed deal</td><td>Sales system, days 10–60, compared with the previous cohort</td><td>Faster ramp than the previous cohort</td></tr>
         </tbody>
       </table></div>
-      <p class="muted" style="font-size:14px">Targets are planning targets for a real rollout, not results. Item and call data from each cohort feed the next version: weak items are rewritten and coach notes are updated.</p>
+      <p class="muted" style="font-size:14px">These targets describe a plan for a real rollout; the project has no outcome data yet. Item and call data from each cohort feed the next version: weak items are rewritten and coach notes are updated.</p>
     </div>
   </div>
   <div class="two">
@@ -223,7 +223,7 @@
       <div class="tablewrap"><table>
         <thead><tr><th>Framework</th><th>What I found</th><th>What I changed</th></tr></thead>
         <tbody>
-          <tr><td>Gilbert’s BEM</td><td>The incentive fix (rate first calls on stages, not closing) had no tool behind it</td><td>Wrote the first-call rubric for managers, using the same call stages as the practice</td></tr>
+          <tr><td>Gilbert’s BEM</td><td>The incentive fix (rate first calls on the call stages) had no tool behind it</td><td>Wrote the first-call rubric for managers, using the same call stages as the practice</td></tr>
           <tr><td>Action Mapping</td><td>Checking AI output is part of the job, but the sprint only showed the note</td><td>Added a note check: the draft leaves out the agreed metric and the seller has to find it</td></tr>
           <tr><td>Backward design and ABCD</td><td>Objective 1 said “explain”, but the evidence is a choice; the bar counted retries as correct</td><td>Rewrote it as “choose the accurate explanation … on the first try”, and the bar now counts first tries only</td></tr>
           <tr><td>Knowles</td><td>The pre-check marked topics “skip”, but sellers still had to answer their checks</td><td>Tested-out topics now count as done; locked steps say why they’re locked</td></tr>
@@ -249,6 +249,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=25" defer></script>
+<script src="js/search.js?v=26" defer></script>
 </body>
 </html>

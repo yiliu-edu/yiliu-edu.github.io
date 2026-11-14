@@ -166,7 +166,7 @@ aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
   <aside>
     <div class="side-card">
       <div class="label">Who does what</div>
-      <div class="chips"><span class="who code">Script</span><span class="who ai">AI drafts</span><span class="who human">You decide</span></div>
+      <div class="chips"><span class="who code">Script</span><span class="who ai">AI drafts</span><span class="who human">You decide what publishes</span></div>
       <p class="small" style="font-size:13px;color:var(--muted)">No customer-facing change publishes without a human decision in the log.</p>
     </div>
     <div class="label">Run log</div>
@@ -181,7 +181,7 @@ const STAGES = [
   {n:"00", t:"Start", s:"Scenario, goals and your role"},
   {n:"01", t:"Intake", s:"Release notes to change records"},
   {n:"02", t:"Impact scan", s:"Which assets does it touch?"},
-  {n:"03", t:"Draft and review", s:"AI drafts, you decide"},
+  {n:"03", t:"Draft and review", s:"AI drafts updates; you decide what publishes"},
   {n:"04", t:"Publish and learn", s:"Decisions improve the prompts"},
   {n:"05", t:"Release 4.3 check", s:"Use the rubric from memory"}
 ];
@@ -216,7 +216,7 @@ function intake(){
   const R = DATA.release.items;
   const srcText = DATA.releaseMd.split("\n").filter(l => l.startsWith("- ")).map(l => l.slice(2));
   $("stage").innerHTML = `<section class="panel">
-    <div class="row"><span class="label">Stage 1 · Intake</span><span class="who ai">AI drafts</span><span class="who human">You check</span></div>
+    <div class="row"><span class="label">Stage 1 · Intake</span><span class="who ai">AI drafts</span><span class="who human">You check the records</span></div>
     <h2>Release 4.2 just shipped. Turn it into change records.</h2>
     <p class="lead">The intake skill reads the release notes and returns one record per user-facing change, with the exact source line quoted, so every later step can trace back to it.</p>
     <div class="split">
@@ -254,7 +254,7 @@ function scan(){
     <div class="row"><span class="label">Stage 2 · Impact scan</span><span class="who code">Script</span><span class="who ai">AI checks</span></div>
     <h2>${DATA.report.flags.length} flags across ${new Set(F.map(f => f.asset)).size} of ${DATA.report.assets_scanned} assets</h2>
     <p class="lead">The script over-flags on purpose: it matches every asset by feature tag <em>and</em> by UI keyword. Then the AI checks each flag and must point to a conflicting line before it can say “update.”</p>
-    ${st.checked ? "" : `<div class="note info"><strong>Your call first:</strong> click the two flags you think need <em>no</em> update, then run the AI check and compare.</div>`}
+    ${st.checked ? "" : `<div class="note info"><strong>Your call first:</strong> click the two flags you think need <em>no</em> update, then run the AI check and compare the results.</div>`}
     <div class="tablewrap"><table><thead><tr><th>Asset</th><th>Title</th><th>Change</th><th>Match</th><th>Severity</th><th>AI check</th></tr></thead><tbody>
       ${F.map(f => { const c = chk(f); return `<tr class="${st.checked ? "" : "pick"} ${st.guess.includes(key(f)) ? "picked" : ""}" data-k="${key(f)}" tabindex="${st.checked ? -1 : 0}">
         <td class="mono">${f.asset}</td><td>${esc(f.title)}<div style="font-size:12px;color:var(--muted)">${esc(f.owner)}</div></td><td class="mono">${f.release_item}</td>
@@ -286,7 +286,7 @@ function scan(){
 }
 
 /* ---------- 3 draft and review ---------- */
-const DEC = [["approve","Approve","Publish as drafted"],["edit","Approve with edit","Fix, publish, log the edit"],["route","Route to owner","Needs a person’s decision"],["reject","Reject","Draft misreads the change"]];
+const DEC = [["approve","Approve","Publish as drafted"],["edit","Approve with edit","Fix the line, publish the update, log the edit"],["route","Route to owner","Needs a person’s decision"],["reject","Reject","Draft misreads the change"]];
 function review(){
   const D = DATA.drafts; const i = st.cur, d = D[i]; const r = st.rev[d.asset] ??= {tries:[], done:false};
   const changed = d.lines.filter(l => l.source !== "unchanged");
@@ -305,7 +305,7 @@ function review(){
     return `<div class="ln ${cls} ${struck ? "struck" : ""}" ${l.source !== "unchanged" && !l.unsupported && !r.done ? `data-k="${k}" role="button" tabindex="0" style="cursor:pointer"` : ""}><span>${md(l.text)}</span><span class="cite">${cite}</span></div>`;
   };
   $("stage").innerHTML = `<section class="panel">
-    <div class="row"><span class="label">Stage 3 · Draft and review</span><span class="who ai">AI drafts</span><span class="who human">You decide</span></div>
+    <div class="row"><span class="label">Stage 3 · Draft and review</span><span class="who ai">AI drafts</span><span class="who human">You decide what publishes</span></div>
     <h2>Review queue</h2>
     <div class="queue">${D.map((x, j) => { const rr = st.rev[x.asset]; return `<button class="qb ${rr?.done ? (rr.tries.length === 1 ? "ok" : "miss") : ""}" data-j="${j}" aria-current="${j === i}"><i></i>${x.asset}</button>`; }).join("")}</div>
     <div><div class="label">${d.asset} · ${esc(d.owner)}</div><h3 style="font-size:19px;margin-top:2px">${esc(d.title)}</h3></div>
@@ -364,9 +364,9 @@ const ROLES = {
   pm:{n:"Product manager", d:"I write release notes and answer questions."}
 };
 const TIPS = {
-  reviewer:["", "Check that every record quotes its source line exactly. You’ll trace drafts back to it later.", "Dismiss a flag only when the owner could read the reason and agree.", "Read each changed line against its source. Invented claims are your biggest risk.", "Note the pattern behind your edit, not just the fix. Patterns become rules.", "No automatic checks this time. Use the rubric from memory."],
+  reviewer:["", "Check that every record quotes its source line exactly. You’ll trace drafts back to it later.", "Dismiss a flag only when the owner could read the reason and agree.", "Read each changed line against its source. Invented claims are your biggest risk.", "Note the pattern behind your edit as well as the fix. Patterns become rules.", "No automatic checks this time. Use the rubric from memory."],
   owner:["", "Records that touch your features will turn into flags on your assets.", "Every dismissal on your assets should come with a reason you can check.", "Objectives and assessment items stay yours. Watch for drafts that change them.", "Routed drafts land in your queue with the open question attached.", "Think like the reviewer: what would you need routed to you?"],
-  pm:["", "Ambiguous release lines come back to you as questions. Clear notes save a day.", "An “unsure” flag is a question for you, not a guess.", "Drafts wait on you when a release line leaves something unanswered.", "Each new rule reduces the questions you get next release.", "Check whether the 4.3 notes give reviewers enough to decide."]
+  pm:["", "Ambiguous release lines come back to you as questions. Clear notes save a day.", "An “unsure” flag asks you a question.", "Drafts wait on you when a release line leaves something unanswered.", "Each new rule reduces the questions you get next release.", "Check whether the 4.3 notes give reviewers enough information to make a decision."]
 };
 function start(){
   $("stage").innerHTML = `<section class="panel">
@@ -403,7 +403,7 @@ const D43 = [
   {asset:"HC-512", title:"Resolve comments", owner:"Help Center",
    old:["## Resolve a comment","Only the comment’s author can resolve it.","1. Hover over the comment.","2. Select **Resolve**."],
    lines:[{text:"## Resolve a comment",source:"unchanged"},{text:"Any project member can resolve a comment.",source:"R6"},{text:"Resolved comments are permanently deleted after 30 days.",source:"R6",unsupported:true},{text:"1. Hover over the comment.",source:"unchanged"},{text:"2. Select **Resolve**.",source:"unchanged"}],
-   correct:"edit", why:"R6 only changes who can resolve a comment. Nothing in 4.3 says resolved comments are deleted, so that line is invented. Strike it, then publish."},
+   correct:"edit", why:"R6 only changes who can resolve a comment. Nothing in 4.3 says resolved comments are deleted, so that line is invented. Strike it, then publish the update."},
   {asset:"ACA-410", title:"Admin Essentials, Lesson 2: Billing", owner:"Academy",
    old:["Practice: go to **Settings > Account** and find last month’s invoice.","Knowledge check: Where do admins find invoices? (a) Reports (b) Settings > Account (c) Help menu"],
    lines:[{text:"Practice: go to **Settings > Billing** and download last month’s invoice as a PDF.",source:"R7"},{text:"Knowledge check: Where do admins find invoices? (a) Reports (b) Settings > Billing (c) Help menu",source:"R7"}],
@@ -472,25 +472,25 @@ function learn(){
     </div>
     <div class="note info">Your review: ${first} of ${D.length} decisions right on the first try. In a real run, these decisions are logged so the team can see where the AI needs the most supervision.</div>
     <h3 style="font-size:18px">The review decision becomes a rule</h3>
-    <p class="lead">The HC-104 edit removed an invented capability. Instead of fixing it by hand every release, the rule goes into the draft skill.</p>
+    <p class="lead">The HC-104 edit removed an invented capability. The rule goes into the draft skill, so nobody has to fix it by hand every release.</p>
     <div class="rule"><div class="hd"><span>skills/03-draft-update.md</span><span>v1.0 → v1.1</span></div><pre>6. For human-owned lines, propose wording but mark it HUMAN DECIDES.
 <ins>7. Never describe a feature or capability unless it appears in a change
    record. If you think a related capability exists, put it under
-   open_questions instead of in the body.</ins>
+   open_questions, outside the body.</ins>
 8. List anything you could not verify under open_questions.</pre></div>
     <div class="row"><button class="btn primary" id="rr" ${st.rerun ? "disabled" : ""}>Re-run the HC-104 draft with v1.1</button></div>
     <div id="rro"></div>
     <h3 style="font-size:18px">Where AI drafts and where a person owns the work</h3>
     <div class="own">
       <div style="background:var(--info-soft)"><span class="who ai">AI drafts</span><ul><li>Classifying release changes</li><li>Checking which assets a change affects</li><li>Minimal edits to steps, UI names and tooltips</li><li>First-draft alt text</li></ul></div>
-      <div style="background:var(--tint)"><span class="who human">A person owns</span><ul><li>Learning objectives, assessment and certification items</li><li>Pricing and legal text</li><li>Anything with an open question</li><li>Every publish decision</li></ul></div>
+      <div style="background:var(--tint)"><span class="who human">A person owns these parts</span><ul><li>Learning objectives, assessment and certification items</li><li>Pricing and legal text</li><li>Anything with an open question</li><li>Every publish decision</li></ul></div>
     </div>
     <div class="row"><button class="btn primary" id="to43">Next: release 4.3 check</button><button class="btn" id="reset">Start over</button></div>
   </section>`;
   const showRerun = () => {
     const d = D[0];
     $("rro").innerHTML = `<div class="col" style="margin-top:4px"><h4>HC-104 · draft v1.1 · traceability ✓ 5 of 5</h4>${d.lines.filter(l => !l.unsupported).map(l => `<div class="ln ${l.source === "unchanged" ? "same" : "chg"}"><span>${md(l.text)}</span><span class="cite">${l.source === "unchanged" ? "same" : l.source}</span></div>`).join("")}<div class="ln"><span style="color:var(--muted)">open_questions: “Screenshot roadmap.png needs capturing.” “Can roadmaps be shared outside the workspace? Not in 4.2 notes.”</span></div></div>
-    <div class="note" style="margin-top:8px">With rule 7, the model moved its guess about sharing into an open question instead of the body. That’s the loop: each review decision makes the next run need less fixing.</div>`;
+    <div class="note" style="margin-top:8px">With rule 7, the model moved its guess about sharing out of the body and into an open question. That’s the loop: each review decision makes the next run need less fixing.</div>`;
   };
   if (st.rerun) showRerun();
   $("rr").onclick = async () => { $("rr").disabled = true; log("ai", "draft HC-104 with skill v1.1"); await wait(600); st.rerun = true; log("ok", "HC-104 v1.1: traceability 5/5, 2 open questions"); log("ok", "published: HC-104, HC-221 · routed: ACA-301 → Academy, HC-050 → Product"); showRerun(); };

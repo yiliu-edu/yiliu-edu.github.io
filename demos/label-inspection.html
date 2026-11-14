@@ -82,7 +82,7 @@ const ELEM = {
   name:{n:"Product name and size", d:"Must match the work order exactly, including size or variant. A wrong size can mean the wrong product in a clinician’s hand."},
   ref:{n:"REF: catalog number", d:"Identifies the exact product. Digits are easy to transpose, so read them in pairs against the work order."},
   lot:{n:"LOT: lot or batch number", d:"Ties every unit to its production record. If it’s wrong, the product can’t be traced or recalled correctly."},
-  exp:{n:"Use-by date (hourglass symbol)", d:"Shown as YYYY-MM-DD. Check the day, not just the month and year."},
+  exp:{n:"Use-by date (hourglass symbol)", d:"Shown as YYYY-MM-DD. Check the day as well as the month and year."},
   ster:{n:"Sterility", d:"For sterile products, the symbol names the method, such as STERILE EO (ethylene oxide). A missing symbol on a sterile product is a nonconformance."},
   qty:{n:"Quantity", d:"Units per package. Must match the specification for that catalog number."},
   udi:{n:"UDI barcode", d:"The Unique Device Identifier encodes the product (01), use-by date (17, as YYMMDD) and lot (10). Use it to cross-check the printed text."},
@@ -197,7 +197,7 @@ function fb(j){
   const s = S(), c = CASES[j], fl = s.flags[j] || {}, errs = Object.keys(c.err);
   const missed = errs.filter(k => !fl[k]), extra = Object.keys(fl).filter(k => fl[k] && !errs.includes(k)), decOk = s.dec[j] === (errs.length ? "hold" : "release");
   if (s.res[j]) return `<div class="note">Correct. ${esc(c.why)}</div>`;
-  return `<div class="note warn">Not yet. ${missed.length ? `${missed.length} field${missed.length > 1 ? "s don’t" : " doesn’t"} match and ${missed.length > 1 ? "weren’t" : "wasn’t"} selected (dashed outline). ` : ""}${extra.length ? `${extra.map(k => ELEM[k].n.split(":")[0]).join(", ")} ${extra.length > 1 ? "match" : "matches"} the work order. ` : ""}${decOk ? "" : errs.length ? "A label with any mismatch is held, not released. " : "Nothing is wrong here, so this lot can be released. "}Adjust and submit again.</div>`;
+  return `<div class="note warn">Not yet. ${missed.length ? `${missed.length} field${missed.length > 1 ? "s don’t" : " doesn’t"} match and ${missed.length > 1 ? "weren’t" : "wasn’t"} selected (dashed outline). ` : ""}${extra.length ? `${extra.map(k => ELEM[k].n.split(":")[0]).join(", ")} ${extra.length > 1 ? "match" : "matches"} the work order. ` : ""}${decOk ? "" : errs.length ? "Hold any label with a mismatch. " : "Nothing is wrong here, so this lot can be released. "}Adjust and submit again.</div>`;
 }
 function s3(){
   const s = S();

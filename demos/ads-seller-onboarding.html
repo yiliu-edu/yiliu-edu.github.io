@@ -178,7 +178,7 @@ const STEPS = [
 ];
 const TOPICS = [
   {id:"auction", t:"The ad auction",
-   body:"Every search runs a quick auction. Ad position depends on the bid and on ad quality and relevance, not on the bid alone. Advertisers pay per click, and the cost per click is often below their maximum bid.",
+   body:"Every search runs a quick auction. Ad position depends on the bid and on ad quality and relevance. Advertisers pay per click, and the cost per click is often below their maximum bid.",
    pre:{q:"A client says: “If I just bid the most, I’ll always be on top.” What’s accurate?", o:["Yes, the highest bid always wins the top spot","No, position also depends on ad quality and relevance","No, position is random each time"], a:1},
    chk:{q:"Which two things decide where an ad shows?", o:["Bid and ad quality","Budget and company size","Bid and account age"], a:0, why:"Position comes from the bid together with quality and relevance. A strong ad can beat a higher bid."}},
   {id:"match", t:"Keywords and match types",
@@ -252,7 +252,7 @@ const CALL = [
     "t": "Got it. Roughly what do you spend on marketing each month right now?",
     "d": -3,
     "rep": "Uh… it changes. Not a lot. Some flyers, the website.",
-    "c": "Budget will matter later. Asked now, it sounds like you’re sizing her up, not understanding the problem."
+    "c": "Budget will matter later. Asked this early, it sounds like you’re sizing her up before you understand the problem."
    },
    {
     "t": "When those orders were coming in, how did new catering customers usually find you?",
@@ -321,7 +321,7 @@ const CALL = [
     "t": "If you start this month, I can get you a 20% credit on your first month, so there’s less risk this time.",
     "d": -8,
     "rep": "A discount on something that didn’t work isn’t really a deal.",
-    "c": "A credit lowers the price, not her real risk: she still couldn’t tell if it worked."
+    "c": "A credit lowers the price. Her real risk stays the same: she still couldn’t tell if it worked."
    },
    {
     "t": "Ads work much better now than two years ago. The targeting has gotten a lot smarter.",
@@ -365,12 +365,12 @@ const CALL = [
  }
 ];
 const BANK = [
-  {q:"A client asks why their ad shows below a competitor who bids less. Your best answer?", o:["The competitor is paying for priority placement","Position depends on quality and relevance too, not just the bid","The platform rotates positions randomly"], a:1, why:"Ad quality and relevance work together with the bid."},
+  {q:"A client asks why their ad shows below a competitor who bids less. Your best answer?", o:["The competitor is paying for priority placement","Position depends on quality and relevance as well as the bid","The platform rotates positions randomly"], a:1, why:"Ad quality and relevance work together with the bid."},
   {q:"A florist gets lots of clicks from people searching “free flower clip art”. First fix?", o:["Add “free” and “clip art” as negative keywords","Raise the daily budget","Switch to broad match"], a:0, why:"Negative keywords stop spend on searches that won’t convert."},
   {q:"A client wants to know if ads are working, but nothing is tracked. What do you propose before launch?", o:["Report clicks and impressions","Set up conversion tracking for calls and forms","Wait a month and see if sales rise"], a:1, why:"Conversion tracking ties spend to real outcomes."},
   {q:"On a discovery call, the owner says “I don’t have time to manage ads.” Best response?", o:["Ask what a manageable check-in would look like for them","Say ads run themselves","Offer a discount"], a:0, why:"Explore the constraint, then design the plan around it."},
   {q:"An online shop spent $1,000 and made $3,000 in tracked sales from ads. ROAS?", o:["3:1","1:3","2:1"], a:0, why:"ROAS = revenue ÷ spend = 3,000 ÷ 1,000."},
-  {q:"A dental clinic’s ads link to the homepage. Which quality signal suffers most?", o:["Expected click-through rate","Landing page experience","Ad relevance"], a:1, why:"Sending people to a general page instead of the relevant service hurts landing page experience."},
+  {q:"A dental clinic’s ads link to the homepage. Which quality signal suffers most?", o:["Expected click-through rate","Landing page experience","Ad relevance"], a:1, why:"Sending people to a general page when they searched for one service hurts landing page experience."},
   {q:"After a strong discovery call, what should you always leave with?", o:["A signed annual contract","A specific next step with a date","A promise to send a brochure"], a:1, why:"A dated next step keeps momentum and gives you a reason to follow up."},
   {q:"A client with a tight budget wants to “reach everyone”. What do you recommend first?", o:["A focused test on the highest-intent searches","Broad match on generic terms","Display ads everywhere"], a:0, why:"High-intent searches use a small budget where it’s most likely to convert."}
 ];

@@ -34,6 +34,6 @@ End the call when a dated next step is agreed or after 12 seller messages.
 
 ## Review checklist (before using with new hires)
 - Ad concepts are accurate and match the essentials cards.
-- Rosa sounds like a small-business owner, not a marketer.
+- Rosa sounds like a small-business owner and uses plain, everyday words.
 - Each coach note teaches one move from the call stages.
 - No claims about real products, prices or results.

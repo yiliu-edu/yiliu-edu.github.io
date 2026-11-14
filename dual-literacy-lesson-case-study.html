@@ -83,7 +83,7 @@
     <h2>The problem</h2>
     <div class="prose">
       <p class="measure">Dual literacy programs ask young students to build reading skills in two languages at once. Digital lessons can help, with audio for every word and instant feedback, but only if every screen is right in both languages. One wrong tone mark or mismatched audio file teaches the wrong thing to thousands of students.</p>
-      <p class="measure">Errors like these usually come from the production process, not the content: unclear storyboards, vendors without language-specific rules, and QC that checks one language more carefully than the other. As a bilingual educator, I designed the lesson and the system that keeps it accurate.</p>
+      <p class="measure">Errors like these usually come from the production process: unclear storyboards, vendors without language-specific rules, and QC that checks one language more carefully than the other. As a bilingual educator, I designed the lesson and the system that keeps it accurate.</p>
     </div>
   </div>
   <div class="two">
@@ -114,7 +114,7 @@
       <p class="measure">Planned backward: each objective has matching evidence in the demo.</p>
       <div class="tablewrap"><table>
         <thead><tr><th>#</th><th>Objective (audience, behavior, condition, degree)</th><th>Evidence in the demo</th></tr></thead>
-        <tbody><tr><td>1</td><td>Given a four-page bilingual book, a first grader will read and listen to every page in at least one language.</td><td>Read and listen</td></tr><tr><td>2</td><td>Given four pictures, a first grader will match each to its word in Mandarin or English.</td><td>Word match</td></tr><tr><td>3</td><td>Given “The duck swims / 鸭子游泳”, a first grader will identify the word that changes in English but not in Chinese (CCSS L.1.1c).</td><td>Language comparison</td></tr><tr><td>4</td><td>Given a vendor build and the storyboard, a designer will flag every issue in both languages with no false flags.</td><td>QC exercise</td></tr></tbody>
+        <tbody><tr><td>1</td><td>Given a four-page bilingual book, a first grader will read and listen to every page in at least one language.</td><td>Read and listen</td></tr><tr><td>2</td><td>Given four pictures, a first grader will match each to its word in Mandarin or English.</td><td>Word match</td></tr><tr><td>3</td><td>Given “The duck swims / 鸭子游泳”, a first grader will identify the verb that changes form in English and stays the same in Chinese (CCSS L.1.1c).</td><td>Language comparison</td></tr><tr><td>4</td><td>Given a vendor build and the storyboard, a designer will flag every issue in both languages with no false flags.</td><td>QC exercise</td></tr></tbody>
       </table></div>
     </div>
   </div>
@@ -124,7 +124,7 @@
       <div class="decision"><h3>Both languages, one screen</h3><p>“Both” mode shows the sentences together, so students can lean on the stronger language.</p></div>
       <div class="decision"><h3>Audio for every word</h3><p>Tapping a single word plays it, which supports decoding in both languages.</p></div>
       <div class="decision"><h3>Make the bridge explicit</h3><p>Color-coded who and action show the shared sentence pattern; the question targets the one difference.</p></div>
-      <div class="decision"><h3>Color plus labels</h3><p>Color is never the only signal, so the comparison works for students who can’t see color.</p></div>
+      <div class="decision"><h3>Color plus labels</h3><p>Every color comes with a label, so students who can’t see color can still follow the comparison.</p></div>
       <div class="decision"><h3>Storyboard as the contract</h3><p>Every row lists text, pinyin, audio file, interaction, alt text and feedback in both languages.</p></div>
       <div class="decision"><h3>QC that mirrors real errors</h3><p>The vendor build includes the errors that happen most: tone marks, audio mapping, alt text and feedback language.</p></div>
     </div>
@@ -146,7 +146,7 @@
     <div class="prose">
       <p class="measure">AI generated prototype audio and helped draft; native speakers and the program team decide what ships.</p>
       <div class="tablewrap"><table>
-        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks</th></tr></thead>
+        <thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks the output</th></tr></thead>
         <tbody><tr><td>1</td><td>Prototype audio</td><td>Kokoro generated English and Mandarin narration</td><td>Listened to every file. The model misread the first tones in 青蛙 and 乌龟, so the prototype now uses the device’s built-in Mandarin voice; production would use recorded native-speaker narration</td></tr><tr><td>2</td><td>Storyboard</td><td>Drafted alt text in both languages</td><td>Checked the Chinese alt text and pinyin myself</td></tr><tr><td>3</td><td>QC exercise</td><td>Suggested common vendor error types</td><td>Chose errors that would mislead a student, with severity</td></tr></tbody>
       </table></div>
       <div class="files">
@@ -162,7 +162,7 @@
         <thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th></tr></thead>
         <tbody><tr><td>1</td><td>Reaction</td><td>Teacher and student usability notes</td><td>User testing sessions</td></tr><tr><td>2</td><td>Learning</td><td>Match accuracy and comparison item, by language</td><td>Lesson data</td></tr><tr><td>3</td><td>Behavior</td><td>Designers and vendors using the checklist on every screen</td><td>QC logs per build</td></tr><tr><td>4</td><td>Results</td><td>Issues found after release; rework per build</td><td>Program QC tracker, per release</td></tr></tbody>
       </table></div>
-      <p class="muted" style="font-size:14px">Targets and measures are plans for a real rollout, not results. This is a concept project built for a fictional organization.</p>
+      <p class="muted" style="font-size:14px">Targets and measures describe a plan for a real rollout. This is a concept project built for a fictional organization, so it has no outcome data yet.</p>
     </div>
   </div>
   <div class="two">
@@ -191,6 +191,6 @@
 (function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
 </script>
-<script src="js/search.js?v=25" defer></script>
+<script src="js/search.js?v=26" defer></script>
 </body>
 </html>

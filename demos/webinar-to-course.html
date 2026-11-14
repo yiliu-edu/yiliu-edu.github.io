@@ -98,7 +98,7 @@ const TAGS = {keep:"Keep and tighten", cut:"Cut or move", practice:"Turn into pr
 const RUBRIC = [
   {c:"Measurable objectives stated up front", r:0},
   {c:"Practice that mirrors the job", r:0},
-  {c:"Assessment that checks the skill, not recall", r:0},
+  {c:"Assessment that checks the skill itself", r:0},
   {c:"Accurate and current content", r:1},
   {c:"Accessible: accurate captions, transcript, contrast, keyboard", r:1},
   {c:"Chunked for busy learners (under 10 minutes per piece)", r:0}
@@ -111,7 +111,7 @@ const SCEN = [
       {t:"The data says $595,000. That’s the number.", ok:false, rep:"So you’re just going to ignore what my neighbor got?", c:"Accurate, but dismissive. She hasn’t seen how you got there."}]},
   {them:"But we put $40,000 into the kitchen two years ago. That has to count for something.",
    o:[{t:"Kitchens don’t really add value.", ok:false, rep:"That can’t be right.", c:"Inaccurate and deflating. Updates can add value; the question is how much buyers pay for them here."},
-      {t:"Then let’s add the $40,000 to the price.", ok:false, rep:"Perfect.", c:"What a seller spent isn’t what buyers will pay. Use sales evidence, not cost."},
+      {t:"Then let’s add the $40,000 to the price.", ok:false, rep:"Perfect.", c:"Buyers pay what the market supports, whatever the seller spent. Use sales evidence to price the update."},
       {t:"It does. Here are two recent nearby sales with renovated kitchens, and what buyers paid compared with similar homes without them.", ok:true, rep:"Oh. So it’s more like fifteen or twenty thousand?", c:"You showed how the market values the update, with evidence she can check."}]},
   {them:"What if we just try $650,000 for a few weeks and see what happens?",
    o:[{t:"If you really want to, we can.", ok:false, rep:"Great.", c:"You gave up the evidence without explaining the risk."},
@@ -173,7 +173,7 @@ function s1(){
 function s2(){
   const s = S();
   const ACC = [["Same neighborhood", "Buyers compare homes they could actually choose between. Stay inside the same school area or subdivision when you can."], ["Similar size, age and features", "Within about 20% of the square footage, similar age and bedroom count. Adjust for the differences you can’t avoid."], ["Sold recently", "Usually the last 3–6 months. In a fast-changing market, the most recent sales matter most."]];
-  const FL = [["List price", "What the seller asks. A starting point, not the value."], ["Market value", "What a typical buyer would likely pay now, based on recent comparable sales."], ["Days on market", "How long homes take to sell. Overpriced homes often sit longer."]];
+  const FL = [["List price", "What the seller asks. A starting point for negotiation."], ["Market value", "What a typical buyer would likely pay now, based on recent comparable sales."], ["Days on market", "How long homes take to sell. Overpriced homes often sit longer."]];
   const KC = {q:"Your seller’s home has 2,000 sq ft and 3 bedrooms. Which sale is the best comparable?", o:["A 3,400 sq ft home on the same street, sold last month","A 2,100 sq ft, 3-bedroom home nearby, sold 8 weeks ago","A 2,000 sq ft, 3-bedroom home across town, sold 2 years ago"], a:1, why:"Close in size, features, location and time. The others differ too much on size, or on location and date."};
   $("stage").innerHTML = `
     <div class="label">Step 3 · Build a microlesson</div>
@@ -225,11 +225,11 @@ function s4(){
       <li>Pick three comparable sales: same area, similar home, sold in the last 3–6 months.</li>
       <li>Note the differences that matter (size, updates, location) and how recent sales priced them.</li>
       <li>Ask what the seller already knows: neighbor sales, online estimates, what they spent.</li>
-      <li>Show the range, not one number. Let the seller see the evidence.</li>
+      <li>Show the full price range. Let the seller see the evidence.</li>
       <li>If they want to price higher, name the trade-off and agree on a review date.</li></ol></div>
     <div class="part"><h3>LMS readiness checklist</h3><div class="opts">${READY.map((r, j) => `<button class="chk" data-r="${j}" aria-pressed="${!!s.ready[j]}"><span class="bx">✓</span><span>${esc(r)}</span></button>`).join("")}</div>
-      <div class="row"><button class="btn primary" id="pub" ${all && !s.published ? "" : "disabled"}>${s.published ? "Published to the LMS (simulated)" : "Publish to the LMS"}</button>${all ? "" : `<span class="qnum">Check every item to publish.</span>`}</div></div>
-    <div class="part"><h3>xAPI statements from your session</h3><p style="font-size:14.5px">Each choice you made sent a statement like these. They show which scenario choices learners struggle with, not just who finished.</p>
+      <div class="row"><button class="btn primary" id="pub" ${all && !s.published ? "" : "disabled"}>${s.published ? "Published to the LMS (simulated)" : "Publish to the LMS"}</button>${all ? "" : `<span class="qnum">Check every item to publish the course.</span>`}</div></div>
+    <div class="part"><h3>xAPI statements from your session</h3><p style="font-size:14.5px">Each choice you made sent a statement like these. They show which scenario choices learners struggle with, in addition to who finished.</p>
       <div class="out" style="max-height:260px">${s.log.length ? esc(s.log.slice(-3).map(l => JSON.stringify(stmt(l), null, 2)).join(",\n")) : "No statements yet."}</div><span class="qnum">Showing the last 3 of ${s.log.length}.</span></div>
     ${D.nav("Next: measure the difference")}`;
   qa("[data-r]").forEach(b => b.onclick = () => { s.ready[b.dataset.r] = !s.ready[b.dataset.r]; D.refresh(); });
@@ -240,7 +240,7 @@ function s5(){
   $("stage").innerHTML = `
     <div class="label">Step 6 · Measure the difference</div>
     <h2>What success would look like</h2>
-    <p class="lead">Baselines come from the legacy webinar’s analytics. Targets are planning targets for launch, not results. The xAPI data adds what completion can’t show: which decisions learners get wrong.</p>
+    <p class="lead">Baselines come from the legacy webinar’s analytics. Targets describe the plan for launch; the course has no results yet. The xAPI data adds what completion can’t show: which decisions learners get wrong.</p>
     <div class="bars">${M.map(([n, a, amax, b, bmax, u]) => `<span>${n}</span><div class="pair"><i class="old" style="width:${Math.round(100 * a / amax)}%" title="Webinar: ${a}"></i><i class="new" style="width:${Math.round(100 * b / bmax)}%" title="Target: ${b}"></i><span class="qnum">Webinar ${a}${u === "%" ? "%" : u === "/ 5" ? " / 5" : " of 62 min"} · Target ${b}${u === "%" ? "%" : u === "/ 5" ? " / 5" : " of 34 min"}</span></div>`).join("")}</div>
     <div class="part"><h3>Evaluation plan</h3><div class="tablewrap"><table><thead><tr><th>Level</th><th>Measure</th><th>Source</th></tr></thead><tbody>
       <tr><td>Reaction</td><td>Rating and “ready for my next listing appointment” (1–5)</td><td>End-of-course survey</td></tr>

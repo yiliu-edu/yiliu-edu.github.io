@@ -261,10 +261,10 @@ const BG = {
   fresh:{n:"New to the field", d:"This is my first learning design role."}
 };
 const TIP = {
-  analyze:{teacher:"You already diagnose why a student is stuck before reteaching. Do the same here: find the cause before you build.",
+  analyze:{teacher:"You already diagnose why a student is stuck before reteaching. Do the same here: find the cause before you build anything.",
     sme:"You’ll be tempted to explain the whole refund policy. Hold that. First find out what agents are actually getting wrong.",
     designer:"Treat Marcus’s request like a feature request: find the user problem behind the solution he’s asking for.",
-    fresh:"Your first job isn’t to build. It’s to ask good questions. Gilbert’s model will help you sort what you hear."},
+    fresh:"Your first job is to ask good questions. Gilbert’s model will help you sort what you hear."},
   objective:{teacher:"This is your learning target, written for adults. Same rule: if you can’t see it, you can’t assess it.",
     sme:"Experts often write 'understand the policy.' Ask yourself what you’d watch an agent do to know they understand it.",
     designer:"Think of the objective as the acceptance criteria for the whole module.",
@@ -274,15 +274,15 @@ const TIP = {
     designer:"Spec the test before you build the feature. The assessment is the test.",
     fresh:"Result, then evidence, then practice, then content. Content goes last, even though it’s tempting to start there."},
   practice:{teacher:"You already pick between anchor charts, role-play and guided practice. Same choices, adult learners.",
-    sme:"Not everything needs a course. Some needs are best met by a one-page tool agents keep open.",
+    sme:"Some needs are best met by a one-page tool agents keep open.",
     designer:"Choose the lowest-cost format that changes the behavior. A job aid ships in a day.",
     fresh:"Ask: does the learner need to remember it, decide something, or click through a tool? Each points to a different format."},
   review:{teacher:"Review it like a lesson plan from a student teacher: is there practice, and does the check match the target?",
     sme:"Accuracy matters, but look past it. Can a new agent actually use this screen?",
-    designer:"Check the screen against the objective and against accessibility basics, not just the visual polish.",
+    designer:"Check the screen against the objective and against accessibility basics as well as visual polish.",
     fresh:"Look for four things: too much text, no practice, a quiz that doesn’t match the objective, and accessibility gaps."},
   measure:{teacher:"Exit tickets measure learning. Here you also need to see what agents do on live tickets weeks later.",
-    sme:"Your credibility with Marcus comes from Level 3 and 4 measures. Plan them now, not after launch.",
+    sme:"Your credibility with Marcus comes from Level 3 and 4 measures. Plan them now, before launch.",
     designer:"These are your product metrics. Satisfaction is a vanity metric on its own.",
     fresh:"The four Kirkpatrick levels go from 'did they like it' to 'did the business problem shrink.' Sort from easiest to hardest to measure."},
   wrap:{teacher:"Your brief is your unit plan. Share it before you build anything.",
@@ -413,11 +413,11 @@ const MOD = {
 analyze(m){
   const T = [
     {them:"Hi! Marcus from Support Ops. Refund tickets are a mess, and escalations doubled this quarter. Can you build a training on refunds by end of month?",
-     o:[{t:"Before I design anything: what should agents be doing differently, and how would we see it?", ok:true, rep:"They should resolve standard refunds themselves. Right now about 4 in 10 refund tickets get escalated to my leads.", c:"Start from the performance you want to see, not the content you could cover."},
+     o:[{t:"Before I design anything: what should agents be doing differently, and how would we see it?", ok:true, rep:"They should resolve standard refunds themselves. Right now about 4 in 10 refund tickets get escalated to my leads.", c:"Start from the performance you want to see, then choose the content that supports it."},
         {t:"Sure! How long should the course be?", rep:"Um, an hour? Whatever you think.", c:"That jumps to format before anyone knows the problem. You’d be scoping a course nobody has defined."},
         {t:"Great, can you send me all the refund policy docs?", rep:"Sure, there are about 40 pages.", c:"Collecting content first usually ends in a policy slideshow. Ask about the performance gap first."}]},
     {them:"So, standard refunds without escalating. What do you need from me?",
-     o:[{t:"Could I read 20 recent escalated tickets and sit with two agents for an hour?", ok:true, rep:"Sure. I’ll set it up for Thursday.", c:"Observing the real work shows where it breaks, and it’s often not where people assume."},
+     o:[{t:"Could I read 20 recent escalated tickets and sit with two agents for an hour?", ok:true, rep:"Sure. I’ll set it up for Thursday.", c:"Observing the real work shows where it breaks, and the break is often somewhere people didn’t expect."},
         {t:"Let’s survey agents on whether they liked their onboarding.", rep:"We can, but they always say it was fine.", c:"Satisfaction won’t tell you why refunds go wrong. Look at the work itself."},
         {t:"No need. I’ll assume they don’t know the policy well enough.", rep:"Makes sense to me.", c:"That’s an untested guess. If the cause isn’t knowledge, a course won’t fix it."}]},
     {them:"Thursday works. Anything else before you start?",
@@ -444,7 +444,7 @@ analyze(m){
         {id:"f", t:"The help-center refund page is two versions out of date", ans:"info", why:"Agents are following wrong guidance. Update the page first."},
         {id:"d", t:"The billing tool times out on refunds over $200", ans:"res", why:"A tool problem. Flag it to the product team. No course fixes a timeout."},
         {id:"e", t:"The quality score rewards escalating anything over $50", ans:"inc", why:"Agents escalate because they’re rewarded for it. Change the score."},
-        {id:"g", t:"Errors spike in the last hours of 12-hour night shifts", ans:"cap", why:"That’s fatigue, a capacity issue. Scheduling, not training."},
+        {id:"g", t:"Errors spike in the last hours of 12-hour night shifts", ans:"cap", why:"That’s fatigue, a capacity issue. A scheduling fix."},
         {id:"h", t:"Agents say they’d rather escalate than be blamed for a wrong refund", ans:"mot", why:"A motive problem. Leads need to make it safe to resolve."}
       ],
       done: out => {
@@ -481,16 +481,16 @@ analyze(m){
 objective(m){
   const S = R0(); S.sel ??= {a:"", b:"", c:"", d:""}; S.lock ??= {}; S.checks ??= 0;
   const SL = {
-    a:{n:"Audience", q:"Who will do it?", opts:[["agents","new support agents",1,"Right: the people whose performance should change."],["all","all Kitebird employees",0,"Too broad. Only agents handle refund tickets."],["course","the refund training",0,"An objective describes learners, not the course."]]},
-    b:{n:"Behavior", q:"What will they do?", opts:[["issue","issue a standard refund in the billing tool",1,"Observable: you can watch it happen."],["understand","understand the refund policy",0,"You can’t see 'understand.' What would they do that shows it?"],["watch","watch the refund walkthrough video",0,"That’s a learning activity, not the performance."]]},
-    c:{n:"Condition", q:"With what, or in what situation?", opts:[["given","Given a customer ticket and the refund policy",1,"That matches the real job: agents always have the ticket and the policy open."],["after","After completing the training",0,"That says when, not the conditions of the task."],["memory","From memory, with no tools open",0,"Unrealistic. On the job, agents have the policy open."]]},
-    d:{n:"Degree", q:"How well?", opts:[["nine","with the correct amount and no escalation, in 9 of 10 practice tickets",1,"Specific and measurable, and it ties to Marcus’s escalation goal."],["best","to the best of their ability",0,"There’s no way to measure 'best.'"],["feel","and feel confident about refunds",0,"Confidence matters, but it isn’t performance you can observe."]]}
+    a:{n:"Audience", q:"Who will do it?", opts:[["agents","new support agents",1,"Right: the people whose performance should change."],["all","all Kitebird employees",0,"Too broad. Only agents handle refund tickets."],["course","the refund training",0,"An objective describes what learners do."]]},
+    b:{n:"Behavior", q:"What will they do?", opts:[["issue","issue a standard refund in the billing tool",1,"Observable: you can watch it happen."],["understand","understand the refund policy",0,"You can’t see 'understand.' What would they do that shows it?"],["watch","watch the refund walkthrough video",0,"That’s a learning activity. The objective should name the performance."]]},
+    c:{n:"Condition", q:"With what, or in what situation?", opts:[["given","Given a customer ticket and the refund policy",1,"That matches the real job: agents always have the ticket and the policy open."],["after","After completing the training",0,"That says when. A condition describes the situation learners work in."],["memory","From memory, with no tools open",0,"Unrealistic. On the job, agents have the policy open."]]},
+    d:{n:"Degree", q:"How well?", opts:[["nine","with the correct amount and no escalation, in 9 of 10 practice tickets",1,"Specific and measurable, and it ties to Marcus’s escalation goal."],["best","to the best of their ability",0,"There’s no way to measure 'best.'"],["feel","and feel confident about refunds",0,"Confidence matters, but an observer can’t see it."]]}
   };
   const opt = (k, v) => SL[k].opts.find(o => o[0] === v);
   shell(m, "On day two you write the objective that everything else will be built from. Start by spotting verbs you can observe, then build the full objective.",
     `<div class="part"><h3>Part 1 · Which verbs can you observe?</h3><div id="verbs"></div></div>
      <div class="part" id="p2" hidden><h3>Part 2 · Build the objective</h3>
-       <p class="small muted">Choose one option for each part, then check. Correct parts lock in.</p>
+       <p class="small muted">Choose one option for each part, then check your answers. Correct parts lock in.</p>
        <div class="objprev" id="prev2"></div>
        <div class="abcd">${Object.entries(SL).map(([k, s]) => `<div class="slot" id="s-${k}"><label for="sel-${k}"><span class="k-${k}">${s.n}</span> <span class="muted" style="font-weight:400">· ${s.q}</span></label>
          <select id="sel-${k}"><option value="">Choose…</option>${s.opts.map(o => `<option value="${o[0]}">${esc(o[1])}</option>`).join("")}</select><div class="fb" id="fb-${k}"></div></div>`).join("")}</div>
@@ -600,10 +600,10 @@ practice(m){
   sorter($("sort"), {id:"pf", cols:"c4", label:"Needs matched",
     bins:[{id:"aid", n:"Job aid", d:"A one-page tool used during the task"}, {id:"scen", n:"Branching scenario", d:"Practice decisions with consequences"}, {id:"sim", n:"Software simulation", d:"Click through the real tool safely"}, {id:"vid", n:"Short video demo", d:"See an expert model it once"}],
     items:[
-      {id:"rules", t:"Agents need 7 refund rules but use some only once a month", ans:"aid", why:"Rarely used rules belong in a job aid, not in memory. Agents keep it open on tickets.", no:{scen:"Scenarios are for judgment calls. Remembering rarely used rules is a reference problem.", sim:"This isn’t about clicking through the tool.", vid:"A video won’t help in the middle of a ticket."}},
-      {id:"angry", t:"Agents freeze when an upset customer threatens to cancel", ans:"scen", why:"Handling emotion means making choices under pressure. Branching scenarios let agents practice safely.", no:{aid:"A checklist won’t help much in a tense moment. They need practice making the call.", sim:"The tool isn’t the hard part here. The conversation is.", vid:"Watching once doesn’t build the skill. They need to practice."}},
+      {id:"rules", t:"Agents need 7 refund rules but use some only once a month", ans:"aid", why:"Rarely used rules belong in a job aid, not in memory. Agents keep it open on tickets.", no:{scen:"Scenarios are for judgment calls. Remembering rarely used rules is a reference problem.", sim:"This task tests a decision. Clicking through the tool comes later.", vid:"A video won’t help in the middle of a ticket."}},
+      {id:"angry", t:"Agents freeze when an upset customer threatens to cancel", ans:"scen", why:"Handling emotion means making choices under pressure. Branching scenarios let agents practice safely.", no:{aid:"A checklist won’t help much in a tense moment. They need practice making the call.", sim:"The hard part here is the conversation.", vid:"Watching once doesn’t build the skill. They need to practice the conversation."}},
       {id:"tool", t:"Agents must click through 6 screens in the billing tool", ans:"sim", why:"A sandbox simulation lets them practice the exact clicks without touching real accounts.", no:{aid:"A job aid can back it up, but they still need hands-on practice in the tool.", scen:"There’s no judgment call here. It’s a procedure in the tool.", vid:"Watching clicks isn’t the same as doing them."}},
-      {id:"model", t:"Agents have never heard what a great refund call sounds like", ans:"vid", why:"A short model lets them see the target before they practice it.", no:{aid:"Tone and pacing are hard to put on a page.", scen:"Show the model first. Scenarios come after they know what good looks like.", sim:"This is about the conversation, not the tool."}}
+      {id:"model", t:"Agents have never heard what a great refund call sounds like", ans:"vid", why:"A short model lets them see the target before they practice it.", no:{aid:"Tone and pacing are hard to put on a page.", scen:"Show the model first. Scenarios come after they know what good looks like.", sim:"This task tests the conversation."}}
     ],
     done: out => { st.brief.formats = "Job aid: refund rules and account-age check. Software simulation: billing tool steps. Short video: a model refund call. Branching scenario: upset customer threatening to cancel."; save(); renderSide(); note(out, "Four needs, four formats. Only two of them need e-learning at all. The job aid alone could ship this week."); finish(); }});
 },
@@ -708,7 +708,7 @@ function renderIntro(){
   $("stage").innerHTML = `
     <p class="eyebrow">Welcome to Kitebird’s learning team</p>
     <h2>Your first week starts with a real request</h2>
-    <p class="lead">Instead of reading a handbook, you’ll work one real assignment from start to finish: a stakeholder asks for “a training,” and by Friday you’ll have a design brief ready for sign-off. About 25 minutes in total. Stop and come back anytime.</p>
+    <p class="lead">You’ll learn the job by working one real assignment from start to finish: a stakeholder asks for “a training,” and by Friday you’ll have a design brief ready for sign-off. About 25 minutes in total. Stop and come back anytime.</p>
     ${buddy("Hi, I’m Dana. I’ll check in with tips along the way. Tell me a bit about your background so I can make them useful.")}
     <div class="part"><h3>What best describes you?</h3><div class="bgs">${Object.entries(BG).map(([k, b]) => `<button class="bgb" data-bg="${k}" aria-pressed="${bg === k}"><b>${b.n}</b><span>${b.d}</span></button>`).join("")}</div></div>
     <div class="part"><h3>Your week</h3><div class="week">

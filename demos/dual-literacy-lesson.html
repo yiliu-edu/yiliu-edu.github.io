@@ -239,7 +239,7 @@ function s2(){
     <div class="kid">
       <div class="cmp"><div><small>ENGLISH</small><span class="who">The duck</span> <span class="act">swims</span>.</div><div class="zh"><small style="font-family:var(--sans)">中文</small><span class="who">鸭子</span><span class="act">游泳</span>。</div></div>
       <div style="padding:0 18px 6px;font-size:15px">Green = who. Orange = what they do. Same order in both languages.</div>
-      <div style="padding:10px 18px 18px"><b>Which word changes in English but not in Chinese?</b>
+      <div style="padding:10px 18px 18px"><b>Which word changes in English and stays the same in Chinese?</b>
         <div class="opts" style="margin-top:8px">${O.map((o, j) => `<button class="opt ${s.cmp === j ? (j === 0 ? "ok" : "bad") : ""}" data-c="${j}" ${s.cmp === 0 ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
         ${s.cmp != null ? `<div class="note ${s.cmp === 0 ? "" : "warn"}" style="margin-top:10px">${s.cmp === 0 ? "Right. “The duck swims” but “The ducks swim.” In Chinese, 鸭子游泳 works for one duck or many. This is CCSS L.1.1c, taught through a contrast students can hear." : "Look at the orange word. Would it change if there were two ducks?"}</div>` : ""}</div>
     </div>

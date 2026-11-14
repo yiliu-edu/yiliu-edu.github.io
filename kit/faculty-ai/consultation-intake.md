@@ -1,6 +1,6 @@
 # Faculty consultation intake: AI in teaching
 
-Used before a one-on-one consultation so the meeting starts with the course, not the tool.
+Used before a one-on-one consultation so the meeting starts with the course and its goals.
 
 1. Course name, level and enrollment:
 2. What should students be able to do by the end of the course?
