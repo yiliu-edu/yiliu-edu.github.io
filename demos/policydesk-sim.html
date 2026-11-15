@@ -66,6 +66,9 @@
 @keyframes ring{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
 .cap{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);max-width:760px;background:rgba(17,24,39,.86);color:#fff;font:600 16px/1.4 var(--sans);padding:9px 18px;border-radius:10px;z-index:9;text-align:center}
 .cap:empty{display:none}
+.wtap{position:absolute;inset:0;z-index:8;cursor:pointer;background:transparent}
+.wtap.on{background:rgba(17,24,39,.18)}
+.wtap.on::after{content:"";position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:rgba(28,69,135,.88) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23fff'/%3E%3C/svg%3E") center/44px no-repeat;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .wctl{position:absolute;right:18px;bottom:20px;z-index:10;display:flex;gap:8px}
 .wctl button{font:700 13px var(--sans);color:#1C4587;background:#fff;border:2px solid #1C4587;border-radius:99px;padding:7px 14px;cursor:pointer;display:flex;align-items:center;gap:6px}
 .wctl button:hover,.wctl button:focus-visible{background:#EAF1FB;outline:none}
@@ -308,12 +311,12 @@ const slides = [
     <div class="obj hide" id="tip" style="left:40px;top:400px;width:880px;font:600 15px var(--sans);color:var(--navy);background:#fff;border-radius:12px;padding:12px 16px">Already confident? You can move straight to Test it once you’ve watched the demo.</div>`,
   run(){ SL.timeline(2400, [...[0,1,2].map(i => [200 + i * 400, () => SL.show(document.querySelector(".m" + i), "in-up")]), [1600, () => { SL.show($("tip"), "in-up"); SL.unlockNext(); }]]); }},
  {nm:"Watch it", gate:true,
-  html:() => `${BG}${head("", "WATCH", "Watch how an account manager submits a change.", "")}${CURSOR}<div class="cap" id="cap" style="max-width:560px;left:40%"></div><div class="wctl"><button id="wp" aria-pressed="false">❚❚ Pause</button><button id="wr">↻ Replay</button></div>`,
+  html:() => `${BG}${head("", "WATCH", "Watch how an account manager submits a change.", "")}${CURSOR}<div class="cap" id="cap" style="max-width:560px;left:40%"></div><div class="wtap" id="wt" title="Click to pause or play"></div><div class="wctl"><button id="wp" aria-pressed="false">❚❚ Pause</button><button id="wr">↻ Replay</button></div>`,
   run(){
     const start = () => { stopSim(); stopSim = runSim("watch", TRY, () => { $("cap").textContent = "Request submitted. Next, you’ll try it yourself."; S.watched = true; save(); SL.unlockNext(); }); setP(false); };
-    const setP = v => { const b = $("wp"); b.classList.toggle("on", v); b.setAttribute("aria-pressed", v); b.textContent = v ? "▶ Play" : "❚❚ Pause"; stopSim.pause && stopSim.pause(v); };
+    const setP = v => { const b = $("wp"); b.classList.toggle("on", v); b.setAttribute("aria-pressed", v); b.textContent = v ? "▶ Play" : "❚❚ Pause"; $("wt").classList.toggle("on", v); stopSim.pause && stopSim.pause(v); };
     $("wp").onclick = () => setP($("wp").getAttribute("aria-pressed") !== "true");
-    $("wr").onclick = start;
+    $("wr").onclick = start; $("wt").onclick = () => $("wp").click();
     start(); if (S.watched) SL.unlockNext(); }},
  {nm:"Try it", gate:true,
   html:() => `${BG}${head("try", "TRY", "", "")}`,
