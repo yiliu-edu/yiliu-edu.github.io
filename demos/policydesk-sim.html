@@ -61,11 +61,15 @@
 .callout{position:absolute;z-index:8;pointer-events:none;max-width:300px;background:#FFF8E7;border:2px solid #E0B23A;border-radius:12px;padding:10px 13px;font:600 14px/1.4 var(--sans);color:#3A3226;box-shadow:0 8px 20px rgba(0,0,0,.15);animation:up .3s ease both}
 .callout.bad{background:#FCE6DB;border-color:#B4461A;color:#5A1E06}
 .callout.good{background:#E3F3EA;border-color:#1E7A55;color:#0E4430}
-.cursor{position:absolute;z-index:9;width:26px;height:26px;pointer-events:none;transition:left .9s cubic-bezier(.4,.1,.2,1),top .9s cubic-bezier(.4,.1,.2,1)}
+.cursor{position:absolute;z-index:9;width:26px;height:26px;pointer-events:none;transition:left 1.4s cubic-bezier(.4,.1,.2,1),top 1.4s cubic-bezier(.4,.1,.2,1)}
 .cursor.clk::after{content:"";position:absolute;left:-10px;top:-10px;width:26px;height:26px;border-radius:50%;border:3px solid #F28A26;animation:ring .5s ease-out both}
 @keyframes ring{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
 .cap{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);max-width:760px;background:rgba(17,24,39,.86);color:#fff;font:600 16px/1.4 var(--sans);padding:9px 18px;border-radius:10px;z-index:9;text-align:center}
 .cap:empty{display:none}
+.wctl{position:absolute;right:18px;bottom:20px;z-index:10;display:flex;gap:8px}
+.wctl button{font:700 13px var(--sans);color:#1C4587;background:#fff;border:2px solid #1C4587;border-radius:99px;padding:7px 14px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.wctl button:hover,.wctl button:focus-visible{background:#EAF1FB;outline:none}
+.wctl button.on{background:#1C4587;color:#fff}
 .ticket{position:absolute;right:28px;top:70px;width:270px;z-index:7;background:#fff;border:2px solid var(--orange);border-radius:12px;padding:12px 14px;font:13.5px/1.45 var(--sans);box-shadow:0 8px 24px rgba(0,0,0,.14)}
 .ticket b{display:block;font:700 11.5px var(--sans);letter-spacing:.08em;color:var(--orange);margin-bottom:4px}
 .flowrow{display:flex;align-items:center;gap:10px}
@@ -197,8 +201,16 @@ function dateOk(sc, v){ return sc.dateOk.includes(v.trim()); }
 
 /* ---------- step runner: mode = watch | try | test ---------- */
 function runSim(mode, sc, done){
-  let k = 0, typed = {}, tries = 0, stopped = false, timers = [];
-  const later = (ms, f) => timers.push(setTimeout(() => { if (!stopped) f(); }, RM ? Math.min(ms, 50) : ms));
+  let k = 0, typed = {}, tries = 0, stopped = false, paused = false, tasks = [], last = performance.now();
+  const SLOW = mode === "watch" ? 1.8 : 1;
+  const later = (ms, f) => tasks.push({left: RM ? Math.min(ms, 50) : ms * SLOW, f});
+  const clock = setInterval(() => {
+    const now = performance.now(), dt = now - last; last = now;
+    if (stopped || paused) return;
+    const due = [];
+    tasks = tasks.filter(t => (t.left -= dt) > 0 || (due.push(t), false));
+    due.forEach(t => { if (!stopped) t.f(); });
+  }, 30);
   function draw(){
     const step = STEPS[k], scr = k < STEPS.length ? step.scr : "done";
     const old = $("app"); if (old) old.remove();
@@ -258,14 +270,16 @@ function runSim(mode, sc, done){
     later(300, () => { cur.style.left = (p.x + Math.min(p.w * .5, 60)) + "px"; cur.style.top = (p.y + p.h * .55) + "px"; });
     if (step.kind === "type") {
       const text = step.t === "search" ? sc.search : sc.date;
-      later(1300, () => { let i = 0; const typeOne = () => { if (stopped) return; el.value = text.slice(0, ++i); typed[step.t] = el.value; if (i < text.length) setTimeout(typeOne, RM ? 0 : 90); else later(500, () => { cur.classList.add("clk"); later(450, () => { cur.classList.remove("clk"); k++; draw(); }); }); }; typeOne(); });
+      later(1300, () => { let i = 0; const typeOne = () => { if (stopped) return; el.value = text.slice(0, ++i); typed[step.t] = el.value; if (i < text.length) later(RM ? 0 : 90, typeOne); else later(500, () => { cur.classList.add("clk"); later(450, () => { cur.classList.remove("clk"); k++; draw(); }); }); }; typeOne(); });
     } else {
       later(1500, () => { el.classList.add("hl"); cur.classList.add("clk"); });
       later(2300, () => { cur.classList.remove("clk"); k++; draw(); });
     }
   }
   draw();
-  return () => { stopped = true; timers.forEach(clearTimeout); };
+  const stop = () => { stopped = true; clearInterval(clock); tasks = []; };
+  stop.pause = v => { paused = v; };
+  return stop;
 }
 let stopSim = () => {};
 
@@ -279,7 +293,7 @@ const slides = [
       <div class="hide" id="s" style="font:18px/1.5 var(--serif);color:#E6EEF9;margin-top:14px">Watch it, try it with hints, then test yourself on a real client request. About 10 minutes.</div>
       <button class="big hide" id="go" style="margin-top:26px">Start ›</button></div>
     <div class="obj hide" id="ap" style="left:590px;top:150px"><div style="transform:scale(.38);transform-origin:0 0;width:920px">${app(TRY, "review").replace('class="app"', 'class="app" style="position:relative;left:0;top:0"')}</div></div>`,
-  run(){ SL.timeline(1800, [[100, () => SL.show($("k"))], [300, () => SL.show($("t"), "in-left")], [700, () => SL.show($("s"), "in-up")], [900, () => SL.show($("ap"), "in-right")], [1300, () => { SL.show($("go"), "pulse"); $("go").focus({preventScroll:true}); }]]); $("go").onclick = () => SL.go(1); }},
+  run(){ SL.timeline(1800, [[100, () => SL.show($("k"))], [300, () => SL.show($("t"), "in-left")], [700, () => SL.show($("s"), "in-up")], [900, () => SL.show($("ap"), "in-right")], [1300, () => { if (!$("go")) return; SL.show($("go"), "pulse"); $("go").focus({preventScroll:true}); }]]); $("go").onclick = () => SL.go(1); }},
  {nm:"What changes on go-live",
   html:() => `${BG}<div class="chip">What changes</div><div class="obj" style="left:28px;top:52px;font:800 25px var(--serif);color:var(--navy)">One request replaces four handoffs</div>
     <div class="obj" style="left:40px;top:120px"><div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--warn);margin-bottom:8px">BEFORE · EMAIL AND SPREADSHEET</div>
@@ -294,8 +308,13 @@ const slides = [
     <div class="obj hide" id="tip" style="left:40px;top:400px;width:880px;font:600 15px var(--sans);color:var(--navy);background:#fff;border-radius:12px;padding:12px 16px">Already confident? You can move straight to Test it once you’ve watched the demo.</div>`,
   run(){ SL.timeline(2400, [...[0,1,2].map(i => [200 + i * 400, () => SL.show(document.querySelector(".m" + i), "in-up")]), [1600, () => { SL.show($("tip"), "in-up"); SL.unlockNext(); }]]); }},
  {nm:"Watch it", gate:true,
-  html:() => `${BG}${head("", "WATCH", "Watch how an account manager submits a change.", "")}${CURSOR}<div class="cap" id="cap"></div>`,
-  run(){ stopSim(); stopSim = runSim("watch", TRY, () => { $("cap").textContent = "Request submitted. Next, you’ll try it yourself."; S.watched = true; save(); SL.unlockNext(); }); if (S.watched) SL.unlockNext(); }},
+  html:() => `${BG}${head("", "WATCH", "Watch how an account manager submits a change.", "")}${CURSOR}<div class="cap" id="cap" style="max-width:560px;left:40%"></div><div class="wctl"><button id="wp" aria-pressed="false">❚❚ Pause</button><button id="wr">↻ Replay</button></div>`,
+  run(){
+    const start = () => { stopSim(); stopSim = runSim("watch", TRY, () => { $("cap").textContent = "Request submitted. Next, you’ll try it yourself."; S.watched = true; save(); SL.unlockNext(); }); setP(false); };
+    const setP = v => { const b = $("wp"); b.classList.toggle("on", v); b.setAttribute("aria-pressed", v); b.textContent = v ? "▶ Play" : "❚❚ Pause"; stopSim.pause && stopSim.pause(v); };
+    $("wp").onclick = () => setP($("wp").getAttribute("aria-pressed") !== "true");
+    $("wr").onclick = start;
+    start(); if (S.watched) SL.unlockNext(); }},
  {nm:"Try it", gate:true,
   html:() => `${BG}${head("try", "TRY", "", "")}`,
   run(){ stopSim(); stopSim = runSim("try", TRY, () => { S.tryDone = true; save(); SL.unlockNext(); }); if (S.tryDone) SL.unlockNext(); }},
