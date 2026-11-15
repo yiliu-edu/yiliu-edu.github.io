@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PolicyDesk Go-Live · Yi Liu</title>
+<meta name="description" content="Case study: PolicyDesk Go-Live, a blended system-rollout program with work samples in four modalities (WBT, vILT, ILT and job aids) for a fictional insurance brokerage. Designed and built by Yi Liu.">
+<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<meta property="og:title" content="PolicyDesk Go-Live · Yi Liu">
+<meta property="og:description" content="Case study: PolicyDesk Go-Live, a blended system-rollout program with work samples in four modalities (WBT, vILT, ILT and job aids) for a fictional insurance brokerage. Designed and built by Yi Liu.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Bowlby+One&family=Montserrat:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/site.css?v=16">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="site" href="index.html"><svg aria-hidden="true" viewBox="4 6 58 52"><g>
+  <!-- fox, emoji-style -->
+  <path d="M13.5 29 L15.6 12.6 C15.8 11.4 16.8 11 17.7 11.8 L26.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M36.5 29 L34.4 12.6 C34.2 11.4 33.2 11 32.3 11.8 L23.5 20.5 Z" fill="#F07F1F"/>
+  <path d="M16.6 24.5 L17.6 15.2 L22.8 20.3 Z" fill="#C8601A"/>
+  <path d="M33.4 24.5 L32.4 15.2 L27.2 20.3 Z" fill="#C8601A"/>
+  <path d="M25 18.2 C32.2 18.2 37 22.4 37.6 28.2 L41 33.6 C37 34.6 33.6 39.4 25 41 C16.4 39.4 13 34.6 9 33.6 L12.4 28.2 C13 22.4 17.8 18.2 25 18.2 Z" fill="#F28A26"/>
+  <path d="M9 33.6 C13.2 31.4 18.6 31.2 21.8 33 C23 35.2 23.9 36.2 25 36.2 C26.1 36.2 27 35.2 28.2 33 C31.4 31.2 36.8 31.4 41 33.6 C37 34.8 33.6 39.4 25 41 C16.4 39.4 13 34.8 9 33.6 Z" fill="#FFFFFF"/>
+  <ellipse cx="20.4" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/><ellipse cx="29.6" cy="28.3" rx="1.9" ry="2.3" fill="#1C2B44"/>
+  <circle cx="21" cy="27.5" r="0.65" fill="#FFFFFF"/><circle cx="30.2" cy="27.5" r="0.65" fill="#FFFFFF"/>
+  <path d="M23.1 35 C23.1 34.1 26.9 34.1 26.9 35 C26.9 36 25.8 37 25 37 C24.2 37 23.1 36 23.1 35 Z" fill="#1C2B44"/>
+  <!-- learning path: nodes rising to a star -->
+  <path d="M41.5 29 L46.5 22.5 L51.5 24.5 L56 16" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 2.6" fill="none"/>
+  <circle cx="41.5" cy="29" r="1.9" fill="#FFFFFF"/>
+  <circle cx="46.5" cy="22.5" r="1.9" fill="#FFFFFF"/>
+  <circle cx="51.5" cy="24.5" r="1.9" fill="#FFFFFF"/>
+  <path d="M56.5 9.6 L58 12.9 L61.5 13.3 L58.9 15.7 L59.6 19.2 L56.5 17.4 L53.4 19.2 L54.1 15.7 L51.5 13.3 L55 12.9 Z" fill="#FF9F2E"/>
+  <!-- book -->
+  <path d="M6 42 C14 39.5 23 39.5 32 43.5 C41 39.5 50 39.5 58 42 V55 C50 52.5 41 52.5 32 56.5 C23 52.5 14 52.5 6 55 Z" fill="#FFFFFF"/>
+  <path d="M32 43.5 V56.5" stroke="#3878BC" stroke-width="1.6"/>
+  <path d="M10.2 45.6 L11.7 47.1 L14.4 44" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 45.9 C20 45.3 23.5 45.5 27.5 46.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <path d="M10.2 49.6 L11.7 51.1 L14.4 48" stroke="#1C4587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16.5 49.9 C20 49.3 23.5 49.5 27.5 50.6" stroke="#9FC1E6" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <!-- tangerine sitting on the right page -->
+  <ellipse cx="46" cy="47.3" rx="6" ry="1.3" fill="#9FC1E6" opacity=".7"/>
+  <circle cx="46" cy="41.5" r="6.4" fill="#FF9F2E"/>
+  <circle cx="43.9" cy="39.4" r="1.6" fill="#FFC77A"/>
+  <path d="M46 35.3 C47.4 32.3 50.6 31.4 52.9 32.4 C51.5 35 48.7 35.9 46 35.3 Z" fill="#FFFFFF"/>
+  <path d="M46 35.5 L45.5 33.2" stroke="#1C4587" stroke-width="1.1" stroke-linecap="round"/>
+</g>
+</svg><span>Yi Liu</span></a>
+    <button class="search-btn" id="search-btn" aria-expanded="false" aria-controls="searchpanel" aria-label="Search this site"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><a href="work.html">Portfolio <span aria-hidden="true">▾</span></a><div class="panel"><a href="workplace-learning.html" aria-current="page">Workplace Learning</a><a href="educator-development.html">Educator Development</a><a href="content-systems.html">Content Systems</a></div></div>
+      <a href="approach.html">Approach</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="searchpanel" id="searchpanel" hidden>
+    <div class="wrap">
+      <label for="q" class="sr">Search this site</label>
+      <input id="q" type="search" placeholder="Search projects, skills, frameworks…" autocomplete="off">
+      <ul id="results" aria-live="polite"></ul>
+    </div>
+  </div>
+</header>
+<main>
+<div class="ptitle wrap">
+  <p style="margin:0 0 6px"><a href="workplace-learning.html" style="color:var(--blue);text-decoration:none">← Workplace Learning</a></p>
+  <h1>PolicyDesk Go-Live</h1>
+  <p class="measure">Case study: a blended training program for a policy-servicing system rollout at an insurance brokerage, with work samples in four modalities: web-based training, virtual and in-person instructor-led sessions, and job aids.</p>
+  <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn primary" href="demos/policydesk-sim.html#full">Try the simulation</a><a class="btn" href="#samples">Work samples</a><a class="btn" href="kit/policydesk/policydesk-work-sample-packet.pdf">Download the PDF packet</a></div>
+</div>
+<div class="wrap"><hr class="rule"></div>
+<section class="wrap prose" style="padding-top:0">
+  <div class="two">
+    <h2>The problem</h2>
+    <div class="prose">
+      <p class="measure">Northgate Insurance Brokers, a fictional brokerage with 140 account managers in six offices, is moving policy servicing from email, a team spreadsheet and an old policy system into a new platform, PolicyDesk. Policy changes are the task people do most often, and every slow or wrong change reaches a client.</p>
+      <p class="measure">Operations asked for “system training for everyone.” Talks with operations managers and underwriting narrowed it down: about one change request in four comes back for missing information, people pick the wrong client when names look alike, and staff worry the new system will slow them down during renewal season.</p>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Purpose</h2>
+    <div class="prose">
+      <p class="measure">The purpose of this program is twofold: first, to have 90% of account managers pass the simulation test at 80% or higher before go-live; and second, within 30 days of go-live, to cut the share of change requests returned for missing information from about 25% to under 10%, and the average time to submit a change from about 20 minutes to under 8. A ten-minute simulation, a 90-minute virtual practice session, a half-day lab for floor champions and a two-page desk card serve account managers, assistants and team leads in every office.</p>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Goal and action map</h2>
+    <div class="prose">
+      <p class="measure"><b>Goal:</b> Every policy change is submitted in PolicyDesk, complete the first time, from go-live day.</p>
+      <div class="amap">
+        <div><span class="lbl">Goal</span><p>Complete change requests in PolicyDesk</p></div>
+        <div><span class="lbl">What people must do</span><ul><li>Confirm the client by account number</li><li>Start every change from the policy</li><li>One change type per request</li><li>Attach the document underwriting needs</li><li>Fix and resubmit a returned request</li></ul></div>
+        <div><span class="lbl">Practice</span><ul><li>Simulation: watch, try, test</li><li>vILT breakout scenarios in the sandbox</li><li>ILT exceptions lab and coaching role-play</li></ul></div>
+        <div><span class="lbl">Minimum information</span><ul><li>What changes on go-live</li><li>Eight steps on a desk card</li><li>Old-to-new map</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Gilbert’s Behavior Engineering Model</h2>
+    <div class="prose">
+<p class="measure">Training covers the skill gaps; the other causes go to the rollout team.</p><div class="tablewrap"><table><thead><tr><th>#</th><th>Cell</th><th>What gets in the way</th><th>How it’s addressed</th><th>Fixed by</th></tr></thead><tbody><tr><td>1</td><td>Information</td><td>People don’t know what changes for them, or when</td><td>Before-and-after map; manager briefings two weeks out</td><td>Change plan</td></tr><tr><td>2</td><td>Resources</td><td>Old spreadsheet still open; no help at the desk</td><td>Spreadsheet read-only after go-live; desk card; floor champions</td><td>Process and job aid</td></tr><tr><td>3</td><td>Incentives</td><td>Go-live lands in renewal season</td><td>Go-live moved to a quieter month; managers protect practice time</td><td>Leadership</td></tr><tr><td>4</td><td>Knowledge and skills</td><td>New screens; exceptions such as past dates and two changes at once</td><td>Simulation, vILT practice, ILT lab</td><td>Training</td></tr><tr><td>5</td><td>Capacity</td><td>Experienced staff learn at different speeds</td><td>Test-out after watching; sandbox open for extra practice</td><td>Design</td></tr><tr><td>6</td><td>Motives</td><td>Fear of slowing down with clients</td><td>Practice on real-looking client emails; champions nearby in week one</td><td>Design and change plan</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Objectives and evidence</h2>
+    <div class="prose">
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Objective (audience, behavior, condition, degree)</th><th>Evidence</th></tr></thead><tbody><tr><td>1</td><td>Given a client email, an account manager will submit a complete policy change in PolicyDesk, scoring at least 80% of steps correct with no hints.</td><td>WBT: Test it round, reported to the LMS</td></tr><tr><td>2</td><td>Given three requests with built-in problems, an account manager will spot the issue before submitting in at least 2 of 3.</td><td>vILT: breakout scenarios A to C, checker notes</td></tr><tr><td>3</td><td>Given a colleague stuck on a request, a floor champion will guide them to submit it without touching their keyboard.</td><td>ILT: coaching station, observer checklist</td></tr><tr><td>4</td><td>Given an issue, a floor champion will route it to the right place: fix it, IT help desk or underwriting, in at least 18 of 20 cards.</td><td>ILT: triage card sort and skills check</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Choosing the modality</h2>
+    <div class="prose">
+<p class="measure">Each part of the program uses the format that fits the job it has to do and the people it has to reach.</p><div class="tablewrap"><table><thead><tr><th>When</th><th>Modality</th><th>Who</th><th>Why this format</th></tr></thead><tbody><tr><td>3 weeks before go-live</td><td>WBT, 10 minutes</td><td>All 140 account managers and assistants</td><td>The eight steps are the same for everyone, so self-paced practice scales and sets a shared baseline</td></tr><tr><td>2 weeks before</td><td>vILT, 90 minutes</td><td>Remote offices, up to 18 per session</td><td>Exceptions need discussion and live practice; a virtual session reaches six offices with no travel</td></tr><tr><td>1 week before</td><td>ILT, half day</td><td>12 floor champions</td><td>Coaching and triage need role-play and observation in the room</td></tr><tr><td>Go-live and after</td><td>Job aid, 2 pages</td><td>Everyone, at the desk</td><td>Support at the moment of need, when the real request arrives</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Design decisions</h2>
+    <div class="decisions">
+      <div class="decision"><h3>Watch, try, test</h3><p>The simulation demonstrates the task once, then lets learners practice with hints, then checks them on a new client with no hints.</p></div>
+      <div class="decision"><h3>Real-looking requests</h3><p>Every activity starts from a client email, so learners practice reading the request as well as clicking through screens.</p></div>
+      <div class="decision"><h3>Exceptions live</h3><p>The vILT session skips the basics the simulation already covered and spends its time on the cases that send requests back.</p></div>
+      <div class="decision"><h3>Roles in breakout rooms</h3><p>Driver, navigator and checker keep all three people working and make the checker habit visible.</p></div>
+      <div class="decision"><h3>Champions coach with questions</h3><p>The ILT lab trains champions to ask before they show, so colleagues finish each request themselves.</p></div>
+      <div class="decision"><h3>One card, two sides</h3><p>The job aid shows the eight steps with screenshots on one side and where old tasks moved on the other.</p></div>
+    </div>
+  </div>
+</section>
+<section class="wrap" id="demo" aria-labelledby="demo-h" style="padding-top:8px">
+  <div class="sechead">
+    <h2 id="demo-h">WBT: try the simulation</h2>
+    <p class="muted measure">You play an account manager submitting a policy change. Watch the demo, try it with hints, then handle a new client email with no hints. Built in HTML on the Storyline 360 model and published as a SCORM 2004 package.</p>
+  </div>
+  <div class="demo">
+    <div class="bar2"><span>PolicyDesk Go-Live · software simulation</span><a href="demos/policydesk-sim.html#full">Open full screen ↗</a></div>
+    <iframe src="demos/policydesk-sim.html" title="PolicyDesk Go-Live · software simulation" style="height:660px"></iframe>
+  </div>
+</section>
+<section class="wrap prose" id="samples" aria-labelledby="samples-h">
+  <div class="two">
+    <h2 id="samples-h">Work samples: WBT, vILT, ILT and job aid</h2>
+    <div class="prose">
+      <p class="measure">The full set is also in one PDF packet: a project overview, then each modality behind its own divider.</p>
+      <div class="files">
+<a class="file" href="kit/policydesk/policydesk-work-sample-packet.pdf"><b>policydesk-work-sample-packet.pdf</b><span>All four modalities in one packet, 28 pages</span></a>
+<a class="file" href="kit/lms/policydesk-scorm2004.zip"><b>WBT · policydesk-scorm2004.zip</b><span>SCORM 2004 4th Edition package</span></a>
+<a class="file" href="kit/policydesk/vilt-facilitator-guide.pdf"><b>vILT · vilt-facilitator-guide.pdf</b><span>90-minute Teams session: roles, timing, scripts, polls, breakouts</span></a>
+<a class="file" href="kit/policydesk/vilt-slides.pdf"><b>vILT · vilt-slides.pdf</b><span>10-slide deck for the virtual session</span></a>
+<a class="file" href="kit/policydesk/vilt-participant-workbook.pdf"><b>vILT · vilt-participant-workbook.pdf</b><span>Breakout scenarios and a returned-request exercise</span></a>
+<a class="file" href="kit/policydesk/ilt-leader-guide.pdf"><b>ILT · ilt-leader-guide.pdf</b><span>Half-day floor champion lab: stations, skills check, evaluation</span></a>
+<a class="file" href="kit/policydesk/policydesk-quick-reference.pdf"><b>JA · policydesk-quick-reference.pdf</b><span>Eight steps with screenshots, and the old-to-new map</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>LMS-ready: SCORM 2004</h2>
+    <div class="prose">
+<div class="tablewrap"><table><thead><tr><th>What the LMS receives</th><th>Details</th></tr></thead><tbody><tr><td>Completion</td><td>Completed when the learner reaches the results slide</td></tr><tr><td>Success</td><td>Passed at 80% or higher, otherwise failed</td></tr><tr><td>Score</td><td>Raw score out of 8 and scaled score, one point per test step</td></tr><tr><td>Interactions</td><td>One record per test step, with the learner’s response and result</td></tr><tr><td>Resume</td><td>Bookmark, so learners return to the slide where they stopped</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>How I use AI to build it</h2>
+    <div class="prose">
+<p class="measure">AI sped up drafting; operations and underwriting would review every screen and script before use.</p><div class="tablewrap"><table><thead><tr><th>#</th><th>Step</th><th>AI does</th><th>A person checks the output</th></tr></thead><tbody><tr><td>1</td><td>Client emails and scenarios</td><td>Drafted realistic change requests and built-in problems</td><td>Checked each problem against the top return reasons from underwriting</td></tr><tr><td>2</td><td>Facilitator scripts</td><td>Drafted say-lines, chat prompts and timing</td><td>Rehearsed aloud and cut to fit 90 minutes</td></tr><tr><td>3</td><td>Issue cards</td><td>Drafted 20 triage cards</td><td>Sorted with the IT help desk and underwriting to agree the answer key</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Evaluation plan (Kirkpatrick)</h2>
+    <div class="prose">
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Level</th><th>Measure</th><th>How and when</th></tr></thead><tbody><tr><td>1</td><td>Reaction</td><td>Confidence before and after; usefulness of each session</td><td>vILT exit survey; ILT evaluation form</td></tr><tr><td>2</td><td>Learning</td><td>Simulation test score; knowledge check poll; champion skills check</td><td>LMS data; poll results; observed task</td></tr><tr><td>3</td><td>Behavior</td><td>Share of changes submitted in PolicyDesk; questions logged by champions</td><td>PolicyDesk report; champion tracker, days 1 to 30</td></tr><tr><td>4</td><td>Results</td><td>Returned-request rate; time to submit a change</td><td>PolicyDesk report at 30 and 90 days</td></tr></tbody></table></div>
+      <p class="muted" style="font-size:14px">Targets and measures describe a plan for a real rollout. This is a concept project built for a fictional organization, so it has no outcome data yet.</p>
+    </div>
+  </div>
+
+  <div class="two">
+    <h2>Framework check</h2>
+    <div class="prose">
+<div class="tablewrap"><table><thead><tr><th>Framework</th><th>How it shows up</th><th>What I’d test next</th></tr></thead><tbody><tr><td>Gilbert’s BEM</td><td>Rollout fixes for information, resources and incentives sit beside the training</td><td>Whether the read-only spreadsheet date holds</td></tr><tr><td>Action Mapping</td><td>Every activity is a change request; system tours are cut</td><td>Whether three exceptions cover most returns</td></tr><tr><td>Backward design and ABCD</td><td>Each objective has evidence in a named activity</td><td>Whether 80% is the right bar for go-live</td></tr><tr><td>Knowles</td><td>Test-out after watching; real-looking client emails</td><td>A shorter path for team leads</td></tr><tr><td>Change management</td><td>Before-and-after map, manager briefings, floor champions</td><td>Whether champions have time during go-live week</td></tr><tr><td>Kirkpatrick</td><td>Levels 1–4 from LMS, polls and PolicyDesk reports</td><td>Attribution: the process change itself also cuts returns</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="nextcase">
+    <a class="btn" href="workplace-learning.html">← Workplace Learning</a>
+    <a class="btn primary" href="ads-seller-onboarding-case-study.html">Next: Ads Seller Onboarding</a>
+  </div>
+</section>
+  <div class="collab">
+    <h2>Let’s Collaborate!</h2>
+    <div class="icons"><a class="icon" href="https://www.linkedin.com/in/louisely1003/" target="_blank" rel="noopener" aria-label="Yi Liu on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="9.5" width="3.2" height="10" fill="#fff"/><circle cx="6.1" cy="6.2" r="1.9" fill="#fff"/><path d="M10 9.5h3v1.5c.6-1 1.8-1.8 3.4-1.8 2.6 0 3.6 1.6 3.6 4.4v5.9h-3.2v-5.3c0-1.4-.4-2.3-1.6-2.3-1.3 0-2 .9-2 2.4v5.2H10z" fill="#fff"/></svg></a><a class="icon" href="mailto:eloisely1003@gmail.com" aria-label="Email Yi Liu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+    <p class="muted" style="font-size:14px">eloisely1003@gmail.com</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Yi Liu. Northgate Insurance Brokers and PolicyDesk are fictional, created for this portfolio.</span><span><a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){var b=document.getElementById("menu-btn"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});})();
+</script>
+<script src="js/search.js?v=29" defer></script>
+</body>
+</html>

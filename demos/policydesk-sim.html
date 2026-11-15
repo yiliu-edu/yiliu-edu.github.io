@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PolicyDesk Go-Live · Software Simulation (SCORM course)</title>
+<meta name="author" content="Yi Liu">
+<meta name="description" content="A watch-try-test software simulation that teaches account managers to submit a policy change in a new system. Built on the Storyline 360 model and published as SCORM 2004. Designed and developed by Yi Liu, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;800&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="sl-player.css?v=1">
+<style>
+.ins{position:absolute;left:20px;top:12px;right:20px;height:44px;display:flex;align-items:center;gap:12px}
+.ins .md{flex:none;font:700 11.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#fff;border-radius:99px;padding:5px 12px;background:var(--navy)}
+.ins .md.try{background:var(--bar)}.ins .md.test{background:var(--orange)}
+.ins .tx{font:600 16px/1.3 var(--sans);color:var(--ink)}
+.ins .st{margin-left:auto;font:700 12px var(--sans);color:var(--muted);white-space:nowrap}
+/* simulated application */
+.app{position:absolute;left:20px;top:62px;width:920px;height:462px;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(28,69,135,.18);font-family:Arial,Helvetica,sans-serif;color:#1F2933}
+.app .tb{height:34px;background:#14365F;color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:13px}
+.app .tb .lg{font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:7px}
+.app .tb .lg i{width:16px;height:16px;border-radius:4px;background:#F28A26;display:inline-block}
+.app .tb .us{margin-left:auto;opacity:.85}
+.app .bd{display:grid;grid-template-columns:150px 1fr;height:428px}
+.app .nv{background:#F1F4F8;border-right:1px solid #DCE2EA;padding:10px 0;font-size:13px}
+.app .nv div{padding:8px 16px;color:#43505E}
+.app .nv div.on{background:#E2EAF5;color:#14365F;font-weight:700;box-shadow:inset 3px 0 #2F62B5}
+.app .mn{padding:16px 20px;overflow:hidden;position:relative}
+.app h3{margin:0 0 4px;font-size:18px;color:#14365F}
+.app .sub{font-size:12.5px;color:#66727F;margin-bottom:12px}
+.app .srch{display:flex;gap:8px;margin:6px 0 16px}
+.app input{font:14px Arial,sans-serif;border:1.5px solid #B9C4D0;border-radius:6px;padding:8px 10px;width:340px;outline:none}
+.app input:focus{border-color:#2F62B5;box-shadow:0 0 0 3px rgba(47,98,181,.18)}
+.app .b{font:700 13px Arial,sans-serif;border:1.5px solid #2F62B5;background:#fff;color:#2F62B5;border-radius:6px;padding:8px 14px;cursor:pointer}
+.app .b.p{background:#2F62B5;color:#fff}
+.app .b.g{border-color:#B9C4D0;color:#43505E}
+.app table{border-collapse:collapse;width:100%;font-size:13px}
+.app th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:#66727F;border-bottom:1.5px solid #DCE2EA;padding:7px 8px}
+.app td{padding:9px 8px;border-bottom:1px solid #EDF0F4}
+.app tr.rw{cursor:pointer}
+.app tr.rw:hover td{background:#F4F8FD}
+.app .card{border:1px solid #DCE2EA;border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.app .kv{display:grid;grid-template-columns:130px 1fr;gap:5px 10px;font-size:13px}
+.app .kv span:nth-child(odd){color:#66727F}
+.app .acts{display:flex;gap:8px;margin-top:6px}
+.app .opt{display:block;width:100%;text-align:left;font:14px Arial,sans-serif;border:1.5px solid #DCE2EA;background:#fff;border-radius:6px;padding:9px 12px;margin-bottom:6px;cursor:pointer;color:#1F2933}
+.app .opt.sel{border-color:#2F62B5;background:#E2EAF5;font-weight:700}
+.app .file{display:flex;align-items:center;gap:10px;border:1.5px solid #DCE2EA;border-radius:6px;padding:9px 12px;margin-bottom:6px;cursor:pointer;font-size:13.5px}
+.app .file i{width:22px;height:26px;border-radius:3px;background:#B4461A;flex:none}
+.app .ok{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:40px;text-align:center}
+.app .ok .ck{width:64px;height:64px;border-radius:50%;background:#1E7A55;display:grid;place-items:center}
+.app label.l{display:block;font-size:12px;font-weight:700;color:#43505E;margin:8px 0 4px}
+.app .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;background:#E3F3EA;color:#1E7A55}
+.app .tag.o{background:#FFF3D6;color:#8A5A00}
+/* hotspot states */
+.hl{outline:3px solid #F28A26!important;outline-offset:2px;border-radius:6px;animation:hlp 1.2s ease-in-out infinite}
+@keyframes hlp{50%{outline-color:rgba(242,138,38,.35)}}
+.miss{outline:3px solid #B4461A!important;outline-offset:2px}
+.callout{position:absolute;z-index:8;pointer-events:none;max-width:300px;background:#FFF8E7;border:2px solid #E0B23A;border-radius:12px;padding:10px 13px;font:600 14px/1.4 var(--sans);color:#3A3226;box-shadow:0 8px 20px rgba(0,0,0,.15);animation:up .3s ease both}
+.callout.bad{background:#FCE6DB;border-color:#B4461A;color:#5A1E06}
+.callout.good{background:#E3F3EA;border-color:#1E7A55;color:#0E4430}
+.cursor{position:absolute;z-index:9;width:26px;height:26px;pointer-events:none;transition:left .9s cubic-bezier(.4,.1,.2,1),top .9s cubic-bezier(.4,.1,.2,1)}
+.cursor.clk::after{content:"";position:absolute;left:-10px;top:-10px;width:26px;height:26px;border-radius:50%;border:3px solid #F28A26;animation:ring .5s ease-out both}
+@keyframes ring{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
+.cap{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);max-width:760px;background:rgba(17,24,39,.86);color:#fff;font:600 16px/1.4 var(--sans);padding:9px 18px;border-radius:10px;z-index:9;text-align:center}
+.cap:empty{display:none}
+.ticket{position:absolute;right:28px;top:70px;width:270px;z-index:7;background:#fff;border:2px solid var(--orange);border-radius:12px;padding:12px 14px;font:13.5px/1.45 var(--sans);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.ticket b{display:block;font:700 11.5px var(--sans);letter-spacing:.08em;color:var(--orange);margin-bottom:4px}
+.flowrow{display:flex;align-items:center;gap:10px}
+.fbox{border-radius:12px;padding:12px 14px;font:600 14px/1.35 var(--sans);background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.07);width:180px}
+.arrow{font:700 22px var(--sans);color:var(--muted)}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dots span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:800 14px var(--sans);color:#fff;background:var(--line)}
+.dots .ok{background:var(--good)}.dots .no{background:var(--orange)}
+.modecard{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 18px rgba(28,69,135,.12);width:270px}
+.modecard b{display:block;font:800 20px var(--serif);color:var(--navy);margin:6px 0 4px}
+.modecard span{font:14px/1.45 var(--sans);color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="pf-back" hidden style="position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:6px;font-family:Bitter,Georgia,serif;font-size:14px;font-weight:700">
+<a href="../policydesk-go-live-case-study.html" style="background:#3878BC;color:#FFFFFF;text-decoration:none;border-radius:99px;padding:9px 16px;box-shadow:0 6px 18px rgba(28,69,135,.3)">← Back to case study</a>
+<a href="../index.html" style="background:#FFFFFF;color:#1C4587;text-decoration:none;border-radius:99px;padding:9px 16px;border:1.5px solid #1C4587;box-shadow:0 6px 18px rgba(28,69,135,.15)">Portfolio home</a></div>
+<script>(function(){var b=document.getElementById("pf-back");function f(){if(location.hash==="#full"){b.hidden=false;b.style.display="flex"}else{b.hidden=true;b.style.display="none"}}f();addEventListener("hashchange",f)})();</script>
+<div class="player" id="player">
+  <div class="ptop">
+    <button class="tbtn" id="mtog" aria-expanded="true" aria-controls="menu">Menu</button>
+    <h1>PolicyDesk Go-Live · Submit a Policy Change</h1>
+    <span id="lms" style="font:600 11.5px var(--sans);opacity:.85"></span>
+    <button class="tbtn" id="rtog" aria-expanded="false">Resources</button>
+  </div>
+  <nav class="menu" id="menu" aria-label="Slides"><div class="mh">Course</div><div id="mlist"></div></nav>
+  <div class="stagewrap" id="sw"><div id="stage" role="region" aria-label="Course slide" aria-live="polite"></div>
+    <div class="res" id="res" hidden><b style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Resources</b>
+      <a href="../kit/policydesk/policydesk-quick-reference.pdf" target="_blank" rel="noopener">Quick reference card (PDF)</a>
+      <a href="../kit/policydesk/policydesk-work-sample-packet.pdf" target="_blank" rel="noopener">Work sample packet (PDF)</a>
+      <a href="../kit/lms/policydesk-scorm2004.zip">SCORM 2004 package (.zip)</a></div>
+  </div>
+  <div class="pbot">
+    <button class="cbtn icon" id="replay" aria-label="Replay slide" title="Replay slide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v5h5"/></svg></button>
+    <div class="seek" aria-hidden="true"><i id="seek"></i></div>
+    <span id="cnt" style="font:600 12px var(--sans);color:var(--muted);min-width:46px;text-align:right"></span>
+    <button class="cbtn" id="prev">‹ PREV</button>
+    <button class="cbtn solid" id="next">NEXT ›</button>
+  </div>
+</div>
+<p class="foot">A watch-try-test software simulation built in HTML on the same model as an Articulate Storyline 360 project and published as a SCORM 2004 package that reports completion, score and each test step to an LMS. Northgate Insurance Brokers, PolicyDesk and every client shown are fictional. Designed and developed by Yi Liu, 2026.</p>
+<span class="sr" id="say" aria-live="assertive"></span>
+<script src="sl-scorm.js?v=1"></script>
+<script src="sl-player.js?v=1"></script>
+<script>
+/* ---------- scenarios ---------- */
+const TRY = {
+  client:"Riverside Dental Group", acct:"RDG-1182", others:["Riverside Auto Body", "Riverside Community Theatre"],
+  search:"Riverside", policy:{id:"CA-20417", line:"Commercial Auto", exp:"09/30/2027"},
+  otherPolicies:[{id:"GL-55102", line:"General Liability", exp:"09/30/2027"}, {id:"WC-31877", line:"Workers’ Compensation", exp:"01/31/2027"}],
+  type:"Add vehicle", date:"12/01/2026", dateOk:["12/01/2026", "12/1/2026", "2026-12-01"],
+  file:"VIN_registration_2024_Transit.pdf", files:["Riverside_COI_2026.pdf", "VIN_registration_2024_Transit.pdf", "Loss_runs_2023-2025.pdf"]
+};
+const TEST = {
+  client:"Lakeview Florist", acct:"LKF-0457", others:["Lakeview Family Dentistry", "Lakeview Florist Supply Co."],
+  search:"Lakeview", policy:{id:"GL-88310", line:"General Liability", exp:"03/31/2027"},
+  otherPolicies:[{id:"BOP-40021", line:"Business Owner’s Policy", exp:"03/31/2027"}, {id:"CA-61290", line:"Commercial Auto", exp:"06/30/2027"}],
+  type:"Change mailing address", date:"01/15/2027", dateOk:["01/15/2027", "1/15/2027", "2027-01-15"],
+  file:"Signed_address_change_request.pdf", files:["Lakeview_invoice_Nov.pdf", "Signed_address_change_request.pdf", "Florist_COI_2026.pdf"],
+  ticket:"From: Dana Ortiz, Lakeview Florist<br>“Please update our mailing address on our general liability policy, starting January 15, 2027. I’ve attached the signed request.”"
+};
+const TYPES = ["Add vehicle", "Remove vehicle", "Change mailing address", "Add additional insured", "Change limits"];
+const STEPS = [
+  {scr:"home", t:"search", kind:"type", hint:sc => `Type the client name, ${sc.search}, in the search box, then press Enter.`, cap:sc => `Search for the client by name: ${sc.search}.`},
+  {scr:"results", t:"client", kind:"click", hint:sc => `Select ${sc.client} in the results. Check the name: similar names appear.`, cap:sc => `Choose the exact client: ${sc.client}.`},
+  {scr:"client", t:"policy", kind:"click", hint:sc => `Open policy ${sc.policy.id}, the ${sc.policy.line} policy.`, cap:sc => `Open the policy the change applies to: ${sc.policy.id}.`},
+  {scr:"policy", t:"change", kind:"click", hint:() => "Select Request change. Endorsements always start here.", cap:() => "Every mid-term change starts from Request change."},
+  {scr:"type", t:"type", kind:"click", hint:sc => `Choose the change type: ${sc.type}.`, cap:sc => `Pick the change type: ${sc.type}.`},
+  {scr:"date", t:"date", kind:"type", hint:sc => `Type the effective date, ${sc.date}, then press Enter.`, cap:sc => `Enter the effective date the client asked for: ${sc.date}.`},
+  {scr:"attach", t:"file", kind:"click", hint:sc => `Attach the supporting document: ${sc.file}.`, cap:() => "Attach the document underwriting needs to approve the change."},
+  {scr:"review", t:"submit", kind:"click", hint:() => "Select Submit for underwriting review. Save draft would leave the request unsent.", cap:() => "Check the summary, then submit it for underwriting review."}
+];
+/* ---------- app renderer ---------- */
+const NAV = ["Home", "Clients", "Policies", "Change requests", "Tasks", "Reports"];
+function app(sc, scr, val = {}){
+  const on = {home:"Home", results:"Clients", client:"Clients", policy:"Policies", type:"Change requests", date:"Change requests", attach:"Change requests", review:"Change requests", done:"Change requests"}[scr];
+  let m = "";
+  if (scr === "home") m = `<h3>Good morning, Jordan</h3><div class="sub">Find a client to start.</div>
+    <div class="srch"><input data-t="search" aria-label="Search clients" placeholder="Search clients by name or account number" value="${esc(val.search || "")}"><button class="b p" data-t="go">Search</button></div>
+    <div class="card"><b style="font-size:13px">Tasks due today</b><table><tr><td>Renewal review · Harbor Logistics</td><td style="text-align:right"><span class="tag o">Due 4 pm</span></td></tr><tr><td>Certificate request · Maple Street Bakery</td><td style="text-align:right"><span class="tag">In progress</span></td></tr></table></div>`;
+  else if (scr === "results") m = `<h3>Clients matching “${esc(sc.search)}”</h3><div class="sub">3 results</div>
+    <table><tr><th>Client</th><th>Account</th><th>Account manager</th></tr>
+    ${[sc.others[0], sc.client, sc.others[1]].map((c, i) => `<tr class="rw" data-t="${c === sc.client ? "client" : "x-c" + i}"><td><b>${esc(c)}</b></td><td>${c === sc.client ? sc.acct : ["AUT-2201", "THT-0918"][i ? 1 : 0]}</td><td>${c === sc.client ? "Jordan Patel" : "Sam Reyes"}</td></tr>`).join("")}</table>`;
+  else if (scr === "client") m = `<h3>${esc(sc.client)}</h3><div class="sub">Account ${sc.acct} · Account manager Jordan Patel</div>
+    <table><tr><th>Policy</th><th>Line</th><th>Expires</th><th>Status</th></tr>
+    ${[sc.otherPolicies[0], sc.policy, sc.otherPolicies[1]].map((p, i) => `<tr class="rw" data-t="${p === sc.policy ? "policy" : "x-p" + i}"><td><b>${p.id}</b></td><td>${esc(p.line)}</td><td>${p.exp}</td><td><span class="tag">Active</span></td></tr>`).join("")}</table>`;
+  else if (scr === "policy") m = `<h3>${sc.policy.id} · ${esc(sc.policy.line)}</h3><div class="sub">${esc(sc.client)} · Active through ${sc.policy.exp}</div>
+    <div class="card"><div class="kv"><span>Carrier</span><span>Midland Mutual (fictional)</span><span>Premium</span><span>$${sc.policy.line === "Commercial Auto" ? "18,420" : "6,950"} annual</span><span>Open requests</span><span>None</span></div></div>
+    <div class="acts"><button class="b g" data-t="x-renew">Start renewal</button><button class="b p" data-t="change">Request change</button><button class="b g" data-t="x-docs">Documents</button><button class="b g" data-t="x-cert">Issue certificate</button></div>`;
+  else if (scr === "type" || scr === "date") m = `<h3>New change request</h3><div class="sub">${sc.policy.id} · ${esc(sc.client)} · Step ${scr === "type" ? 1 : 2} of 4</div>
+    <label class="l">Change type</label>${scr === "type" ? TYPES.map((t, i) => `<button class="opt" data-t="${t === sc.type ? "type" : "x-t" + i}">${t}</button>`).join("") : `<div class="opt sel" style="cursor:default">${esc(sc.type)}</div>
+    <label class="l">Effective date (MM/DD/YYYY)</label><div class="srch"><input data-t="date" aria-label="Effective date" placeholder="MM/DD/YYYY" style="width:200px" value="${esc(val.date || "")}"><button class="b p" data-t="go">Continue</button></div>`}`;
+  else if (scr === "attach") m = `<h3>Attach supporting documents</h3><div class="sub">${sc.policy.id} · ${esc(sc.type)} · effective ${sc.date} · Step 3 of 4</div>
+    <div class="sub">Client documents on file</div>${sc.files.map((f, i) => `<div class="file" data-t="${f === sc.file ? "file" : "x-f" + i}"><i></i>${esc(f)}</div>`).join("")}`;
+  else if (scr === "review") m = `<h3>Review and submit</h3><div class="sub">Step 4 of 4</div>
+    <div class="card"><div class="kv"><span>Client</span><span>${esc(sc.client)}</span><span>Policy</span><span>${sc.policy.id} · ${esc(sc.policy.line)}</span><span>Change</span><span>${esc(sc.type)}</span><span>Effective</span><span>${sc.date}</span><span>Attachment</span><span>${esc(sc.file)}</span><span>Routes to</span><span>Underwriting · Midland Mutual</span></div></div>
+    <div class="acts"><button class="b g" data-t="x-draft">Save draft</button><button class="b p" data-t="submit">Submit for underwriting review</button></div>`;
+  else if (scr === "done") m = `<div class="ok"><div class="ck"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h3>Change request CR-48213 submitted</h3><div class="sub">Underwriting usually responds within 1 business day. You and the client team can track status under Change requests.</div></div>`;
+  return `<div class="app" id="app"><div class="tb"><span class="lg"><i></i>PolicyDesk</span><span style="opacity:.6">Northgate Insurance Brokers</span><span class="us">Jordan Patel · Account Manager</span></div>
+    <div class="bd"><div class="nv">${NAV.map(n => `<div class="${n === on ? "on" : ""}">${n}</div>`).join("")}</div><div class="mn">${m}</div></div></div>`;
+}
+/* ---------- state + SCORM ---------- */
+const KEY = "pd-sim-v1";
+const fresh = () => ({watched:false, tryDone:false, test:{k:0, miss:0, res:[]}});
+let S = fresh();
+const LMS = SCORM.init();
+$("lms").textContent = LMS ? "Connected to LMS · progress is tracked" : "";
+let resume = 0;
+if (LMS) { const r = SCORM.resume(); if (r.data) S = Object.assign(fresh(), r.data); if (r.slide) resume = r.slide; }
+else { try { const x = JSON.parse(sessionStorage.getItem(KEY)); if (x) S = Object.assign(fresh(), x); } catch {} }
+const save = () => { if (LMS) SCORM.bookmark(SL.slide, S); else try { sessionStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+/* ---------- helpers ---------- */
+const sc2st = () => { const s = $("stage").getBoundingClientRect(); return s.width / 960; };
+function posOf(el){ const s = $("stage").getBoundingClientRect(), r = el.getBoundingClientRect(), k = s.width / 960; return {x:(r.left - s.left) / k, y:(r.top - s.top) / k, w:r.width / k, h:r.height / k}; }
+function callout(el, text, cls){
+  document.querySelectorAll(".callout").forEach(c => c.remove());
+  if (!el) return;
+  const p = posOf(el), c = document.createElement("div"); c.className = "callout " + (cls || ""); c.textContent = text;
+  $("stage").appendChild(c);
+  const below = p.y + p.h + 12 + 90 < 530;
+  c.style.left = Math.min(640, Math.max(24, p.x)) + "px";
+  c.style.top = (below ? p.y + p.h + 12 : Math.max(60, p.y - 12 - c.offsetHeight)) + "px";
+}
+const CURSOR = `<svg class="cursor" id="cur" viewBox="0 0 24 24" style="left:480px;top:300px"><path d="M3 2l7 19 2.6-7.4L20 11z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+const head = (mode, label, text, st) => `<div class="ins"><span class="md ${mode}">${label}</span><span class="tx" id="itx">${text}</span><span class="st" id="ist">${st || ""}</span></div>`;
+const BG = `<div class="obj" style="inset:0;background:linear-gradient(#EEF3F9,#E3EAF3)"></div>`;
+function dateOk(sc, v){ return sc.dateOk.includes(v.trim()); }
+
+/* ---------- step runner: mode = watch | try | test ---------- */
+function runSim(mode, sc, done){
+  let k = 0, typed = {}, tries = 0, stopped = false, timers = [];
+  const later = (ms, f) => timers.push(setTimeout(() => { if (!stopped) f(); }, RM ? Math.min(ms, 50) : ms));
+  function draw(){
+    const step = STEPS[k], scr = k < STEPS.length ? step.scr : "done";
+    const old = $("app"); if (old) old.remove();
+    $("sl").insertAdjacentHTML("beforeend", app(sc, scr, typed));
+    $("ist").textContent = k < STEPS.length ? `Step ${k + 1} of ${STEPS.length}` : "Complete";
+    if (k >= STEPS.length) { $("itx").textContent = mode === "test" ? "Request submitted. See your results next." : "Request submitted."; callout(null); return done && done(); }
+    const tgt = () => $("app").querySelector(`[data-t="${step.t}"]`);
+    if (mode === "watch") return watchStep(step, tgt());
+    $("itx").textContent = mode === "try" ? step.hint(sc) : "Complete the client’s request. No hints in this round.";
+    if (mode === "try") { tgt().classList.add("hl"); }
+    wire(step);
+  }
+  function wire(step){
+    const a = $("app");
+    const advance = () => { k++; tries = 0; callout(null); later(250, draw); };
+    const wrong = el => {
+      tries++;
+      if (el) { el.classList.add("miss"); setTimeout(() => el.classList.remove("miss"), 700); }
+      if (mode === "try") callout(a.querySelector(`[data-t="${step.t}"]`), "Not quite. " + step.hint(sc), "bad");
+      else if (tries < 2) callout(el || a.querySelector(`[data-t="${step.t}"]`), "That isn’t right. Try once more.", "bad");
+      else {
+        const t = a.querySelector(`[data-t="${step.t}"]`); t.classList.add("hl");
+        callout(t, "Here’s the right spot. " + step.hint(sc), "bad");
+        S.test.res[k] = false; S.test.miss++; save(); SCORM.interaction(`step-${k + 1}`, "other", "missed", false);
+        stopInput = true; later(2400, () => { stopInput = false; if (step.kind === "type") typed[step.t] = sc[step.t === "search" ? "search" : "date"]; advance(); });
+      }
+    };
+    let stopInput = false;
+    const right = () => {
+      if (mode === "test") { S.test.res[k] = true; save(); SCORM.interaction(`step-${k + 1}`, "other", tries ? "second-try" : "first-try", true); }
+      if (mode === "try") callout(a.querySelector(`[data-t="${step.t}"]`), "That’s it.", "good");
+      advance();
+    };
+    if (step.kind === "type") {
+      const inp = a.querySelector(`[data-t="${step.t}"]`); inp.focus({preventScroll:true});
+      const check = () => {
+        if (stopInput) return;
+        const v = inp.value; typed[step.t] = v;
+        const ok = step.t === "search" ? v.trim().toLowerCase() === sc.search.toLowerCase() || v.trim().toLowerCase() === sc.client.toLowerCase() : dateOk(sc, v);
+        ok ? right() : wrong(inp);
+      };
+      inp.addEventListener("keydown", e => { if (e.key === "Enter") check(); });
+      a.querySelector('[data-t="go"]').onclick = check;
+      a.addEventListener("click", e => { const el = e.target.closest("[data-t]"); if (!el || stopInput || el === inp || el.dataset.t === "go") return; wrong(el); });
+    } else {
+      a.addEventListener("click", e => {
+        if (stopInput) return;
+        const el = e.target.closest("[data-t]"); if (!el) { if (e.target.closest(".mn")) wrong(null); return; }
+        el.dataset.t === step.t ? right() : wrong(el);
+      });
+    }
+  }
+  function watchStep(step, el){
+    $("itx").textContent = "Watch how an account manager submits a change.";
+    $("cap").textContent = step.cap(sc);
+    const p = posOf(el), cur = $("cur");
+    later(300, () => { cur.style.left = (p.x + Math.min(p.w * .5, 60)) + "px"; cur.style.top = (p.y + p.h * .55) + "px"; });
+    if (step.kind === "type") {
+      const text = step.t === "search" ? sc.search : sc.date;
+      later(1300, () => { let i = 0; const typeOne = () => { if (stopped) return; el.value = text.slice(0, ++i); typed[step.t] = el.value; if (i < text.length) setTimeout(typeOne, RM ? 0 : 90); else later(500, () => { cur.classList.add("clk"); later(450, () => { cur.classList.remove("clk"); k++; draw(); }); }); }; typeOne(); });
+    } else {
+      later(1500, () => { el.classList.add("hl"); cur.classList.add("clk"); });
+      later(2300, () => { cur.classList.remove("clk"); k++; draw(); });
+    }
+  }
+  draw();
+  return () => { stopped = true; timers.forEach(clearTimeout); };
+}
+let stopSim = () => {};
+
+/* ---------- slides ---------- */
+const slides = [
+ {nm:"Welcome",
+  html:() => `<div class="obj" style="inset:0;background:linear-gradient(135deg,#14365F,#3878BC)"></div>
+    <div class="obj" style="left:64px;top:110px;width:500px;color:#fff">
+      <div class="hide" id="k" style="font:700 13px var(--sans);letter-spacing:.14em;color:#9EC5EE">NORTHGATE INSURANCE BROKERS · POLICYDESK GO-LIVE</div>
+      <div class="hide" id="t" style="font:800 46px/1.08 var(--serif);margin-top:10px">Submit a Policy Change in PolicyDesk</div>
+      <div class="hide" id="s" style="font:18px/1.5 var(--serif);color:#E6EEF9;margin-top:14px">Watch it, try it with hints, then test yourself on a real client request. About 10 minutes.</div>
+      <button class="big hide" id="go" style="margin-top:26px">Start ›</button></div>
+    <div class="obj hide" id="ap" style="left:590px;top:150px"><div style="transform:scale(.38);transform-origin:0 0;width:920px">${app(TRY, "review").replace('class="app"', 'class="app" style="position:relative;left:0;top:0"')}</div></div>`,
+  run(){ SL.timeline(1800, [[100, () => SL.show($("k"))], [300, () => SL.show($("t"), "in-left")], [700, () => SL.show($("s"), "in-up")], [900, () => SL.show($("ap"), "in-right")], [1300, () => { SL.show($("go"), "pulse"); $("go").focus({preventScroll:true}); }]]); $("go").onclick = () => SL.go(1); }},
+ {nm:"What changes on go-live",
+  html:() => `${BG}<div class="chip">What changes</div><div class="obj" style="left:28px;top:52px;font:800 25px var(--serif);color:var(--navy)">One request replaces four handoffs</div>
+    <div class="obj" style="left:40px;top:120px"><div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--warn);margin-bottom:8px">BEFORE · EMAIL AND SPREADSHEET</div>
+      <div class="flowrow">${["Client emails the change", "Logged in a tracking spreadsheet", "Re-keyed into the old system", "Follow-up calls on status"].map((t, i) => `<div class="fbox hide b${i}" style="border-top:4px solid #B4461A">${t}</div>${i < 3 ? '<span class="arrow">›</span>' : ""}`).join("")}</div></div>
+    <div class="obj" style="left:40px;top:290px"><div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--good);margin-bottom:8px">AFTER · POLICYDESK</div>
+      <div class="flowrow"><div class="fbox hide a0" style="border-top:4px solid #1E7A55;width:260px">One change request, started from the policy</div><span class="arrow">›</span><div class="fbox hide a1" style="border-top:4px solid #1E7A55;width:260px">Routes to underwriting with the documents attached</div><span class="arrow">›</span><div class="fbox hide a2" style="border-top:4px solid #1E7A55;width:220px">Status visible to the whole client team</div></div></div>`,
+  run(){ SL.timeline(4200, [...[0,1,2,3].map(i => [200 + i * 450, () => SL.show(document.querySelector(".b" + i), "in-up")]), ...[0,1,2].map(i => [2300 + i * 500, () => SL.show(document.querySelector(".a" + i), "in-up")]), [3900, () => SL.unlockNext()]]); }},
+ {nm:"Choose your path",
+  html:() => `${BG}<div class="chip">How this works</div><div class="obj" style="left:28px;top:52px;font:800 25px var(--serif);color:var(--navy)">Three rounds, same task</div>
+    <div class="obj" style="left:40px;top:130px;display:flex;gap:20px">
+      ${[["Watch it", "See an account manager add a vehicle to a commercial auto policy, step by step.", "WATCH"], ["Try it", "Do the same task yourself. Each step is highlighted, and a hint appears if you miss.", "TRY"], ["Test it", "Handle a new client request with no hints. Your score is sent to the LMS. Pass mark 80%.", "TEST"]].map(([b, s, m], i) => `<div class="modecard hide m${i}"><span class="md ${["", "try", "test"][i]}" style="display:inline-block;font:700 11px var(--sans);letter-spacing:.1em;color:#fff;border-radius:99px;padding:4px 10px;background:${["#1C4587", "#3878BC", "#F28A26"][i]}">${m}</span><b>${b}</b><span>${s}</span></div>`).join("")}</div>
+    <div class="obj hide" id="tip" style="left:40px;top:400px;width:880px;font:600 15px var(--sans);color:var(--navy);background:#fff;border-radius:12px;padding:12px 16px">Already confident? You can move straight to Test it once you’ve watched the demo.</div>`,
+  run(){ SL.timeline(2400, [...[0,1,2].map(i => [200 + i * 400, () => SL.show(document.querySelector(".m" + i), "in-up")]), [1600, () => { SL.show($("tip"), "in-up"); SL.unlockNext(); }]]); }},
+ {nm:"Watch it", gate:true,
+  html:() => `${BG}${head("", "WATCH", "Watch how an account manager submits a change.", "")}${CURSOR}<div class="cap" id="cap"></div>`,
+  run(){ stopSim(); stopSim = runSim("watch", TRY, () => { $("cap").textContent = "Request submitted. Next, you’ll try it yourself."; S.watched = true; save(); SL.unlockNext(); }); if (S.watched) SL.unlockNext(); }},
+ {nm:"Try it", gate:true,
+  html:() => `${BG}${head("try", "TRY", "", "")}`,
+  run(){ stopSim(); stopSim = runSim("try", TRY, () => { S.tryDone = true; save(); SL.unlockNext(); }); if (S.tryDone) SL.unlockNext(); }},
+ {nm:"Test it", gate:true,
+  html:() => `${BG}${head("test", "TEST", "", "")}<div class="ticket" id="tk"><b>NEW CLIENT EMAIL</b>${TEST.ticket}</div>`,
+  run(){
+    stopSim(); S.test = {k:0, miss:0, res:[]}; save();
+    stopSim = runSim("test", TEST, () => { SL.unlockNext(); });
+    const app0 = () => { const a = $("app"); if (a) { a.style.width = "620px"; } };
+    new MutationObserver(app0).observe($("sl"), {childList:true}); app0();
+  }},
+ {nm:"Results", gate:true,
+  html:() => { const sc = score(); return `<div class="obj" style="inset:0;background:linear-gradient(135deg,#F3F6FA,#EAF1FB)"></div>
+    <div class="obj" style="left:60px;top:46px;width:840px;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(28,69,135,.16);padding:28px 32px">
+      <div style="font:700 12px var(--sans);letter-spacing:.1em;color:var(--blue)">RESULTS · TEST IT</div>
+      <div style="display:flex;align-items:baseline;gap:16px;margin:8px 0"><span id="pct" style="font:800 66px var(--sans);color:${sc.pass ? "var(--good)" : "var(--warn)"}">0%</span><span style="font:600 17px var(--sans);color:var(--muted)">of steps completed without a reveal · pass mark 80%</span></div>
+      <p style="margin:0 0 16px;font-size:18px">${sc.pass ? "Passed. You’re ready to submit policy changes in PolicyDesk on go-live day." : "Not yet. Replay Try it, then take the test again."}</p>
+      <div class="dots">${STEPS.map((_, j) => `<span class="${S.test.res[j] ? "ok" : "no"}" title="Step ${j + 1}">${j + 1}</span>`).join("")}</div>
+      <p style="margin:18px 0 0;font:600 14px var(--sans);color:var(--muted)">${LMS ? "Your score, completion and each step were sent to the LMS." : "In an LMS, this score, completion and each step are reported through SCORM 2004."} Keep the quick reference card at your desk for go-live week.</p>
+      <div style="margin-top:18px;display:flex;gap:12px"><button class="big blue" id="again">Retake the test</button></div>
+    </div>`; },
+  run(){
+    const sc = score(), t0 = performance.now();
+    const tick = () => { const p = Math.min(1, RM ? 1 : (performance.now() - t0) / 900); $("pct").textContent = Math.round(sc.pct * p) + "%"; if (p < 1) requestAnimationFrame(tick); }; tick();
+    SCORM.finish(sc.raw, STEPS.length, 0.8);
+    $("again").onclick = () => SL.go(5);
+    SL.timeline(1000, []);
+  }}
+];
+function score(){ const raw = STEPS.filter((_, j) => S.test.res[j] === true).length; return {raw, pct:Math.round(raw / STEPS.length * 100), pass:raw / STEPS.length >= .8}; }
+SL.start({slides, resume, onLeave: () => { stopSim(); stopSim = () => {}; },
+  done: i => i < 3 ? SL.V.far > i : i === 3 ? S.watched : i === 4 ? S.tryDone : i === 5 ? S.test.res.length === STEPS.length : false,
+  onSlide: () => save()});
+/* screenshot hook for documents: ?shot=screen&sc=try|test */
+(() => { const q = new URLSearchParams(location.search); if (q.get("shot")) { document.body.innerHTML = `<div style="position:relative;width:960px;height:540px;background:#E3EAF3">${app(q.get("sc") === "test" ? TEST : TRY, q.get("shot"), {search:q.get("v") || "", date:q.get("v") || ""})}</div>`; document.body.style.margin = 0; } })();
+</script>
+</body>
+</html>
